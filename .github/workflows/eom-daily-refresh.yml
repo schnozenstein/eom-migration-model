@@ -40,7 +40,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/refresh_eom_data.py
-
+      - name: Create human-readable report
+        run: python scripts/create_daily_summary.py
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
