@@ -1,0 +1,20 @@
+destination_id,destination_name,wb_country_code,country_code,NY.GDP.PCAP.PP.KD,SL.UEM.TOTL.ZS,SM.POP.NETM,SP.POP.TOTL,net_migration_per_1000,energy_score_status,year
+GBR,United Kingdom,GBR,GBR,53993.117260788495,4.746,389911.0,69487000.0,5.611279807733821,Not scored: cost and governance components unavailable in this release after 2023,2025
+IRL,Ireland,IRL,IRL,131338.44474504076,4.632,35417.0,5484367.0,6.457809989739928,Not scored: cost and governance components unavailable in this release after 2023,2025
+NLD,Netherlands,NLD,NLD,71378.48563310123,3.874,104681.0,18087633.0,5.787434983892033,Not scored: cost and governance components unavailable in this release after 2023,2025
+DEU,Germany,DEU,DEU,62823.77366488221,3.711,-334072.0,83491249.0,-4.0012816193467176,Not scored: cost and governance components unavailable in this release after 2023,2025
+CHE,Switzerland,CHE,CHE,85732.10975352318,4.873,37253.0,9092436.0,4.097141844055872,Not scored: cost and governance components unavailable in this release after 2023,2025
+HKG,Hong Kong,HKG,HKG,68724.55658657564,2.799,17863.0,7498900.0,2.3820827054634677,Not scored: cost and governance components unavailable in this release after 2023,2025
+JPN,Japan,JPN,JPN,48283.37239594646,2.451,140579.0,123366734.0,1.1395211289292946,Not scored: cost and governance components unavailable in this release after 2023,2025
+SGP,Singapore,SGP,SGP,139592.61221076077,2.818,16892.0,6111175.0,2.764116556963268,Not scored: cost and governance components unavailable in this release after 2023,2025
+AUS,Australia,AUS,AUS,60194.06335479612,4.09,137109.0,27614411.0,4.96512491249587,Not scored: cost and governance components unavailable in this release after 2023,2025
+CAN,Canada,CAN,CAN,57989.57846535583,6.907,326204.0,41651653.0,7.83171798727892,Not scored: cost and governance components unavailable in this release after 2023,2025
+USA,United States,USA,USA,76931.31069904083,4.198,1230663.0,341784857.0,3.6006949248778453,Not scored: cost and governance components unavailable in this release after 2023,2025
+NZL,New Zealand,NZL,NZL,48232.66519946959,5.076,17403.0,5324700.0,3.2683531466561497,Not scored: cost and governance components unavailable in this release after 2023,2025
+FRA,France,FRA,FRA,55124.53925643946,7.542,91737.0,68720337.0,1.3349323359691907,Not scored: cost and governance components unavailable in this release after 2023,2025
+SWE,Sweden,SWE,SWE,63362.4612808079,8.694,47079.0,10596620.0,4.442831770885433,Not scored: cost and governance components unavailable in this release after 2023,2025
+DNK,Denmark,DNK,DNK,72723.27478679921,5.529,22103.0,6009169.0,3.6782124117328037,Not scored: cost and governance components unavailable in this release after 2023,2025
+FIN,Finland,FIN,FIN,55735.21749213258,9.461,18246.0,5646436.0,3.231418898576022,Not scored: cost and governance components unavailable in this release after 2023,2025
+NOR,Norway,NOR,NOR,95173.43082243668,4.637,29798.0,5610870.0,5.310762858522832,Not scored: cost and governance components unavailable in this release after 2023,2025
+AUT,Austria,AUT,AUT,63970.40085348593,5.582,11254.0,9208163.0,1.2221764536531337,Not scored: cost and governance components unavailable in this release after 2023,2025
+CZE,Czechia,CZE,CZE,49292.48787132084,2.825,-112188.0,10886878.0,-10.304882630263698,Not scored: cost and governance components unavailable in this release after 2023,2025

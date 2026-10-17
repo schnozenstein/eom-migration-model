@@ -1,0 +1,16 @@
+{
+  "run_date": "2026-10-17",
+  "model_version": "EOM-general-v2-architecture-2026-10-17",
+  "run_status": "completed_with_data_gates",
+  "fresh_numeric_observations_added": 0,
+  "ranking_year": 2023,
+  "backtest_predictions": 4174,
+  "backtest_geographies": 177,
+  "backtest_target_years": 24,
+  "tests_passed": 8,
+  "tests_failed": 0,
+  "joie_de_vivre_destinations_scored": 0,
+  "feasibility_destinations_scored": 0,
+  "combined_v2_ranking_produced": false,
+  "reason_combined_ranking_not_produced": "Required comparable wellbeing and verified profile-specific visa feasibility inputs are absent."
+}

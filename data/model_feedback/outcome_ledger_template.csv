@@ -1,0 +1,1 @@
+forecast_id,outcome_observation_date,target_period_start,target_period_end,origin_geo,destination_geo,target_name,observed_value,unit,observed_definition,source_name,source_url,publication_date,observation_date,data_vintage_date,revision_status,missingness_flag,comparability_note,notes

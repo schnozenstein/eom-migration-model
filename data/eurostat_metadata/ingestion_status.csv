@@ -1,0 +1,10 @@
+dataset,selected_rows,years_available,integration_status,reason
+immigration_by_birth,889692,2019;2020;2021;2022;2023;2024,staged_not_aggregated,Eurostat dimensions not decoded/filtered to one consistent total row; aggregation now would risk double-counting disaggregated age/sex/birth/citizenship rows
+emigration,15791,2019;2020;2021;2022;2023;2024,staged_not_aggregated,Eurostat dimensions not decoded/filtered to one consistent total row; aggregation now would risk double-counting disaggregated age/sex/birth/citizenship rows
+immigration_by_birth_category,64188,2019;2020;2021;2022;2023;2024,staged_not_aggregated,Eurostat dimensions not decoded/filtered to one consistent total row; aggregation now would risk double-counting disaggregated age/sex/birth/citizenship rows
+immigration_by_citizenship,63033,2019;2020;2021;2022;2023;2024,staged_not_aggregated,Eurostat dimensions not decoded/filtered to one consistent total row; aggregation now would risk double-counting disaggregated age/sex/birth/citizenship rows
+emigration_by_citizenship_partner,5286,2019;2020,staged_not_aggregated,Eurostat dimensions not decoded/filtered to one consistent total row; aggregation now would risk double-counting disaggregated age/sex/birth/citizenship rows
+immigration_citizenship_birth,96457,2019;2020;2021;2022;2023;2024,staged_not_aggregated,Eurostat dimensions not decoded/filtered to one consistent total row; aggregation now would risk double-counting disaggregated age/sex/birth/citizenship rows
+population_by_birth,558,2021;2022;2023;2024;2025,staged_not_aggregated,Eurostat dimensions not decoded/filtered to one consistent total row; aggregation now would risk double-counting disaggregated age/sex/birth/citizenship rows
+population_projection,450,2024;2025,staged_not_aggregated,Eurostat dimensions not decoded/filtered to one consistent total row; aggregation now would risk double-counting disaggregated age/sex/birth/citizenship rows
+fertility_projection,2280,2022;2023;2024;2025,staged_not_aggregated,Eurostat dimensions not decoded/filtered to one consistent total row; aggregation now would risk double-counting disaggregated age/sex/birth/citizenship rows

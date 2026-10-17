@@ -1,0 +1,21 @@
+destination_id,destination_name,country_code,data_year,life_evaluation,work_life_balance,social_connection,autonomy,leisure_cultural_access,everyday_environment,source_name,source_url,retrieved_at_utc,notes
+SGP,Singapore,SGP,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+IRL,Ireland,IRL,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+NOR,Norway,NOR,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+JPN,Japan,JPN,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+CHE,Switzerland,CHE,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+NZL,New Zealand,NZL,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+HKG,Hong Kong,HKG,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+NLD,Netherlands,NLD,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+AUS,Australia,AUS,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+DNK,Denmark,DNK,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+CZE,Czechia,CZE,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+DEU,Germany,DEU,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+CAN,Canada,CAN,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+AUT,Austria,AUT,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+FIN,Finland,FIN,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+SWE,Sweden,SWE,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+GBR,United Kingdom,GBR,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+USA,United States,USA,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+FRA,France,FRA,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.
+IND,India,IND,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.

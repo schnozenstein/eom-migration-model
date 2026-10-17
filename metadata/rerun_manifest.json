@@ -1,0 +1,63 @@
+{
+  "run_date": "2026-10-12",
+  "run_version": "rerun-1",
+  "base_panel": "Reused latest locally available 2026-10-12 panel; no new World Bank/UN/ILOSTAT data downloaded in this rerun",
+  "panel_rows": 756,
+  "policy_events_logged": 14,
+  "eurostat_datasets_staged": 9,
+  "eurostat_selected_rows": 1137735,
+  "programme_outcomes_observations": 0,
+  "ranking_changed": false,
+  "model_fit_performed": false,
+  "reason_no_fit": "No programme-level Tech-MBA-to-sponsored-employment-to-settlement outcomes; broad migration/labour indicators cannot validate personal pathway model.",
+  "data_integrity": "Missing/suppressed values preserved; no projection values treated as observed outcomes; no disaggregated Eurostat rows summed.",
+  "last_update": "2026-10-12",
+  "additional_user_uploads": [
+    "migr_emi4ctb",
+    "migr_imm5prv"
+  ],
+  "new_dataset_counts": {
+    "migr_emi4ctb": {
+      "source_rows": 904579,
+      "selected_rows": 192,
+      "observed_values": 184,
+      "years": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "destinations": 32
+    },
+    "migr_imm5prv": {
+      "source_rows": 1007661,
+      "selected_rows": 192,
+      "observed_values": 186,
+      "years": [
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "destinations": 32
+    }
+  },
+  "note": "Two additional Eurostat datasets processed with official total-dimension selectors; no category summation.",
+  "additional_processing_2026_10_12": {
+    "sources": [
+      "estat_migr_emi4ctb.tsv.gz.tsv",
+      "estat_migr_imm5prv.tsv.gz.tsv"
+    ],
+    "outputs": [
+      "data/eurostat_new_migration_indicators_long.csv",
+      "data/eurostat_new_indicators_aggregation_audit.csv",
+      "data/eurostat_new_indicators_destination_coverage.csv",
+      "data/historical_destination_year_panel.csv"
+    ],
+    "status": "processed_and_merged_with_missingness_flags"
+  }
+}

@@ -1,0 +1,413 @@
+{
+  "run_id": "EOM-GENERAL-2026-10-14-v3",
+  "run_date": "2026-10-14",
+  "run_type": "daily evidence and implementation audit",
+  "status": "completed_with_blocker",
+  "model_status": "conceptual, uncalibrated, not backtested",
+  "panel_rows": 756,
+  "destinations": 21,
+  "year_min": 1990,
+  "year_max": 2025,
+  "policy_evidence_rows": 17,
+  "prediction_ledger_rows": 0,
+  "new_macro_observations_downloaded": 0,
+  "new_policy_events_added": 0,
+  "numerical_ranking_produced": false,
+  "fit_performed": false,
+  "backtest_performed": false,
+  "causal_estimate_performed": false,
+  "tests": "6 passed with PYTHONPATH=src; plain pytest from uninstalled src-layout initially failed collection because package was not on import path",
+  "world_bank_fetch": "failed: DNS resolution for api.worldbank.org; no partial data file written",
+  "source_checks": [
+    "Ireland DETE processing dates",
+    "UK Home Office September 2026 monthly applications",
+    "Australia Home Affairs student visa rule explainer"
+  ],
+  "artifact_inventory": [
+    {
+      "path": ".pytest_cache/.gitignore",
+      "bytes": 37,
+      "sha256": "3ed731b65d06150c138e2dadb0be0697550888a6b47eb8c45ecc9adba8b8e9bd"
+    },
+    {
+      "path": ".pytest_cache/CACHEDIR.TAG",
+      "bytes": 191,
+      "sha256": "37dc88ef9a0abeddbe81053a6dd8fdfb13afb613045ea1eb4a5c815a74a3bde4"
+    },
+    {
+      "path": ".pytest_cache/README.md",
+      "bytes": 302,
+      "sha256": "73fd6fccdd802c419a6b2d983d6c3173b7da97558ac4b589edec2dfe443db9ad"
+    },
+    {
+      "path": ".pytest_cache/v/cache/lastfailed",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": ".pytest_cache/v/cache/nodeids",
+      "bytes": 449,
+      "sha256": "52f9a341ab53f9fb5ca35088d1a13724937a6fa29ab7b28e6413379909db318f"
+    },
+    {
+      "path": "DAILY_REPORT_2026-10-13_v2.md",
+      "bytes": 11086,
+      "sha256": "31ceb5b153de134f0a9ef0bf430379778129ed85ac72f55b4ab97d6e5b1e771e"
+    },
+    {
+      "path": "DAILY_REPORT_2026-10-14_v3.md",
+      "bytes": 7455,
+      "sha256": "acc99779b1be0bd72d0ea35244963b979446ef728c980da1ee8f9885d7ae9950"
+    },
+    {
+      "path": "DATA_DICTIONARY.md",
+      "bytes": 2569,
+      "sha256": "60b4ebc9ba2f31f05b9af932e2bef654d2cb8fab3f39493b36cfd845ff4f2a7e"
+    },
+    {
+      "path": "EMPIRICAL_DESIGN.md",
+      "bytes": 3461,
+      "sha256": "9ef82afb24dc64fa55f421560385afea851908927d7d2dd7e45db027248e4199"
+    },
+    {
+      "path": "GENERAL_MODEL_ARCHITECTURE_AMENDMENT_2026-10-13.md",
+      "bytes": 3772,
+      "sha256": "d713bee1af7af4d52783060dcf89a1085d99cebffa0ae90c0a1b2a4a8cda7544"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5982,
+      "sha256": "4d0d02663ab145ba99cfeeb27964f9a03eeba2a1fcdb51490f166767f4e3522d"
+    },
+    {
+      "path": "archive/DAILY_REPORT_2026-10-13_previous_run.md",
+      "bytes": 7111,
+      "sha256": "96f6201a77389071965dcc56810eff88b92ac4f7ba25637acfce60df3805ac12"
+    },
+    {
+      "path": "archive/DAILY_REPORT_2026-10-13_v2.md",
+      "bytes": 11086,
+      "sha256": "31ceb5b153de134f0a9ef0bf430379778129ed85ac72f55b4ab97d6e5b1e771e"
+    },
+    {
+      "path": "config/profile.json",
+      "bytes": 694,
+      "sha256": "892b45ba364af03069767bf0c8302ee720687104f624f8980aa7ca0f3c59c881"
+    },
+    {
+      "path": "config/scenarios/tech_mba_example.json",
+      "bytes": 1129,
+      "sha256": "0f5be97e2faa8d3082764c2ca80a0c899431efe907dbe5c49003af3378423cd4"
+    },
+    {
+      "path": "data/country_coverage.csv",
+      "bytes": 4927,
+      "sha256": "d1f2a2ec3568e0bf29070d965f3035d055540fbfad9939137e1e373c9fc30acc"
+    },
+    {
+      "path": "data/data_quality_audit.csv",
+      "bytes": 20065,
+      "sha256": "66089dec510b0bd9ca31896a459e1f0ad533242791a1809a2154632fa9a6afaa"
+    },
+    {
+      "path": "data/data_quality_audit_general_2026-10-13.csv",
+      "bytes": 4724,
+      "sha256": "9c9039ef2c538a90e01ec65a39364744c6d6127fde9b4e01d9ddfe021dfd96ee"
+    },
+    {
+      "path": "data/data_quality_audit_general_2026-10-14.csv",
+      "bytes": 1679,
+      "sha256": "444ee2477ad4fee2e20cf1b17e4f366fa2f102c7cdb593b3d1e3f36c62b38977"
+    },
+    {
+      "path": "data/data_quality_audit_general_rerun.csv",
+      "bytes": 1679,
+      "sha256": "444ee2477ad4fee2e20cf1b17e4f366fa2f102c7cdb593b3d1e3f36c62b38977"
+    },
+    {
+      "path": "data/destinations.csv",
+      "bytes": 1178,
+      "sha256": "9d6d62625f7efd2d178b1cd434229bac10203f0ac8da880892870eaa952e7b7a"
+    },
+    {
+      "path": "data/eurostat_aggregation_audit.csv",
+      "bytes": 1615,
+      "sha256": "b884a2956d91147f280f9a444fea7aa8144e2f99b40672775c33610291fb2ecd"
+    },
+    {
+      "path": "data/eurostat_metadata/README.md",
+      "bytes": 898,
+      "sha256": "7259126c6cea466957d52b9c953c110b496428b19ad59d5379f9c63da1af0761"
+    },
+    {
+      "path": "data/eurostat_metadata/dataset_inventory.json",
+      "bytes": 5300,
+      "sha256": "419bc8243147edac1a0baab1b28e48f32e435f6bd6910a2491e8fef19fbca580"
+    },
+    {
+      "path": "data/eurostat_metadata/ingestion_status.csv",
+      "bytes": 2174,
+      "sha256": "43e480034e5fe3a1367f117ca81ccee4493233320e052f30fe121ec274f4e74f"
+    },
+    {
+      "path": "data/eurostat_new_indicators_aggregation_audit.csv",
+      "bytes": 808,
+      "sha256": "bba0a5c22b46f329f932c01bf977fe9d7896fdf83406c94036b555a7f3f9cf50"
+    },
+    {
+      "path": "data/eurostat_new_indicators_destination_coverage.csv",
+      "bytes": 4615,
+      "sha256": "44840aebae2f93f47675e145d58c67e6b56fda48ddbf6edad535a8ea9173572f"
+    },
+    {
+      "path": "data/eurostat_new_migration_indicators_long.csv",
+      "bytes": 54792,
+      "sha256": "9a5536d7487bd418fe955d8b6ab6ef72b8e93c8baa52e9fb7755cbbc25b4c5a5"
+    },
+    {
+      "path": "data/eurostat_selected_total_indicators_long.csv",
+      "bytes": 144316,
+      "sha256": "2610096ed7418b3ac6afb2b34e2112067ebbb73c69543b23f86d9e5aec8be389"
+    },
+    {
+      "path": "data/historical_destination_year_panel.csv",
+      "bytes": 108018,
+      "sha256": "3447cc511f2414f602c00b52b4d42babb0563d7780fc933b11a189021bf67aa0"
+    },
+    {
+      "path": "data/mba_outcomes_official_benchmarks.csv",
+      "bytes": 1497,
+      "sha256": "ed5399babc9810c39c826d1e193a85a7b12cea45733955097106ef2445873e6a"
+    },
+    {
+      "path": "data/model_feedback/baseline_coverage_and_status_2026-10-13.json",
+      "bytes": 3596,
+      "sha256": "d081ad987d67d067ce770dd733279467bcb6839a3ea2e14d18a90eb66d955993"
+    },
+    {
+      "path": "data/model_feedback/causal_evaluation_register_template.csv",
+      "bytes": 407,
+      "sha256": "729fa09b6f68bb7e3c606a9e793f9202ab733b3edab63a2da11b1e4cefde6b28"
+    },
+    {
+      "path": "data/model_feedback/evaluation_gate_2026-10-13.json",
+      "bytes": 1055,
+      "sha256": "6be5c30088b5c28975b7f79bdf0dabee02a67a3e7d10aaa2702dc4575fa12a7c"
+    },
+    {
+      "path": "data/model_feedback/evaluation_gate_2026-10-14.json",
+      "bytes": 1101,
+      "sha256": "bfd48fad2eabb7496ec547c970e8738b6f7922e3e662a99c121c57026c5232b7"
+    },
+    {
+      "path": "data/model_feedback/evaluation_run_template.csv",
+      "bytes": 474,
+      "sha256": "71837cb0eb61870e26585a838ddba8ecdd87ba22c68f868e6fdbc132c3e82d89"
+    },
+    {
+      "path": "data/model_feedback/feature_readiness_audit_2026-10-13.csv",
+      "bytes": 5209,
+      "sha256": "db4961bb309cd0d2d11a587d7fb05e84fa6f9b3815b1826591c2c81751ced00a"
+    },
+    {
+      "path": "data/model_feedback/model_version_registry.csv",
+      "bytes": 2583,
+      "sha256": "6bcf22c484e10149671b82ac7ae1de7127c7a80c3effe03811fc5efa2e79fc29"
+    },
+    {
+      "path": "data/model_feedback/origin_destination_year_panel_template.csv",
+      "bytes": 650,
+      "sha256": "eec51406360f98eb15177c6356379e686c4969af1ca5101bd27ed20f72ae7dff"
+    },
+    {
+      "path": "data/model_feedback/outcome_ledger_template.csv",
+      "bytes": 287,
+      "sha256": "6d18af7d58e768b0ec206d64b0be937c9f5f28f89be21b330254fc64110633d5"
+    },
+    {
+      "path": "data/model_feedback/prediction_ledger_template.csv",
+      "bytes": 414,
+      "sha256": "77c67dec3a55691a9d271ceaa64d550bc4ba18b4d74744ae527a7409ffaed0bf"
+    },
+    {
+      "path": "data/operational_indicators_snapshot.csv",
+      "bytes": 10092,
+      "sha256": "0012089bd017923ad3f1c9887bf39752104af8ef0f4727a8002f48aea8d55c5c"
+    },
+    {
+      "path": "data/policy_evidence_log.csv",
+      "bytes": 17160,
+      "sha256": "76a31645039116c24218cc3570c559e0965dcf2425f88c36ce754984a7ab0fcc"
+    },
+    {
+      "path": "data/tech_mba_programme_outcomes_template.csv",
+      "bytes": 628,
+      "sha256": "75feb35fa89eb321d9aa1f56fdab3f9eea599143dc6562c15897fbe5a6577d1e"
+    },
+    {
+      "path": "metadata/code_review_2026-10-14.csv",
+      "bytes": 2021,
+      "sha256": "812d557cb250fef4e3dc094d3c356cecfbe09bb9b8f32440d4acb7fb6ada04a6"
+    },
+    {
+      "path": "metadata/new_eurostat_processing_summary.json",
+      "bytes": 2013,
+      "sha256": "295a747e833874b9d3aa783c9a6cf7ecf8e55e6d908091963826dbb35ac17909"
+    },
+    {
+      "path": "metadata/rerun_manifest.json",
+      "bytes": 1947,
+      "sha256": "4c70f4369ff7c5aafb93ac00d88648b4fcf7d387c4e9a75275dba9c1dd311a94"
+    },
+    {
+      "path": "metadata/run_manifest_2026-10-13.json",
+      "bytes": 1651,
+      "sha256": "851171264d711ecbc9c6555bbfbbe5ceb0aa2bf32603347c7892450176751e42"
+    },
+    {
+      "path": "metadata/run_manifest_2026-10-13_v2.json",
+      "bytes": 1806,
+      "sha256": "ab7ee5972aea77bc5abb985615632542e21fe0914ca234ea01f8683e1e22bc15"
+    },
+    {
+      "path": "metadata/run_summary.json",
+      "bytes": 8197,
+      "sha256": "dfe061e4c27737c5aa22df8b53d580c9de0e99a8fac68949fa22ec83c86faee2"
+    },
+    {
+      "path": "metadata/source_checks_2026-10-14.csv",
+      "bytes": 1644,
+      "sha256": "094897bb1e23b6dc0fd5e8b9551bae4d062bdf5eb8629221770701049494d72e"
+    },
+    {
+      "path": "metadata/source_lineage_2026-10-13.csv",
+      "bytes": 7789,
+      "sha256": "2a5ee151b84dc17214a40b0ca9d746d942157c865aecb0e2f77fdcbdf8d3bdd7"
+    },
+    {
+      "path": "metadata/source_registry.csv",
+      "bytes": 3850,
+      "sha256": "a81cdc303fbb2d2cada73509a64bd2c52d27a984ac24da1e5947dece57efa07d"
+    },
+    {
+      "path": "metadata/unit_test_run_2026-10-13.txt",
+      "bytes": 721,
+      "sha256": "8f699a5548657ae5ceb178ef513d3af57c3b9dee97f67f6401e086178194ce34"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 485,
+      "sha256": "dde535c2b90894dc4ad1aa82ddb9489f90791c4e89c46342116496604f177117"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 98,
+      "sha256": "709308f3bf970f3c040bdeb116e43e475cd68a42ac58aa992a4c73e145471eac"
+    },
+    {
+      "path": "scripts/audit_general_eom_panel.py",
+      "bytes": 1683,
+      "sha256": "132d37d50f697794e439bc62bfe9131f3ec481ab1ec015c376f7138485d64868"
+    },
+    {
+      "path": "src/eom_empirical/__init__.py",
+      "bytes": 76,
+      "sha256": "af575809ec99587ad75912d096c87d1f56367887bf1839ab37abc3c16f6aa9c8"
+    },
+    {
+      "path": "src/eom_empirical/__pycache__/__init__.cpython-313.pyc",
+      "bytes": 278,
+      "sha256": "75ac5e6c463dcd5e7cd5e34a4e56e541936ef27b0e44d942221caf1b396ca59f"
+    },
+    {
+      "path": "src/eom_empirical/__pycache__/evaluation.cpython-313.pyc",
+      "bytes": 4469,
+      "sha256": "ecc6689972c5268246195c75ce140c1dbec1c1de8fd6ed0c94b61d15e3312945"
+    },
+    {
+      "path": "src/eom_empirical/__pycache__/fetch_world_bank.cpython-313.pyc",
+      "bytes": 5897,
+      "sha256": "27ece79cf0a99e8546abe7b18f5de688bd564e8859acc3961fd637fe95fc4ad8"
+    },
+    {
+      "path": "src/eom_empirical/__pycache__/model.cpython-313.pyc",
+      "bytes": 5526,
+      "sha256": "fad854da5b7a88f030df70d1a3b0f2e24fa3b45e7f47ef8476cb6373a11c4583"
+    },
+    {
+      "path": "src/eom_empirical/__pycache__/summarize_pathway.cpython-313.pyc",
+      "bytes": 5642,
+      "sha256": "0b1398660fa46d07f9698a2e2b0aff01877a90a00a032b5ffda4e09d9e02852b"
+    },
+    {
+      "path": "src/eom_empirical/evaluation.py",
+      "bytes": 3125,
+      "sha256": "018b9785e78fcf4d2c81d03cfc36e81bf1765b04ead98c3baf58df33c3bc1e81"
+    },
+    {
+      "path": "src/eom_empirical/fetch_world_bank.py",
+      "bytes": 3690,
+      "sha256": "1dc26f5d78846dd5052f5f3ac16a75680c33b209216827faf3bf4107e51cb333"
+    },
+    {
+      "path": "src/eom_empirical/fit_macro_model.py",
+      "bytes": 8355,
+      "sha256": "ce66ff14c4fd5a60ef7328becb8e5a0a46e0836b932e4d977432e79a65beefae"
+    },
+    {
+      "path": "src/eom_empirical/model.py",
+      "bytes": 4019,
+      "sha256": "750f4696438eabff978deaab0c4b62d2d56562519bb570616c0a124e7919be13"
+    },
+    {
+      "path": "src/eom_empirical/summarize_pathway.py",
+      "bytes": 3514,
+      "sha256": "e27590f06e9da2cfbac9c5ecaeedcbe1a135e3843803431c657993d2cf33e4be"
+    },
+    {
+      "path": "tests/__pycache__/test_expanding_origin.cpython-313-pytest-9.0.2.pyc",
+      "bytes": 2379,
+      "sha256": "f7fd47daac1df16edb54a327331be3fa8add3b0bd88c5729ff482b1e04a92ad2"
+    },
+    {
+      "path": "tests/__pycache__/test_expanding_origin.cpython-313.pyc",
+      "bytes": 2258,
+      "sha256": "14f5ce6bd4379e40a18329aa2433db6cccbc84c7d0bf57c83dbbd5b44299cf5d"
+    },
+    {
+      "path": "tests/__pycache__/test_model.cpython-313-pytest-9.0.2.pyc",
+      "bytes": 4306,
+      "sha256": "286ceb72e0ac1ead50cdff0ee1d06fcc4f60ccf467c61b81fa8b2181442cceb9"
+    },
+    {
+      "path": "tests/__pycache__/test_model.cpython-313.pyc",
+      "bytes": 4185,
+      "sha256": "c2fd9105a43e56e9b5c2a11c0062bcee2bad1984aeb4a8dabef2da613b2c64b6"
+    },
+    {
+      "path": "tests/__pycache__/test_pathway.cpython-313-pytest-9.0.2.pyc",
+      "bytes": 2364,
+      "sha256": "6af18c42f2fe6dc1fcb19846a47046b7ca3e92c9d953ade93a865c836fe3e821"
+    },
+    {
+      "path": "tests/__pycache__/test_pathway.cpython-313.pyc",
+      "bytes": 2243,
+      "sha256": "b51cf970267f76d032ebf0e68f9d4ce11af19f4fe6c1d6fdeb8420589c1acc28"
+    },
+    {
+      "path": "tests/test_expanding_origin.py",
+      "bytes": 1177,
+      "sha256": "99421f62e079dda76762b7b2d69e69dc3c508de8389348ddfe96a1ba4405edb7"
+    },
+    {
+      "path": "tests/test_model.py",
+      "bytes": 2036,
+      "sha256": "630b398e5d339a84f17241b163fdb721c09cccf03e6e96410b573126c2c34259"
+    },
+    {
+      "path": "tests/test_pathway.py",
+      "bytes": 1145,
+      "sha256": "c3f17b5cc8dc5b6371603581fcc43e0c2a8c836bbd9f5c741f6b5ed6312f878c"
+    }
+  ]
+}

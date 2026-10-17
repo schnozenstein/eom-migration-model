@@ -1,0 +1,32 @@
+{
+  "origin_country": "India",
+  "experience_years_at_entry_planning": 4.5,
+  "target_programmes": [
+    "Tech MBA",
+    "Management of Technology",
+    "Technology and Management",
+    "Technology Management",
+    "closely related technology/business programmes"
+  ],
+  "target_roles": [
+    "product management",
+    "technology consulting",
+    "engineering management",
+    "technology strategy",
+    "senior technical leadership"
+  ],
+  "desired_pathway": [
+    "strong programme",
+    "relevant graduate employment",
+    "lawful sponsored employment where required",
+    "career progression",
+    "secure long-term settlement"
+  ],
+  "planning_horizon_years": [
+    8,
+    10
+  ],
+  "note": "Profile is a starting configuration, not a claim that individual outcomes can be predicted from public country averages. Edit as goals or constraints change. No personal preference weights are assumed by default.",
+  "scenario_role": "optional illustrative parameterization only",
+  "model_scope_note": "This file is an optional scenario input. It does not define the general EOM model, its primary outcome, or its core dataset."
+}

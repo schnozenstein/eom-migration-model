@@ -1,0 +1,16 @@
+dataset,indicator,expected_cells,observed_cells,missing_cells,coverage_pct,geographies_with_value,year_min,year_max
+historical_destination_year_panel.csv,un_migrant_stock_destination,756,160,596,21.16,20,1990,2024
+historical_destination_year_panel.csv,ilo_5wap_lfpr_15plus_total_pct,756,228,528,30.16,19,2014,2025
+historical_destination_year_panel.csv,ilo_dwap_lfpr_15plus_total_pct,756,696,60,92.06,20,1990,2025
+historical_destination_year_panel.csv,eurostat_emigration_total_flow_persons,756,58,698,7.67,11,2019,2024
+historical_destination_year_panel.csv,eurostat_immigration_total_by_birth_flow_persons,756,58,698,7.67,11,2019,2024
+historical_destination_year_panel.csv,eurostat_immigration_total_by_citizenship_flow_persons,756,58,698,7.67,11,2019,2024
+historical_destination_year_panel.csv,eurostat_emigration_total_by_birth_flow_persons,756,65,691,8.6,11,2019,2024
+historical_destination_year_panel.csv,eurostat_immigration_total_by_previous_residence_flow_persons,756,67,689,8.86,12,2019,2024
+eurostat_selected_total_indicators_long.csv,emigration,192,168,24,87.5,31,2019,2024
+eurostat_selected_total_indicators_long.csv,emigration_by_birth,192,184,8,95.83,31,2019,2024
+eurostat_selected_total_indicators_long.csv,immigration_by_birth,192,166,26,86.46,31,2019,2024
+eurostat_selected_total_indicators_long.csv,immigration_by_citizenship,192,166,26,86.46,31,2019,2024
+eurostat_selected_total_indicators_long.csv,immigration_by_previous_residence,192,186,6,96.88,32,2019,2024
+eurostat_new_migration_indicators_long.csv,emigration_by_birth,198,188,10,94.95,32,2019,2024
+eurostat_new_migration_indicators_long.csv,immigration_by_previous_residence,198,190,8,95.96,33,2019,2024

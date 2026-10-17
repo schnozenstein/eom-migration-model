@@ -1,0 +1,21 @@
+{
+  "evaluation_id": "EOM-EVAL-GATE-2026-10-13-01",
+  "status": "not_run",
+  "reason": "No EOM-versus-baseline backtest was run because current processed inputs do not contain a sufficiently aligned, comparable energy-feature panel and annual flow outcome denominator across the focus set.",
+  "checks_completed": [
+    "historical destination-year coverage audit",
+    "native Eurostat selected-total coverage audit",
+    "source lineage review",
+    "EOM term-to-data readiness mapping"
+  ],
+  "minimum_gate_to_run_backtest": [
+    "assemble comparable salary/income, cost, opportunity, policy, institutional quality and stability measures by destination-year",
+    "align outcome definition and denominator for a multi-destination time panel",
+    "choose a prespecified target and chronological split",
+    "register forecast issue date and model version before outcome is observed",
+    "compare equal-weight EOM separately from simple baselines"
+  ],
+  "model_calibrated": false,
+  "backtest_performed": false,
+  "causal_estimate_performed": false
+}

@@ -1,0 +1,58 @@
+{
+  "source_file": "WDI_CSV.zip",
+  "zip_integrity": "passed CRC test",
+  "new_csv_observed_rows": 153770,
+  "merged_long_rows": 175361,
+  "indicator_count": 16,
+  "country_codes": 265,
+  "year_min": 1960,
+  "year_max": 2025,
+  "indicators_in_current_release": [
+    "BX.TRF.PWKR.CD.DT",
+    "FP.CPI.TOTL.ZG",
+    "NY.GDP.MKTP.KD.ZG",
+    "NY.GDP.PCAP.CD",
+    "NY.GDP.PCAP.PP.KD",
+    "SL.EMP.TOTL.SP.ZS",
+    "SL.TLF.CACT.ZS",
+    "SL.UEM.TOTL.ZS",
+    "SM.POP.NETM",
+    "SP.DYN.LE00.IN",
+    "SP.POP.1564.TO.ZS",
+    "SP.POP.TOTL"
+  ],
+  "indicators_absent_from_current_release_retained_from_prior_vintage": [
+    "GE.EST",
+    "PA.NUS.PPPC.RF",
+    "PV.EST",
+    "RQ.EST"
+  ],
+  "year_max_by_indicator": {
+    "BX.TRF.PWKR.CD.DT": 2025,
+    "FP.CPI.TOTL.ZG": 2025,
+    "GE.EST": 2023,
+    "NY.GDP.MKTP.KD.ZG": 2025,
+    "NY.GDP.PCAP.CD": 2025,
+    "NY.GDP.PCAP.PP.KD": 2025,
+    "PA.NUS.PPPC.RF": 2023,
+    "PV.EST": 2023,
+    "RQ.EST": 2023,
+    "SL.EMP.TOTL.SP.ZS": 2025,
+    "SL.TLF.CACT.ZS": 2025,
+    "SL.UEM.TOTL.ZS": 2025,
+    "SM.POP.NETM": 2025,
+    "SP.DYN.LE00.IN": 2024,
+    "SP.POP.1564.TO.ZS": 2025,
+    "SP.POP.TOTL": 2025
+  },
+  "rows_by_year_2020_plus": {
+    "2020": 3797,
+    "2021": 3796,
+    "2022": 3787,
+    "2023": 3759,
+    "2024": 2924,
+    "2025": 2582
+  },
+  "ranking_caveat": "Four absent series are retained only from prior vintage; latest fully comparable six-component ranking remains earlier than 2025. No values are invented or carried forward.",
+  "vintage_caveat": "Uploaded CSV ZIP passed archive integrity checks and includes a 2025 year column; exact official publication date was not independently verified."
+}

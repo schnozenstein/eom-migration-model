@@ -1,0 +1,49 @@
+year,indicator,indicator_code,observed_destinations,focus_destinations,coverage_pct,vintage_note,missing_destinations
+2020,income_GDP_per_capita_PPP,NY.GDP.PCAP.PP.KD,20,20,100.0,Uploaded WDI CSV vintage,
+2020,cost_price_level,PA.NUS.PPPC.RF,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2020,job_opportunity_unemployment,SL.UEM.TOTL.ZS,20,20,100.0,Uploaded WDI CSV vintage,
+2020,policy_regulatory_quality,RQ.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2020,institution_government_effectiveness,GE.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2020,stability_political_stability,PV.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2020,net_migration_count,SM.POP.NETM,20,20,100.0,Uploaded WDI CSV vintage,
+2020,population,SP.POP.TOTL,20,20,100.0,Uploaded WDI CSV vintage,
+2021,income_GDP_per_capita_PPP,NY.GDP.PCAP.PP.KD,20,20,100.0,Uploaded WDI CSV vintage,
+2021,cost_price_level,PA.NUS.PPPC.RF,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2021,job_opportunity_unemployment,SL.UEM.TOTL.ZS,20,20,100.0,Uploaded WDI CSV vintage,
+2021,policy_regulatory_quality,RQ.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2021,institution_government_effectiveness,GE.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2021,stability_political_stability,PV.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2021,net_migration_count,SM.POP.NETM,20,20,100.0,Uploaded WDI CSV vintage,
+2021,population,SP.POP.TOTL,20,20,100.0,Uploaded WDI CSV vintage,
+2022,income_GDP_per_capita_PPP,NY.GDP.PCAP.PP.KD,20,20,100.0,Uploaded WDI CSV vintage,
+2022,cost_price_level,PA.NUS.PPPC.RF,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2022,job_opportunity_unemployment,SL.UEM.TOTL.ZS,20,20,100.0,Uploaded WDI CSV vintage,
+2022,policy_regulatory_quality,RQ.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2022,institution_government_effectiveness,GE.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2022,stability_political_stability,PV.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2022,net_migration_count,SM.POP.NETM,20,20,100.0,Uploaded WDI CSV vintage,
+2022,population,SP.POP.TOTL,20,20,100.0,Uploaded WDI CSV vintage,
+2023,income_GDP_per_capita_PPP,NY.GDP.PCAP.PP.KD,20,20,100.0,Uploaded WDI CSV vintage,
+2023,cost_price_level,PA.NUS.PPPC.RF,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2023,job_opportunity_unemployment,SL.UEM.TOTL.ZS,20,20,100.0,Uploaded WDI CSV vintage,
+2023,policy_regulatory_quality,RQ.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2023,institution_government_effectiveness,GE.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2023,stability_political_stability,PV.EST,20,20,100.0,Legacy WDI Excel vintage; current CSV absent,
+2023,net_migration_count,SM.POP.NETM,20,20,100.0,Uploaded WDI CSV vintage,
+2023,population,SP.POP.TOTL,20,20,100.0,Uploaded WDI CSV vintage,
+2024,income_GDP_per_capita_PPP,NY.GDP.PCAP.PP.KD,20,20,100.0,Uploaded WDI CSV vintage,
+2024,cost_price_level,PA.NUS.PPPC.RF,0,20,0.0,Legacy WDI Excel vintage; current CSV absent,AUS;AUT;CAN;CHE;CZE;DEU;DNK;FIN;FRA;GBR;HKG;IND;IRL;JPN;NLD;NOR;NZL;SGP;SWE;USA
+2024,job_opportunity_unemployment,SL.UEM.TOTL.ZS,20,20,100.0,Uploaded WDI CSV vintage,
+2024,policy_regulatory_quality,RQ.EST,0,20,0.0,Legacy WDI Excel vintage; current CSV absent,AUS;AUT;CAN;CHE;CZE;DEU;DNK;FIN;FRA;GBR;HKG;IND;IRL;JPN;NLD;NOR;NZL;SGP;SWE;USA
+2024,institution_government_effectiveness,GE.EST,0,20,0.0,Legacy WDI Excel vintage; current CSV absent,AUS;AUT;CAN;CHE;CZE;DEU;DNK;FIN;FRA;GBR;HKG;IND;IRL;JPN;NLD;NOR;NZL;SGP;SWE;USA
+2024,stability_political_stability,PV.EST,0,20,0.0,Legacy WDI Excel vintage; current CSV absent,AUS;AUT;CAN;CHE;CZE;DEU;DNK;FIN;FRA;GBR;HKG;IND;IRL;JPN;NLD;NOR;NZL;SGP;SWE;USA
+2024,net_migration_count,SM.POP.NETM,20,20,100.0,Uploaded WDI CSV vintage,
+2024,population,SP.POP.TOTL,20,20,100.0,Uploaded WDI CSV vintage,
+2025,income_GDP_per_capita_PPP,NY.GDP.PCAP.PP.KD,20,20,100.0,Uploaded WDI CSV vintage,
+2025,cost_price_level,PA.NUS.PPPC.RF,0,20,0.0,Legacy WDI Excel vintage; current CSV absent,AUS;AUT;CAN;CHE;CZE;DEU;DNK;FIN;FRA;GBR;HKG;IND;IRL;JPN;NLD;NOR;NZL;SGP;SWE;USA
+2025,job_opportunity_unemployment,SL.UEM.TOTL.ZS,20,20,100.0,Uploaded WDI CSV vintage,
+2025,policy_regulatory_quality,RQ.EST,0,20,0.0,Legacy WDI Excel vintage; current CSV absent,AUS;AUT;CAN;CHE;CZE;DEU;DNK;FIN;FRA;GBR;HKG;IND;IRL;JPN;NLD;NOR;NZL;SGP;SWE;USA
+2025,institution_government_effectiveness,GE.EST,0,20,0.0,Legacy WDI Excel vintage; current CSV absent,AUS;AUT;CAN;CHE;CZE;DEU;DNK;FIN;FRA;GBR;HKG;IND;IRL;JPN;NLD;NOR;NZL;SGP;SWE;USA
+2025,stability_political_stability,PV.EST,0,20,0.0,Legacy WDI Excel vintage; current CSV absent,AUS;AUT;CAN;CHE;CZE;DEU;DNK;FIN;FRA;GBR;HKG;IND;IRL;JPN;NLD;NOR;NZL;SGP;SWE;USA
+2025,net_migration_count,SM.POP.NETM,20,20,100.0,Uploaded WDI CSV vintage,
+2025,population,SP.POP.TOTL,20,20,100.0,Uploaded WDI CSV vintage,

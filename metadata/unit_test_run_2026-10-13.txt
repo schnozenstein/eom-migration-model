@@ -1,0 +1,16 @@
+STDOUT
+
+STDERR
+test_only_earlier_target_years_train_each_fold (test_expanding_origin.ExpandingOriginTests.test_only_earlier_target_years_train_each_fold) ... ok
+test_energy_direction (test_model.ModelTests.test_energy_direction) ... ok
+test_lagged_target_alignment (test_model.ModelTests.test_lagged_target_alignment) ... ok
+test_wide_and_derived_features (test_model.ModelTests.test_wide_and_derived_features) ... ok
+test_summary_pools_only_observed_counts (test_pathway.PathwayTests.test_summary_pools_only_observed_counts) ... ok
+test_wilson_interval (test_pathway.PathwayTests.test_wilson_interval) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.064s
+
+OK
+
+EXIT_CODE=0

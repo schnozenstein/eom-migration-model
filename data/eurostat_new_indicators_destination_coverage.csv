@@ -1,0 +1,43 @@
+destination,indicator,years_with_rows,years_with_nonmissing_values,first_year,last_year,nonmissing_observations,note
+Australia,emigration_by_birth,0,0,,,0,No Eurostat geography in this extract
+Austria,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Canada,emigration_by_birth,0,0,,,0,No Eurostat geography in this extract
+Czechia,emigration_by_birth,6,5,2019.0,2024.0,5,National migration flow; not graduate- or occupation-specific
+Denmark,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Finland,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+France,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Germany,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Hong Kong,emigration_by_birth,0,0,,,0,No Eurostat geography in this extract
+India (baseline),emigration_by_birth,0,0,,,0,No Eurostat geography in this extract
+Ireland,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Japan,emigration_by_birth,0,0,,,0,No Eurostat geography in this extract
+Netherlands,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+New Zealand,emigration_by_birth,0,0,,,0,No Eurostat geography in this extract
+Norway,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Scotland / Edinburgh (subnational),emigration_by_birth,0,0,,,0,Eurostat national reporting geography; Scotland/Edinburgh is not assigned UK national values
+Singapore,emigration_by_birth,0,0,,,0,No Eurostat geography in this extract
+Sweden,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Switzerland,emigration_by_birth,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+United Kingdom,emigration_by_birth,6,0,2019.0,2024.0,0,National migration flow; not graduate- or occupation-specific
+United States,emigration_by_birth,0,0,,,0,No Eurostat geography in this extract
+Australia,immigration_by_previous_residence,0,0,,,0,No Eurostat geography in this extract
+Austria,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Canada,immigration_by_previous_residence,0,0,,,0,No Eurostat geography in this extract
+Czechia,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Denmark,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Finland,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+France,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Germany,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Hong Kong,immigration_by_previous_residence,0,0,,,0,No Eurostat geography in this extract
+India (baseline),immigration_by_previous_residence,0,0,,,0,No Eurostat geography in this extract
+Ireland,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Japan,immigration_by_previous_residence,0,0,,,0,No Eurostat geography in this extract
+Netherlands,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+New Zealand,immigration_by_previous_residence,0,0,,,0,No Eurostat geography in this extract
+Norway,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Scotland / Edinburgh (subnational),immigration_by_previous_residence,0,0,,,0,Eurostat national reporting geography; Scotland/Edinburgh is not assigned UK national values
+Singapore,immigration_by_previous_residence,0,0,,,0,No Eurostat geography in this extract
+Sweden,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+Switzerland,immigration_by_previous_residence,6,6,2019.0,2024.0,6,National migration flow; not graduate- or occupation-specific
+United Kingdom,immigration_by_previous_residence,6,1,2019.0,2024.0,1,National migration flow; not graduate- or occupation-specific
+United States,immigration_by_previous_residence,0,0,,,0,No Eurostat geography in this extract

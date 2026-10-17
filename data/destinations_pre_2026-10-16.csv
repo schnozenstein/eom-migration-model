@@ -1,0 +1,21 @@
+destination_id,destination_name,destination_type,parent_id,wb_country_code,primary_choice_set,notes
+GBR,United Kingdom,country,,GBR,global_country,"Country-level choice; do not count Edinburgh again in same flat probability denominator"
+IRL,Ireland,country,,IRL,global_country,
+NLD,Netherlands,country,,NLD,global_country,
+DEU,Germany,country,,DEU,global_country,
+CHE,Switzerland,country,,CHE,global_country,
+HKG,Hong Kong,region,,HKG,global_country,"Special administrative region; data comparability must be checked"
+JPN,Japan,country,,JPN,global_country,
+SGP,Singapore,country,,SGP,global_country,
+AUS,Australia,country,,AUS,global_country,
+CAN,Canada,country,,CAN,global_country,
+USA,United States,country,,USA,global_country,
+NZL,New Zealand,country,,NZL,global_country,
+FRA,France,country,,FRA,global_country,
+SWE,Sweden,country,,SWE,global_country,
+DNK,Denmark,country,,DNK,global_country,
+FIN,Finland,country,,FIN,global_country,
+NOR,Norway,country,,NOR,global_country,
+AUT,Austria,country,,AUT,global_country,
+CZE,Czechia,country,,CZE,global_country,
+EDI,Edinburgh,city,GBR,,uk_nested,"Nested city option; compare conditionally within the UK or in a hierarchical model"

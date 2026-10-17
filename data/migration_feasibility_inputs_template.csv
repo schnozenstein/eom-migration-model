@@ -1,0 +1,21 @@
+destination_id,destination_name,country_code,origin_country,visa_route,eligible,minimum_salary_or_funds,tuition_and_fees,language_requirement,time_to_permanent_residence_years,dependent_rights,work_rights,source_url,effective_date,verified_at,feasibility_status
+SGP,Singapore,SGP,India,,,,,,,,,,,,unscored: profile/route evidence missing
+IRL,Ireland,IRL,India,,,,,,,,,,,,unscored: profile/route evidence missing
+NOR,Norway,NOR,India,,,,,,,,,,,,unscored: profile/route evidence missing
+JPN,Japan,JPN,India,,,,,,,,,,,,unscored: profile/route evidence missing
+CHE,Switzerland,CHE,India,,,,,,,,,,,,unscored: profile/route evidence missing
+NZL,New Zealand,NZL,India,,,,,,,,,,,,unscored: profile/route evidence missing
+HKG,Hong Kong,HKG,India,,,,,,,,,,,,unscored: profile/route evidence missing
+NLD,Netherlands,NLD,India,,,,,,,,,,,,unscored: profile/route evidence missing
+AUS,Australia,AUS,India,,,,,,,,,,,,unscored: profile/route evidence missing
+DNK,Denmark,DNK,India,,,,,,,,,,,,unscored: profile/route evidence missing
+CZE,Czechia,CZE,India,,,,,,,,,,,,unscored: profile/route evidence missing
+DEU,Germany,DEU,India,,,,,,,,,,,,unscored: profile/route evidence missing
+CAN,Canada,CAN,India,,,,,,,,,,,,unscored: profile/route evidence missing
+AUT,Austria,AUT,India,,,,,,,,,,,,unscored: profile/route evidence missing
+FIN,Finland,FIN,India,,,,,,,,,,,,unscored: profile/route evidence missing
+SWE,Sweden,SWE,India,,,,,,,,,,,,unscored: profile/route evidence missing
+GBR,United Kingdom,GBR,India,,,,,,,,,,,,unscored: profile/route evidence missing
+USA,United States,USA,India,,,,,,,,,,,,unscored: profile/route evidence missing
+FRA,France,FRA,India,,,,,,,,,,,,unscored: profile/route evidence missing
+IND,India,IND,India,,,,,,,,,,,,unscored: profile/route evidence missing

@@ -1,0 +1,21 @@
+destination_id,destination_name,country_code,data_year,life_evaluation,work_life_balance,social_connection,autonomy,leisure_cultural_access,everyday_environment,source_name,source_url,retrieved_at_utc,notes,z_life_evaluation,z_work_life_balance,z_social_connection,z_autonomy,z_leisure_cultural_access,z_everyday_environment,joie_de_vivre_score,qol_score_status
+SGP,Singapore,SGP,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+IRL,Ireland,IRL,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+NOR,Norway,NOR,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+JPN,Japan,JPN,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+CHE,Switzerland,CHE,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+NZL,New Zealand,NZL,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+HKG,Hong Kong,HKG,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+NLD,Netherlands,NLD,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+AUS,Australia,AUS,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+DNK,Denmark,DNK,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+CZE,Czechia,CZE,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+DEU,Germany,DEU,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+CAN,Canada,CAN,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+AUT,Austria,AUT,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+FIN,Finland,FIN,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+SWE,Sweden,SWE,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+GBR,United Kingdom,GBR,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+USA,United States,USA,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+FRA,France,FRA,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence
+IND,India,IND,2025,,,,,,,,,,Blank = not yet ingested; do not treat as zero. Prefer comparable official/survey data.,,,,,,,,not scored: incomplete QoL evidence

@@ -1,0 +1,47 @@
+{
+  "run_date": "2026-10-12",
+  "new_sources_processed": 2,
+  "indicators": [
+    {
+      "indicator": "emigration_by_birth",
+      "source_dataset": "migr_emi4ctb",
+      "source_file": "estat_migr_emi4ctb.tsv.gz.tsv",
+      "source_rows_scanned": 904579,
+      "rows_matching_total_dimensions_and_target_geographies": 66,
+      "selected_geo_year_rows": 198,
+      "distinct_geographies": 33,
+      "years": "2019-2024",
+      "selected_age_definition_counts": "{\"COMPLET\": 198}",
+      "nonmissing_values": 188,
+      "missing_or_suppressed_values": 10,
+      "duplicate_geo_year_rows_after_selection": 0,
+      "selection_rule": "freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; prefer agedef=COMPLET, fallback=REACH only if COMPLET unavailable; no summing"
+    },
+    {
+      "indicator": "immigration_by_previous_residence",
+      "source_dataset": "migr_imm5prv",
+      "source_file": "estat_migr_imm5prv.tsv.gz.tsv",
+      "source_rows_scanned": 1007661,
+      "rows_matching_total_dimensions_and_target_geographies": 66,
+      "selected_geo_year_rows": 198,
+      "distinct_geographies": 33,
+      "years": "2019-2024",
+      "selected_age_definition_counts": "{\"COMPLET\": 198}",
+      "nonmissing_values": 190,
+      "missing_or_suppressed_values": 8,
+      "duplicate_geo_year_rows_after_selection": 0,
+      "selection_rule": "freq=A; age=TOTAL; partner=TOTAL; unit=NR; sex=T; prefer agedef=COMPLET, fallback=REACH only if COMPLET unavailable; no summing"
+    }
+  ],
+  "panel_rows": 756,
+  "panel_destinations": 21,
+  "new_indicator_nonmissing_panel_values": {
+    "eurostat_emigration_total_by_birth_flow_persons": 65,
+    "eurostat_immigration_total_by_previous_residence_flow_persons": 67
+  },
+  "new_indicator_missing_panel_values": {
+    "eurostat_emigration_total_by_birth_flow_persons": 691,
+    "eurostat_immigration_total_by_previous_residence_flow_persons": 689
+  },
+  "model_status": "No fitted EOM model or destination ranking produced; programme-level outcomes remain unavailable."
+}

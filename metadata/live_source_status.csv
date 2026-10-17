@@ -1,0 +1,17 @@
+source_id,source,url,status,rows_fetched,indicator,observation_start,observation_end_requested,error
+WDI_NY.GDP.PCAP.PP.KD,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/NY.GDP.PCAP.PP.KD,SKIPPED_OFFLINE,0,NY.GDP.PCAP.PP.KD,2010,2026,Offline audit requested; no network call made
+WDI_SL.UEM.TOTL.ZS,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SL.UEM.TOTL.ZS,SKIPPED_OFFLINE,0,SL.UEM.TOTL.ZS,2010,2026,Offline audit requested; no network call made
+WDI_PA.NUS.PPPC.RF,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/PA.NUS.PPPC.RF,SKIPPED_OFFLINE,0,PA.NUS.PPPC.RF,2010,2026,Offline audit requested; no network call made
+WDI_RQ.EST,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/RQ.EST,SKIPPED_OFFLINE,0,RQ.EST,2010,2026,Offline audit requested; no network call made
+WDI_GE.EST,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/GE.EST,SKIPPED_OFFLINE,0,GE.EST,2010,2026,Offline audit requested; no network call made
+WDI_PV.EST,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/PV.EST,SKIPPED_OFFLINE,0,PV.EST,2010,2026,Offline audit requested; no network call made
+WDI_SP.POP.TOTL,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL,SKIPPED_OFFLINE,0,SP.POP.TOTL,2010,2026,Offline audit requested; no network call made
+WDI_SM.POP.NETM,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SM.POP.NETM,SKIPPED_OFFLINE,0,SM.POP.NETM,2010,2026,Offline audit requested; no network call made
+WDI_NY.GDP.MKTP.KD.ZG,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.KD.ZG,SKIPPED_OFFLINE,0,NY.GDP.MKTP.KD.ZG,2010,2026,Offline audit requested; no network call made
+WDI_NY.GDP.PCAP.CD,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/NY.GDP.PCAP.CD,SKIPPED_OFFLINE,0,NY.GDP.PCAP.CD,2010,2026,Offline audit requested; no network call made
+WDI_FP.CPI.TOTL.ZG,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/FP.CPI.TOTL.ZG,SKIPPED_OFFLINE,0,FP.CPI.TOTL.ZG,2010,2026,Offline audit requested; no network call made
+WDI_SL.EMP.TOTL.SP.ZS,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SL.EMP.TOTL.SP.ZS,SKIPPED_OFFLINE,0,SL.EMP.TOTL.SP.ZS,2010,2026,Offline audit requested; no network call made
+WDI_SL.TLF.CACT.ZS,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SL.TLF.CACT.ZS,SKIPPED_OFFLINE,0,SL.TLF.CACT.ZS,2010,2026,Offline audit requested; no network call made
+WDI_SP.DYN.LE00.IN,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SP.DYN.LE00.IN,SKIPPED_OFFLINE,0,SP.DYN.LE00.IN,2010,2026,Offline audit requested; no network call made
+WDI_SP.POP.1564.TO.ZS,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SP.POP.1564.TO.ZS,SKIPPED_OFFLINE,0,SP.POP.1564.TO.ZS,2010,2026,Offline audit requested; no network call made
+WDI_BX.TRF.PWKR.CD.DT,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/BX.TRF.PWKR.CD.DT,SKIPPED_OFFLINE,0,BX.TRF.PWKR.CD.DT,2010,2026,Offline audit requested; no network call made

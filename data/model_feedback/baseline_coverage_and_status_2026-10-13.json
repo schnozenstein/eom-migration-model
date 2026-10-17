@@ -1,0 +1,103 @@
+{
+  "run_date": "2026-10-13",
+  "run_type": "EOM General Migration Model daily research run",
+  "model_scope": "General migration dynamics; Tech MBA remains an optional parameterized scenario",
+  "historical_destination_year_panel": {
+    "rows": 756,
+    "destinations": 21,
+    "year_min": 1990,
+    "year_max": 2025,
+    "coverage_by_column": {
+      "un_migrant_stock_destination": {
+        "observed": 160,
+        "expected": 756,
+        "missing": 596,
+        "coverage_pct": 21.16
+      },
+      "ilo_5wap_lfpr_15plus_total_pct": {
+        "observed": 228,
+        "expected": 756,
+        "missing": 528,
+        "coverage_pct": 30.16
+      },
+      "ilo_dwap_lfpr_15plus_total_pct": {
+        "observed": 696,
+        "expected": 756,
+        "missing": 60,
+        "coverage_pct": 92.06
+      },
+      "eurostat_emigration_total_flow_persons": {
+        "observed": 58,
+        "expected": 756,
+        "missing": 698,
+        "coverage_pct": 7.67
+      },
+      "eurostat_immigration_total_by_birth_flow_persons": {
+        "observed": 58,
+        "expected": 756,
+        "missing": 698,
+        "coverage_pct": 7.67
+      },
+      "eurostat_immigration_total_by_citizenship_flow_persons": {
+        "observed": 58,
+        "expected": 756,
+        "missing": 698,
+        "coverage_pct": 7.67
+      },
+      "eurostat_emigration_total_by_birth_flow_persons": {
+        "observed": 65,
+        "expected": 756,
+        "missing": 691,
+        "coverage_pct": 8.6
+      },
+      "eurostat_immigration_total_by_previous_residence_flow_persons": {
+        "observed": 67,
+        "expected": 756,
+        "missing": 689,
+        "coverage_pct": 8.86
+      }
+    }
+  },
+  "eurostat_selected_total_indicators_long": {
+    "rows": 960,
+    "indicators": 5,
+    "destinations": 32,
+    "year_min": 2019,
+    "year_max": 2024,
+    "observed_by_indicator": {
+      "emigration": 168,
+      "emigration_by_birth": 184,
+      "immigration_by_birth": 166,
+      "immigration_by_citizenship": 166,
+      "immigration_by_previous_residence": 186
+    },
+    "rows_with_any_value": 870
+  },
+  "eurostat_new_migration_indicators_long": {
+    "rows": 396,
+    "indicators": 2,
+    "destinations": 33,
+    "year_min": 2019,
+    "year_max": 2024,
+    "observed_by_indicator": {
+      "emigration_by_birth": 188,
+      "immigration_by_previous_residence": 190
+    }
+  },
+  "historical_panel_rows_with_any_eurostat_flow": 67,
+  "prediction_ledger_rows": 0,
+  "outcome_ledger_rows": 0,
+  "evaluation_status": "not run",
+  "causal_evaluation_status": "not run",
+  "model_status": "conceptual / uncalibrated / not backtested",
+  "why_no_fit_or_backtest": "The existing historical panel has no aligned salary, cost, policy, institutional-quality or stability feature set. Its migration-flow columns cover only 11-12 destinations in 2019-2024 and lack a consistently aligned population denominator. Fitting EOM coefficients or claiming an EOM-vs-baseline backtest from these inputs would not be defensible.",
+  "numerical_energy_ranking": "not produced; no comparable full feature matrix and no calibrated coefficients",
+  "external_data_refresh": "Ireland processing-date frontier page checked live on 2026-10-13; no raw bulk data were downloaded in this run.",
+  "container_network": "World Bank API download attempt failed due DNS/network resolution; no live macro series claimed.",
+  "new_operational_snapshot_rows": 7,
+  "data_quality_audit_rows": 15,
+  "source_lineage_rows": 8,
+  "model_fit_or_backtest_performed": false,
+  "causal_effect_estimated": false,
+  "model_calibrated_or_validated": false
+}

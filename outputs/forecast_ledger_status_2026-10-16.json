@@ -1,0 +1,9 @@
+{
+  "as_of_date": "2026-10-16",
+  "model_version": "EOM-general-equalweight-unfitted-2026-10-16-v2",
+  "forward_forecast_rows": 0,
+  "status": "no_forward_forecast_issued",
+  "reason": "The equal-weight energy baseline is not calibrated and its historical rank association is weaker than persistence; avoid issuing point forecasts or probabilities as if validated.",
+  "historical_backtest_predictions": "outputs/macro_backtest_predictions.csv",
+  "causal_estimates": 0
+}

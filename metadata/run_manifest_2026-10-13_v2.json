@@ -1,0 +1,51 @@
+{
+  "run_date": "2026-10-13",
+  "run_id": "EOM-general-daily-2026-10-13-v2",
+  "scope": "general migration dynamics; optional Tech MBA scenario only",
+  "input_files": {
+    "data/historical_destination_year_panel.csv": {
+      "sha256": "3447cc511f2414f602c00b52b4d42babb0563d7780fc933b11a189021bf67aa0",
+      "bytes": 108018
+    },
+    "data/eurostat_selected_total_indicators_long.csv": {
+      "sha256": "2610096ed7418b3ac6afb2b34e2112067ebbb73c69543b23f86d9e5aec8be389",
+      "bytes": 144316
+    },
+    "data/eurostat_new_migration_indicators_long.csv": {
+      "sha256": "9a5536d7487bd418fe955d8b6ab6ef72b8e93c8baa52e9fb7755cbbc25b4c5a5",
+      "bytes": 54792
+    },
+    "data/operational_indicators_snapshot.csv": {
+      "sha256": "0012089bd017923ad3f1c9887bf39752104af8ef0f4727a8002f48aea8d55c5c",
+      "bytes": 10092
+    },
+    "data/policy_evidence_log.csv": {
+      "sha256": "76a31645039116c24218cc3570c559e0965dcf2425f88c36ce754984a7ab0fcc",
+      "bytes": 17160
+    }
+  },
+  "outputs": [
+    "DAILY_REPORT_2026-10-13_v2.md",
+    "data/data_quality_audit_general_2026-10-13.csv",
+    "metadata/source_lineage_2026-10-13.csv",
+    "data/model_feedback/feature_readiness_audit_2026-10-13.csv",
+    "data/model_feedback/evaluation_gate_2026-10-13.json",
+    "scripts/audit_general_eom_panel.py",
+    "metadata/unit_test_run_2026-10-13.txt",
+    "src/eom_empirical/evaluation.py",
+    "src/eom_empirical/fit_macro_model.py",
+    "tests/test_expanding_origin.py",
+    "data/destinations.csv",
+    "requirements.txt",
+    "pyproject.toml"
+  ],
+  "claims_not_made": [
+    "no live World Bank bulk retrieval",
+    "no parameter fitting",
+    "no forecasting",
+    "no chronological backtest",
+    "no numerical EOM ranking",
+    "no causal estimate",
+    "no calibration or validation claim"
+  ]
+}

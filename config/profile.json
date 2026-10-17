@@ -1,0 +1,24 @@
+{
+  "model_scope": "general_migration_dynamics",
+  "origin_geography": null,
+  "destination_geographies": "all_supported_global_geographies",
+  "migrant_group_or_profile": "all_migrants unless a harmonized subgroup is explicitly selected",
+  "objectives": [],
+  "constraints": {},
+  "forecast_horizons_years": [
+    1,
+    3,
+    5,
+    10
+  ],
+  "scenario_inputs": {
+    "origin": null,
+    "destination_set": null,
+    "migrant_attributes": {},
+    "objective": null,
+    "constraints": {},
+    "time_horizon_years": null
+  },
+  "status": "generic interface; no personal preference weights or calibrated probabilities assumed",
+  "tech_mba_example": "config/scenarios/tech_mba_example.json"
+}

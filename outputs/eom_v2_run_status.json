@@ -1,0 +1,51 @@
+{
+  "model_version": "EOM-general-v2-architecture-2026-10-17",
+  "run_status": "completed_with_data_gates",
+  "legacy_macro_ranking_preserved": true,
+  "legacy_ranking_file": "outputs/latest_macro_eom_ranking.csv",
+  "joie_de_vivre": {
+    "weights": {
+      "life_evaluation": 0.25,
+      "work_life_balance": 0.2,
+      "social_connection": 0.15,
+      "autonomy": 0.15,
+      "leisure_cultural_access": 0.15,
+      "everyday_environment": 0.1
+    },
+    "weight_status": "illustrative, not estimated",
+    "destinations_with_complete_inputs": 0,
+    "destinations_in_input_template": 20,
+    "score_output": "outputs/eom_joie_de_vivre_scores.csv",
+    "interpretation": "separate subsystem; no score if any required component is missing"
+  },
+  "feasibility": {
+    "origin_country_default": "India",
+    "scored_destinations": 0,
+    "reason": "No verified person-specific visa-route/eligibility/funds/language inputs supplied; template created rather than fabricate scores.",
+    "input_template": "data/migration_feasibility_inputs_template.csv"
+  },
+  "uncertainty": {
+    "weight_sensitivity_draws": 2000,
+    "range": "each existing macro component weight independently perturbed uniformly from 0.8 to 1.2; signs held fixed",
+    "output": "outputs/eom_v2_weight_sensitivity.csv",
+    "not_a_confidence_interval": true
+  },
+  "year_balanced_backtest": {
+    "output": "outputs/eom_v2_year_balanced_backtest.csv",
+    "mean_of_yearly_eom_attraction_spearman": 0.40305925635243095,
+    "mean_of_yearly_ridge_spearman": 0.4478993074729998,
+    "mean_of_yearly_persistence_spearman": 0.8698594294414433,
+    "mean_of_yearly_ridge_mae": 6.004375609020207,
+    "mean_of_yearly_country_mean_mae": 3.9321009456496046,
+    "mean_of_yearly_persistence_mae": 2.3994364615503034,
+    "years_scored": 24
+  },
+  "fresh_numeric_ingestion": "blocked in prior v7 run by DNS/network resolution; no new observations claimed",
+  "combined_v2_ranking": "not produced: wellbeing and feasibility evidence incomplete",
+  "next_required_inputs": [
+    "official comparable wellbeing/life-evaluation series",
+    "annual hours/work-life balance",
+    "verified visa route and eligibility by profile",
+    "housing/rent and after-tax occupation-specific salary"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "input_file": "/mnt/data/eom_inputs/WDI_CSV.zip",
+  "input_bytes": 283089754,
+  "zip_members": [
+    "WDICSV.csv",
+    "WDICountry.csv",
+    "WDISeries.csv",
+    "WDIcountry-series.csv",
+    "WDIfootnote.csv",
+    "WDIseries-time.csv"
+  ],
+  "selected_indicator_count": 8,
+  "country_geographies": 217,
+  "rows_long_including_missing": 57288,
+  "observed_values": 42122,
+  "missing_cells": 15166,
+  "year_min": 1960,
+  "year_max": 2025,
+  "selected_indicators": {
+    "NY.GDP.PCAP.PP.KD": "GDP per capita, PPP (constant 2021 international $)",
+    "SL.UEM.TOTL.ZS": "Unemployment, total (% of labor force, ILO modeled estimate)",
+    "PA.NUS.PPPC.RF": "GDP price level ratio of PPP to market exchange rate (US=1)",
+    "RQ.EST": "Regulatory quality estimate",
+    "GE.EST": "Government effectiveness estimate",
+    "PV.EST": "Political stability and absence of violence/terrorism estimate",
+    "SP.POP.TOTL": "Population, total",
+    "SM.POP.NETM": "Net migration"
+  },
+  "note": "2025 appears as a column in WDI_CSV.zip; actual coverage is indicator-specific.",
+  "final_long_rows_including_missing": 78879,
+  "final_selected_indicator_codes": [
+    "GE.EST",
+    "NY.GDP.PCAP.PP.KD",
+    "PA.NUS.PPPC.RF",
+    "PV.EST",
+    "RQ.EST",
+    "SL.UEM.TOTL.ZS",
+    "SM.POP.NETM",
+    "SP.POP.TOTL"
+  ],
+  "supplemented_indicator_codes_from_prior_export": [
+    "GE.EST",
+    "PA.NUS.PPPC.RF",
+    "PV.EST",
+    "RQ.EST"
+  ],
+  "source_vintage_note": "The newly uploaded WDI_CSV.zip does not contain PA.NUS.PPPC.RF, RQ.EST, GE.EST, or PV.EST in its main WDICSV.csv. These four series are retained from the previous Excel export only to preserve the exploratory six-component baseline; therefore this is a mixed-vintage panel, not a single-vintage extraction."
+}

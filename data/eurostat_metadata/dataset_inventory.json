@@ -1,0 +1,207 @@
+[
+  {
+    "input_file": "estat_migr_imm3ctb.tsv.gz.tsv",
+    "dataset": "immigration_by_birth",
+    "dimension_fields": [
+      "freq",
+      "age",
+      "agedef",
+      "c_birth",
+      "unit",
+      "sex",
+      "geo\\TIME_PERIOD"
+    ],
+    "all_source_rows": 976920,
+    "selected_reporting_country_rows": 889692,
+    "years_included": [
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ],
+    "output_file": "immigration_by_birth_recent_country_rows.csv",
+    "filter": "Reporting geography in European comparison-country code list; recent years only where available."
+  },
+  {
+    "input_file": "estat_migr_emi2.tsv.gz.tsv",
+    "dataset": "emigration",
+    "dimension_fields": [
+      "freq",
+      "age",
+      "agedef",
+      "unit",
+      "sex",
+      "geo\\TIME_PERIOD"
+    ],
+    "all_source_rows": 17069,
+    "selected_reporting_country_rows": 15791,
+    "years_included": [
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ],
+    "output_file": "emigration_recent_country_rows.csv",
+    "filter": "Reporting geography in European comparison-country code list; recent years only where available."
+  },
+  {
+    "input_file": "estat_migr_imm10ctb.tsv.gz.tsv",
+    "dataset": "immigration_by_birth_category",
+    "dimension_fields": [
+      "freq",
+      "age",
+      "agedef",
+      "c_birth",
+      "unit",
+      "sex",
+      "geo\\TIME_PERIOD"
+    ],
+    "all_source_rows": 69237,
+    "selected_reporting_country_rows": 64188,
+    "years_included": [
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ],
+    "output_file": "immigration_by_birth_category_recent_country_rows.csv",
+    "filter": "Reporting geography in European comparison-country code list; recent years only where available."
+  },
+  {
+    "input_file": "estat_migr_imm2ctz.tsv.gz.tsv",
+    "dataset": "immigration_by_citizenship",
+    "dimension_fields": [
+      "freq",
+      "age",
+      "agedef",
+      "citizen",
+      "unit",
+      "sex",
+      "geo\\TIME_PERIOD"
+    ],
+    "all_source_rows": 68110,
+    "selected_reporting_country_rows": 63033,
+    "years_included": [
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ],
+    "output_file": "immigration_by_citizenship_recent_country_rows.csv",
+    "filter": "Reporting geography in European comparison-country code list; recent years only where available."
+  },
+  {
+    "input_file": "estat_migr_emictznxt.tsv.gz.tsv",
+    "dataset": "emigration_by_citizenship_partner",
+    "dimension_fields": [
+      "freq",
+      "age",
+      "citizen",
+      "partner",
+      "unit",
+      "sex",
+      "geo\\TIME_PERIOD"
+    ],
+    "all_source_rows": 5286,
+    "selected_reporting_country_rows": 5286,
+    "years_included": [
+      "2019",
+      "2020"
+    ],
+    "output_file": "emigration_by_citizenship_partner_recent_country_rows.csv",
+    "filter": "Reporting geography in European comparison-country code list; recent years only where available."
+  },
+  {
+    "input_file": "estat_migr_imm6ctz.tsv.gz.tsv",
+    "dataset": "immigration_citizenship_birth",
+    "dimension_fields": [
+      "freq",
+      "citizen",
+      "c_birth",
+      "unit",
+      "sex",
+      "geo\\TIME_PERIOD"
+    ],
+    "all_source_rows": 98757,
+    "selected_reporting_country_rows": 96457,
+    "years_included": [
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ],
+    "output_file": "immigration_citizenship_birth_recent_country_rows.csv",
+    "filter": "Reporting geography in European comparison-country code list; recent years only where available."
+  },
+  {
+    "input_file": "estat_demo_popmdctb.tsv.gz.tsv",
+    "dataset": "population_by_birth",
+    "dimension_fields": [
+      "freq",
+      "c_birth",
+      "unit",
+      "sex",
+      "geo\\TIME_PERIOD"
+    ],
+    "all_source_rows": 594,
+    "selected_reporting_country_rows": 558,
+    "years_included": [
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "2025"
+    ],
+    "output_file": "population_by_birth_recent_country_rows.csv",
+    "filter": "Reporting geography in European comparison-country code list; recent years only where available."
+  },
+  {
+    "input_file": "estat_proj_stp25.tsv.gz.tsv",
+    "dataset": "population_projection",
+    "dimension_fields": [
+      "freq",
+      "indic_de",
+      "projection",
+      "geo\\TIME_PERIOD"
+    ],
+    "all_source_rows": 486,
+    "selected_reporting_country_rows": 450,
+    "years_included": [
+      "2024",
+      "2025"
+    ],
+    "output_file": "population_projection_recent_country_rows.csv",
+    "filter": "Reporting geography in European comparison-country code list; recent years only where available."
+  },
+  {
+    "input_file": "estat_proj_23naasfr.tsv.gz.tsv",
+    "dataset": "fertility_projection",
+    "dimension_fields": [
+      "freq",
+      "projection",
+      "age",
+      "unit",
+      "geo\\TIME_PERIOD"
+    ],
+    "all_source_rows": 2280,
+    "selected_reporting_country_rows": 2280,
+    "years_included": [
+      "2022",
+      "2023",
+      "2024",
+      "2025"
+    ],
+    "output_file": "fertility_projection_recent_country_rows.csv",
+    "filter": "Reporting geography in European comparison-country code list; recent years only where available."
+  }
+]

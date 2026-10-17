@@ -1,0 +1,25 @@
+{
+  "evaluation_id": "EOM-EVAL-GATE-2026-10-14-01",
+  "status": "not_run",
+  "run_date": "2026-10-14",
+  "reason": "No aligned six-component feature matrix or defensible multi-destination annual flow-rate outcome. World Bank API retrieval was attempted but failed at DNS resolution; no raw observations were added.",
+  "checks_completed": [
+    "historical destination-year audit regenerated",
+    "native Eurostat indicator coverage regenerated",
+    "source checks for Ireland, UK and Australia performed",
+    "model implementation reviewed",
+    "six unit tests passed using PYTHONPATH=src"
+  ],
+  "model_calibrated": false,
+  "backtest_performed": false,
+  "causal_estimate_performed": false,
+  "numerical_ranking_produced": false,
+  "prediction_ledger_rows": 0,
+  "minimum_gate_to_run_backtest": [
+    "obtain six comparable energy components across destination-years",
+    "align a defensible outcome and denominator",
+    "pre-register target and forecast origin",
+    "preserve forecast issue date and model version",
+    "compare equal-weight EOM separately from transparent baselines"
+  ]
+}

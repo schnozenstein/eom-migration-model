@@ -1,0 +1,397 @@
+geo_code,destination,year,indicator,value,raw_value,status_flag,source_dataset,source_file,age_definition,freq,age,classification_dimension,classification_value,unit,sex
+AT,Austria,2019,emigration_by_birth,68280.0,68280,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+AT,Austria,2020,emigration_by_birth,62581.0,62581,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+AT,Austria,2021,emigration_by_birth,67299.0,67299,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+AT,Austria,2022,emigration_by_birth,74271.0,74271,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+AT,Austria,2023,emigration_by_birth,74036.0,74036,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+AT,Austria,2024,emigration_by_birth,81477.0,81477,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BE,Belgium,2019,emigration_by_birth,102936.0,102936,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BE,Belgium,2020,emigration_by_birth,76562.0,76562,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BE,Belgium,2021,emigration_by_birth,87272.0,87272,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BE,Belgium,2022,emigration_by_birth,84627.0,84627,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BE,Belgium,2023,emigration_by_birth,96071.0,96071,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BE,Belgium,2024,emigration_by_birth,100100.0,100100,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BG,Bulgaria,2019,emigration_by_birth,39941.0,39941,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BG,Bulgaria,2020,emigration_by_birth,6649.0,6649,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BG,Bulgaria,2021,emigration_by_birth,26755.0,26755,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BG,Bulgaria,2022,emigration_by_birth,13175.0,13175,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BG,Bulgaria,2023,emigration_by_birth,15227.0,15227,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+BG,Bulgaria,2024,emigration_by_birth,13002.0,13002,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CH,Switzerland,2019,emigration_by_birth,126221.0,126221,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CH,Switzerland,2020,emigration_by_birth,109376.0,109376,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CH,Switzerland,2021,emigration_by_birth,116769.0,116769,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CH,Switzerland,2022,emigration_by_birth,122123.0,122123,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CH,Switzerland,2023,emigration_by_birth,123963.0,123963,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CH,Switzerland,2024,emigration_by_birth,129786.0,129786,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CY,Cyprus,2019,emigration_by_birth,18598.0,18598,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CY,Cyprus,2020,emigration_by_birth,14200.0,14200,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CY,Cyprus,2021,emigration_by_birth,13244.0,13244,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CY,Cyprus,2022,emigration_by_birth,21118.0,21118,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CY,Cyprus,2023,emigration_by_birth,26979.0,26979,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CY,Cyprus,2024,emigration_by_birth,26883.0,26883,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CZ,Czechia,2019,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CZ,Czechia,2020,emigration_by_birth,35854.0,35854,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CZ,Czechia,2021,emigration_by_birth,18630.0,18630,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CZ,Czechia,2022,emigration_by_birth,31764.0,31764,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CZ,Czechia,2023,emigration_by_birth,53639.0,53639,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+CZ,Czechia,2024,emigration_by_birth,88379.0,88379,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DE,Germany,2019,emigration_by_birth,496613.0,496613 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DE,Germany,2020,emigration_by_birth,404026.0,404026 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DE,Germany,2021,emigration_by_birth,458574.0,458574 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DE,Germany,2022,emigration_by_birth,452713.0,452713 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DE,Germany,2023,emigration_by_birth,580499.0,580499 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DE,Germany,2024,emigration_by_birth,584230.0,584230 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DK,Denmark,2019,emigration_by_birth,66520.0,66520,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DK,Denmark,2020,emigration_by_birth,53822.0,53822,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DK,Denmark,2021,emigration_by_birth,44008.0,44008,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DK,Denmark,2022,emigration_by_birth,62927.0,62927,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DK,Denmark,2023,emigration_by_birth,68172.0,68172,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+DK,Denmark,2024,emigration_by_birth,69467.0,69467,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EE,Estonia,2019,emigration_by_birth,12801.0,12801,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EE,Estonia,2020,emigration_by_birth,12427.0,12427,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EE,Estonia,2021,emigration_by_birth,12481.0,12481,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EE,Estonia,2022,emigration_by_birth,9657.0,9657,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EE,Estonia,2023,emigration_by_birth,12543.0,12543,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EE,Estonia,2024,emigration_by_birth,17260.0,17260,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EL,Greece,2019,emigration_by_birth,111603.0,111603,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EL,Greece,2020,emigration_by_birth,95439.0,95439,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EL,Greece,2021,emigration_by_birth,92775.0,92775,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EL,Greece,2022,emigration_by_birth,91137.0,91137,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EL,Greece,2023,emigration_by_birth,86775.0,86775,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+EL,Greece,2024,emigration_by_birth,78014.0,78014,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+ES,Spain,2019,emigration_by_birth,296248.0,296248,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+ES,Spain,2020,emigration_by_birth,248561.0,248561,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+ES,Spain,2021,emigration_by_birth,696866.0,696866 b,b,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+ES,Spain,2022,emigration_by_birth,531889.0,531889,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+ES,Spain,2023,emigration_by_birth,608695.0,608695,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+ES,Spain,2024,emigration_by_birth,662294.0,662294,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FI,Finland,2019,emigration_by_birth,17263.0,17263,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FI,Finland,2020,emigration_by_birth,15084.0,15084,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FI,Finland,2021,emigration_by_birth,13459.0,13459,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FI,Finland,2022,emigration_by_birth,15635.0,15635,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FI,Finland,2023,emigration_by_birth,15322.0,15322,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FI,Finland,2024,emigration_by_birth,16914.0,16914,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FR,France,2019,emigration_by_birth,259143.0,259143,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FR,France,2020,emigration_by_birth,191893.0,191893,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FR,France,2021,emigration_by_birth,147051.0,147051,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FR,France,2022,emigration_by_birth,279833.0,279833 p,p,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FR,France,2023,emigration_by_birth,266368.0,266368 p,p,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+FR,France,2024,emigration_by_birth,263233.0,263233 p,p,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HR,Croatia,2019,emigration_by_birth,40148.0,40148,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HR,Croatia,2020,emigration_by_birth,34046.0,34046,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HR,Croatia,2021,emigration_by_birth,40424.0,40424,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HR,Croatia,2022,emigration_by_birth,46287.0,46287,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HR,Croatia,2023,emigration_by_birth,39218.0,39218,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HR,Croatia,2024,emigration_by_birth,38997.0,38997,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HU,Hungary,2019,emigration_by_birth,49795.0,49795,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HU,Hungary,2020,emigration_by_birth,67364.0,67364,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HU,Hungary,2021,emigration_by_birth,67999.0,67999,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HU,Hungary,2022,emigration_by_birth,58408.0,58408,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HU,Hungary,2023,emigration_by_birth,71369.0,71369,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+HU,Hungary,2024,emigration_by_birth,84286.0,84286,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IE,Ireland,2019,emigration_by_birth,51410.0,51410,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IE,Ireland,2020,emigration_by_birth,51313.0,51313,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IE,Ireland,2021,emigration_by_birth,53673.0,53673,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IE,Ireland,2022,emigration_by_birth,61133.0,61133,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IE,Ireland,2023,emigration_by_birth,75020.0,75020,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IE,Ireland,2024,emigration_by_birth,58077.0,58077,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IS,Iceland,2019,emigration_by_birth,4590.0,4590,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IS,Iceland,2020,emigration_by_birth,6009.0,6009,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IS,Iceland,2021,emigration_by_birth,4661.0,4661,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IS,Iceland,2022,emigration_by_birth,5091.0,5091,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IS,Iceland,2023,emigration_by_birth,4831.0,4831,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IS,Iceland,2024,emigration_by_birth,5700.0,5700,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IT,Italy,2019,emigration_by_birth,179505.0,179505,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IT,Italy,2020,emigration_by_birth,159884.0,159884,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IT,Italy,2021,emigration_by_birth,158312.0,158312,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IT,Italy,2022,emigration_by_birth,150189.0,150189,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IT,Italy,2023,emigration_by_birth,158438.0,158438,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+IT,Italy,2024,emigration_by_birth,188903.0,188903,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LI,Liechtenstein,2019,emigration_by_birth,446.0,446,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LI,Liechtenstein,2020,emigration_by_birth,432.0,432,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LI,Liechtenstein,2021,emigration_by_birth,516.0,516,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LI,Liechtenstein,2022,emigration_by_birth,480.0,480,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LI,Liechtenstein,2023,emigration_by_birth,460.0,460,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LI,Liechtenstein,2024,emigration_by_birth,467.0,467 b,b,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LT,Lithuania,2019,emigration_by_birth,35441.0,35441,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LT,Lithuania,2020,emigration_by_birth,25245.0,25245,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LT,Lithuania,2021,emigration_by_birth,25205.0,25205,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LT,Lithuania,2022,emigration_by_birth,15270.0,15270,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LT,Lithuania,2023,emigration_by_birth,21688.0,21688,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LT,Lithuania,2024,emigration_by_birth,28705.0,28705,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LU,Luxembourg,2019,emigration_by_birth,15593.0,15593,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LU,Luxembourg,2020,emigration_by_birth,14870.0,14870,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LU,Luxembourg,2021,emigration_by_birth,15959.0,15959,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LU,Luxembourg,2022,emigration_by_birth,17227.0,17227,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LU,Luxembourg,2023,emigration_by_birth,16588.0,16588,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LU,Luxembourg,2024,emigration_by_birth,16444.0,16444,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LV,Latvia,2019,emigration_by_birth,14583.0,14583,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LV,Latvia,2020,emigration_by_birth,11990.0,11990,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LV,Latvia,2021,emigration_by_birth,12975.0,12975,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LV,Latvia,2022,emigration_by_birth,16680.0,16680,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LV,Latvia,2023,emigration_by_birth,18752.0,18752,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+LV,Latvia,2024,emigration_by_birth,18937.0,18937,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MK,North Macedonia,2019,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MK,North Macedonia,2020,emigration_by_birth,1082.0,1082,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MK,North Macedonia,2021,emigration_by_birth,1412.0,1412,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MK,North Macedonia,2022,emigration_by_birth,2374.0,2374,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MK,North Macedonia,2023,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MK,North Macedonia,2024,emigration_by_birth,1711.0,1711,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MT,Malta,2019,emigration_by_birth,8079.0,8079,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MT,Malta,2020,emigration_by_birth,13804.0,13804,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MT,Malta,2021,emigration_by_birth,13146.0,13146,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MT,Malta,2022,emigration_by_birth,13166.0,13166,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MT,Malta,2023,emigration_by_birth,21279.0,21279,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+MT,Malta,2024,emigration_by_birth,23419.0,23419,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NL,Netherlands,2019,emigration_by_birth,107906.0,107906,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NL,Netherlands,2020,emigration_by_birth,102502.0,102502,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NL,Netherlands,2021,emigration_by_birth,110342.0,110342,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NL,Netherlands,2022,emigration_by_birth,109616.0,109616,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NL,Netherlands,2023,emigration_by_birth,123574.0,123574,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NL,Netherlands,2024,emigration_by_birth,140087.0,140087,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NO,Norway,2019,emigration_by_birth,23207.0,23207,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NO,Norway,2020,emigration_by_birth,21447.0,21447,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NO,Norway,2021,emigration_by_birth,34297.0,34297,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NO,Norway,2022,emigration_by_birth,32536.0,32536,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NO,Norway,2023,emigration_by_birth,34011.0,34011,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+NO,Norway,2024,emigration_by_birth,31968.0,31968,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PL,Poland,2019,emigration_by_birth,180594.0,180594 ep,ep,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PL,Poland,2020,emigration_by_birth,161666.0,161666 ep,ep,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PL,Poland,2021,emigration_by_birth,201595.0,201595,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PL,Poland,2022,emigration_by_birth,228006.0,228006,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PL,Poland,2023,emigration_by_birth,194063.0,194063,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PL,Poland,2024,emigration_by_birth,205869.0,205869 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PT,Portugal,2019,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PT,Portugal,2020,emigration_by_birth,25886.0,25886,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PT,Portugal,2021,emigration_by_birth,25079.0,25079,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PT,Portugal,2022,emigration_by_birth,30954.0,30954,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PT,Portugal,2023,emigration_by_birth,33666.0,33666,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+PT,Portugal,2024,emigration_by_birth,33916.0,33916,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+RO,Romania,2019,emigration_by_birth,233736.0,233736 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+RO,Romania,2020,emigration_by_birth,186818.0,186818 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+RO,Romania,2021,emigration_by_birth,216861.0,216861,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+RO,Romania,2022,emigration_by_birth,202311.0,202311 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+RO,Romania,2023,emigration_by_birth,239244.0,239244 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+RO,Romania,2024,emigration_by_birth,215191.0,215191 e,e,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SE,Sweden,2019,emigration_by_birth,47718.0,47718,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SE,Sweden,2020,emigration_by_birth,48937.0,48937,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SE,Sweden,2021,emigration_by_birth,48284.0,48284,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SE,Sweden,2022,emigration_by_birth,50592.0,50592,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SE,Sweden,2023,emigration_by_birth,73434.0,73434,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SE,Sweden,2024,emigration_by_birth,86449.0,86449,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SI,Slovenia,2019,emigration_by_birth,15106.0,15106,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SI,Slovenia,2020,emigration_by_birth,17745.0,17745,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SI,Slovenia,2021,emigration_by_birth,21144.0,21144,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SI,Slovenia,2022,emigration_by_birth,20956.0,20956,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SI,Slovenia,2023,emigration_by_birth,22411.0,22411,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SI,Slovenia,2024,emigration_by_birth,21491.0,21491,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SK,Slovakia,2019,emigration_by_birth,3384.0,3384,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SK,Slovakia,2020,emigration_by_birth,2428.0,2428,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SK,Slovakia,2021,emigration_by_birth,3395.0,3395,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SK,Slovakia,2022,emigration_by_birth,4468.0,4468,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SK,Slovakia,2023,emigration_by_birth,4522.0,4522,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+SK,Slovakia,2024,emigration_by_birth,4425.0,4425,,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+UK,United Kingdom,2019,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+UK,United Kingdom,2020,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+UK,United Kingdom,2021,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+UK,United Kingdom,2022,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+UK,United Kingdom,2023,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+UK,United Kingdom,2024,emigration_by_birth,,:,missing_or_suppressed,migr_emi4ctb,estat_migr_emi4ctb.tsv.gz.tsv,COMPLET,A,TOTAL,c_birth,TOTAL,NR,T
+AT,Austria,2019,immigration_by_previous_residence,109167.0,109167,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+AT,Austria,2020,immigration_by_previous_residence,103565.0,103565,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+AT,Austria,2021,immigration_by_previous_residence,118511.0,118511,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+AT,Austria,2022,immigration_by_previous_residence,201622.0,201622,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+AT,Austria,2023,immigration_by_previous_residence,147591.0,147591,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+AT,Austria,2024,immigration_by_previous_residence,128805.0,128805,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BE,Belgium,2019,immigration_by_previous_residence,150006.0,150006,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BE,Belgium,2020,immigration_by_previous_residence,118683.0,118683,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BE,Belgium,2021,immigration_by_previous_residence,139743.0,139743,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BE,Belgium,2022,immigration_by_previous_residence,208356.0,208356,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BE,Belgium,2023,immigration_by_previous_residence,169609.0,169609,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BE,Belgium,2024,immigration_by_previous_residence,162926.0,162926,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BG,Bulgaria,2019,immigration_by_previous_residence,37929.0,37929,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BG,Bulgaria,2020,immigration_by_previous_residence,37364.0,37364,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BG,Bulgaria,2021,immigration_by_previous_residence,39461.0,39461,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BG,Bulgaria,2022,immigration_by_previous_residence,40619.0,40619,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BG,Bulgaria,2023,immigration_by_previous_residence,56807.0,56807,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+BG,Bulgaria,2024,immigration_by_previous_residence,52189.0,52189,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CH,Switzerland,2019,immigration_by_previous_residence,145129.0,145129,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CH,Switzerland,2020,immigration_by_previous_residence,138778.0,138778,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CH,Switzerland,2021,immigration_by_previous_residence,144907.0,144907,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CH,Switzerland,2022,immigration_by_previous_residence,167079.0,167079,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CH,Switzerland,2023,immigration_by_previous_residence,263081.0,263081,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CH,Switzerland,2024,immigration_by_previous_residence,212578.0,212578,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CY,Cyprus,2019,immigration_by_previous_residence,27553.0,27553,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CY,Cyprus,2020,immigration_by_previous_residence,22850.0,22850,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CY,Cyprus,2021,immigration_by_previous_residence,25473.0,25473,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CY,Cyprus,2022,immigration_by_previous_residence,37558.0,37558,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CY,Cyprus,2023,immigration_by_previous_residence,40761.0,40761,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CY,Cyprus,2024,immigration_by_previous_residence,40471.0,40471,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CZ,Czechia,2019,immigration_by_previous_residence,105888.0,105888,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CZ,Czechia,2020,immigration_by_previous_residence,63095.0,63095,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CZ,Czechia,2021,immigration_by_previous_residence,69360.0,69360,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CZ,Czechia,2022,immigration_by_previous_residence,347429.0,347429,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CZ,Czechia,2023,immigration_by_previous_residence,142149.0,142149,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+CZ,Czechia,2024,immigration_by_previous_residence,123910.0,123910,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DE,Germany,2019,immigration_by_previous_residence,834338.0,834338 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DE,Germany,2020,immigration_by_previous_residence,666639.0,666639 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DE,Germany,2021,immigration_by_previous_residence,801361.0,801361 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DE,Germany,2022,immigration_by_previous_residence,1977121.0,1977121 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DE,Germany,2023,immigration_by_previous_residence,1303251.0,1303251 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DE,Germany,2024,immigration_by_previous_residence,1078504.0,1078504 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DK,Denmark,2019,immigration_by_previous_residence,61384.0,61384,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DK,Denmark,2020,immigration_by_previous_residence,57230.0,57230,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DK,Denmark,2021,immigration_by_previous_residence,63489.0,63489,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DK,Denmark,2022,immigration_by_previous_residence,121183.0,121183,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DK,Denmark,2023,immigration_by_previous_residence,98344.0,98344,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+DK,Denmark,2024,immigration_by_previous_residence,101724.0,101724,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EE,Estonia,2019,immigration_by_previous_residence,18259.0,18259,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EE,Estonia,2020,immigration_by_previous_residence,16209.0,16209,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EE,Estonia,2021,immigration_by_previous_residence,19524.0,19524,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EE,Estonia,2022,immigration_by_previous_residence,49414.0,49414,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EE,Estonia,2023,immigration_by_previous_residence,26399.0,26399,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EE,Estonia,2024,immigration_by_previous_residence,18634.0,18634,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EL,Greece,2019,immigration_by_previous_residence,129459.0,129459,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EL,Greece,2020,immigration_by_previous_residence,84221.0,84221,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EL,Greece,2021,immigration_by_previous_residence,57120.0,57120,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EL,Greece,2022,immigration_by_previous_residence,95374.0,95374,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EL,Greece,2023,immigration_by_previous_residence,116591.0,116591,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+EL,Greece,2024,immigration_by_previous_residence,132149.0,132149,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+ES,Spain,2019,immigration_by_previous_residence,750480.0,750480,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+ES,Spain,2020,immigration_by_previous_residence,467918.0,467918,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+ES,Spain,2021,immigration_by_previous_residence,887960.0,887960 b,b,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+ES,Spain,2022,immigration_by_previous_residence,1258894.0,1258894,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+ES,Spain,2023,immigration_by_previous_residence,1250991.0,1250991,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+ES,Spain,2024,immigration_by_previous_residence,1288562.0,1288562,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FI,Finland,2019,immigration_by_previous_residence,32758.0,32758,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FI,Finland,2020,immigration_by_previous_residence,32898.0,32898,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FI,Finland,2021,immigration_by_previous_residence,36364.0,36364,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FI,Finland,2022,immigration_by_previous_residence,49998.0,49998,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FI,Finland,2023,immigration_by_previous_residence,73236.0,73236,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FI,Finland,2024,immigration_by_previous_residence,63965.0,63965,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FR,France,2019,immigration_by_previous_residence,385596.0,385596,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FR,France,2020,immigration_by_previous_residence,331137.0,331137,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FR,France,2021,immigration_by_previous_residence,388513.0,388513,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FR,France,2022,immigration_by_previous_residence,490655.0,490655 p,p,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FR,France,2023,immigration_by_previous_residence,467548.0,467548 p,p,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+FR,France,2024,immigration_by_previous_residence,438626.0,438626 p,p,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HR,Croatia,2019,immigration_by_previous_residence,37726.0,37726,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HR,Croatia,2020,immigration_by_previous_residence,33414.0,33414,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HR,Croatia,2021,immigration_by_previous_residence,35912.0,35912,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HR,Croatia,2022,immigration_by_previous_residence,57972.0,57972,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HR,Croatia,2023,immigration_by_previous_residence,69396.0,69396,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HR,Croatia,2024,immigration_by_previous_residence,70391.0,70391,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HU,Hungary,2019,immigration_by_previous_residence,88581.0,88581,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HU,Hungary,2020,immigration_by_previous_residence,75470.0,75470,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HU,Hungary,2021,immigration_by_previous_residence,80471.0,80471,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HU,Hungary,2022,immigration_by_previous_residence,94148.0,94148,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HU,Hungary,2023,immigration_by_previous_residence,96192.0,96192,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+HU,Hungary,2024,immigration_by_previous_residence,88418.0,88418,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IE,Ireland,2019,immigration_by_previous_residence,96321.0,96321,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IE,Ireland,2020,immigration_by_previous_residence,81918.0,81918,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IE,Ireland,2021,immigration_by_previous_residence,83770.0,83770,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IE,Ireland,2022,immigration_by_previous_residence,157537.0,157537,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IE,Ireland,2023,immigration_by_previous_residence,135617.0,135617,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IE,Ireland,2024,immigration_by_previous_residence,127664.0,127664,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IS,Iceland,2019,immigration_by_previous_residence,9872.0,9872,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IS,Iceland,2020,immigration_by_previous_residence,8544.0,8544,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IS,Iceland,2021,immigration_by_previous_residence,8996.0,8996,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IS,Iceland,2022,immigration_by_previous_residence,14878.0,14878,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IS,Iceland,2023,immigration_by_previous_residence,11235.0,11235,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IS,Iceland,2024,immigration_by_previous_residence,9946.0,9946,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IT,Italy,2019,immigration_by_previous_residence,332778.0,332778,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IT,Italy,2020,immigration_by_previous_residence,247526.0,247526,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IT,Italy,2021,immigration_by_previous_residence,318366.0,318366,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IT,Italy,2022,immigration_by_previous_residence,410985.0,410985,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IT,Italy,2023,immigration_by_previous_residence,439658.0,439658,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+IT,Italy,2024,immigration_by_previous_residence,451583.0,451583,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LI,Liechtenstein,2019,immigration_by_previous_residence,727.0,727,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LI,Liechtenstein,2020,immigration_by_previous_residence,713.0,713,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LI,Liechtenstein,2021,immigration_by_previous_residence,669.0,669,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LI,Liechtenstein,2022,immigration_by_previous_residence,770.0,770,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LI,Liechtenstein,2023,immigration_by_previous_residence,716.0,716,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LI,Liechtenstein,2024,immigration_by_previous_residence,1300.0,1300,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LT,Lithuania,2019,immigration_by_previous_residence,46526.0,46526,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LT,Lithuania,2020,immigration_by_previous_residence,46020.0,46020,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LT,Lithuania,2021,immigration_by_previous_residence,44858.0,44858,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LT,Lithuania,2022,immigration_by_previous_residence,87367.0,87367,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LT,Lithuania,2023,immigration_by_previous_residence,66682.0,66682,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LT,Lithuania,2024,immigration_by_previous_residence,51845.0,51845,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LU,Luxembourg,2019,immigration_by_previous_residence,26668.0,26668,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LU,Luxembourg,2020,immigration_by_previous_residence,22490.0,22490,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LU,Luxembourg,2021,immigration_by_previous_residence,25335.0,25335,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LU,Luxembourg,2022,immigration_by_previous_residence,31433.0,31433,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LU,Luxembourg,2023,immigration_by_previous_residence,26964.0,26964,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LU,Luxembourg,2024,immigration_by_previous_residence,25725.0,25725,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LV,Latvia,2019,immigration_by_previous_residence,11223.0,11223,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LV,Latvia,2020,immigration_by_previous_residence,8840.0,8840,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LV,Latvia,2021,immigration_by_previous_residence,12689.0,12689,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LV,Latvia,2022,immigration_by_previous_residence,38708.0,38708,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LV,Latvia,2023,immigration_by_previous_residence,15629.0,15629,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+LV,Latvia,2024,immigration_by_previous_residence,14701.0,14701,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MK,North Macedonia,2019,immigration_by_previous_residence,,:,missing_or_suppressed,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MK,North Macedonia,2020,immigration_by_previous_residence,2555.0,2555,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MK,North Macedonia,2021,immigration_by_previous_residence,1570.0,1570,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MK,North Macedonia,2022,immigration_by_previous_residence,2452.0,2452,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MK,North Macedonia,2023,immigration_by_previous_residence,,:,missing_or_suppressed,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MK,North Macedonia,2024,immigration_by_previous_residence,7458.0,7458,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MT,Malta,2019,immigration_by_previous_residence,29304.0,29304,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MT,Malta,2020,immigration_by_previous_residence,14751.0,14751,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MT,Malta,2021,immigration_by_previous_residence,16963.0,16963,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MT,Malta,2022,immigration_by_previous_residence,34964.0,34964,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MT,Malta,2023,immigration_by_previous_residence,42239.0,42239,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+MT,Malta,2024,immigration_by_previous_residence,34033.0,34033,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NL,Netherlands,2019,immigration_by_previous_residence,215756.0,215756,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NL,Netherlands,2020,immigration_by_previous_residence,182244.0,182244,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NL,Netherlands,2021,immigration_by_previous_residence,214105.0,214105,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NL,Netherlands,2022,immigration_by_previous_residence,326798.0,326798,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NL,Netherlands,2023,immigration_by_previous_residence,274597.0,274597,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NL,Netherlands,2024,immigration_by_previous_residence,257714.0,257714,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NO,Norway,2019,immigration_by_previous_residence,48680.0,48680,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NO,Norway,2020,immigration_by_previous_residence,36287.0,36287,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NO,Norway,2021,immigration_by_previous_residence,53947.0,53947,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NO,Norway,2022,immigration_by_previous_residence,90475.0,90475,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NO,Norway,2023,immigration_by_previous_residence,86589.0,86589,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+NO,Norway,2024,immigration_by_previous_residence,66077.0,66077,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PL,Poland,2019,immigration_by_previous_residence,226649.0,226649 ep,ep,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PL,Poland,2020,immigration_by_previous_residence,210615.0,210615 ep,ep,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PL,Poland,2021,immigration_by_previous_residence,241116.0,241116,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PL,Poland,2022,immigration_by_previous_residence,275515.0,275515 p,p,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PL,Poland,2023,immigration_by_previous_residence,303275.0,303275 p,p,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PL,Poland,2024,immigration_by_previous_residence,300496.0,300496 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PT,Portugal,2019,immigration_by_previous_residence,95382.0,95382,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PT,Portugal,2020,immigration_by_previous_residence,83654.0,83654,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PT,Portugal,2021,immigration_by_previous_residence,97119.0,97119,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PT,Portugal,2022,immigration_by_previous_residence,167098.0,167098,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PT,Portugal,2023,immigration_by_previous_residence,189367.0,189367,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+PT,Portugal,2024,immigration_by_previous_residence,,:,missing_or_suppressed,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+RO,Romania,2019,immigration_by_previous_residence,202422.0,202422 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+RO,Romania,2020,immigration_by_previous_residence,145519.0,145519 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+RO,Romania,2021,immigration_by_previous_residence,194642.0,194642,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+RO,Romania,2022,immigration_by_previous_residence,293024.0,293024 e,e,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+RO,Romania,2023,immigration_by_previous_residence,324091.0,324091,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+RO,Romania,2024,immigration_by_previous_residence,286538.0,286538,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SE,Sweden,2019,immigration_by_previous_residence,115805.0,115805,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SE,Sweden,2020,immigration_by_previous_residence,82518.0,82518,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SE,Sweden,2021,immigration_by_previous_residence,90631.0,90631,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SE,Sweden,2022,immigration_by_previous_residence,102436.0,102436,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SE,Sweden,2023,immigration_by_previous_residence,94514.0,94514,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SE,Sweden,2024,immigration_by_previous_residence,116197.0,116197,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SI,Slovenia,2019,immigration_by_previous_residence,31319.0,31319 be,be,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SI,Slovenia,2020,immigration_by_previous_residence,36110.0,36110,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SI,Slovenia,2021,immigration_by_previous_residence,23624.0,23624,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SI,Slovenia,2022,immigration_by_previous_residence,35613.0,35613,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SI,Slovenia,2023,immigration_by_previous_residence,33939.0,33939,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SI,Slovenia,2024,immigration_by_previous_residence,33023.0,33023,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SK,Slovakia,2019,immigration_by_previous_residence,7016.0,7016 p,p,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SK,Slovakia,2020,immigration_by_previous_residence,6775.0,6775 p,p,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SK,Slovakia,2021,immigration_by_previous_residence,5733.0,5733,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SK,Slovakia,2022,immigration_by_previous_residence,5463.0,5463,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SK,Slovakia,2023,immigration_by_previous_residence,5923.0,5923,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+SK,Slovakia,2024,immigration_by_previous_residence,6824.0,6824,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+UK,United Kingdom,2019,immigration_by_previous_residence,680906.0,680906,,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+UK,United Kingdom,2020,immigration_by_previous_residence,,:,missing_or_suppressed,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+UK,United Kingdom,2021,immigration_by_previous_residence,,:,missing_or_suppressed,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+UK,United Kingdom,2022,immigration_by_previous_residence,,:,missing_or_suppressed,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+UK,United Kingdom,2023,immigration_by_previous_residence,,:,missing_or_suppressed,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T
+UK,United Kingdom,2024,immigration_by_previous_residence,,:,missing_or_suppressed,migr_imm5prv,estat_migr_imm5prv.tsv.gz.tsv,COMPLET,A,TOTAL,partner,TOTAL,NR,T

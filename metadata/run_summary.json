@@ -1,0 +1,156 @@
+{
+  "run_date": "2026-10-12",
+  "target_destinations_in_panel": 21,
+  "panel_rows": 756,
+  "panel_years": [
+    1990,
+    2025
+  ],
+  "panel_data_note": "Rows span every year 1990-2025; source observations remain sparse and missing years are explicitly flagged.",
+  "un_stock_observations_in_panel": 160,
+  "ilo_5wap_observations_in_panel": 228,
+  "ilo_dwap_observations_in_panel": 696,
+  "programme_outcomes_observations": 0,
+  "programme_outcomes_template_columns": 29,
+  "policy_events_logged": 12,
+  "equal_weight_baseline_score": "Not computed: comparable salary/net income, relevant jobs, costs, programme outcomes, visa, sponsorship and settlement indicators remain incomplete.",
+  "fitted_model": "Not fitted; no labelled personal Tech-MBA-to-sponsored-employment-to-settlement outcomes.",
+  "backtest": "Not run; insufficient comparable pathway outcomes.",
+  "model_status": "EOM remains a conceptual baseline for this personal pathway. Its normalized energy parameters and Gibbs-style choice probabilities are uncalibrated for Tech-MBA-to-sponsored-employment-to-settlement outcomes.",
+  "critical_caveats": [
+    "General migrant stock is not a migration flow or personal success probability.",
+    "ILOSTAT labour-force participation is a macro proxy, not technology vacancy demand.",
+    "5WAP and DWAP indicators are stored separately because standards/definitions differ.",
+    "Scotland/Edinburgh are not separately covered in these national datasets.",
+    "Policy proposals are logged as scenario risks, not treated as enacted law."
+  ],
+  "new_policy_events_this_run": [
+    "UK Home Office Student sponsor compliance guidance updated 2026-10-09; core thresholds unchanged but RAG/enforcement and calculation clarifications added",
+    "UK international-offer withdrawal/visa-application withdrawal risk reported by Financial Times on 2026-10-11; secondary-source signal, India-specific impact not measured",
+    "Verified official Australian Student visa application/family-member rule changes effective 2026-10-02; added explicit policy event (Home Affairs page checked 2026-10-12)",
+    "Verified UKVI Student sponsor guidance and sponsor register update dated 2026-10-09; added provider due-diligence signal, not a claim of a national rule change"
+  ],
+  "operational_indicator_snapshots_added": 2,
+  "new_indicator": "Ireland employment-permit processing-date frontier, compared 2026-10-06 vs 2026-10-08",
+  "historical_provider_risk_cases_added": 1,
+  "data_quality_audit_rows": 63,
+  "indicator_coverage_summary": [
+    {
+      "indicator_column": "un_migrant_stock_destination",
+      "indicator_definition": "UN migrant stock by destination",
+      "unit": "persons",
+      "expected_rows": 756,
+      "observed_rows": 160,
+      "missing_rows": 596,
+      "coverage_pct": 21.16,
+      "distinct_destinations_with_any_value": 20,
+      "destinations_total": 21,
+      "note": "Not an annual flow, job measure, or personal probability"
+    },
+    {
+      "indicator_column": "ilo_5wap_lfpr_15plus_total_pct",
+      "indicator_definition": "Labour-force participation rate, 15+, total, 19th ICLS series",
+      "unit": "percent",
+      "expected_rows": 756,
+      "observed_rows": 228,
+      "missing_rows": 528,
+      "coverage_pct": 30.16,
+      "distinct_destinations_with_any_value": 19,
+      "destinations_total": 21,
+      "note": "Macro labour-supply proxy; not tech vacancies or graduate employment"
+    },
+    {
+      "indicator_column": "ilo_dwap_lfpr_15plus_total_pct",
+      "indicator_definition": "Labour-force participation rate, 15+, total, legacy/alternate series",
+      "unit": "percent",
+      "expected_rows": 756,
+      "observed_rows": 696,
+      "missing_rows": 60,
+      "coverage_pct": 92.06,
+      "distinct_destinations_with_any_value": 20,
+      "destinations_total": 21,
+      "note": "Kept separate from 5WAP; definitions/standards may differ"
+    }
+  ],
+  "operational_indicator_snapshots_added_this_run": 0,
+  "operational_indicator_snapshot_note": "Ireland processing-date frontier has not been re-fetched beyond the 2026-10-08 snapshot in this run; no newer observation claimed.",
+  "ranking_change": "No numerical EOM ranking produced; country-level migration flows added as contextual outcomes, but programme-specific employment/sponsorship/settlement data remain unavailable.",
+  "pipeline_work_completed_this_run": [
+    "Audited completeness for all 756 destination-year rows across three existing indicators, producing a 63-row destination-by-indicator audit with observed/missing counts and coverage percentages.",
+    "Added current UK sponsor compliance guidance, one official sponsor-licence revocation case, and a clearly flagged secondary-source admissions-risk report to the policy evidence log and source registry.",
+    "No new macroeconomic or programme-outcome raw observations were downloaded; no data are imputed or invented.",
+    "Decoded and applied Eurostat total-dimension selection for immigration by country of birth, emigration, and immigration by citizenship; selected total rows rather than summing categories.",
+    "Merged three selected Eurostat flow indicators into the destination-year panel without interpolation; added missingness flags, a long-format selected extract, and an aggregation audit.",
+    "Added official INSEAD and HEC Paris Class of 2025 MBA employment outcomes as separate benchmark records, explicitly flagged as not Tech-MBA-, Indian-cohort-, sponsorship-, or settlement-specific."
+  ],
+  "rerun_version": "2026-10-12-rerun-2",
+  "eurostat_extracts_staged": 9,
+  "eurostat_selected_disaggregated_rows": 1137735,
+  "eurostat_integration_status": "Staged metadata and ingestion audit only; no country-year aggregation performed because dimension categories must be decoded and total rows selected to avoid double counting.",
+  "eurostat_integration": {
+    "datasets_used_for_country_year_panel": [
+      "migr_imm3ctb",
+      "migr_emi2",
+      "migr_imm2ctz"
+    ],
+    "selection_rule": "Official total dimensions selected (age=TOTAL, sex=T, and c_birth=TOTAL or citizen=TOTAL as applicable); no summing across disaggregated categories; where both age definitions appear, prefer COMPLET and otherwise retain REACH.",
+    "merged_panel_columns": [
+      "eurostat_immigration_total_by_birth_flow_persons",
+      "eurostat_emigration_total_flow_persons",
+      "eurostat_immigration_total_by_citizenship_flow_persons"
+    ],
+    "rows_in_long_selected_extract": 576,
+    "panel_rows_after_merge": 756,
+    "panel_rows_with_any_new_eurostat_indicator": 58,
+    "caveat": "Eurostat data were uploaded by the user and processed locally; they were not newly downloaded live. Values remain missing where source data are absent/suppressed. National migration flows are contextual macro outcomes, not MBA pathway success."
+  },
+  "programme_outcomes_benchmarks": {
+    "official_public_benchmark_rows": 3,
+    "programme_specific_tech_mba_outcome_rows": 0,
+    "note": "INSEAD and HEC Paris MBA figures are official school-reported benchmarks, not comparable enough for direct ranking and not evidence of visa sponsorship/settlement. Tech-MBA pathway outcome template remains empty."
+  },
+  "latest_update": {
+    "date": "2026-10-12",
+    "additional_datasets": {
+      "migr_emi4ctb": {
+        "source_rows": 904579,
+        "selected_rows": 192,
+        "observed_values": 184,
+        "years": [
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "destinations": 32
+      },
+      "migr_imm5prv": {
+        "source_rows": 1007661,
+        "selected_rows": 192,
+        "observed_values": 186,
+        "years": [
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "destinations": 32
+      }
+    },
+    "new_indicators": [
+      "emigration_by_birth",
+      "immigration_by_previous_residence"
+    ],
+    "panel_rows": 756,
+    "panel_destinations": 21,
+    "panel_year_range": [
+      1990,
+      2025
+    ]
+  },
+  "ranking_status": "No calibrated EOM model or numerical destination ranking generated; programme-level Tech-MBA outcomes remain insufficient."
+}

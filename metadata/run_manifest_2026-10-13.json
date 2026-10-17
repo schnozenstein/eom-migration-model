@@ -1,0 +1,35 @@
+{
+  "run_date": "2026-10-13",
+  "run_type": "Study Visa Policy Watch + EOM empirical pipeline",
+  "policy_rows_before": 14,
+  "policy_rows_after": 17,
+  "operational_snapshot_rows_before": 2,
+  "operational_snapshot_rows_after": 8,
+  "source_registry_rows_after": 6,
+  "historical_panel_modified": false,
+  "reason_panel_not_modified": "UK data are rolling 12-month windows ending September 2026, not calendar-year annual observations; inserting as annual country-year values would break comparability.",
+  "equal_weight_baseline_recalculated": false,
+  "fitted_model_or_backtest_run": false,
+  "ranking_changed": false,
+  "files_updated": [
+    "data/policy_evidence_log.csv",
+    "data/operational_indicators_snapshot.csv",
+    "metadata/source_registry.csv",
+    "DAILY_REPORT_2026-10-13.md"
+  ],
+  "model_status": "Personal Tech-MBA EOM remains uncalibrated; no unsupported numerical energy changes or ranking were made.",
+  "scope_correction": "General EOM migration model is primary; Tech MBA is optional parameterized scenario only.",
+  "architecture_changes_completed": [
+    "Added prediction ledger template",
+    "Added observed outcome ledger template",
+    "Added chronological evaluation-run template",
+    "Added causal evaluation register template",
+    "Added model version registry marking current state conceptual/unfitted",
+    "Added origin-destination-year panel template",
+    "Added coverage and status JSON with observed row counts",
+    "Added general model architecture amendment document"
+  ],
+  "model_fitting_or_backtesting_performed": false,
+  "causal_effect_estimated": false,
+  "model_calibrated_or_validated": false
+}

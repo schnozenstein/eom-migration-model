@@ -1,0 +1,961 @@
+destination,year,indicator,value,source_dataset,selection_rule
+Austria,2019,emigration,68280.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2019,emigration_by_birth,68280.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2019,immigration_by_birth,109167.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2019,immigration_by_citizenship,109167.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2019,immigration_by_previous_residence,109167.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2020,emigration,62581.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2020,emigration_by_birth,62581.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2020,immigration_by_birth,103565.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2020,immigration_by_citizenship,103565.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2020,immigration_by_previous_residence,103565.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2021,emigration,67299.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2021,emigration_by_birth,67299.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2021,immigration_by_birth,118511.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2021,immigration_by_citizenship,118511.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2021,immigration_by_previous_residence,118511.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2022,emigration,74271.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2022,emigration_by_birth,74271.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2022,immigration_by_birth,201622.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2022,immigration_by_citizenship,201622.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2022,immigration_by_previous_residence,201622.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2023,emigration,74036.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2023,emigration_by_birth,74036.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2023,immigration_by_birth,147591.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2023,immigration_by_citizenship,147591.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2023,immigration_by_previous_residence,147591.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2024,emigration,81477.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2024,emigration_by_birth,81477.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Austria,2024,immigration_by_birth,128805.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2024,immigration_by_citizenship,128805.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Austria,2024,immigration_by_previous_residence,128805.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2019,emigration,102936.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2019,emigration_by_birth,102936.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2019,immigration_by_birth,150006.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2019,immigration_by_citizenship,150006.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2019,immigration_by_previous_residence,150006.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2020,emigration,76562.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2020,emigration_by_birth,76562.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2020,immigration_by_birth,118683.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2020,immigration_by_citizenship,118683.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2020,immigration_by_previous_residence,118683.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2021,emigration,87272.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2021,emigration_by_birth,87272.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2021,immigration_by_birth,139743.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2021,immigration_by_citizenship,139743.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2021,immigration_by_previous_residence,139743.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2022,emigration,84627.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2022,emigration_by_birth,84627.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2022,immigration_by_birth,208356.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2022,immigration_by_citizenship,208356.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2022,immigration_by_previous_residence,208356.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2023,emigration,96071.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2023,emigration_by_birth,96071.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2023,immigration_by_birth,169609.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2023,immigration_by_citizenship,169609.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2023,immigration_by_previous_residence,169609.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2024,emigration,100100.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2024,emigration_by_birth,100100.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Belgium,2024,immigration_by_birth,162926.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2024,immigration_by_citizenship,162926.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Belgium,2024,immigration_by_previous_residence,162926.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2019,emigration,39941.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2019,emigration_by_birth,39941.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2019,immigration_by_birth,37929.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2019,immigration_by_citizenship,37929.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2019,immigration_by_previous_residence,37929.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2020,emigration,6649.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2020,emigration_by_birth,6649.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2020,immigration_by_birth,37364.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2020,immigration_by_citizenship,37364.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2020,immigration_by_previous_residence,37364.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2021,emigration,26755.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2021,emigration_by_birth,26755.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2021,immigration_by_birth,39461.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2021,immigration_by_citizenship,39461.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2021,immigration_by_previous_residence,39461.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2022,emigration,13175.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2022,emigration_by_birth,13175.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2022,immigration_by_birth,40619.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2022,immigration_by_citizenship,40619.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2022,immigration_by_previous_residence,40619.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2023,emigration,15227.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2023,emigration_by_birth,15227.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2023,immigration_by_birth,56807.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2023,immigration_by_citizenship,56807.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2023,immigration_by_previous_residence,56807.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2024,emigration,13002.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2024,emigration_by_birth,13002.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Bulgaria,2024,immigration_by_birth,52189.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2024,immigration_by_citizenship,52189.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Bulgaria,2024,immigration_by_previous_residence,52189.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2019,emigration,40148.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2019,emigration_by_birth,40148.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2019,immigration_by_birth,37726.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2019,immigration_by_citizenship,37726.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2019,immigration_by_previous_residence,37726.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2020,emigration,34046.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2020,emigration_by_birth,34046.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2020,immigration_by_birth,33414.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2020,immigration_by_citizenship,33414.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2020,immigration_by_previous_residence,33414.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2021,emigration,40424.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2021,emigration_by_birth,40424.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2021,immigration_by_birth,35912.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2021,immigration_by_citizenship,35912.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2021,immigration_by_previous_residence,35912.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2022,emigration,46287.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2022,emigration_by_birth,46287.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2022,immigration_by_birth,57972.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2022,immigration_by_citizenship,57972.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2022,immigration_by_previous_residence,57972.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2023,emigration,39218.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2023,emigration_by_birth,39218.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2023,immigration_by_birth,69396.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2023,immigration_by_citizenship,69396.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2023,immigration_by_previous_residence,69396.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2024,emigration,38997.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2024,emigration_by_birth,38997.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Croatia,2024,immigration_by_birth,70391.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2024,immigration_by_citizenship,70391.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Croatia,2024,immigration_by_previous_residence,70391.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2019,emigration,18598.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2019,emigration_by_birth,18598.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2019,immigration_by_birth,27553.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2019,immigration_by_citizenship,27553.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2019,immigration_by_previous_residence,27553.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2020,emigration,14200.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2020,emigration_by_birth,14200.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2020,immigration_by_birth,22850.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2020,immigration_by_citizenship,22850.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2020,immigration_by_previous_residence,22850.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2021,emigration,13244.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2021,emigration_by_birth,13244.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2021,immigration_by_birth,25473.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2021,immigration_by_citizenship,25473.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2021,immigration_by_previous_residence,25473.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2022,emigration,21118.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2022,emigration_by_birth,21118.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2022,immigration_by_birth,37558.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2022,immigration_by_citizenship,37558.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2022,immigration_by_previous_residence,37558.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2023,emigration,26979.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2023,emigration_by_birth,26979.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2023,immigration_by_birth,40761.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2023,immigration_by_citizenship,40761.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2023,immigration_by_previous_residence,40761.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2024,emigration,26883.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2024,emigration_by_birth,26883.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Cyprus,2024,immigration_by_birth,40471.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2024,immigration_by_citizenship,40471.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Cyprus,2024,immigration_by_previous_residence,40471.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2019,emigration,77798.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2019,emigration_by_birth,,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2019,immigration_by_birth,105888.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2019,immigration_by_citizenship,105888.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2019,immigration_by_previous_residence,105888.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2020,emigration,35854.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2020,emigration_by_birth,35854.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2020,immigration_by_birth,63095.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2020,immigration_by_citizenship,63095.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2020,immigration_by_previous_residence,63095.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2021,emigration,18630.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2021,emigration_by_birth,18630.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2021,immigration_by_birth,69360.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2021,immigration_by_citizenship,69360.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2021,immigration_by_previous_residence,69360.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2022,emigration,31764.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2022,emigration_by_birth,31764.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2022,immigration_by_birth,347429.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2022,immigration_by_citizenship,347429.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2022,immigration_by_previous_residence,347429.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2023,emigration,53639.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2023,emigration_by_birth,53639.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2023,immigration_by_birth,142149.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2023,immigration_by_citizenship,142149.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2023,immigration_by_previous_residence,142149.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2024,emigration,88379.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2024,emigration_by_birth,88379.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Czechia,2024,immigration_by_birth,123910.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2024,immigration_by_citizenship,123910.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Czechia,2024,immigration_by_previous_residence,123910.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2019,emigration,66520.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2019,emigration_by_birth,66520.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2019,immigration_by_birth,61384.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2019,immigration_by_citizenship,61384.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2019,immigration_by_previous_residence,61384.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2020,emigration,53822.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2020,emigration_by_birth,53822.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2020,immigration_by_birth,57230.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2020,immigration_by_citizenship,57230.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2020,immigration_by_previous_residence,57230.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2021,emigration,44008.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2021,emigration_by_birth,44008.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2021,immigration_by_birth,63489.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2021,immigration_by_citizenship,63489.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2021,immigration_by_previous_residence,63489.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2022,emigration,62927.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2022,emigration_by_birth,62927.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2022,immigration_by_birth,121183.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2022,immigration_by_citizenship,121183.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2022,immigration_by_previous_residence,121183.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2023,emigration,68172.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2023,emigration_by_birth,68172.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2023,immigration_by_birth,98344.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2023,immigration_by_citizenship,98344.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2023,immigration_by_previous_residence,98344.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2024,emigration,69467.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2024,emigration_by_birth,69467.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Denmark,2024,immigration_by_birth,101724.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2024,immigration_by_citizenship,101724.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Denmark,2024,immigration_by_previous_residence,101724.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2019,emigration,12801.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2019,emigration_by_birth,12801.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2019,immigration_by_birth,18259.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2019,immigration_by_citizenship,18259.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2019,immigration_by_previous_residence,18259.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2020,emigration,12427.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2020,emigration_by_birth,12427.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2020,immigration_by_birth,16209.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2020,immigration_by_citizenship,16209.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2020,immigration_by_previous_residence,16209.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2021,emigration,12481.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2021,emigration_by_birth,12481.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2021,immigration_by_birth,19524.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2021,immigration_by_citizenship,19524.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2021,immigration_by_previous_residence,19524.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2022,emigration,9657.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2022,emigration_by_birth,9657.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2022,immigration_by_birth,49414.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2022,immigration_by_citizenship,49414.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2022,immigration_by_previous_residence,49414.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2023,emigration,12543.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2023,emigration_by_birth,12543.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2023,immigration_by_birth,26399.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2023,immigration_by_citizenship,26399.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2023,immigration_by_previous_residence,26399.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2024,emigration,17260.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2024,emigration_by_birth,17260.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Estonia,2024,immigration_by_birth,18634.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2024,immigration_by_citizenship,18634.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Estonia,2024,immigration_by_previous_residence,18634.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2019,emigration,17263.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2019,emigration_by_birth,17263.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2019,immigration_by_birth,32758.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2019,immigration_by_citizenship,32758.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2019,immigration_by_previous_residence,32758.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2020,emigration,15084.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2020,emigration_by_birth,15084.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2020,immigration_by_birth,32898.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2020,immigration_by_citizenship,32898.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2020,immigration_by_previous_residence,32898.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2021,emigration,13459.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2021,emigration_by_birth,13459.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2021,immigration_by_birth,36364.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2021,immigration_by_citizenship,36364.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2021,immigration_by_previous_residence,36364.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2022,emigration,15635.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2022,emigration_by_birth,15635.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2022,immigration_by_birth,49998.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2022,immigration_by_citizenship,49998.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2022,immigration_by_previous_residence,49998.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2023,emigration,15322.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2023,emigration_by_birth,15322.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2023,immigration_by_birth,73236.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2023,immigration_by_citizenship,73236.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2023,immigration_by_previous_residence,73236.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2024,emigration,16914.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2024,emigration_by_birth,16914.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Finland,2024,immigration_by_birth,63965.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2024,immigration_by_citizenship,63965.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Finland,2024,immigration_by_previous_residence,63965.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2019,emigration,259143.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2019,emigration_by_birth,259143.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2019,immigration_by_birth,385596.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2019,immigration_by_citizenship,385596.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2019,immigration_by_previous_residence,385596.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2020,emigration,191893.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2020,emigration_by_birth,191893.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2020,immigration_by_birth,331137.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2020,immigration_by_citizenship,331137.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2020,immigration_by_previous_residence,331137.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2021,emigration,147051.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2021,emigration_by_birth,147051.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2021,immigration_by_birth,388513.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2021,immigration_by_citizenship,388513.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2021,immigration_by_previous_residence,388513.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2022,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2022,emigration_by_birth,279833.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2022,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2022,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2022,immigration_by_previous_residence,490655.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2023,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2023,emigration_by_birth,266368.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2023,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2023,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2023,immigration_by_previous_residence,467548.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2024,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2024,emigration_by_birth,263233.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+France,2024,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2024,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+France,2024,immigration_by_previous_residence,438626.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2019,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2019,emigration_by_birth,496613.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2019,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2019,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2019,immigration_by_previous_residence,834338.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2020,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2020,emigration_by_birth,404026.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2020,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2020,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2020,immigration_by_previous_residence,666639.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2021,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2021,emigration_by_birth,458574.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2021,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2021,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2021,immigration_by_previous_residence,801361.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2022,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2022,emigration_by_birth,452713.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2022,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2022,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2022,immigration_by_previous_residence,1977121.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2023,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2023,emigration_by_birth,580499.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2023,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2023,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2023,immigration_by_previous_residence,1303251.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2024,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2024,emigration_by_birth,584230.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Germany,2024,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2024,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Germany,2024,immigration_by_previous_residence,1078504.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2019,emigration,111603.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2019,emigration_by_birth,111603.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2019,immigration_by_birth,129459.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2019,immigration_by_citizenship,129459.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2019,immigration_by_previous_residence,129459.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2020,emigration,95439.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2020,emigration_by_birth,95439.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2020,immigration_by_birth,84221.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2020,immigration_by_citizenship,84221.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2020,immigration_by_previous_residence,84221.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2021,emigration,92775.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2021,emigration_by_birth,92775.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2021,immigration_by_birth,57120.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2021,immigration_by_citizenship,57120.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2021,immigration_by_previous_residence,57120.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2022,emigration,91137.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2022,emigration_by_birth,91137.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2022,immigration_by_birth,95374.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2022,immigration_by_citizenship,95374.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2022,immigration_by_previous_residence,95374.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2023,emigration,86775.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2023,emigration_by_birth,86775.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2023,immigration_by_birth,116591.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2023,immigration_by_citizenship,116591.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2023,immigration_by_previous_residence,116591.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2024,emigration,78014.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2024,emigration_by_birth,78014.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Greece,2024,immigration_by_birth,132149.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2024,immigration_by_citizenship,132149.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Greece,2024,immigration_by_previous_residence,132149.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2019,emigration,49795.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2019,emigration_by_birth,49795.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2019,immigration_by_birth,88581.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2019,immigration_by_citizenship,88581.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2019,immigration_by_previous_residence,88581.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2020,emigration,67364.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2020,emigration_by_birth,67364.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2020,immigration_by_birth,75470.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2020,immigration_by_citizenship,75470.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2020,immigration_by_previous_residence,75470.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2021,emigration,67999.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2021,emigration_by_birth,67999.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2021,immigration_by_birth,80471.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2021,immigration_by_citizenship,80471.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2021,immigration_by_previous_residence,80471.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2022,emigration,58408.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2022,emigration_by_birth,58408.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2022,immigration_by_birth,94148.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2022,immigration_by_citizenship,94148.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2022,immigration_by_previous_residence,94148.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2023,emigration,71369.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2023,emigration_by_birth,71369.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2023,immigration_by_birth,96192.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2023,immigration_by_citizenship,96192.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2023,immigration_by_previous_residence,96192.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2024,emigration,84286.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2024,emigration_by_birth,84286.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Hungary,2024,immigration_by_birth,88418.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2024,immigration_by_citizenship,88418.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Hungary,2024,immigration_by_previous_residence,88418.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2019,emigration,4590.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2019,emigration_by_birth,4590.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2019,immigration_by_birth,9872.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2019,immigration_by_citizenship,9872.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2019,immigration_by_previous_residence,9872.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2020,emigration,6009.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2020,emigration_by_birth,6009.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2020,immigration_by_birth,8544.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2020,immigration_by_citizenship,8544.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2020,immigration_by_previous_residence,8544.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2021,emigration,4661.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2021,emigration_by_birth,4661.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2021,immigration_by_birth,8996.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2021,immigration_by_citizenship,8996.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2021,immigration_by_previous_residence,8996.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2022,emigration,5091.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2022,emigration_by_birth,5091.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2022,immigration_by_birth,14878.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2022,immigration_by_citizenship,14878.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2022,immigration_by_previous_residence,14878.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2023,emigration,4831.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2023,emigration_by_birth,4831.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2023,immigration_by_birth,11235.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2023,immigration_by_citizenship,11235.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2023,immigration_by_previous_residence,11235.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2024,emigration,5700.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2024,emigration_by_birth,5700.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Iceland,2024,immigration_by_birth,9946.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2024,immigration_by_citizenship,9946.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Iceland,2024,immigration_by_previous_residence,9946.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2019,emigration,51410.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2019,emigration_by_birth,51410.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2019,immigration_by_birth,96321.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2019,immigration_by_citizenship,96321.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2019,immigration_by_previous_residence,96321.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2020,emigration,51313.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2020,emigration_by_birth,51313.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2020,immigration_by_birth,81918.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2020,immigration_by_citizenship,81918.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2020,immigration_by_previous_residence,81918.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2021,emigration,53673.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2021,emigration_by_birth,53673.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2021,immigration_by_birth,83770.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2021,immigration_by_citizenship,83770.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2021,immigration_by_previous_residence,83770.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2022,emigration,61133.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2022,emigration_by_birth,61133.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2022,immigration_by_birth,157537.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2022,immigration_by_citizenship,157537.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2022,immigration_by_previous_residence,157537.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2023,emigration,75020.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2023,emigration_by_birth,75020.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2023,immigration_by_birth,135617.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2023,immigration_by_citizenship,135617.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2023,immigration_by_previous_residence,135617.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2024,emigration,58077.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2024,emigration_by_birth,58077.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Ireland,2024,immigration_by_birth,127664.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2024,immigration_by_citizenship,127664.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Ireland,2024,immigration_by_previous_residence,127664.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2019,emigration,179505.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2019,emigration_by_birth,179505.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2019,immigration_by_birth,332778.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2019,immigration_by_citizenship,332778.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2019,immigration_by_previous_residence,332778.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2020,emigration,159884.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2020,emigration_by_birth,159884.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2020,immigration_by_birth,247526.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2020,immigration_by_citizenship,247526.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2020,immigration_by_previous_residence,247526.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2021,emigration,158312.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2021,emigration_by_birth,158312.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2021,immigration_by_birth,318366.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2021,immigration_by_citizenship,318366.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2021,immigration_by_previous_residence,318366.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2022,emigration,150189.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2022,emigration_by_birth,150189.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2022,immigration_by_birth,410985.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2022,immigration_by_citizenship,410985.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2022,immigration_by_previous_residence,410985.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2023,emigration,158438.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2023,emigration_by_birth,158438.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2023,immigration_by_birth,439658.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2023,immigration_by_citizenship,439658.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2023,immigration_by_previous_residence,439658.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2024,emigration,188903.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2024,emigration_by_birth,188903.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Italy,2024,immigration_by_birth,451583.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2024,immigration_by_citizenship,451583.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Italy,2024,immigration_by_previous_residence,451583.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2019,emigration,14583.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2019,emigration_by_birth,14583.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2019,immigration_by_birth,11223.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2019,immigration_by_citizenship,11223.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2019,immigration_by_previous_residence,11223.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2020,emigration,11990.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2020,emigration_by_birth,11990.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2020,immigration_by_birth,8840.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2020,immigration_by_citizenship,8840.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2020,immigration_by_previous_residence,8840.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2021,emigration,12975.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2021,emigration_by_birth,12975.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2021,immigration_by_birth,12689.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2021,immigration_by_citizenship,12689.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2021,immigration_by_previous_residence,12689.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2022,emigration,16680.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2022,emigration_by_birth,16680.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2022,immigration_by_birth,38708.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2022,immigration_by_citizenship,38708.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2022,immigration_by_previous_residence,38708.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2023,emigration,18752.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2023,emigration_by_birth,18752.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2023,immigration_by_birth,15629.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2023,immigration_by_citizenship,15629.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2023,immigration_by_previous_residence,15629.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2024,emigration,18937.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2024,emigration_by_birth,18937.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Latvia,2024,immigration_by_birth,14701.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2024,immigration_by_citizenship,14701.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Latvia,2024,immigration_by_previous_residence,14701.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2019,emigration,446.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2019,emigration_by_birth,446.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2019,immigration_by_birth,727.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2019,immigration_by_citizenship,727.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2019,immigration_by_previous_residence,727.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2020,emigration,432.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2020,emigration_by_birth,432.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2020,immigration_by_birth,713.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2020,immigration_by_citizenship,713.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2020,immigration_by_previous_residence,713.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2021,emigration,516.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2021,emigration_by_birth,516.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2021,immigration_by_birth,669.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2021,immigration_by_citizenship,669.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2021,immigration_by_previous_residence,669.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2022,emigration,480.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2022,emigration_by_birth,480.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2022,immigration_by_birth,770.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2022,immigration_by_citizenship,770.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2022,immigration_by_previous_residence,770.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2023,emigration,460.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2023,emigration_by_birth,460.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2023,immigration_by_birth,716.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2023,immigration_by_citizenship,716.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2023,immigration_by_previous_residence,716.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2024,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2024,emigration_by_birth,467.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Liechtenstein,2024,immigration_by_birth,1300.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2024,immigration_by_citizenship,1300.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Liechtenstein,2024,immigration_by_previous_residence,1300.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2019,emigration,35441.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2019,emigration_by_birth,35441.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2019,immigration_by_birth,46526.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2019,immigration_by_citizenship,46526.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2019,immigration_by_previous_residence,46526.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2020,emigration,25245.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2020,emigration_by_birth,25245.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2020,immigration_by_birth,46020.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2020,immigration_by_citizenship,46020.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2020,immigration_by_previous_residence,46020.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2021,emigration,25205.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2021,emigration_by_birth,25205.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2021,immigration_by_birth,44858.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2021,immigration_by_citizenship,44858.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2021,immigration_by_previous_residence,44858.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2022,emigration,15270.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2022,emigration_by_birth,15270.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2022,immigration_by_birth,87367.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2022,immigration_by_citizenship,87367.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2022,immigration_by_previous_residence,87367.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2023,emigration,21688.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2023,emigration_by_birth,21688.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2023,immigration_by_birth,66682.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2023,immigration_by_citizenship,66682.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2023,immigration_by_previous_residence,66682.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2024,emigration,28705.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2024,emigration_by_birth,28705.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Lithuania,2024,immigration_by_birth,51845.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2024,immigration_by_citizenship,51845.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Lithuania,2024,immigration_by_previous_residence,51845.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2019,emigration,15593.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2019,emigration_by_birth,15593.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2019,immigration_by_birth,26668.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2019,immigration_by_citizenship,26668.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2019,immigration_by_previous_residence,26668.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2020,emigration,14870.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2020,emigration_by_birth,14870.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2020,immigration_by_birth,22490.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2020,immigration_by_citizenship,22490.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2020,immigration_by_previous_residence,22490.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2021,emigration,15959.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2021,emigration_by_birth,15959.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2021,immigration_by_birth,25335.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2021,immigration_by_citizenship,25335.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2021,immigration_by_previous_residence,25335.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2022,emigration,17227.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2022,emigration_by_birth,17227.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2022,immigration_by_birth,31433.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2022,immigration_by_citizenship,31433.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2022,immigration_by_previous_residence,31433.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2023,emigration,16588.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2023,emigration_by_birth,16588.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2023,immigration_by_birth,26964.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2023,immigration_by_citizenship,26964.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2023,immigration_by_previous_residence,26964.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2024,emigration,16444.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2024,emigration_by_birth,16444.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Luxembourg,2024,immigration_by_birth,25725.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2024,immigration_by_citizenship,25725.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Luxembourg,2024,immigration_by_previous_residence,25725.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2019,emigration,8079.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2019,emigration_by_birth,8079.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2019,immigration_by_birth,29304.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2019,immigration_by_citizenship,29304.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2019,immigration_by_previous_residence,29304.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2020,emigration,13804.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2020,emigration_by_birth,13804.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2020,immigration_by_birth,14751.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2020,immigration_by_citizenship,14751.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2020,immigration_by_previous_residence,14751.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2021,emigration,13146.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2021,emigration_by_birth,13146.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2021,immigration_by_birth,16963.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2021,immigration_by_citizenship,16963.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2021,immigration_by_previous_residence,16963.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2022,emigration,13166.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2022,emigration_by_birth,13166.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2022,immigration_by_birth,34964.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2022,immigration_by_citizenship,34964.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2022,immigration_by_previous_residence,34964.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2023,emigration,21279.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2023,emigration_by_birth,21279.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2023,immigration_by_birth,42239.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2023,immigration_by_citizenship,42239.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2023,immigration_by_previous_residence,42239.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2024,emigration,23419.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2024,emigration_by_birth,23419.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Malta,2024,immigration_by_birth,34033.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2024,immigration_by_citizenship,34033.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Malta,2024,immigration_by_previous_residence,34033.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2019,emigration,107906.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2019,emigration_by_birth,107906.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2019,immigration_by_birth,215756.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2019,immigration_by_citizenship,215756.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2019,immigration_by_previous_residence,215756.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2020,emigration,102502.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2020,emigration_by_birth,102502.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2020,immigration_by_birth,182244.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2020,immigration_by_citizenship,182244.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2020,immigration_by_previous_residence,182244.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2021,emigration,110342.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2021,emigration_by_birth,110342.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2021,immigration_by_birth,214105.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2021,immigration_by_citizenship,214105.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2021,immigration_by_previous_residence,214105.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2022,emigration,109616.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2022,emigration_by_birth,109616.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2022,immigration_by_birth,326798.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2022,immigration_by_citizenship,326798.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2022,immigration_by_previous_residence,326798.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2023,emigration,123574.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2023,emigration_by_birth,123574.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2023,immigration_by_birth,274597.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2023,immigration_by_citizenship,274597.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2023,immigration_by_previous_residence,274597.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2024,emigration,140087.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2024,emigration_by_birth,140087.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Netherlands,2024,immigration_by_birth,257714.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2024,immigration_by_citizenship,257714.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Netherlands,2024,immigration_by_previous_residence,257714.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2019,emigration,23207.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2019,emigration_by_birth,23207.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2019,immigration_by_birth,48680.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2019,immigration_by_citizenship,48680.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2019,immigration_by_previous_residence,48680.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2020,emigration,21447.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2020,emigration_by_birth,21447.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2020,immigration_by_birth,36287.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2020,immigration_by_citizenship,36287.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2020,immigration_by_previous_residence,36287.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2021,emigration,34297.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2021,emigration_by_birth,34297.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2021,immigration_by_birth,53947.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2021,immigration_by_citizenship,53947.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2021,immigration_by_previous_residence,53947.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2022,emigration,32536.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2022,emigration_by_birth,32536.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2022,immigration_by_birth,90475.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2022,immigration_by_citizenship,90475.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2022,immigration_by_previous_residence,90475.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2023,emigration,34011.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2023,emigration_by_birth,34011.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2023,immigration_by_birth,86589.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2023,immigration_by_citizenship,86589.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2023,immigration_by_previous_residence,86589.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2024,emigration,31968.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2024,emigration_by_birth,31968.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Norway,2024,immigration_by_birth,66077.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2024,immigration_by_citizenship,66077.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Norway,2024,immigration_by_previous_residence,66077.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2019,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2019,emigration_by_birth,180594.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2019,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2019,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2019,immigration_by_previous_residence,226649.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2020,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2020,emigration_by_birth,161666.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2020,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2020,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2020,immigration_by_previous_residence,210615.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2021,emigration,201595.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2021,emigration_by_birth,201595.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2021,immigration_by_birth,241116.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2021,immigration_by_citizenship,241116.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2021,immigration_by_previous_residence,241116.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2022,emigration,228006.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2022,emigration_by_birth,228006.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2022,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2022,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2022,immigration_by_previous_residence,275515.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2023,emigration,194063.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2023,emigration_by_birth,194063.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2023,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2023,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2023,immigration_by_previous_residence,303275.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2024,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2024,emigration_by_birth,205869.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Poland,2024,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2024,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Poland,2024,immigration_by_previous_residence,300496.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2019,emigration,28219.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2019,emigration_by_birth,,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2019,immigration_by_birth,95382.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2019,immigration_by_citizenship,95382.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2019,immigration_by_previous_residence,95382.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2020,emigration,25886.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2020,emigration_by_birth,25886.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2020,immigration_by_birth,83654.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2020,immigration_by_citizenship,83654.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2020,immigration_by_previous_residence,83654.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2021,emigration,25079.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2021,emigration_by_birth,25079.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2021,immigration_by_birth,97119.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2021,immigration_by_citizenship,97119.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2021,immigration_by_previous_residence,97119.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2022,emigration,30954.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2022,emigration_by_birth,30954.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2022,immigration_by_birth,167098.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2022,immigration_by_citizenship,167098.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2022,immigration_by_previous_residence,167098.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2023,emigration,33666.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2023,emigration_by_birth,33666.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2023,immigration_by_birth,189367.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2023,immigration_by_citizenship,189367.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2023,immigration_by_previous_residence,189367.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2024,emigration,33916.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2024,emigration_by_birth,33916.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Portugal,2024,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2024,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Portugal,2024,immigration_by_previous_residence,,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2019,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2019,emigration_by_birth,233736.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2019,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2019,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2019,immigration_by_previous_residence,202422.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2020,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2020,emigration_by_birth,186818.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2020,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2020,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2020,immigration_by_previous_residence,145519.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2021,emigration,216861.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2021,emigration_by_birth,216861.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2021,immigration_by_birth,194642.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2021,immigration_by_citizenship,194642.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2021,immigration_by_previous_residence,194642.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2022,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2022,emigration_by_birth,202311.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2022,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2022,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2022,immigration_by_previous_residence,293024.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2023,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2023,emigration_by_birth,239244.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2023,immigration_by_birth,324091.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2023,immigration_by_citizenship,324091.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2023,immigration_by_previous_residence,324091.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2024,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2024,emigration_by_birth,215191.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Romania,2024,immigration_by_birth,286538.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2024,immigration_by_citizenship,286538.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Romania,2024,immigration_by_previous_residence,286538.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2019,emigration,3384.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2019,emigration_by_birth,3384.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2019,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2019,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2019,immigration_by_previous_residence,7016.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2020,emigration,2428.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2020,emigration_by_birth,2428.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2020,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2020,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2020,immigration_by_previous_residence,6775.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2021,emigration,3395.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2021,emigration_by_birth,3395.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2021,immigration_by_birth,5733.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2021,immigration_by_citizenship,5733.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2021,immigration_by_previous_residence,5733.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2022,emigration,4468.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2022,emigration_by_birth,4468.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2022,immigration_by_birth,5463.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2022,immigration_by_citizenship,5463.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2022,immigration_by_previous_residence,5463.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2023,emigration,4522.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2023,emigration_by_birth,4522.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2023,immigration_by_birth,5923.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2023,immigration_by_citizenship,5923.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2023,immigration_by_previous_residence,5923.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2024,emigration,4425.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2024,emigration_by_birth,4425.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovakia,2024,immigration_by_birth,6824.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2024,immigration_by_citizenship,6824.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovakia,2024,immigration_by_previous_residence,6824.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2019,emigration,15106.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2019,emigration_by_birth,15106.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2019,immigration_by_birth,31319.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2019,immigration_by_citizenship,31319.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2019,immigration_by_previous_residence,31319.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2020,emigration,17745.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2020,emigration_by_birth,17745.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2020,immigration_by_birth,36110.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2020,immigration_by_citizenship,36110.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2020,immigration_by_previous_residence,36110.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2021,emigration,21144.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2021,emigration_by_birth,21144.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2021,immigration_by_birth,23624.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2021,immigration_by_citizenship,23624.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2021,immigration_by_previous_residence,23624.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2022,emigration,20956.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2022,emigration_by_birth,20956.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2022,immigration_by_birth,35613.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2022,immigration_by_citizenship,35613.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2022,immigration_by_previous_residence,35613.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2023,emigration,22411.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2023,emigration_by_birth,22411.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2023,immigration_by_birth,33939.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2023,immigration_by_citizenship,33939.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2023,immigration_by_previous_residence,33939.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2024,emigration,21491.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2024,emigration_by_birth,21491.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Slovenia,2024,immigration_by_birth,33023.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2024,immigration_by_citizenship,33023.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Slovenia,2024,immigration_by_previous_residence,33023.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2019,emigration,296248.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2019,emigration_by_birth,296248.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2019,immigration_by_birth,750480.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2019,immigration_by_citizenship,750480.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2019,immigration_by_previous_residence,750480.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2020,emigration,248561.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2020,emigration_by_birth,248561.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2020,immigration_by_birth,467918.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2020,immigration_by_citizenship,467918.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2020,immigration_by_previous_residence,467918.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2021,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2021,emigration_by_birth,696866.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2021,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2021,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2021,immigration_by_previous_residence,887960.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2022,emigration,531889.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2022,emigration_by_birth,531889.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2022,immigration_by_birth,1258894.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2022,immigration_by_citizenship,1258894.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2022,immigration_by_previous_residence,1258894.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2023,emigration,608695.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2023,emigration_by_birth,608695.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2023,immigration_by_birth,1250991.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2023,immigration_by_citizenship,1250991.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2023,immigration_by_previous_residence,1250991.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2024,emigration,662294.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2024,emigration_by_birth,662294.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Spain,2024,immigration_by_birth,1288562.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2024,immigration_by_citizenship,1288562.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Spain,2024,immigration_by_previous_residence,1288562.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2019,emigration,47718.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2019,emigration_by_birth,47718.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2019,immigration_by_birth,115805.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2019,immigration_by_citizenship,115805.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2019,immigration_by_previous_residence,115805.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2020,emigration,48937.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2020,emigration_by_birth,48937.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2020,immigration_by_birth,82518.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2020,immigration_by_citizenship,82518.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2020,immigration_by_previous_residence,82518.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2021,emigration,48284.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2021,emigration_by_birth,48284.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2021,immigration_by_birth,90631.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2021,immigration_by_citizenship,90631.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2021,immigration_by_previous_residence,90631.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2022,emigration,50592.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2022,emigration_by_birth,50592.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2022,immigration_by_birth,102436.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2022,immigration_by_citizenship,102436.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2022,immigration_by_previous_residence,102436.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2023,emigration,73434.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2023,emigration_by_birth,73434.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2023,immigration_by_birth,94514.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2023,immigration_by_citizenship,94514.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2023,immigration_by_previous_residence,94514.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2024,emigration,86449.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2024,emigration_by_birth,86449.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Sweden,2024,immigration_by_birth,116197.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2024,immigration_by_citizenship,116197.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Sweden,2024,immigration_by_previous_residence,116197.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2019,emigration,126221.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2019,emigration_by_birth,126221.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2019,immigration_by_birth,145129.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2019,immigration_by_citizenship,145129.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2019,immigration_by_previous_residence,145129.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2020,emigration,109376.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2020,emigration_by_birth,109376.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2020,immigration_by_birth,138778.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2020,immigration_by_citizenship,138778.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2020,immigration_by_previous_residence,138778.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2021,emigration,116769.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2021,emigration_by_birth,116769.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2021,immigration_by_birth,144907.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2021,immigration_by_citizenship,144907.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2021,immigration_by_previous_residence,144907.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2022,emigration,122123.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2022,emigration_by_birth,122123.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2022,immigration_by_birth,167079.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2022,immigration_by_citizenship,167079.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2022,immigration_by_previous_residence,167079.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2023,emigration,123963.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2023,emigration_by_birth,123963.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2023,immigration_by_birth,263081.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2023,immigration_by_citizenship,263081.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2023,immigration_by_previous_residence,263081.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2024,emigration,129786.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2024,emigration_by_birth,129786.0,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+Switzerland,2024,immigration_by_birth,212578.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2024,immigration_by_citizenship,212578.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+Switzerland,2024,immigration_by_previous_residence,212578.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2019,emigration,368385.0,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2019,emigration_by_birth,,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2019,immigration_by_birth,680906.0,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2019,immigration_by_citizenship,680906.0,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2019,immigration_by_previous_residence,680906.0,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2020,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2020,emigration_by_birth,,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2020,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2020,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2020,immigration_by_previous_residence,,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2021,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2021,emigration_by_birth,,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2021,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2021,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2021,immigration_by_previous_residence,,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2022,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2022,emigration_by_birth,,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2022,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2022,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2022,immigration_by_previous_residence,,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2023,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2023,emigration_by_birth,,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2023,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2023,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2023,immigration_by_previous_residence,,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2024,emigration,,migr_emi2,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2024,emigration_by_birth,,migr_emi4ctb,freq=A; age=TOTAL; c_birth=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing
+United Kingdom,2024,immigration_by_birth,,migr_imm3ctb,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2024,immigration_by_citizenship,,migr_imm2ctz,age=TOTAL; sex=T; classification=TOTAL; one age definition per reporting geography; no summing
+United Kingdom,2024,immigration_by_previous_residence,,migr_imm5prv,freq=A; partner=TOTAL; age=TOTAL; unit=NR; sex=T; select one agedef per geo/year; no summing

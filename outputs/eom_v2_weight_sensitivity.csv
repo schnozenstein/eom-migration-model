@@ -1,0 +1,21 @@
+destination_name,country_code,baseline_rank,median_rank_under_weights_0_8_1_2,p10_rank,p90_rank,top5_share,bottom5_share,draws
+Singapore,SGP,1,1.0,1.0,1.0,1.0,0.0,2000
+Ireland,IRL,2,3.0,2.0,4.0,0.9945,0.0,2000
+Norway,NOR,3,3.0,2.0,4.0,1.0,0.0,2000
+Japan,JPN,4,4.0,2.0,5.0,0.9325,0.0,2000
+Switzerland,CHE,5,5.0,4.0,7.0,0.516,0.0,2000
+New Zealand,NZL,6,6.0,5.0,7.0,0.266,0.0,2000
+Hong Kong,HKG,7,6.0,5.0,7.0,0.2905,0.0,2000
+Netherlands,NLD,8,8.0,8.0,9.0,0.0,0.0,2000
+Australia,AUS,9,9.0,8.0,10.0,0.0,0.0,2000
+Denmark,DNK,10,10.0,8.0,11.0,0.0005,0.0,2000
+Czechia,CZE,11,11.0,9.0,11.0,0.0,0.0,2000
+Germany,DEU,12,12.0,12.0,12.0,0.0,0.0,2000
+Canada,CAN,13,13.0,13.0,13.0,0.0,0.0,2000
+Austria,AUT,14,14.0,14.0,15.0,0.0,0.0725,2000
+Finland,FIN,15,15.0,14.0,16.0,0.0,0.168,2000
+Sweden,SWE,16,16.0,16.0,17.0,0.0,0.9275,2000
+United Kingdom,GBR,17,17.0,15.0,17.0,0.0,0.832,2000
+United States,USA,18,18.0,18.0,18.0,0.0,1.0,2000
+France,FRA,19,19.0,19.0,19.0,0.0,1.0,2000
+India,IND,20,20.0,20.0,20.0,0.0,1.0,2000

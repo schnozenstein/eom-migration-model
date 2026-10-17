@@ -1,0 +1,17 @@
+indicator_code,dataset_vintage,rows,countries,year_min,year_max,observed_values
+BX.TRF.PWKR.CD.DT,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,9820,246,1970,2025,9820
+FP.CPI.TOTL.ZG,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,11547,241,1960,2025,11547
+GE.EST,"Prior user-uploaded WDIEXCEL.xlsx; ZIP member timestamp 2025-06-05, not independently verified as publication date",4964,205,1996,2023,4964
+NY.GDP.MKTP.KD.ZG,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,14388,262,1961,2025,14388
+NY.GDP.PCAP.CD,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,14811,262,1960,2025,14811
+NY.GDP.PCAP.PP.KD,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,8705,247,1990,2025,8705
+PA.NUS.PPPC.RF,"Prior user-uploaded WDIEXCEL.xlsx; ZIP member timestamp 2025-06-05, not independently verified as publication date",6636,203,1990,2023,6636
+PV.EST,"Prior user-uploaded WDIEXCEL.xlsx; ZIP member timestamp 2025-06-05, not independently verified as publication date",5025,205,1996,2023,5025
+RQ.EST,"Prior user-uploaded WDIEXCEL.xlsx; ZIP member timestamp 2025-06-05, not independently verified as publication date",4966,205,1996,2023,4966
+SL.EMP.TOTL.SP.ZS,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,8211,235,1991,2025,8211
+SL.TLF.CACT.ZS,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,8446,235,1990,2025,8446
+SL.UEM.TOTL.ZS,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,8211,235,1991,2025,8211
+SM.POP.NETM,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,17490,265,1960,2025,17490
+SP.DYN.LE00.IN,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,17191,265,1960,2024,17191
+SP.POP.1564.TO.ZS,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,17490,265,1960,2025,17490
+SP.POP.TOTL,User-uploaded WDI_CSV.zip; archive passed integrity check; exact official release date not independently verified,17460,265,1960,2025,17460
