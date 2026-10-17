@@ -1,17 +1,17 @@
 indicator_code,indicator_name,latest_observation_year,countries_with_latest_year,observed_rows,last_retrieval_utc,freshness_status
-BX.TRF.PWKR.CD.DT,"Personal remittances, received (current US$)",2025,180,9836,2026-10-17T19:24:41.475681+00:00,RECENT
-FP.CPI.TOTL.ZG,"Inflation, consumer prices (annual %)",2025,216,11563,2026-10-17T19:24:41.116374+00:00,RECENT
+BX.TRF.PWKR.CD.DT,"Personal remittances, received (current US$)",2025,180,9852,2026-10-17T20:02:06.642103+00:00,RECENT
+FP.CPI.TOTL.ZG,"Inflation, consumer prices (annual %)",2025,216,11579,2026-10-17T20:02:06.323807+00:00,RECENT
 GE.EST,,2023,205,4964,unknown_for_legacy_snapshot,STALE_OR_SLOW_RELEASE
-NY.GDP.MKTP.KD.ZG,GDP growth (annual %),2025,234,14404,2026-10-17T19:24:40.973178+00:00,RECENT
-NY.GDP.PCAP.CD,GDP per capita (current US$),2025,234,14827,2026-10-17T19:24:41.020350+00:00,RECENT
-NY.GDP.PCAP.PP.KD,"GDP per capita, PPP (constant 2021 international $)",2025,233,8721,2026-10-17T19:24:40.905079+00:00,RECENT
+NY.GDP.MKTP.KD.ZG,GDP growth (annual %),2025,234,14420,2026-10-17T20:02:06.475051+00:00,RECENT
+NY.GDP.PCAP.CD,GDP per capita (current US$),2025,234,14843,2026-10-17T20:02:06.597935+00:00,RECENT
+NY.GDP.PCAP.PP.KD,"GDP per capita, PPP (constant 2021 international $)",2025,233,8737,2026-10-17T20:02:06.142956+00:00,RECENT
 PA.NUS.PPPC.RF,,2023,192,6636,unknown_for_legacy_snapshot,STALE_OR_SLOW_RELEASE
 PV.EST,,2023,205,5025,unknown_for_legacy_snapshot,STALE_OR_SLOW_RELEASE
 RQ.EST,,2023,205,4966,unknown_for_legacy_snapshot,STALE_OR_SLOW_RELEASE
-SL.EMP.TOTL.SP.ZS,"Employment to population ratio, 15+, total (%) (modeled ILO estimate)",2025,230,8227,2026-10-17T19:24:41.084193+00:00,RECENT
-SL.TLF.CACT.ZS,"Labor force participation rate, total (% of total population ages 15+) (modeled ILO estimate)",2025,230,8462,2026-10-17T19:24:41.156989+00:00,RECENT
-SL.UEM.TOTL.ZS,"Unemployment, total (% of total labor force) (modeled ILO estimate)",2025,230,8227,2026-10-17T19:24:40.737556+00:00,RECENT
-SM.POP.NETM,Net migration,2025,265,17506,2026-10-17T19:24:40.602586+00:00,RECENT
-SP.DYN.LE00.IN,"Life expectancy at birth, total (years)",2024,265,17206,2026-10-17T19:24:41.213128+00:00,RECENT
-SP.POP.1564.TO.ZS,Population ages 15-64 (% of total population),2025,265,17506,2026-10-17T19:24:41.243583+00:00,RECENT
-SP.POP.TOTL,"Population, total",2025,265,17476,2026-10-17T19:24:40.399351+00:00,RECENT
+SL.EMP.TOTL.SP.ZS,"Employment to population ratio, 15+, total (%) (modeled ILO estimate)",2025,230,8243,2026-10-17T20:02:06.533066+00:00,RECENT
+SL.TLF.CACT.ZS,"Labor force participation rate, total (% of total population ages 15+) (modeled ILO estimate)",2025,230,8478,2026-10-17T20:02:06.530501+00:00,RECENT
+SL.UEM.TOTL.ZS,"Unemployment, total (% of total labor force) (modeled ILO estimate)",2025,230,8243,2026-10-17T20:02:06.212189+00:00,RECENT
+SM.POP.NETM,Net migration,2025,265,17522,2026-10-17T20:02:06.059992+00:00,RECENT
+SP.DYN.LE00.IN,"Life expectancy at birth, total (years)",2024,265,17221,2026-10-17T20:02:06.541022+00:00,RECENT
+SP.POP.1564.TO.ZS,Population ages 15-64 (% of total population),2025,265,17522,2026-10-17T20:02:06.672540+00:00,RECENT
+SP.POP.TOTL,"Population, total",2025,265,17492,2026-10-17T20:02:06.334205+00:00,RECENT
