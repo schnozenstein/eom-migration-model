@@ -1,0 +1,17 @@
+{
+  "run_id": "2026-10-18T074947Z",
+  "run_at_utc": "2026-10-18T07:49:47.442463+00:00",
+  "requested_year_range": [
+    2010,
+    2026
+  ],
+  "world_bank_indicators_successful": 12,
+  "world_bank_indicators_failed": 4,
+  "offline_audit": false,
+  "world_bank_rows_fetched": 51072,
+  "policy_pages_successful": 7,
+  "policy_pages_failed": 2,
+  "ranking_recomputed": false,
+  "forecast_issued": false,
+  "note": "This is a source refresh, not model calibration. Failed sources preserve the prior canonical data; a new ranking requires a separate validated run."
+}
