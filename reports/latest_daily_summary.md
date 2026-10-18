@@ -1,11 +1,11 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-18 07:50 UTC
+> Generated: 2026-10-18 09:41 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-18T074947Z`
-- **Refresh timestamp:** 2026-10-18T07:49:47.442463+00:00
+- **Latest refresh run:** `2026-10-18T094109Z`
+- **Refresh timestamp:** 2026-10-18T09:41:09.513575+00:00
 - **World Bank observations fetched:** 51072
 - **World Bank indicator requests:** 12 succeeded; 4 failed
 - **Policy pages:** 7 succeeded; 2 failed
