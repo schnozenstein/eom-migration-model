@@ -1,15 +1,15 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-19 03:53 UTC
+> Generated: 2026-10-19 04:51 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-19T035323Z`
-- **Refresh timestamp:** 2026-10-19T03:53:23.368042+00:00
-- **World Bank observations fetched:** 51072
-- **World Bank indicator requests:** 12 succeeded; 4 failed
+- **Latest refresh run:** `2026-10-19T045049Z`
+- **Refresh timestamp:** 2026-10-19T04:50:49.915949+00:00
+- **World Bank observations fetched:** 63840
+- **World Bank indicator requests:** 15 succeeded; 1 failed
 - **Policy pages:** 7 succeeded; 2 failed
-- **Freshness dashboard:** 12 recent; 4 requiring attention out of 16 indicators
+- **Freshness dashboard:** 15 recent; 1 requiring attention out of 16 indicators
 - **Ranking recomputed during refresh:** No
 - **Forecast issued during refresh:** No
 
@@ -87,10 +87,7 @@ Missing QoL or visa data must remain missing, not be silently converted to zero.
 
 | Indicator | Latest observation year | Status |
 |---|---:|---|
-| GE.EST | 2023 | STALE_OR_SLOW_RELEASE |
 | PA.NUS.PPPC.RF | 2023 | STALE_OR_SLOW_RELEASE |
-| PV.EST | 2023 | STALE_OR_SLOW_RELEASE |
-| RQ.EST | 2023 | STALE_OR_SLOW_RELEASE |
 
 A recent retrieval timestamp does not guarantee a recent statistical observation. Some indicators are released with a delay, so check release schedules before labelling them defective.
 

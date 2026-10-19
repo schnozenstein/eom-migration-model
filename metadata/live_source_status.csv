@@ -1,13 +1,13 @@
 source_id,source,url,status,rows_fetched,indicator,observation_start,observation_end_requested,error
 WDI_BX.TRF.PWKR.CD.DT,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/BX.TRF.PWKR.CD.DT,SUCCESS,4256,BX.TRF.PWKR.CD.DT,2010,2026,
 WDI_FP.CPI.TOTL.ZG,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/FP.CPI.TOTL.ZG,SUCCESS,4256,FP.CPI.TOTL.ZG,2010,2026,
-WDI_GE.EST,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/GE.EST,FAILED,0,GE.EST,2010,2026,ValueError: Unexpected World Bank API response schema
+WDI_GE.EST,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/GOV_WGI_GE_EST,SUCCESS,4256,GE.EST,2010,2026,
 WDI_NY.GDP.MKTP.KD.ZG,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.KD.ZG,SUCCESS,4256,NY.GDP.MKTP.KD.ZG,2010,2026,
 WDI_NY.GDP.PCAP.CD,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/NY.GDP.PCAP.CD,SUCCESS,4256,NY.GDP.PCAP.CD,2010,2026,
 WDI_NY.GDP.PCAP.PP.KD,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/NY.GDP.PCAP.PP.KD,SUCCESS,4256,NY.GDP.PCAP.PP.KD,2010,2026,
-WDI_PA.NUS.PPPC.RF,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/PA.NUS.PPPC.RF,FAILED,0,PA.NUS.PPPC.RF,2010,2026,ValueError: Unexpected World Bank API response schema
-WDI_PV.EST,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/PV.EST,FAILED,0,PV.EST,2010,2026,ValueError: Unexpected World Bank API response schema
-WDI_RQ.EST,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/RQ.EST,FAILED,0,RQ.EST,2010,2026,ValueError: Unexpected World Bank API response schema
+WDI_PA.NUS.PPPC.RF,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/PA.NUS.PPPC.RF,FAILED,0,PA.NUS.PPPC.RF,2010,2026,"ValueError: Unexpected World Bank API response for PA.NUS.PPPC.RF: HTTP 200, content-type=application/json;charset=utf-8, payload_type=list, body_preview='[{""message"":[{""id"":""175"",""key"":""Invalid format"",""value"":""The indicator was not found. It may have been deleted or archived.""}]}]'"
+WDI_PV.EST,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/GOV_WGI_PV_EST,SUCCESS,4256,PV.EST,2010,2026,
+WDI_RQ.EST,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/GOV_WGI_RQ_EST,SUCCESS,4256,RQ.EST,2010,2026,
 WDI_SL.EMP.TOTL.SP.ZS,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SL.EMP.TOTL.SP.ZS,SUCCESS,4256,SL.EMP.TOTL.SP.ZS,2010,2026,
 WDI_SL.TLF.CACT.ZS,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SL.TLF.CACT.ZS,SUCCESS,4256,SL.TLF.CACT.ZS,2010,2026,
 WDI_SL.UEM.TOTL.ZS,World Bank Indicators API,https://api.worldbank.org/v2/country/all/indicator/SL.UEM.TOTL.ZS,SUCCESS,4256,SL.UEM.TOTL.ZS,2010,2026,
