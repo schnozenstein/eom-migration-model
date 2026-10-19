@@ -2,7 +2,7 @@
 
 ## What this adds
 
-- A daily, retrying World Bank Indicators API pull across 16 selected macro/labour/demographic indicators, with the requested end year defaulting to the current UTC year instead of being hard-coded to 2025.
+- A daily, retrying World Bank Indicators API pull across 18 selected macro/labour/demographic indicators, including complementary PPP measures, with the requested end year defaulting to the current UTC year instead of being hard-coded to 2025.
 - Immutable run-level JSON response snapshots and a retrieval-vintage history table.
 - A canonical observation table that updates successful keys while retaining old rows when a source fails.
 - Per-indicator freshness and country-coverage dashboard, per-source status logs, and per-run machine-readable summaries.
@@ -27,3 +27,9 @@ Optional: `python scripts/refresh_eom_data.py --start-year 2015 --end-year 2026 
 4. The GitHub Actions schedule is a deployable workflow, not an active schedule in this ZIP. It only runs after the project is pushed to a repository and Actions are enabled. If the execution environment blocks DNS/network access, the workflow will log failures and preserve prior data.
 5. The workflow is configured to commit refreshed data back to the repository. Review repository size/retention settings before running indefinitely because raw snapshots can accumulate.
 6. A full current-conditions ranking should only be produced after the pipeline reports adequate feature coverage and the ranking code uses actual latest observations with missingness/uncertainty penalties; this patch deliberately does not substitute stale values or invent data.
+
+
+## Country and PPP expansion (2026-10-19)
+
+- Spain (ESP) is now in `data/destinations.csv` and the maintained historical panel scaffold. Its numeric migration/QoL evidence remains explicitly missing until ingested; blanks are not zeros. Austria (AUT) was already in the destination set and is now monitored through the official Austrian Federal Government migration portal.
+- The PPP block includes GDP per capita at constant 2021 PPP, current PPP GDP, GDP PPP conversion factor and household/private-consumption PPP conversion factor. The legacy `PA.NUS.PPPC.RF` series is not polled because the live API returned an indicator-not-found/archived response; prior historical observations are not deleted. These measures remain separately named.
