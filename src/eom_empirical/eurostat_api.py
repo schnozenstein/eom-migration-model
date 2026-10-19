@@ -166,6 +166,7 @@ def fetch_spain_migration_flows(
             observed_count = sum(value is not None for value in observed.values())
             retrieved = datetime.now(timezone.utc).isoformat()
             for year in range(start_year, end_year + 1):
+                cell_present = year in observed
                 value = observed.get(year)
                 flag = flags.get(year, "")
                 rows.append({
@@ -174,8 +175,11 @@ def fetch_spain_migration_flows(
                     "year": year,
                     "indicator": indicator,
                     "value": value,
+                    "source_cell_present": cell_present,
                     "observation_status": (
-                        "observed" if value is not None else "missing_or_suppressed"
+                        "observed"
+                        if value is not None
+                        else ("missing_or_suppressed" if cell_present else "not_returned_by_source")
                     ),
                     "source_flag": flag,
                     "source": "Eurostat Statistics API",
