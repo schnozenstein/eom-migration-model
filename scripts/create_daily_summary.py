@@ -78,6 +78,7 @@ def main():
         f"- **Refresh timestamp:** {manifest.get('run_at_utc', 'Not reported')}",
         f"- **World Bank observations fetched:** {manifest.get('world_bank_rows_fetched', 'Not reported')}",
         f"- **World Bank indicator requests:** {manifest.get('world_bank_indicators_successful', 'Not reported')} succeeded; {manifest.get('world_bank_indicators_failed', 'Not reported')} failed",
+        f"- **Brazil World Bank extract:** {manifest.get('brazil_macro_rows_fetched', 'Not reported')} fresh Brazil indicator-year rows",
         f"- **Eurostat Spain migration series:** {eurostat_succeeded} succeeded; {eurostat_failed} failed; {eurostat_observed} observed annual cells",
         f"- **Brazil OBMigra official source page:** {obmigra_state} (catalogue monitor only; report tables are not numerically parsed)",
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
