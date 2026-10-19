@@ -1,0 +1,23 @@
+{
+  "run_id": "2026-10-19T191348Z",
+  "run_at_utc": "2026-10-19T19:13:48.463685+00:00",
+  "requested_year_range": [
+    2010,
+    2026
+  ],
+  "world_bank_indicators_successful": 18,
+  "world_bank_indicators_failed": 0,
+  "offline_audit": false,
+  "world_bank_rows_fetched": 76608,
+  "brazil_macro_rows_fetched": 288,
+  "policy_pages_successful": 8,
+  "policy_pages_failed": 3,
+  "eurostat_series_successful": 2,
+  "eurostat_series_failed": 0,
+  "eurostat_observed_rows": 30,
+  "obmigra_source_status": "SUCCESS",
+  "obmigra_numeric_data_ingested": false,
+  "ranking_recomputed": false,
+  "forecast_issued": false,
+  "note": "This is a source refresh, not model calibration. Eurostat total flows are kept separate from subgroup-specific series; OBMigra is source-page monitored only and is not numerically parsed. Failed sources preserve prior canonical data; a new ranking requires a separate validated run."
+}

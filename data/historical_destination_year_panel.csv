@@ -775,21 +775,21 @@ Spain,2006,,,,True,True,True,Spain added to focus set; harmonized numeric eviden
 Spain,2007,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
 Spain,2008,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
 Spain,2009,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2010,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2011,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2012,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2013,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2014,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2015,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2016,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2017,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2018,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2019,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2020,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2021,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2022,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2023,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
-Spain,2024,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
+Spain,2010,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,403377.0,,,True,False,True,True,True,,,360705.0,False
+Spain,2011,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,409034.0,,,True,False,True,True,True,,,371331.0,False
+Spain,2012,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,446606.0,,,True,False,True,True,True,,,304053.0,False
+Spain,2013,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,532303.0,,,True,False,True,True,True,,,280772.0,False
+Spain,2014,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,400430.0,,,True,False,True,True,True,,,305454.0,False
+Spain,2015,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,343875.0,,,True,False,True,True,True,,,342114.0,False
+Spain,2016,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,327325.0,,,True,False,True,True,True,,,414746.0,False
+Spain,2017,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,368860.0,,,True,False,True,True,True,,,532132.0,False
+Spain,2018,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,309526.0,,,True,False,True,True,True,,,643684.0,False
+Spain,2019,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,296248.0,,,True,False,True,True,True,,,750480.0,False
+Spain,2020,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,248561.0,,,True,False,True,True,True,,,467918.0,False
+Spain,2021,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,696866.0,,,True,False,True,True,True,,,887960.0,False
+Spain,2022,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,531889.0,,,True,False,True,True,True,,,1258894.0,False
+Spain,2023,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,608695.0,,,True,False,True,True,True,,,1250991.0,False
+Spain,2024,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,662294.0,,,True,False,True,True,True,,,1288562.0,False
 Spain,2025,,,,True,True,True,Spain added to focus set; harmonized numeric evidence not yet ingested. Missing values are not zero.,,,,True,True,True,True,True,,,,True
 Brazil,1990,,,,True,True,True,National series; World Bank macro indicators are stored separately; comparable migration-flow observations not yet integrated,,,,True,True,True,True,True,,,,True
 Brazil,1991,,,,True,True,True,National series; World Bank macro indicators are stored separately; comparable migration-flow observations not yet integrated,,,,True,True,True,True,True,,,,True

@@ -1,1 +1,3 @@
-source_id,source,dataset,url,status,rows_fetched,observed_rows,observation_start,observation_end_requested,error\n
+source_id,source,dataset,url,status,rows_fetched,observed_rows,observation_start,observation_end_requested,error
+EUROSTAT_migr_emi2,Eurostat Statistics API,migr_emi2,https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/migr_emi2?lang=EN&geo=ES&freq=A&unit=NR&age=TOTAL&agedef=REACH&sex=T&sinceTimePeriod=2010&untilTimePeriod=2026,SUCCESS,17,15,2010,2026,
+EUROSTAT_migr_imm8,Eurostat Statistics API,migr_imm8,https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/migr_imm8?lang=EN&geo=ES&freq=A&unit=NR&age=TOTAL&agedef=REACH&sex=T&sinceTimePeriod=2010&untilTimePeriod=2026,SUCCESS,17,15,2010,2026,
