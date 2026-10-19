@@ -1,15 +1,15 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-19 04:51 UTC
+> Generated: 2026-10-19 05:09 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-19T045049Z`
-- **Refresh timestamp:** 2026-10-19T04:50:49.915949+00:00
-- **World Bank observations fetched:** 63840
-- **World Bank indicator requests:** 15 succeeded; 1 failed
-- **Policy pages:** 7 succeeded; 2 failed
-- **Freshness dashboard:** 15 recent; 1 requiring attention out of 16 indicators
+- **Latest refresh run:** `2026-10-19T050759Z`
+- **Refresh timestamp:** 2026-10-19T05:07:59.200199+00:00
+- **World Bank observations fetched:** 76608
+- **World Bank indicator requests:** 18 succeeded; 0 failed
+- **Policy pages:** 7 succeeded; 4 failed
+- **Freshness dashboard:** 18 recent; 1 requiring attention out of 19 indicators
 - **Ranking recomputed during refresh:** No
 - **Forecast issued during refresh:** No
 
@@ -73,7 +73,7 @@ These draws are a weight-sensitivity exercise, not a statistical confidence inte
 
 ## 5. Joie de vivre and visa feasibility
 
-- **Destinations in QoL input file:** 20
+- **Destinations in QoL input file:** 21
 - **Destinations with a recorded scored QoL value:** 0
 - **Destinations with complete inputs according to model status:** 0
 - **QoL weights:** illustrative, not estimated
