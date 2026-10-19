@@ -32,3 +32,13 @@
 - `C`: reputable secondary/industry source with defined method.
 - `D`: inferred/proxy or weak comparability; use only in sensitivity analysis.
 - `X`: exclude from quantitative fit; keep as narrative context only.
+
+
+## PPP and price-level parameters
+- `NY.GDP.PCAP.PP.KD`: GDP per capita at constant 2021 PPP international dollars; a real-income/output proxy.
+- `NY.GDP.MKTP.PP.CD`: GDP in current PPP international dollars; not interchangeable with constant-price GDP per capita.
+- `PA.NUS.PPP`: GDP PPP conversion factor, local currency units per international dollar.
+- `PA.NUS.PRVT.PP`: household/private-consumption PPP conversion factor, local currency units per international dollar; broad household price-level proxy, not a destination-specific rent basket.
+- `PA.NUS.PPPC.RF`: legacy GDP price-level ratio (US=1); the World Bank API returned an indicator-not-found/archived response in the 2026-10-19 run. Historical observations are retained but the series is not polled until API availability is verified.
+
+Do not combine these series into one score without defining the estimand, direction, year/base and transformation. PPP measures do not replace rent, tuition, taxes, net salary or a personal cost-of-living basket.
