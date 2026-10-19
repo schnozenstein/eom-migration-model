@@ -5,7 +5,9 @@ import pandas as pd
 import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from unittest.mock import patch\nimport socket\nfrom refresh_eom_data import WB_API_CODE_OVERRIDES, resolve_host_with_retries
+from unittest.mock import patch
+import socket
+from refresh_eom_data import WB_API_CODE_OVERRIDES, resolve_host_with_retries
 
 class RefreshETLTests(unittest.TestCase):
     def test_freshness_label_rules_are_explicit(self):
