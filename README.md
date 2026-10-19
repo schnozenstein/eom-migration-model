@@ -14,7 +14,7 @@ Read in English: energy equals minus salary plus cost minus policy friendliness 
 
 ## Data currently present
 
-- `data/historical_destination_year_panel.csv`: 756 destination-year rows, 21 destinations, 1990–2025. It is a rectangular scaffold; indicators are intermittent and definitions differ.
+- `data/historical_destination_year_panel.csv`: 792 destination-year rows, 22 destinations (21 country comparators plus nested Scotland/Edinburgh), 1990–2025. It is a rectangular scaffold; indicators are intermittent and definitions differ.
 - `data/eurostat_selected_total_indicators_long.csv`: 960 selected-total rows across five flow indicators, 32 reporting geographies, 2019–2024. Per-indicator observed values range from 166 to 186 of 192.
 - `data/eurostat_new_migration_indicators_long.csv`: 396 rows for two indicators across 33 geographies, 2019–2024; 188/198 and 190/198 observed values.
 - `data/data_quality_audit_general_2026-10-13.csv`: expanded audit across panel columns and native Eurostat extracts.
@@ -57,7 +57,7 @@ This writes an audit CSV only. It does not fetch new data, fit a model, forecast
 
 ## Geographic coverage and known gaps
 
-The maintained focus set is UK (with Scotland/Edinburgh as nested regional analysis where data allow), Ireland, Netherlands, Germany, Switzerland, Hong Kong, Japan, Singapore, Australia, Canada, USA, New Zealand, France, Sweden, Denmark, Finland, Norway, Austria and Czechia. The general architecture is global, not restricted to this set. Current harmonized flow coverage is Europe-heavy; most focus countries outside Eurostat's reporting universe remain gaps. Scotland/Edinburgh is not separately observed in the current national migration panel.
+The maintained focus set is UK (with Scotland/Edinburgh as nested regional analysis where data allow), Ireland, Netherlands, Germany, Switzerland, Hong Kong, Japan, Singapore, Australia, Canada, USA, New Zealand, France, Sweden, Denmark, Finland, Norway, Austria, Czechia and Spain. The general architecture is global, not restricted to this set. Current harmonized flow coverage is Europe-heavy; most focus countries outside Eurostat's reporting universe remain gaps. Scotland/Edinburgh is not separately observed in the current national migration panel.
 
 
 ## 2026-10-15 WDI ingestion run
@@ -82,3 +82,8 @@ See `DAILY_REPORT_2026-10-16_v6.md`. India has been added as the 20th global com
 ## EOM live refresh pipeline patch (v9, 17 October 2026)
 
 See `LIVE_DATA_PIPELINE.md`. `scripts/refresh_eom_data.py` now requests the current UTC year by default, uses retries, preserves per-run source snapshots and retrieval vintages, writes source-level status/freshness dashboards, and watches official immigration landing pages for content changes. `.github/workflows/eom-daily-refresh.yml` defines a daily GitHub Actions run at 05:17 UTC plus manual dispatch. The workflow is deployable but not active until this project is pushed to a GitHub repository with Actions enabled. Eurostat/OECD numeric connectors and automatic policy interpretation remain future work. Source refresh does not automatically create a new ranking or forecast.
+
+
+## PPP parameter coverage (2026-10-19)
+
+The live World Bank refresh now collects complementary PPP measures: GDP per capita at constant 2021 international dollars (`NY.GDP.PCAP.PP.KD`), GDP at current PPP international dollars (`NY.GDP.MKTP.PP.CD`), the GDP PPP conversion factor (`PA.NUS.PPP`), and the household/private-consumption PPP conversion factor (`PA.NUS.PRVT.PP`). These are distinct concepts, not interchangeable “PPP scores.” The legacy GDP price-level-ratio code (`PA.NUS.PPPC.RF`) returned an API “not found or archived” error in the 19 October run and is no longer actively polled pending re-verification; previously stored observations remain. Spain is added as a focus destination; Austria was already in the focus set and now also has official policy-page monitoring.

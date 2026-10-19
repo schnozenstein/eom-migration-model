@@ -23,8 +23,10 @@ WB_BASE = "https://api.worldbank.org/v2"
 WB_API_CODE_OVERRIDES = {"GE.EST": "GOV_WGI_GE_EST", "PV.EST": "GOV_WGI_PV_EST", "RQ.EST": "GOV_WGI_RQ_EST"}
 WB_INDICATORS = {
     "NY.GDP.PCAP.PP.KD": "GDP per capita, PPP (constant 2021 international $)",
+    "NY.GDP.MKTP.PP.CD": "GDP, PPP (current international $)",
+    "PA.NUS.PPP": "PPP conversion factor, GDP (LCU per international $)",
+    "PA.NUS.PRVT.PP": "PPP conversion factor, household/private consumption (LCU per international $)",
     "SL.UEM.TOTL.ZS": "Unemployment, total (% of labor force, ILO modeled estimate)",
-    "PA.NUS.PPPC.RF": "GDP price level ratio of PPP to market exchange rate (US=1)",
     "RQ.EST": "Regulatory quality estimate",
     "GE.EST": "Government effectiveness estimate",
     "PV.EST": "Political stability and absence of violence/terrorism estimate",
@@ -49,6 +51,8 @@ POLICY_URLS = [
     ("Hong Kong", "Immigration Department news", "https://www.immd.gov.hk/eng/press/"),
     ("Japan", "Immigration Services Agency", "https://www.moj.go.jp/isa/"),
     ("Switzerland", "State Secretariat for Migration news", "https://www.sem.admin.ch/sem/en/home/aktuell.html"),
+    ("Austria", "Austrian Federal Government migration portal", "https://www.migration.gv.at/en/welcome/"),
+    ("Spain", "Spanish State Secretariat for Migration", "https://www.inclusion.gob.es/en/web/migraciones/home"),
 ]
 
 
@@ -187,7 +191,7 @@ def check_policy_sources(session: requests.Session, run_id: str) -> list[dict]:
         row = {"country": country, "source_label": label, "url": url, "checked_at_utc": utc_now().isoformat(), "status": "FAILED", "http_status": None, "content_sha256": "", "changed_since_previous_check": "unknown", "error": ""}
         try:
             host = (urlparse(url).hostname or "").lower()
-            if not (host.endswith(".gov.uk") or host.endswith(".gov.au") or host.endswith(".govt.nz") or host.endswith(".gov.sg") or host.endswith(".gov.hk") or host.endswith(".admin.ch") or host.endswith(".go.jp") or host.endswith(".canada.ca") or host.endswith(".gov.ie") or host.endswith(".mom.gov.sg") or host.endswith(".immd.gov.hk") or host.endswith(".moj.go.jp") or host.endswith(".sem.admin.ch") or host in {"www.canada.ca", "enterprise.gov.ie", "www.mom.gov.sg", "www.immd.gov.hk", "www.moj.go.jp", "www.sem.admin.ch"}):
+            if not (host.endswith(".gov.uk") or host.endswith(".gov.au") or host.endswith(".govt.nz") or host.endswith(".gov.sg") or host.endswith(".gov.hk") or host.endswith(".admin.ch") or host.endswith(".go.jp") or host.endswith(".canada.ca") or host.endswith(".gov.ie") or host.endswith(".mom.gov.sg") or host.endswith(".immd.gov.hk") or host.endswith(".moj.go.jp") or host.endswith(".sem.admin.ch") or host.endswith(".gv.at") or host.endswith(".gob.es") or host in {"www.canada.ca", "enterprise.gov.ie", "www.mom.gov.sg", "www.immd.gov.hk", "www.moj.go.jp", "www.sem.admin.ch"}):
                 raise ValueError(f"Host not on official-domain allowlist: {host}")
             r = request_with_dns_retries(session, url, timeout=(8, 20), allow_redirects=True)
             r.raise_for_status()
