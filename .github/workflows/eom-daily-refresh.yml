@@ -80,10 +80,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Commit only lightweight operational outputs. The full observation history,
-          # refreshed World Bank CSV, and raw source snapshots are intentionally not
-          # committed: they exceed GitHub's 100 MB file limit and grow every run.
-          # Full diagnostics remain available in the uploaded workflow artifact.
+          # Commit lightweight operational outputs and intentionally small country/source extracts.
+          # The full all-country World Bank history and raw source snapshots are not committed
+          # because they exceed GitHub's 100 MB limit or grow every run. Full diagnostics remain
+          # available in the uploaded workflow artifact.
           git add reports/latest_daily_summary.md \\
                   metadata/live_source_status.csv \\
                   metadata/eurostat_source_status.csv \\
