@@ -5,11 +5,11 @@ Historical snapshots and retrieval vintages are retained. This script does not c
 or publish a new ranking automatically; it only refreshes evidence and freshness reports.
 """
 from __future__ import annotations
-import argparse, hashlib, json, os, socket, sys, time
+import argparse, hashlib, json, os, socket, sys, time, re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 
 import pandas as pd
 import requests
@@ -17,6 +17,9 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+from eom_empirical.eurostat_api import fetch_spain_migration_flows
+
 WB_BASE = "https://api.worldbank.org/v2"
 # Current identifiers for revised World Bank Worldwide Governance Indicators.
 # Keep canonical feature keys stable for downstream EOM data.
@@ -54,6 +57,8 @@ POLICY_URLS = [
     ("Austria", "Austrian Federal Government migration portal", "https://www.migration.gv.at/en/welcome/"),
     ("Spain", "Spanish State Secretariat for Migration", "https://www.inclusion.gob.es/en/web/migraciones/home"),
 ]
+
+OBMIGRA_URL = "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/obmigra-1/relatorios-obmigra/dados-consolidados/2025"
 
 
 def utc_now() -> datetime:
@@ -210,6 +215,104 @@ def check_policy_sources(session: requests.Session, run_id: str) -> list[dict]:
     return out
 
 
+def check_obmigra_source(session: requests.Session, run_id: str) -> dict:
+    """Monitor the official Brazil OBMigra catalogue page.
+
+    This is a source-page/change monitor only. It does not claim to parse PDF tables
+    or turn the report into numeric observations.
+    """
+    row = {
+        "source_id": "BRAZIL_OBMIGRA_CATALOG",
+        "source": "Brazil OBMigra consolidated migration statistics",
+        "url": OBMIGRA_URL,
+        "checked_at_utc": utc_now().isoformat(),
+        "status": "FAILED",
+        "http_status": None,
+        "content_sha256": "",
+        "linked_data_assets": "",
+        "linked_data_asset_count": 0,
+        "error": "",
+        "numeric_data_ingested": False,
+    }
+    try:
+        response = request_with_dns_retries(session, OBMIGRA_URL, timeout=(8, 25))
+        response.raise_for_status()
+        final_host = (urlparse(response.url).hostname or "").lower()
+        if not (final_host == "gov.br" or final_host.endswith(".gov.br")):
+            raise ValueError(f"Unexpected redirect away from official gov.br domain: {final_host}")
+        body = response.text
+        digest = hashlib.sha256(body.encode("utf-8", errors="replace")).hexdigest()
+        snapshot = ROOT / "data" / "raw" / "snapshots" / "obmigra" / run_id / "catalog.html"
+        snapshot.parent.mkdir(parents=True, exist_ok=True)
+        snapshot.write_text(body, encoding="utf-8", errors="replace")
+        hrefs = re.findall(r"""href=["']([^"']+)["']""", body, flags=re.IGNORECASE)
+        assets = sorted({
+            urljoin(response.url, href)
+            for href in hrefs
+            if urlparse(urljoin(response.url, href)).path.lower().endswith(
+                (".pdf", ".xlsx", ".xls", ".csv", ".zip", ".ods")
+            )
+        })
+        row.update({
+            "status": "SUCCESS",
+            "http_status": response.status_code,
+            "content_sha256": digest,
+            "linked_data_assets": ";".join(assets),
+            "linked_data_asset_count": len(assets),
+        })
+    except Exception as exc:
+        row["error"] = f"{type(exc).__name__}: {exc}"
+    return row
+
+
+def integrate_eurostat_panel(rows: list[dict]) -> None:
+    """Merge Spain's refreshed total flows into the historical panel where years exist."""
+    panel_path = ROOT / "data" / "historical_destination_year_panel.csv"
+    if not rows or not panel_path.exists():
+        return
+    panel = pd.read_csv(panel_path)
+    if "eurostat_immigration_total_flow_persons" not in panel.columns:
+        panel["eurostat_immigration_total_flow_persons"] = pd.NA
+        panel["missing_eurostat_immigration_total_flow_persons"] = True
+    column_map = {
+        "emigration_total": (
+            "eurostat_emigration_total_flow_persons",
+            "missing_eurostat_emigration_total_flow_persons",
+        ),
+        "immigration_total": (
+            "eurostat_immigration_total_flow_persons",
+            "missing_eurostat_immigration_total_flow_persons",
+        ),
+    }
+    for item in rows:
+        destination = item.get("destination")
+        if destination != "Spain":
+            continue
+        try:
+            year = int(item["year"])
+        except (TypeError, ValueError):
+            continue
+        mask = (panel["destination"] == destination) & (pd.to_numeric(panel["year"], errors="coerce") == year)
+        if not mask.any():
+            continue
+        columns = column_map.get(item.get("indicator"))
+        if not columns:
+            continue
+        value_column, missing_column = columns
+        if value_column not in panel.columns:
+            panel[value_column] = pd.NA
+        if missing_column not in panel.columns:
+            panel[missing_column] = True
+        value = item.get("value")
+        if value is None or pd.isna(value):
+            panel.loc[mask, value_column] = pd.NA
+            panel.loc[mask, missing_column] = True
+        else:
+            panel.loc[mask, value_column] = float(value)
+            panel.loc[mask, missing_column] = False
+    atomic_csv(panel, panel_path)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--start-year", type=int, default=2010)
@@ -223,9 +326,20 @@ def main() -> int:
     if args.offline_audit:
         fresh = pd.DataFrame()
         statuses = [{"source_id": f"WDI_{code}", "source": "World Bank Indicators API", "url": f"{WB_BASE}/country/all/indicator/{code}", "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "indicator": code, "observation_start": args.start_year, "observation_end_requested": args.end_year, "error": "Offline audit requested; no network call made"} for code in WB_INDICATORS]
+        eurostat_rows = []
+        eurostat_status = [{"source_id": f"EUROSTAT_{dataset}", "source": "Eurostat Statistics API", "dataset": dataset, "url": f"https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}", "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "observed_rows": 0, "observation_start": args.start_year, "observation_end_requested": args.end_year, "error": "Offline audit requested; no network call made"} for _indicator, dataset in (("emigration_total", "migr_emi2"), ("immigration_total", "migr_imm8"))]
+        obmigra = {"source_id": "BRAZIL_OBMIGRA_CATALOG", "source": "Brazil OBMigra consolidated migration statistics", "url": OBMIGRA_URL, "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "http_status": None, "content_sha256": "", "linked_data_assets": "", "linked_data_asset_count": 0, "error": "Offline audit requested; no network call made", "numeric_data_ingested": False}
         policy = []
     else:
         fresh, statuses = fetch_world_bank(session, run_id, args.start_year, args.end_year)
+        eurostat_rows, eurostat_status = fetch_spain_migration_flows(
+            session,
+            run_id=run_id,
+            start_year=args.start_year,
+            end_year=args.end_year,
+            snapshot_dir=ROOT / "data" / "raw" / "snapshots" / "eurostat" / run_id,
+        )
+        obmigra = check_obmigra_source(session, run_id)
         policy = [] if args.skip_policy_watch else check_policy_sources(session, run_id)
     raw_path = ROOT / "data" / "raw" / "world_bank_long.csv"
     history_path = ROOT / "data" / "observations_history" / "world_bank_observations.csv"
@@ -245,9 +359,30 @@ def main() -> int:
             atomic_csv(merged, raw_path)
     status_df = pd.DataFrame(statuses)
     policy_df = pd.DataFrame(policy)
+    eurostat_status_df = pd.DataFrame(eurostat_status)
+    obmigra_df = pd.DataFrame([obmigra])
     atomic_csv(status_df, ROOT / "metadata" / "live_source_status.csv")
+    atomic_csv(eurostat_status_df, ROOT / "metadata" / "eurostat_source_status.csv")
+    atomic_csv(obmigra_df, ROOT / "metadata" / "obmigra_source_status.csv")
     if policy:
         atomic_csv(policy_df, ROOT / "metadata" / "policy_page_watch_status.csv")
+
+    if eurostat_rows:
+        eurostat_path = ROOT / "data" / "raw" / "eurostat_migration_flows.csv"
+        existing_eurostat = pd.read_csv(eurostat_path) if eurostat_path.exists() else pd.DataFrame()
+        combined_eurostat = pd.concat(
+            [existing_eurostat, pd.DataFrame(eurostat_rows)], ignore_index=True, sort=False
+        )
+        combined_eurostat["_retrieved_sort"] = pd.to_datetime(
+            combined_eurostat.get("retrieved_utc"), errors="coerce", utc=True
+        )
+        combined_eurostat = (
+            combined_eurostat.sort_values("_retrieved_sort")
+            .drop_duplicates(["geo_code", "indicator", "year"], keep="last")
+            .drop(columns=["_retrieved_sort"])
+        )
+        atomic_csv(combined_eurostat, eurostat_path)
+        integrate_eurostat_panel(eurostat_rows)
     # Freshness dashboard by indicator: last nonmissing observation year and destination coverage.
     dashboard = []
     canonical = pd.read_csv(raw_path) if raw_path.exists() else pd.DataFrame()
@@ -271,12 +406,19 @@ def main() -> int:
         "offline_audit": bool(args.offline_audit),
         "world_bank_rows_fetched": int(len(fresh)), "policy_pages_successful": int((policy_df["status"] == "SUCCESS").sum()) if not policy_df.empty else 0,
         "policy_pages_failed": int((policy_df["status"] == "FAILED").sum()) if not policy_df.empty else 0,
+        "eurostat_series_successful": int((eurostat_status_df["status"] == "SUCCESS").sum()) if not eurostat_status_df.empty else 0,
+        "eurostat_series_failed": int((eurostat_status_df["status"] == "FAILED").sum()) if not eurostat_status_df.empty else 0,
+        "eurostat_observed_rows": int(eurostat_status_df["observed_rows"].sum()) if not eurostat_status_df.empty else 0,
+        "obmigra_source_status": obmigra.get("status", "Not reported"),
+        "obmigra_numeric_data_ingested": False,
         "ranking_recomputed": False, "forecast_issued": False,
-        "note": "This is a source refresh, not model calibration. Failed sources preserve the prior canonical data; a new ranking requires a separate validated run."}
+        "note": "This is a source refresh, not model calibration. Eurostat total flows are kept separate from subgroup-specific series; OBMigra is source-page monitored only and is not numerically parsed. Failed sources preserve prior canonical data; a new ranking requires a separate validated run."}
     out_dir = ROOT / "metadata" / "refresh_runs"; out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / f"{run_id}.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps(summary, indent=2))
-    return 0 if args.offline_audit or summary["world_bank_indicators_successful"] > 0 or policy_df.get("status", pd.Series(dtype=str)).eq("SUCCESS").any() else 2
+    any_eurostat_success = not eurostat_status_df.empty and eurostat_status_df["status"].eq("SUCCESS").any()
+    obmigra_success = obmigra.get("status") == "SUCCESS"
+    return 0 if args.offline_audit or summary["world_bank_indicators_successful"] > 0 or policy_df.get("status", pd.Series(dtype=str)).eq("SUCCESS").any() or any_eurostat_success or obmigra_success else 2
 
 if __name__ == "__main__":
     raise SystemExit(main())
