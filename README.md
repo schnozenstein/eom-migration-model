@@ -31,7 +31,7 @@ No new bulk macro data were downloaded: a local World Bank API request failed at
 
 ## Why fitting is gated
 
-The existing panel does not yet contain a comparable, aligned set of salary/income, cost, policy, job opportunity, institutional quality and stability features. Migration-flow coverage in the merged 21-destination panel is limited to 11–12 destinations during 2019–2024, and the current package does not contain a consistently aligned population denominator for a defensible flow-rate target. Fitting coefficients or presenting EOM-vs-baseline metrics from this matrix would be misleading.
+The existing panel does not yet contain a comparable, aligned set of salary/income, cost, policy, job opportunity, institutional quality and stability features. The pre-existing harmonized migration-flow series cover only a subset of destinations during 2019–2024, and the current package does not contain a consistently aligned population denominator for a defensible flow-rate target. Fitting coefficients or presenting EOM-vs-baseline metrics from this matrix would be misleading.
 
 ## Feedback and scientific safeguards
 
