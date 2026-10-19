@@ -229,6 +229,7 @@ def check_obmigra_source(session: requests.Session, run_id: str) -> dict:
         "status": "FAILED",
         "http_status": None,
         "content_sha256": "",
+        "changed_since_previous_check": "unknown",
         "linked_data_assets": "",
         "linked_data_asset_count": 0,
         "error": "",
@@ -242,6 +243,20 @@ def check_obmigra_source(session: requests.Session, run_id: str) -> dict:
             raise ValueError(f"Unexpected redirect away from official gov.br domain: {final_host}")
         body = response.text
         digest = hashlib.sha256(body.encode("utf-8", errors="replace")).hexdigest()
+        state_path = ROOT / "data" / "obmigra_page_state.json"
+        try:
+            previous_state = json.loads(state_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            previous_state = {}
+        previous_hash = (previous_state.get(OBMIGRA_URL) or {}).get("content_sha256", "")
+        changed = "first_seen" if not previous_hash else str(previous_hash != digest).lower()
+        previous_state[OBMIGRA_URL] = {
+            "content_sha256": digest,
+            "last_checked_utc": row["checked_at_utc"],
+            "final_url": response.url,
+        }
+        state_path.parent.mkdir(parents=True, exist_ok=True)
+        state_path.write_text(json.dumps(previous_state, indent=2), encoding="utf-8")
         snapshot = ROOT / "data" / "raw" / "snapshots" / "obmigra" / run_id / "catalog.html"
         snapshot.parent.mkdir(parents=True, exist_ok=True)
         snapshot.write_text(body, encoding="utf-8", errors="replace")
@@ -257,6 +272,7 @@ def check_obmigra_source(session: requests.Session, run_id: str) -> dict:
             "status": "SUCCESS",
             "http_status": response.status_code,
             "content_sha256": digest,
+            "changed_since_previous_check": changed,
             "linked_data_assets": ";".join(assets),
             "linked_data_asset_count": len(assets),
         })
