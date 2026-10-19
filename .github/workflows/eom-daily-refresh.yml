@@ -1,8 +1,13 @@
-
 name: EOM Daily Refresh
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/refresh_eom_data.py"
+      - "scripts/create_daily_summary.py"
+      - "tests/**"
+      - ".github/workflows/eom-daily-refresh.yml"
   schedule:
     - cron: "17 5 * * *"
 
@@ -15,8 +20,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -32,17 +35,40 @@ jobs:
           pip install pytest
 
       - name: Run tests
+        id: tests
+        continue-on-error: true
         env:
           PYTHONPATH: src
         run: python -m pytest -q
 
       - name: Refresh EOM data
+        if: github.event_name != 'pull_request'
+        id: refresh_data
+        continue-on-error: true
         env:
           PYTHONPATH: src
         run: python scripts/refresh_eom_data.py
+
       - name: Create human-readable report
+        if: always()
         run: python scripts/create_daily_summary.py
-      - name: Commit updated data
+
+      - name: Upload daily report and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eom-daily-report-${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 30
+          path: |
+            reports/latest_daily_summary.md
+            metadata/live_source_status.csv
+            metadata/policy_page_watch_status.csv
+            metadata/refresh_runs/*.json
+            outputs/data_freshness_dashboard.csv
+
+      - name: Commit report and refreshed data
+        if: always() && github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -51,3 +77,9 @@ jobs:
             git commit -m "Automated EOM data refresh"
             git push
           fi
+
+      - name: Mark run failed if tests or data refresh failed
+        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure')
+        run: |
+          echo "Daily report was generated, but tests or live data refresh failed. Inspect the source status CSV and step logs."
+          exit 1

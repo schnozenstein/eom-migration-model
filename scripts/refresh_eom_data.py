@@ -5,7 +5,7 @@ Historical snapshots and retrieval vintages are retained. This script does not c
 or publish a new ranking automatically; it only refreshes evidence and freshness reports.
 """
 from __future__ import annotations
-import argparse, hashlib, json, os, sys, time
+import argparse, hashlib, json, os, socket, sys, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
@@ -18,6 +18,9 @@ from urllib3.util.retry import Retry
 
 ROOT = Path(__file__).resolve().parents[1]
 WB_BASE = "https://api.worldbank.org/v2"
+# Current identifiers for revised World Bank Worldwide Governance Indicators.
+# Keep canonical feature keys stable for downstream EOM data.
+WB_API_CODE_OVERRIDES = {"GE.EST": "GOV_WGI_GE_EST", "PV.EST": "GOV_WGI_PV_EST", "RQ.EST": "GOV_WGI_RQ_EST"}
 WB_INDICATORS = {
     "NY.GDP.PCAP.PP.KD": "GDP per capita, PPP (constant 2021 international $)",
     "SL.UEM.TOTL.ZS": "Unemployment, total (% of labor force, ILO modeled estimate)",
@@ -63,6 +66,51 @@ def session_with_retries() -> requests.Session:
     return s
 
 
+def resolve_host_with_retries(url: str, attempts: int = 3, base_delay: float = 1.0) -> None:
+    """Preflight DNS resolution and retry transient resolver failures with backoff.
+
+    This does not replace the system resolver; it prevents a transient DNS failure
+    from immediately failing an entire source fetch and leaves useful diagnostics.
+    """
+    parsed = urlparse(url)
+    host = parsed.hostname
+    if not host:
+        raise ValueError(f"URL has no hostname: {url!r}")
+    port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    last_error = None
+    for attempt in range(attempts):
+        try:
+            socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)
+            return
+        except socket.gaierror as exc:
+            last_error = exc
+            if attempt + 1 < attempts:
+                time.sleep(base_delay * (2 ** attempt))
+    raise socket.gaierror(f"DNS lookup failed for {host} after {attempts} attempts: {last_error}") from last_error
+
+
+def request_with_dns_retries(session: requests.Session, url: str, *, attempts: int = 3, base_delay: float = 1.0, **kwargs):
+    """Retry transient DNS resolution errors around an HTTP GET."""
+    last_error = None
+    for attempt in range(attempts):
+        try:
+            resolve_host_with_retries(url, attempts=2, base_delay=base_delay)
+            return session.get(url, **kwargs)
+        except (socket.gaierror, requests.exceptions.ConnectionError) as exc:
+            message = str(exc).lower()
+            is_dns_error = isinstance(exc, socket.gaierror) or any(
+                token in message for token in ("name or service not known", "temporary failure in name resolution",
+                                                "getaddrinfo failed", "nodename nor servname", "failed to resolve"))
+            if not is_dns_error:
+                raise
+            last_error = exc
+            if attempt + 1 < attempts:
+                time.sleep(base_delay * (2 ** attempt))
+    raise requests.exceptions.ConnectionError(
+        f"DNS resolution/request failed for {url} after {attempts} attempts: {last_error}"
+    ) from last_error
+
+
 def atomic_csv(df: pd.DataFrame, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
@@ -74,16 +122,28 @@ def fetch_one_indicator(code: str, label: str, run_id: str, start: int, end: int
     session = session_with_retries()
     rows, statuses = [], []
     snapshot_dir = ROOT / "data" / "raw" / "snapshots" / "world_bank" / run_id
-    url = f"{WB_BASE}/country/all/indicator/{code}"
-    page, pages, count = 1, 1, 0
+    api_code = WB_API_CODE_OVERRIDES.get(code, code)
+    url = f"{WB_BASE}/country/all/indicator/{api_code}"
+    page, pages, count, per_page = 1, 1, 0, 20000
     try:
         while page <= pages:
-            r = session.get(url, params={"date": f"{start}:{end}", "format": "json", "per_page": 20000, "page": page}, timeout=(4, 12))
-            r.raise_for_status()
-            payload = r.json()
-            if not isinstance(payload, list) or len(payload) < 2 or not isinstance(payload[0], dict):
-                raise ValueError("Unexpected World Bank API response schema")
-            meta, observations = payload[0], payload[1] or []
+            last_error = None
+            parsed = None
+            for candidate_per_page in dict.fromkeys([per_page, 1000]):
+                try:
+                    r = request_with_dns_retries(session, url, params={"date": f"{start}:{end}", "format": "json", "per_page": candidate_per_page, "page": page}, timeout=(8, 30))
+                    r.raise_for_status()
+                    payload = r.json()
+                    if not isinstance(payload, list) or len(payload) < 2 or not isinstance(payload[0], dict) or not (payload[1] is None or isinstance(payload[1], list)):
+                        preview = (r.text or "").replace("\n", " ")[:400]
+                        raise ValueError(f"Unexpected World Bank API response for {code}: HTTP {r.status_code}, content-type={r.headers.get('Content-Type')}, payload_type={type(payload).__name__}, body_preview={preview!r}")
+                    parsed = (r, payload, payload[0], payload[1] or [], candidate_per_page)
+                    break
+                except Exception as exc:
+                    last_error = exc
+            if parsed is None:
+                raise last_error or ValueError(f"No valid World Bank response for {code}")
+            r, payload, meta, observations, per_page = parsed
             snapshot_dir.mkdir(parents=True, exist_ok=True)
             (snapshot_dir / f"{code.replace('.', '_')}_page_{page}.json").write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
             for item in observations:
@@ -91,7 +151,7 @@ def fetch_one_indicator(code: str, label: str, run_id: str, start: int, end: int
                 year = item.get("date")
                 if not year: continue
                 rows.append({"country_code": (item.get("countryiso3code") or "").upper(), "country_name_api": c.get("value"),
-                    "indicator_code": im.get("id", code), "indicator_name_api": im.get("value") or label, "year": int(year),
+                    "indicator_code": code, "indicator_api_code": im.get("id", api_code), "indicator_name_api": im.get("value") or label, "year": int(year),
                     "value": item.get("value"), "source": "World Bank Indicators API", "source_url": r.url,
                     "retrieved_utc": utc_now().isoformat(), "run_id": run_id,
                     "status": "observed" if item.get("value") is not None else "missing"})
@@ -129,7 +189,7 @@ def check_policy_sources(session: requests.Session, run_id: str) -> list[dict]:
             host = (urlparse(url).hostname or "").lower()
             if not (host.endswith(".gov.uk") or host.endswith(".gov.au") or host.endswith(".govt.nz") or host.endswith(".gov.sg") or host.endswith(".gov.hk") or host.endswith(".admin.ch") or host.endswith(".go.jp") or host.endswith(".canada.ca") or host.endswith(".gov.ie") or host.endswith(".mom.gov.sg") or host.endswith(".immd.gov.hk") or host.endswith(".moj.go.jp") or host.endswith(".sem.admin.ch") or host in {"www.canada.ca", "enterprise.gov.ie", "www.mom.gov.sg", "www.immd.gov.hk", "www.moj.go.jp", "www.sem.admin.ch"}):
                 raise ValueError(f"Host not on official-domain allowlist: {host}")
-            r = session.get(url, timeout=(4, 12), allow_redirects=True)
+            r = request_with_dns_retries(session, url, timeout=(8, 20), allow_redirects=True)
             r.raise_for_status()
             body = r.text
             digest = hashlib.sha256(body.encode("utf-8", errors="replace")).hexdigest()
