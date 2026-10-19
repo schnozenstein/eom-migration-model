@@ -21,3 +21,4 @@ AUT,Austria,country,,AUT,global_country,
 CZE,Czechia,country,,CZE,global_country,
 EDI,Edinburgh,city,GBR,,uk_nested,Nested city option; compare conditionally within the UK or in a hierarchical model
 IND,India,country,,IND,global_country,"Added 2026-10-16 as the 20th comparator by explicit user request; national macro comparison only, not an origin-specific migration estimate."
+BRA,Brazil,country,,BRA,global_country,"Added 2026-10-20; macro series are available through the global World Bank pull. OBMigra remains source-page monitored until numeric table parsing is validated."
