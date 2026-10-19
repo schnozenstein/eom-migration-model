@@ -12,8 +12,10 @@ DESTINATIONS = ROOT / "data" / "destinations.csv"
 OUT = ROOT / "data" / "raw" / "world_bank_long.csv"
 INDICATORS = {
     "NY.GDP.PCAP.PP.KD": "GDP per capita, PPP (constant 2021 international $)",
+    "NY.GDP.MKTP.PP.CD": "GDP, PPP (current international $)",
+    "PA.NUS.PPP": "PPP conversion factor, GDP (LCU per international $)",
+    "PA.NUS.PRVT.PP": "PPP conversion factor, household/private consumption (LCU per international $)",
     "SL.UEM.TOTL.ZS": "Unemployment, total (% of labor force, ILO modeled estimate)",
-    "PA.NUS.PPPC.RF": "GDP price level ratio of PPP to market exchange rate (US=1)",
     "RQ.EST": "Regulatory quality estimate",
     "GE.EST": "Government effectiveness estimate",
     "PV.EST": "Political stability and absence of violence/terrorism estimate",
