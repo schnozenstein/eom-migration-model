@@ -5,7 +5,7 @@ import pandas as pd
 import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from refresh_eom_data import WB_API_CODE_OVERRIDES
+from unittest.mock import patch\nimport socket\nfrom refresh_eom_data import WB_API_CODE_OVERRIDES, resolve_host_with_retries
 
 class RefreshETLTests(unittest.TestCase):
     def test_freshness_label_rules_are_explicit(self):
@@ -32,6 +32,11 @@ class RefreshETLTests(unittest.TestCase):
         self.assertEqual(WB_API_CODE_OVERRIDES["GE.EST"], "GOV_WGI_GE_EST")
         self.assertEqual(WB_API_CODE_OVERRIDES["PV.EST"], "GOV_WGI_PV_EST")
         self.assertEqual(WB_API_CODE_OVERRIDES["RQ.EST"], "GOV_WGI_RQ_EST")
+
+    def test_dns_lookup_retries_transient_failures(self):
+        with patch("refresh_eom_data.socket.getaddrinfo", side_effect=[socket.gaierror("temporary failure"), [(None, None, None, None, ("127.0.0.1", 443))]]) as lookup, patch("refresh_eom_data.time.sleep"):
+            resolve_host_with_retries("https://api.worldbank.org/v2", attempts=2, base_delay=0.01)
+        self.assertEqual(lookup.call_count, 2)
 
     def test_missing_values_are_not_zero(self):
         df = pd.DataFrame({"value":[None, 12.0]})
