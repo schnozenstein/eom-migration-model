@@ -33,7 +33,7 @@ Optional: `python scripts/refresh_eom_data.py --start-year 2015 --end-year 2026 
 
 - Added a small Eurostat Statistics API adapter for Spain's annual total immigration (`migr_imm8`) and emigration (`migr_emi2`) flows. API response snapshots are retained by run; the normalized table carries data values, flags, missingness, source URL, and retrieval timestamp.
 - Refreshed Spanish emigration is merged into the existing matching panel field. Immigration is stored in its own generic total-flow field to avoid conflating it with the existing birth/citizenship/previous-residence-specific measures.
-- Added Brazil to the destination registry and panel scaffold. The existing World Bank endpoint requests all countries, including BRA, for all configured macro indicators. OBMigra's official statistics page is monitored, but numeric parsing from its reports remains an explicit follow-up task.
+- Added Brazil to the destination registry and panel scaffold. The global World Bank pull is filtered into a compact, versioned `data/raw/brazil_world_bank_macro.csv` extract that the workflow can commit separately from the oversized all-country history. OBMigra's official statistics page is monitored, but numeric parsing from its reports remains an explicit follow-up task.
 - The refresh still never recalibrates or ranks automatically.
 
 ## Country and PPP expansion (2026-10-19)
