@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "status": "measurement_registry_not_a_calibrated_score",
+  "source": "World Bank World Development Indicators API",
+  "parameters": [
+    {
+      "indicator_code": "NY.GDP.PCAP.PP.KD",
+      "name": "GDP per capita, PPP (constant 2021 international $)",
+      "concept": "real output/income proxy",
+      "unit": "constant 2021 international dollars per person",
+      "use": "macro income feature",
+      "not_equivalent_to": [
+        "salary",
+        "disposable income",
+        "household purchasing power"
+      ]
+    },
+    {
+      "indicator_code": "NY.GDP.MKTP.PP.CD",
+      "name": "GDP, PPP (current international $)",
+      "concept": "aggregate output at current PPP",
+      "unit": "current international dollars",
+      "use": "macro scale/context",
+      "not_equivalent_to": [
+        "real GDP per capita",
+        "salary"
+      ]
+    },
+    {
+      "indicator_code": "PA.NUS.PPP",
+      "name": "PPP conversion factor, GDP (LCU per international $)",
+      "concept": "GDP-wide currency conversion and spatial price deflator",
+      "unit": "local currency units per international dollar",
+      "use": "PPP conversion / macro price-level analysis",
+      "not_equivalent_to": [
+        "rent index",
+        "household consumption basket"
+      ]
+    },
+    {
+      "indicator_code": "PA.NUS.PRVT.PP",
+      "name": "PPP conversion factor, household/private consumption (LCU per international $)",
+      "concept": "household/private consumption PPP conversion factor",
+      "unit": "local currency units per international dollar",
+      "use": "broad household price-level proxy",
+      "not_equivalent_to": [
+        "destination-specific rent",
+        "tuition",
+        "personal cost-of-living basket"
+      ]
+    },
+    {
+      "indicator_code": "PA.NUS.PPPC.RF",
+      "name": "Legacy GDP price-level ratio of PPP to market exchange rate (US=1)",
+      "concept": "historical GDP price-level ratio",
+      "unit": "US=1 index",
+      "use": "historical observations only pending API re-verification",
+      "active_polling": false
+    }
+  ],
+  "safeguards": [
+    "Do not collapse PPP measures into one score without a defined estimand and transformation.",
+    "Keep price year/base and missingness explicit.",
+    "These measures do not replace rent, tuition, tax, net salary or profile-specific cost data."
+  ]
+}
