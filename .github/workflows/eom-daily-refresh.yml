@@ -72,7 +72,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
+          # Commit only lightweight operational outputs. The full observation history,
+          # refreshed World Bank CSV, and raw source snapshots are intentionally not
+          # committed: they exceed GitHub's 100 MB file limit and grow every run.
+          # Full diagnostics remain available in the uploaded workflow artifact.
+          git add reports/latest_daily_summary.md \
+                  metadata/live_source_status.csv \
+                  metadata/policy_page_watch_status.csv \
+                  metadata/refresh_runs/ \
+                  outputs/data_freshness_dashboard.csv \
+                  data/policy_page_state.json
           if ! git diff --cached --quiet; then
             git commit -m "Automated EOM data refresh"
             git push
