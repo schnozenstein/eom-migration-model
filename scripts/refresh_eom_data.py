@@ -18,6 +18,9 @@ from urllib3.util.retry import Retry
 
 ROOT = Path(__file__).resolve().parents[1]
 WB_BASE = "https://api.worldbank.org/v2"
+# Current identifiers for revised World Bank Worldwide Governance Indicators.
+# Keep canonical feature keys stable for downstream EOM data.
+WB_API_CODE_OVERRIDES = {"GE.EST": "GOV_WGI_GE_EST", "PV.EST": "GOV_WGI_PV_EST", "RQ.EST": "GOV_WGI_RQ_EST"}
 WB_INDICATORS = {
     "NY.GDP.PCAP.PP.KD": "GDP per capita, PPP (constant 2021 international $)",
     "SL.UEM.TOTL.ZS": "Unemployment, total (% of labor force, ILO modeled estimate)",
@@ -74,16 +77,28 @@ def fetch_one_indicator(code: str, label: str, run_id: str, start: int, end: int
     session = session_with_retries()
     rows, statuses = [], []
     snapshot_dir = ROOT / "data" / "raw" / "snapshots" / "world_bank" / run_id
-    url = f"{WB_BASE}/country/all/indicator/{code}"
-    page, pages, count = 1, 1, 0
+    api_code = WB_API_CODE_OVERRIDES.get(code, code)
+    url = f"{WB_BASE}/country/all/indicator/{api_code}"
+    page, pages, count, per_page = 1, 1, 0, 20000
     try:
         while page <= pages:
-            r = session.get(url, params={"date": f"{start}:{end}", "format": "json", "per_page": 20000, "page": page}, timeout=(4, 12))
-            r.raise_for_status()
-            payload = r.json()
-            if not isinstance(payload, list) or len(payload) < 2 or not isinstance(payload[0], dict):
-                raise ValueError("Unexpected World Bank API response schema")
-            meta, observations = payload[0], payload[1] or []
+            last_error = None
+            parsed = None
+            for candidate_per_page in dict.fromkeys([per_page, 1000]):
+                try:
+                    r = session.get(url, params={"date": f"{start}:{end}", "format": "json", "per_page": candidate_per_page, "page": page}, timeout=(8, 30))
+                    r.raise_for_status()
+                    payload = r.json()
+                    if not isinstance(payload, list) or len(payload) < 2 or not isinstance(payload[0], dict) or not (payload[1] is None or isinstance(payload[1], list)):
+                        preview = (r.text or "").replace("\n", " ")[:400]
+                        raise ValueError(f"Unexpected World Bank API response for {code}: HTTP {r.status_code}, content-type={r.headers.get('Content-Type')}, payload_type={type(payload).__name__}, body_preview={preview!r}")
+                    parsed = (r, payload, payload[0], payload[1] or [], candidate_per_page)
+                    break
+                except Exception as exc:
+                    last_error = exc
+            if parsed is None:
+                raise last_error or ValueError(f"No valid World Bank response for {code}")
+            r, payload, meta, observations, per_page = parsed
             snapshot_dir.mkdir(parents=True, exist_ok=True)
             (snapshot_dir / f"{code.replace('.', '_')}_page_{page}.json").write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
             for item in observations:
@@ -91,7 +106,7 @@ def fetch_one_indicator(code: str, label: str, run_id: str, start: int, end: int
                 year = item.get("date")
                 if not year: continue
                 rows.append({"country_code": (item.get("countryiso3code") or "").upper(), "country_name_api": c.get("value"),
-                    "indicator_code": im.get("id", code), "indicator_name_api": im.get("value") or label, "year": int(year),
+                    "indicator_code": code, "indicator_api_code": im.get("id", api_code), "indicator_name_api": im.get("value") or label, "year": int(year),
                     "value": item.get("value"), "source": "World Bank Indicators API", "source_url": r.url,
                     "retrieved_utc": utc_now().isoformat(), "run_id": run_id,
                     "status": "observed" if item.get("value") is not None else "missing"})
