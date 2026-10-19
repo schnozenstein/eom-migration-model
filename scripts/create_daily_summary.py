@@ -50,6 +50,13 @@ def main():
     qol = read_csv(OUT / "eom_joie_de_vivre_scores.csv")
     status = read_json(OUT / "eom_v2_run_status.json")
     backtest = read_json(OUT / "macro_backtest.json")
+    eurostat_status = read_csv(ROOT / "metadata" / "eurostat_source_status.csv")
+    obmigra_status = read_csv(DATA.parent / "metadata" / "obmigra_source_status.csv")
+
+    eurostat_succeeded = sum(r.get("status") == "SUCCESS" for r in eurostat_status)
+    eurostat_failed = sum(r.get("status") == "FAILED" for r in eurostat_status)
+    eurostat_observed = sum(int(r.get("observed_rows") or 0) for r in eurostat_status)
+    obmigra_state = obmigra_status[0].get("status", "Not reported") if obmigra_status else "Not reported"
 
     recent = [r for r in dashboard if r.get("freshness_status") == "RECENT"]
     attention = [r for r in dashboard if r.get("freshness_status") != "RECENT"]
@@ -71,6 +78,9 @@ def main():
         f"- **Refresh timestamp:** {manifest.get('run_at_utc', 'Not reported')}",
         f"- **World Bank observations fetched:** {manifest.get('world_bank_rows_fetched', 'Not reported')}",
         f"- **World Bank indicator requests:** {manifest.get('world_bank_indicators_successful', 'Not reported')} succeeded; {manifest.get('world_bank_indicators_failed', 'Not reported')} failed",
+        f"- **Brazil World Bank extract:** {manifest.get('brazil_macro_rows_fetched', 'Not reported')} fresh Brazil indicator-year rows",
+        f"- **Eurostat Spain migration series:** {eurostat_succeeded} succeeded; {eurostat_failed} failed; {eurostat_observed} observed annual cells",
+        f"- **Brazil OBMigra official source page:** {obmigra_state} (catalogue monitor only; report tables are not numerically parsed)",
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
         f"- **Freshness dashboard:** {len(recent)} recent; {len(attention)} requiring attention out of {len(dashboard)} indicators",
         f"- **Ranking recomputed during refresh:** {yes_no(manifest.get('ranking_recomputed'))}",
