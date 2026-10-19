@@ -73,6 +73,7 @@ jobs:
             metadata/refresh_runs/*.json
             outputs/data_freshness_dashboard.csv
             data/raw/eurostat_migration_flows.csv
+            data/raw/brazil_world_bank_macro.csv
 
       - name: Commit report and refreshed data
         if: always() && github.event_name != 'pull_request'
