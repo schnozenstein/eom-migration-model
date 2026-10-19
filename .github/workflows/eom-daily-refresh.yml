@@ -42,6 +42,7 @@ jobs:
         run: python -m pytest -q
 
       - name: Refresh EOM data
+        if: github.event_name != 'pull_request'
         id: refresh_data
         continue-on-error: true
         env:
