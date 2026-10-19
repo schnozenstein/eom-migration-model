@@ -50,7 +50,7 @@ def main():
     qol = read_csv(OUT / "eom_joie_de_vivre_scores.csv")
     status = read_json(OUT / "eom_v2_run_status.json")
     backtest = read_json(OUT / "macro_backtest.json")
-    eurostat_status = read_csv(DATA / "eurostat_source_status.csv")
+    eurostat_status = read_csv(ROOT / "metadata" / "eurostat_source_status.csv")
     obmigra_status = read_csv(DATA.parent / "metadata" / "obmigra_source_status.csv")
 
     eurostat_succeeded = sum(r.get("status") == "SUCCESS" for r in eurostat_status)
