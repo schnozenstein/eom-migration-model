@@ -314,6 +314,11 @@ def integrate_eurostat_panel(rows: list[dict]) -> None:
         columns = column_map.get(item.get("indicator"))
         if not columns:
             continue
+        # An omitted sparse JSON-stat cell is different from an explicit suppressed
+        # value. Leave the panel unchanged when Eurostat did not return the year.
+        cell_present = item.get("source_cell_present", True)
+        if cell_present is False or str(cell_present).strip().lower() == "false":
+            continue
         value_column, missing_column = columns
         if value_column not in panel.columns:
             panel[value_column] = pd.NA
