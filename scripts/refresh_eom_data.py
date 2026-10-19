@@ -313,6 +313,34 @@ def integrate_eurostat_panel(rows: list[dict]) -> None:
     atomic_csv(panel, panel_path)
 
 
+def update_brazil_macro_extract(
+    fresh: pd.DataFrame, output_path: Path | None = None
+) -> int:
+    """Persist a compact BRA-only extract from the global World Bank refresh.
+
+    Returns the number of Brazil indicator-year rows fetched in this run. If no
+    Brazil rows arrive, existing output is left untouched rather than erased.
+    """
+    if fresh.empty or "country_code" not in fresh.columns:
+        return 0
+    brazil = fresh[fresh["country_code"].astype(str).str.upper().eq("BRA")].copy()
+    if brazil.empty:
+        return 0
+    path = output_path or ROOT / "data" / "raw" / "brazil_world_bank_macro.csv"
+    existing = pd.read_csv(path) if path.exists() else pd.DataFrame()
+    combined = pd.concat([existing, brazil], ignore_index=True, sort=False)
+    combined["_retrieved_sort"] = pd.to_datetime(
+        combined.get("retrieved_utc"), errors="coerce", utc=True
+    )
+    combined = (
+        combined.sort_values("_retrieved_sort")
+        .drop_duplicates(["country_code", "indicator_code", "year"], keep="last")
+        .drop(columns=["_retrieved_sort"])
+    )
+    atomic_csv(combined, path)
+    return int(len(brazil))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--start-year", type=int, default=2010)
@@ -357,6 +385,7 @@ def main() -> int:
             merged["_retrieved_sort"] = pd.to_datetime(merged.get("retrieved_utc"), errors="coerce", utc=True)
             merged = merged.sort_values("_retrieved_sort").drop_duplicates(["country_code", "indicator_code", "year"], keep="last").drop(columns=["_retrieved_sort"])
             atomic_csv(merged, raw_path)
+    brazil_macro_rows = update_brazil_macro_extract(fresh)
     status_df = pd.DataFrame(statuses)
     policy_df = pd.DataFrame(policy)
     eurostat_status_df = pd.DataFrame(eurostat_status)
@@ -404,7 +433,7 @@ def main() -> int:
         "world_bank_indicators_successful": int((status_df["status"] == "SUCCESS").sum()) if not status_df.empty else 0,
         "world_bank_indicators_failed": int((status_df["status"] == "FAILED").sum()) if not status_df.empty else 0,
         "offline_audit": bool(args.offline_audit),
-        "world_bank_rows_fetched": int(len(fresh)), "policy_pages_successful": int((policy_df["status"] == "SUCCESS").sum()) if not policy_df.empty else 0,
+        "world_bank_rows_fetched": int(len(fresh)), "brazil_macro_rows_fetched": int(brazil_macro_rows), "policy_pages_successful": int((policy_df["status"] == "SUCCESS").sum()) if not policy_df.empty else 0,
         "policy_pages_failed": int((policy_df["status"] == "FAILED").sum()) if not policy_df.empty else 0,
         "eurostat_series_successful": int((eurostat_status_df["status"] == "SUCCESS").sum()) if not eurostat_status_df.empty else 0,
         "eurostat_series_failed": int((eurostat_status_df["status"] == "FAILED").sum()) if not eurostat_status_df.empty else 0,
