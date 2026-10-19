@@ -84,15 +84,17 @@ jobs:
           # The full all-country World Bank history and raw source snapshots are not committed
           # because they exceed GitHub's 100 MB limit or grow every run. Full diagnostics remain
           # available in the uploaded workflow artifact.
-          git add reports/latest_daily_summary.md \\
-                  metadata/live_source_status.csv \\
-                  metadata/eurostat_source_status.csv \\
-                  metadata/obmigra_source_status.csv \\
-                  metadata/policy_page_watch_status.csv \\
-                  metadata/refresh_runs/ \\
-                  outputs/data_freshness_dashboard.csv \\
-                  data/historical_destination_year_panel.csv \\
-                  data/raw/eurostat_migration_flows.csv \\
+          git add reports/latest_daily_summary.md \
+                  metadata/live_source_status.csv \
+                  metadata/eurostat_source_status.csv \
+                  metadata/obmigra_source_status.csv \
+                  metadata/policy_page_watch_status.csv \
+                  metadata/refresh_runs/ \
+                  outputs/data_freshness_dashboard.csv \
+                  data/historical_destination_year_panel.csv \
+                  data/raw/eurostat_migration_flows.csv \
+                  data/raw/brazil_world_bank_macro.csv \
+                  data/obmigra_page_state.json \
                   data/policy_page_state.json
           if ! git diff --cached --quiet; then
             git commit -m "Automated EOM data refresh"
