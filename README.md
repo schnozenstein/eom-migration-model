@@ -14,7 +14,7 @@ Read in English: energy equals minus salary plus cost minus policy friendliness 
 
 ## Data currently present
 
-- `data/historical_destination_year_panel.csv`: 792 destination-year rows, 22 destinations (21 country comparators plus nested Scotland/Edinburgh), 1990–2025. It is a rectangular scaffold; indicators are intermittent and definitions differ.
+- `data/historical_destination_year_panel.csv`: 828 destination-year rows, 23 destination IDs (22 national comparators plus nested Edinburgh), 1990–2025. It is a rectangular scaffold; indicators are intermittent and definitions differ.
 - `data/eurostat_selected_total_indicators_long.csv`: 960 selected-total rows across five flow indicators, 32 reporting geographies, 2019–2024. Per-indicator observed values range from 166 to 186 of 192.
 - `data/eurostat_new_migration_indicators_long.csv`: 396 rows for two indicators across 33 geographies, 2019–2024; 188/198 and 190/198 observed values.
 - `data/data_quality_audit_general_2026-10-13.csv`: expanded audit across panel columns and native Eurostat extracts.
@@ -55,9 +55,17 @@ From the package root, run:
 
 This writes an audit CSV only. It does not fetch new data, fit a model, forecast, calibrate, rank destinations or estimate causal effects. The macro World Bank API starter code is under `src/eom_empirical/`. The backtest implementation uses expanding-origin folds and compares the fitted Ridge model with persistence and country-mean baselines; it also reports the equal-weight EOM energy rank association separately. Live data retrieval requires network access and must be recorded with source URLs and retrieval timestamps. Synthetic unit tests check logic only and are not empirical validation.
 
+## Spain and Brazil live source ingestion
+
+- The daily refresh now queries Eurostat's official Statistics API for Spain's annual total emigration (`migr_emi2`) and immigration (`migr_imm8`) from the requested start year through the requested end year. It stores a small normalized table at `data/raw/eurostat_migration_flows.csv`, with retrieval vintage, flags, source URL and explicit missing/suppressed markers.
+- Spain's emigration values update the existing `eurostat_emigration_total_flow_persons` panel field. Total immigration is retained in a distinct `eurostat_immigration_total_flow_persons` field; it is not mislabeled as immigration by birth, citizenship or previous residence.
+- Brazil is now a configured destination and historical-panel scaffold. The existing World Bank connector calls `/country/all/indicator/{code}`, so BRA macro observations are already included when the global indicator calls succeed. They remain in the raw World Bank extract rather than being silently transformed into migration flows.
+- The pipeline checks the official OBMigra consolidated-statistics page and records page status, a content hash and links to downloadable data assets. This is a page-change monitor only: OBMigra PDF/spreadsheet tables are not yet parsed into numeric model inputs.
+- Neither connector recalibrates EOM or produces a new ranking. Eurostat series and World Bank indicators have different definitions and coverage; retain these caveats when using the data.
+
 ## Geographic coverage and known gaps
 
-The maintained focus set is UK (with Scotland/Edinburgh as nested regional analysis where data allow), Ireland, Netherlands, Germany, Switzerland, Hong Kong, Japan, Singapore, Australia, Canada, USA, New Zealand, France, Sweden, Denmark, Finland, Norway, Austria, Czechia and Spain. The general architecture is global, not restricted to this set. Current harmonized flow coverage is Europe-heavy; most focus countries outside Eurostat's reporting universe remain gaps. Scotland/Edinburgh is not separately observed in the current national migration panel.
+The maintained focus set is UK (with Scotland/Edinburgh as nested regional analysis where data allow), Ireland, Netherlands, Germany, Switzerland, Hong Kong, Japan, Singapore, Australia, Canada, USA, New Zealand, France, Sweden, Denmark, Finland, Norway, Austria, Czechia, Spain and Brazil. The general architecture is global, not restricted to this set. Current harmonized flow coverage is Europe-heavy; most focus countries outside Eurostat's reporting universe remain gaps. Scotland/Edinburgh is not separately observed in the current national migration panel.
 
 
 ## 2026-10-15 WDI ingestion run
@@ -81,7 +89,7 @@ See `DAILY_REPORT_2026-10-16_v6.md`. India has been added as the 20th global com
 
 ## EOM live refresh pipeline patch (v9, 17 October 2026)
 
-See `LIVE_DATA_PIPELINE.md`. `scripts/refresh_eom_data.py` now requests the current UTC year by default, uses retries, preserves per-run source snapshots and retrieval vintages, writes source-level status/freshness dashboards, and watches official immigration landing pages for content changes. `.github/workflows/eom-daily-refresh.yml` defines a daily GitHub Actions run at 05:17 UTC plus manual dispatch. The workflow is deployable but not active until this project is pushed to a GitHub repository with Actions enabled. Eurostat/OECD numeric connectors and automatic policy interpretation remain future work. Source refresh does not automatically create a new ranking or forecast.
+See `LIVE_DATA_PIPELINE.md`. `scripts/refresh_eom_data.py` now requests the current UTC year by default, uses retries, preserves per-run source snapshots and retrieval vintages, writes source-level status/freshness dashboards, and watches official immigration landing pages for content changes. `.github/workflows/eom-daily-refresh.yml` defines a daily GitHub Actions run at 05:17 UTC plus manual dispatch. The workflow is deployable but not active until this project is pushed to a GitHub repository with Actions enabled. Spain's Eurostat total immigration/emigration series is now fetched by the live refresh; the connector does not yet fetch OECD numeric data. Brazil's official OBMigra page is monitored, but its report tables are not yet parsed into numeric series. Source refresh does not automatically create a new ranking or forecast.
 
 
 ## PPP parameter coverage (2026-10-19)
