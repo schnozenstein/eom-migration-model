@@ -144,13 +144,10 @@ def test_ilostat_focus_filter_retains_origin_breakdown_and_source_flags():
 
 
 
-def test_ilostat_fetch_uses_official_rds_bulk_endpoint_and_caps_year(tmp_path, monkeypatch):
+def test_ilostat_fetch_uses_official_csv_endpoint_and_caps_year(tmp_path):
     from datetime import datetime, timezone
-    import pyreadr
-    import pandas as pd
 
     from eom_empirical.research_datasets import (
-        ILOSTAT_API_URL,
         ILOSTAT_MIGRATION_INDICATORS,
         ILOSTAT_TOC_URL,
         fetch_ilostat_migration_focus,
@@ -162,25 +159,16 @@ def test_ilostat_fetch_uses_official_rds_bulk_endpoint_and_caps_year(tmp_path, m
         "EMP_XFRB_SEX_CBR_NB": "EMP_XFRB_SEX_CBR_NB_A",
         "POP_XFLB_SEX_CBR_NB": "POP_XFLB_SEX_CBR_NB_A",
     }
-    parsed_by_url = {}
-
-    def fake_read_r(path):
-        # The temporary file contains the payload from the most recent request.
-        return {"ilostat": parsed_by_url[current_url[0]]}
-
-    current_url = [None]
-    monkeypatch.setattr(pyreadr, "read_r", fake_read_r)
 
     class FakeResponse:
-        def __init__(self, status_code, body, url):
-            self.status_code = status_code
+        def __init__(self, body, url):
+            self.status_code = 200
             self.content = body.encode("utf-8")
             self.text = body
             self.url = url
 
         def raise_for_status(self):
-            if self.status_code >= 400:
-                raise RuntimeError(f"fake HTTP {self.status_code}")
+            return None
 
     class FakeSession:
         def __init__(self):
@@ -192,20 +180,15 @@ def test_ilostat_fetch_uses_official_rds_bulk_endpoint_and_caps_year(tmp_path, m
                 rows = ["id,indicator.label,freq,freq.label"]
                 for legacy_id, label in ILOSTAT_MIGRATION_INDICATORS.items():
                     rows.append(f"{current_ids[legacy_id]},{label},A,Annual")
-                return FakeResponse(200, "\n".join(rows) + "\n", url)
-            current_url[0] = url
-            dataset_id = url.rsplit("/", 1)[-1].removesuffix(".rds")
-            parsed_by_url[url] = pd.DataFrame({
-                "ref_area": ["GBR", "GBR", "GBR"],
-                "ref_area.label": ["United Kingdom"] * 3,
-                "indicator": [dataset_id] * 3,
-                "sex": ["SEX_T"] * 3,
-                "classif1": ["CBR_BRT_TOTAL"] * 3,
-                "time": [2020, query_end_year, query_end_year + 1],
-                "obs_value": [123.4, 234.5, 999.9],
-                "source": ["LFS"] * 3,
-            })
-            return FakeResponse(200, "rds-fixture", url)
+                return FakeResponse("\\n".join(rows) + "\\n", url)
+            dataset_id = params["id"]
+            body = (
+                "ref_area,ref_area.label,indicator,sex,classif1,time,obs_value,source\\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,2020,123.4,LFS\\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year},234.5,LFS\\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year + 1},999.9,LFS\\n"
+            )
+            return FakeResponse(body, url)
 
     session = FakeSession()
     fresh, statuses = fetch_ilostat_migration_focus(
@@ -214,13 +197,15 @@ def test_ilostat_fetch_uses_official_rds_bulk_endpoint_and_caps_year(tmp_path, m
 
     assert len(statuses) == len(ILOSTAT_MIGRATION_INDICATORS) == 3
     assert all(status["status"] == "SUCCESS" for status in statuses), statuses
-    assert all(status["request_variant"] == "official_bulk_rds" for status in statuses)
+    assert all(status["request_variant"] == "rplumber_csv_year_bounded" for status in statuses)
     assert all(status["observation_end_queried"] == query_end_year for status in statuses)
     assert {status["indicator_code"] for status in statuses} == set(current_ids.values())
     assert all(status["id_resolution"] == "official_catalogue_label_match" for status in statuses)
     assert len(session.calls) == 1 + len(ILOSTAT_MIGRATION_INDICATORS)
     assert session.calls[0][0] == ILOSTAT_TOC_URL
-    assert all(call[0].startswith(f"{ILOSTAT_API_URL}/") and call[0].endswith(".rds") for call in session.calls[1:])
+    assert all(call[0] == "https://rplumber.ilo.org/data/indicator" for call in session.calls[1:])
+    assert all(call[1]["format"] == ".csv" for call in session.calls[1:])
+    assert all(call[1]["timefrom"] == 2010 and call[1]["timeto"] == query_end_year for call in session.calls[1:])
     assert fresh["time"].max() == query_end_year
     assert (fresh["time"] < query_end_year + 1).all()
     assert set(fresh["ref_area"]) == {"GBR"}
