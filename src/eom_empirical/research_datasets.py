@@ -556,7 +556,7 @@ def fetch_ilostat_migration_focus(
                 try:
                     response.raise_for_status()
                 except Exception as exc:
-                    detail = re.sub(r"\\s+", " ", str(getattr(response, "text", ""))).strip()[:300]
+                    detail = " ".join(str(getattr(response, "text", "")).split())[:300]
                     status_code = getattr(response, "status_code", "unknown")
                     raise RuntimeError(
                         f"HTTP {status_code}; response body: {detail or str(exc)}"
