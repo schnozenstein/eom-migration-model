@@ -126,6 +126,7 @@ jobs:
             outputs/risk_coverage_audit.json
             outputs/geographical_risk_adjusted_ranking.csv
             outputs/geographical_uncertainty_audit.json
+            data/geographical_uncertainty_inputs.csv
             data/geographical_uncertainty_inputs_template.csv
             outputs/macro_backtest.json
             outputs/macro_backtest_folds.csv
@@ -179,7 +180,7 @@ jobs:
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Preserve the compact risk panel and coverage audit when the risk step produced them.
-          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs_template.csv; do
+          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.
@@ -198,8 +199,8 @@ jobs:
             git push
           fi
 
-      - name: Mark run failed if tests, data refresh, ranking, or risk-panel generation failed
-        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure')
+      - name: Mark run failed if required pipeline stages failed
+        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure')
         run: |
-          echo "Daily report was generated, but tests, live data refresh, ranking, or risk-panel generation failed. Inspect the source status CSV and step logs."
+          echo "Daily report was generated, but a required test, data refresh, ranking, risk panel, or geographic evidence stage failed. Inspect the step logs."
           exit 1
