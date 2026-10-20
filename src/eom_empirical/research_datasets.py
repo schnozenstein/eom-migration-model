@@ -370,9 +370,17 @@ def fetch_undesa_migrant_stock(session, root: Path, run_id: str) -> tuple[pd.Dat
             old = old[~old["direction"].astype(str).isin(successful_directions)]
         combined = pd.concat([old, result], ignore_index=True, sort=False)
         if not combined.empty:
-            combined = combined.drop_duplicates(
-                ["direction", "country_code_un", "year", "sex"], keep="last"
-            )
+            non_bilateral = combined[combined["direction"].astype(str) != "bilateral"]
+            bilateral = combined[combined["direction"].astype(str) == "bilateral"]
+            if not non_bilateral.empty:
+                non_bilateral = non_bilateral.drop_duplicates(
+                    ["direction", "country_code_un", "year", "sex"], keep="last"
+                )
+            if not bilateral.empty:
+                bilateral = bilateral.drop_duplicates(
+                    ["direction", "destination_code_un", "origin_code_un", "year", "sex"], keep="last"
+                )
+            combined = pd.concat([non_bilateral, bilateral], ignore_index=True, sort=False)
         combined.to_csv(result_path, index=False)
     return result, statuses
 
