@@ -1,11 +1,11 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-20 10:02 UTC
+> Generated: 2026-10-20 13:43 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-20T100118Z`
-- **Refresh timestamp:** 2026-10-20T10:01:18.100745+00:00
+- **Latest refresh run:** `2026-10-20T134244Z`
+- **Refresh timestamp:** 2026-10-20T13:42:44.968049+00:00
 - **World Bank observations fetched:** 165984
 - **World Bank indicator requests:** 39 succeeded; 0 failed
 - **Brazil World Bank extract:** 624 fresh Brazil indicator-year rows
@@ -15,7 +15,7 @@
 - **OECD migration database slice:** SUCCESS; 290 focus-country rows retained
 - **ILOSTAT migrant-labour indicators:** 3 succeeded; 0 failed; 6469 focus rows
 - **Brazil OBMigra official source page:** SUCCESS (catalogue monitor only; report tables are not numerically parsed)
-- **Policy pages:** 10 succeeded; 1 failed
+- **Policy pages:** 11 succeeded; 0 failed
 - **Freshness dashboard:** 38 recent; 2 requiring attention out of 40 indicators
 - **Ranking recomputed during refresh:** No
 - **Forecast issued during refresh:** No
@@ -59,15 +59,40 @@ This is the latest stored macro-proxy ranking, not a personalised migration reco
 
 ### Destination coverage
 
-- **Registered destinations:** 23
+- **Registered destinations:** 48
 - **Destinations in stored macro ranking:** 20
-- **Registered destinations not in stored ranking:** 3
+- **Registered destinations not in stored ranking:** 28
 
 | Destination | ID | Coverage note |
 |---|---|---|
 | Spain | ESP | Added 2026-10-19; national-level indicators only until harmonized flow coverage is verified. |
 | Edinburgh | EDI | Nested city option; compare conditionally within the UK or in a hierarchical model |
 | Brazil | BRA | Added 2026-10-20; macro series are available through the global World Bank pull. OBMigra remains source-page monitored until numeric table parsing is validated. |
+| China | CHN | Added 2026-10-20; major economy and migration comparator. |
+| Taiwan | TWN | Added 2026-10-20; major advanced economy; World Bank WDI coverage is limited or absent for many indicators, so use official Taiwan national statistics and preserve source-specific coverage. |
+| South Korea | KOR | Added 2026-10-20; major advanced economy and migration destination. |
+| Indonesia | IDN | Added 2026-10-20; major Southeast Asian economy. |
+| Malaysia | MYS | Added 2026-10-20; major Southeast Asian economy and migration destination. |
+| Thailand | THA | Added 2026-10-20; major Southeast Asian economy and migration destination. |
+| Vietnam | VNM | Added 2026-10-20; major manufacturing economy and migration-origin comparator. |
+| Philippines | PHL | Added 2026-10-20; major migration-origin and remittance economy. |
+| Mexico | MEX | Added 2026-10-20; major economy and migration-origin/destination comparator. |
+| South Africa | ZAF | Added 2026-10-20; major African economy. |
+| Saudi Arabia | SAU | Added 2026-10-20; major Gulf economy and migrant-labour destination. |
+| United Arab Emirates | ARE | Added 2026-10-20; major Gulf economy and migrant-labour destination; World Bank country code is ARE. |
+| Israel | ISR | Added 2026-10-20; advanced economy and migration destination. |
+| Poland | POL | Added 2026-10-20; major European economy and migration destination. |
+| Italy | ITA | Added 2026-10-20; major European economy and migration destination. |
+| Belgium | BEL | Added 2026-10-20; major European economy and migration destination. |
+| Portugal | PRT | Added 2026-10-20; European migration destination. |
+| Greece | GRC | Added 2026-10-20; European migration destination. |
+| Türkiye | TUR | Added 2026-10-20; major regional economy and migration destination. |
+| Argentina | ARG | Added 2026-10-20; major Latin American economy. |
+| Chile | CHL | Added 2026-10-20; Latin American economy and migration destination. |
+| Colombia | COL | Added 2026-10-20; major Latin American economy and migration-origin/destination comparator. |
+| Peru | PER | Added 2026-10-20; major Latin American economy. |
+| Pakistan | PAK | Added 2026-10-20; major South Asian economy and migration-origin comparator. |
+| Bangladesh | BGD | Added 2026-10-20; major South Asian economy and migration-origin comparator. |
 
 These destinations are registered but were not scored in the stored ranking. Registration or newly ingested source data does not automatically create a comparable score. Do not infer a rank for an unscored destination.
 
