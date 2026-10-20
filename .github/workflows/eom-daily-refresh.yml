@@ -106,6 +106,8 @@ jobs:
             metadata/refresh_runs/*.json
             outputs/data_freshness_dashboard.csv
             outputs/latest_macro_eom_ranking.csv
+            outputs/risk_indicator_panel.csv
+            outputs/risk_coverage_audit.json
             outputs/macro_backtest.json
             outputs/macro_backtest_folds.csv
             outputs/macro_backtest_predictions.csv
@@ -157,6 +159,10 @@ jobs:
           for path in data/raw/undesa_migrant_stock_long.csv data/raw/oecd_migration_database_focus.csv data/raw/ilostat_migrant_labour_focus.csv; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
+          # Preserve the compact risk panel and coverage audit when the risk step produced them.
+          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json; do
+            if [ -f "$path" ]; then git add "$path"; fi
+          done
           # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.
           while IFS= read -r path; do
             if [ -f "$path" ]; then
@@ -173,8 +179,8 @@ jobs:
             git push
           fi
 
-      - name: Mark run failed if tests, data refresh, or ranking failed
-        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure')
+      - name: Mark run failed if tests, data refresh, ranking, or risk-panel generation failed
+        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure')
         run: |
-          echo "Daily report was generated, but tests or live data refresh failed. Inspect the source status CSV and step logs."
+          echo "Daily report was generated, but tests, live data refresh, ranking, or risk-panel generation failed. Inspect the source status CSV and step logs."
           exit 1
