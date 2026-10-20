@@ -463,12 +463,79 @@ def fetch_oecd_migration_slice(session, root: Path, run_id: str, start_year: int
 
 
 ILOSTAT_API_URL = "https://rplumber.ilo.org/data/indicator"
+ILOSTAT_TOC_URL = "https://rplumber.ilo.org/metadata/toc/indicator"
 ILOSTAT_MIGRATION_INDICATORS = {
     "POP_XFRB_SEX_CBR_NB": "Working-age foreign-born population by sex and country of birth (thousands)",
     "EMP_XFRB_SEX_CBR_NB": "Employed foreign-born population by sex and country of birth (thousands)",
     "POP_XFLB_SEX_CBR_NB": "Inflow of working-age foreign-born population by sex and country of birth (thousands)",
 }
 
+
+def fetch_ilostat_annual_dataset_ids(session) -> dict[str, str]:
+    """Resolve current annual dataset IDs by official ILOSTAT catalogue labels.
+
+    Legacy IDs are intentionally not trusted: ILOSTAT has deprecated some older
+    identifiers. Resolve each requested series from the provider's live TOC instead.
+    """
+    from io import StringIO
+
+    response = session.get(
+        ILOSTAT_TOC_URL,
+        params={"lang": "en", "format": ".csv"},
+        timeout=(15, 60),
+    )
+    response.raise_for_status()
+    body = response.text
+    if not body.strip() or body.lstrip().startswith("<"):
+        raise ValueError("ILOSTAT indicator catalogue returned empty or non-CSV content")
+    catalog = pd.read_csv(StringIO(body), low_memory=False)
+    catalog.columns = [str(col).replace("\ufeff", "").strip() for col in catalog.columns]
+    id_col = _find_column(catalog.columns, ("id",))
+    label_col = _find_column(catalog.columns, ("indicator.label", "indicator_label", "label"))
+    freq_col = _find_column(catalog.columns, ("freq",))
+    freq_label_col = _find_column(catalog.columns, ("freq.label", "freq_label"))
+    if not id_col or not label_col:
+        raise ValueError(
+            "ILOSTAT catalogue missing id/indicator label columns; "
+            f"columns={list(catalog.columns)[:30]}"
+        )
+
+    resolved: dict[str, str] = {}
+    for legacy_id, expected_label in ILOSTAT_MIGRATION_INDICATORS.items():
+        expected_key = _norm(expected_label)
+        label_values = catalog[label_col].fillna("").astype(str).map(_norm)
+        matches = catalog.loc[label_values == expected_key].copy()
+        if matches.empty:
+            # Allow harmless wording additions around the expected label, but do
+            # not choose unrelated indicators based on a broad keyword search.
+            matches = catalog.loc[label_values.map(
+                lambda value: value.startswith(expected_key) or expected_key.startswith(value)
+                if value else False
+            )].copy()
+
+        if matches.empty:
+            continue
+
+        annual_mask = pd.Series(False, index=matches.index)
+        if freq_col:
+            annual_mask |= matches[freq_col].fillna("").astype(str).map(_norm).isin({"a", "annual", "annually"})
+        if freq_label_col:
+            annual_mask |= matches[freq_label_col].fillna("").astype(str).map(_norm).isin({"a", "annual", "annually"})
+        id_values = matches[id_col].fillna("").astype(str)
+        annual_mask |= id_values.str.upper().str.endswith("_A")
+        annual = matches.loc[annual_mask].copy()
+        if annual.empty:
+            continue
+        # Prefer an explicit annual-frequency row and a stable ID when duplicate
+        # catalogue aliases exist. Refuse ambiguity rather than guessing silently.
+        annual_ids = sorted(set(annual[id_col].dropna().astype(str).str.strip()) - {""})
+        if len(annual_ids) == 1:
+            resolved[legacy_id] = annual_ids[0]
+        elif annual_ids:
+            with_suffix = [value for value in annual_ids if value.upper().endswith("_A")]
+            if len(with_suffix) == 1:
+                resolved[legacy_id] = with_suffix[0]
+    return resolved
 
 def filter_ilostat_focus(df: pd.DataFrame) -> pd.DataFrame:
     """Keep destination-country rows for the registered country comparison set.
@@ -504,14 +571,24 @@ def fetch_ilostat_migration_focus(
     new_frames: list[pd.DataFrame] = []
     statuses: list[dict] = []
     successful_ids: set[str] = set()
-    for indicator, label in ILOSTAT_MIGRATION_INDICATORS.items():
-        url = ILOSTAT_API_URL
+    try:
+        current_dataset_ids = fetch_ilostat_annual_dataset_ids(session)
+        catalogue_error = ""
+    except Exception as exc:
+        current_dataset_ids = {}
+        catalogue_error = f"{type(exc).__name__}: {exc}"
+
+    for legacy_id, label in ILOSTAT_MIGRATION_INDICATORS.items():
+        query_end_year = min(int(end_year), datetime.now(timezone.utc).year - 1)
+        dataset_id = current_dataset_ids.get(legacy_id, "")
         status = {
-            "source_id": f"ILOSTAT_{indicator}",
+            "source_id": f"ILOSTAT_{legacy_id}",
             "source": "International Labour Organization (ILOSTAT)",
-            "indicator_code": indicator,
+            "indicator_code": dataset_id,
+            "legacy_indicator_code": legacy_id,
             "indicator_label_expected": label,
-            "url": url,
+            "url": ILOSTAT_API_URL,
+            "catalogue_url": ILOSTAT_TOC_URL,
             "checked_at_utc": _now(),
             "status": "FAILED",
             "rows_fetched": 0,
@@ -519,40 +596,57 @@ def fetch_ilostat_migration_focus(
             "geographies": 0,
             "observation_start": start_year,
             "observation_end_requested": end_year,
-            "observation_end_queried": min(int(end_year), datetime.now(timezone.utc).year - 1),
+            "observation_end_queried": query_end_year,
             "request_variant": "",
             "sha256_response": "",
             "error": "",
             "output_path": "data/raw/ilostat_migrant_labour_focus.csv",
         }
-        query_end_year = min(int(end_year), datetime.now(timezone.utc).year - 1)
+
+        if not dataset_id:
+            if catalogue_error:
+                # A catalogue outage should not make the whole data refresh abort.
+                # Try the modern annual suffix as a fallback, while preserving the
+                # catalogue error in status for auditability.
+                dataset_id = f"{legacy_id}_A"
+                status["indicator_code"] = dataset_id
+                status["id_resolution"] = "annual_suffix_fallback_after_catalogue_error"
+                status["catalogue_error"] = catalogue_error
+            else:
+                status["error"] = (
+                    f"No unique annual ILOSTAT dataset ID found for label {label!r} "
+                    f"in the official indicator catalogue"
+                )
+                statuses.append(status)
+                continue
+        else:
+            status["id_resolution"] = "official_catalogue_label_match"
+
         request_variants = [
             (
                 "bounded_dot_csv",
                 {
-                    "id": indicator, "lang": "en", "type": "both", "format": ".csv",
+                    "id": dataset_id, "lang": "en", "type": "both", "format": ".csv",
                     "timefrom": start_year, "timeto": query_end_year,
                 },
             ),
             (
                 "bounded_csv",
                 {
-                    "id": indicator, "lang": "en", "type": "both", "format": "csv",
+                    "id": dataset_id, "lang": "en", "type": "both", "format": "csv",
                     "timefrom": start_year, "timeto": query_end_year,
                 },
             ),
-            # The API has occasionally rejected bounded requests with HTTP 400.
-            # Try its complete CSV series and apply the year window locally.
-            ("full_series_dot_csv", {"id": indicator, "lang": "en", "type": "both", "format": ".csv"}),
-            ("full_series_csv", {"id": indicator, "lang": "en", "type": "both", "format": "csv"}),
+            ("full_series_dot_csv", {"id": dataset_id, "lang": "en", "type": "both", "format": ".csv"}),
+            ("full_series_csv", {"id": dataset_id, "lang": "en", "type": "both", "format": "csv"}),
         ]
         parsed_raw = None
         selected_variant = ""
+        response = None
         failures: list[str] = []
         for variant_name, params in request_variants:
-            response = None
             try:
-                response = session.get(url, params=params, timeout=(15, 90))
+                response = session.get(ILOSTAT_API_URL, params=params, timeout=(15, 90))
                 try:
                     response.raise_for_status()
                 except Exception as exc:
@@ -567,7 +661,7 @@ def fetch_ilostat_migration_focus(
                     raise ValueError("ILOSTAT API returned empty or HTML content instead of CSV")
                 from io import StringIO
                 candidate = pd.read_csv(StringIO(body), low_memory=False)
-                candidate.columns = [str(col).replace("\\ufeff", "").strip() for col in candidate.columns]
+                candidate.columns = [str(col).replace("\ufeff", "").strip() for col in candidate.columns]
                 norm_columns = {_norm(col): str(col) for col in candidate.columns}
                 time_col = norm_columns.get("time")
                 value_col = norm_columns.get("obsvalue")
@@ -592,39 +686,41 @@ def fetch_ilostat_migration_focus(
                 failures.append(f"{variant_name}: {type(exc).__name__}: {exc}")
 
         if parsed_raw is None:
-            raise RuntimeError("All ILOSTAT request variants failed: " + " | ".join(failures))
+            status["error"] = "All ILOSTAT request variants failed: " + " | ".join(failures)
+            statuses.append(status)
+            continue
 
-        raw = parsed_raw
-        time_col = _find_column(raw.columns, ("time",))
-        value_col = _find_column(raw.columns, ("obs_value",))
-        indicator_col = _find_column(raw.columns, ("indicator",))
-        area_col = _find_column(raw.columns, ("ref_area",))
-        filtered = filter_ilostat_focus(raw)
-        if filtered.empty:
-            raise ValueError(
-                f"ILOSTAT returned {len(raw)} rows for {indicator} in years "
-                f"{start_year}-{query_end_year}, but none matched registered destination codes"
-            )
-        filtered["retrieved_utc"] = _now()
-        filtered["run_id"] = run_id
-        filtered["source_url"] = response.url
-        filtered["source_dataset"] = indicator
-        filtered["source_publisher"] = "International Labour Organization (ILOSTAT)"
-        new_frames.append(filtered)
-        successful_ids.add(indicator)
-        time_values = pd.to_numeric(filtered[time_col], errors="coerce").dropna()
-        status.update({
-            "status": "SUCCESS",
-            "rows_fetched": len(raw),
-            "rows_focus": len(filtered),
-            "geographies": int(filtered[area_col].nunique()),
-            "observation_start": int(time_values.min()) if not time_values.empty else "",
-            "observation_end": int(time_values.max()) if not time_values.empty else "",
-            "observation_end_queried": query_end_year,
-            "request_variant": selected_variant,
-            "sha256_response": hashlib.sha256(response.content).hexdigest(),
-            "error": "" if not failures else "Recovered after fallback: " + " | ".join(failures),
-        })
+        try:
+            time_col = _find_column(parsed_raw.columns, ("time",))
+            area_col = _find_column(parsed_raw.columns, ("ref_area",))
+            filtered = filter_ilostat_focus(parsed_raw)
+            if filtered.empty:
+                raise ValueError(
+                    f"ILOSTAT returned {len(parsed_raw)} rows for {dataset_id} but none matched "
+                    "registered destination codes"
+                )
+
+            filtered["retrieved_utc"] = _now()
+            filtered["run_id"] = run_id
+            filtered["source_url"] = response.url
+            filtered["source_dataset"] = dataset_id
+            filtered["source_publisher"] = "International Labour Organization (ILOSTAT)"
+            new_frames.append(filtered)
+            successful_ids.add(dataset_id)
+            time_values = pd.to_numeric(filtered[time_col], errors="coerce").dropna()
+            status.update({
+                "status": "SUCCESS",
+                "rows_fetched": len(parsed_raw),
+                "rows_focus": len(filtered),
+                "geographies": int(filtered[area_col].nunique()),
+                "observation_start": int(time_values.min()) if not time_values.empty else "",
+                "observation_end": int(time_values.max()) if not time_values.empty else "",
+                "request_variant": selected_variant,
+                "sha256_response": hashlib.sha256(response.content).hexdigest(),
+                "error": "" if not failures else "Recovered after fallback: " + " | ".join(failures),
+            })
+        except Exception as exc:
+            status["error"] = f"{type(exc).__name__}: {exc}"
         statuses.append(status)
 
     fresh = pd.concat(new_frames, ignore_index=True, sort=False) if new_frames else pd.DataFrame()
