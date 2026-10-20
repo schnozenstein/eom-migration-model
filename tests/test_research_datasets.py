@@ -93,3 +93,51 @@ def test_undesa_bilateral_workbook_parses_origin_destination_pairs(tmp_path):
     male_2024 = result[(result["sex"] == "Male") & (result["year"] == 2024)].iloc[0]
     assert both_1990["migrant_stock_persons"] == 100
     assert male_2024["migrant_stock_persons"] == 207
+
+
+def test_ilostat_focus_filter_retains_origin_breakdown_and_source_flags():
+    from eom_empirical.research_datasets import filter_ilostat_focus
+
+    source = pd.DataFrame([
+        {
+            "ref_area": "GBR",
+            "ref_area.label": "United Kingdom",
+            "indicator": "POP_XFRB_SEX_CBR_NB",
+            "sex": "SEX_T",
+            "classif1": "CBR_BRT_IND",
+            "classif1.label": "Country of birth: India",
+            "time": 2022,
+            "obs_value": 123.4,
+            "obs_status": "P",
+            "source.label": "Labour force survey",
+        },
+        {
+            "ref_area": "BRA",
+            "ref_area.label": "Brazil",
+            "indicator": "POP_XFRB_SEX_CBR_NB",
+            "sex": "SEX_F",
+            "classif1": "CBR_BRT_TOTAL",
+            "classif1.label": "Country of birth: Total",
+            "time": 2021,
+            "obs_value": 56.7,
+            "obs_status": "",
+            "source.label": "National survey",
+        },
+        {
+            "ref_area": "XYZ",
+            "ref_area.label": "Non-focus area",
+            "indicator": "POP_XFRB_SEX_CBR_NB",
+            "sex": "SEX_T",
+            "classif1": "CBR_BRT_TOTAL",
+            "classif1.label": "Country of birth: Total",
+            "time": 2020,
+            "obs_value": 5.0,
+            "obs_status": "",
+            "source.label": "Source",
+        },
+    ])
+    result = filter_ilostat_focus(source)
+    assert result["ref_area"].tolist() == ["GBR", "BRA"]
+    assert result.iloc[0]["classif1"] == "CBR_BRT_IND"
+    assert result.iloc[0]["obs_status"] == "P"
+    assert "source.label" in result.columns
