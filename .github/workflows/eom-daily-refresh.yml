@@ -82,6 +82,14 @@ jobs:
           PYTHONPATH: src
         run: python -m eom_empirical.build_risk_panel
 
+      - name: Fetch source-backed geographic hazard evidence
+        if: github.event_name != 'pull_request'
+        id: geographic_evidence
+        continue-on-error: true
+        env:
+          PYTHONPATH: src
+        run: python -m eom_empirical.fetch_geographical_evidence
+
       - name: Build geographic uncertainty adjustment (evidence-gated)
         if: github.event_name != 'pull_request'
         id: geographic_adjustment
