@@ -581,11 +581,10 @@ def fetch_ilostat_migration_focus(
 
     fresh = pd.concat(new_frames, ignore_index=True, sort=False) if new_frames else pd.DataFrame()
     if not fresh.empty:
-        if not old.empty and "indicator" in old.columns:
-            old = old[~old["indicator"].astype(str).isin(successful_ids)]
         combined = pd.concat([old, fresh], ignore_index=True, sort=False)
-        # Preserve separate source releases where ILOSTAT reports multiple sources;
-        # the source field is part of the observation key along with all dimensions.
+        # Merge at observation-key level rather than replacing whole indicators:
+        # a requested time window must not erase older or newer stored years, and
+        # source rows omitted from a new vintage must not silently delete prior data.
         dimension_keys = [
             key for key in (
                 "indicator", "ref_area", "sex", "classif1", "classif2",
