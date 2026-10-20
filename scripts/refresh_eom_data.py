@@ -532,8 +532,22 @@ def main() -> int:
     (out_dir / f"{run_id}.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps(summary, indent=2))
     any_eurostat_success = not eurostat_status_df.empty and eurostat_status_df["status"].eq("SUCCESS").any()
+    any_unhcr_success = unhcr_status.get("status") == "SUCCESS"
+    any_undesa_success = not undesa_status_df.empty and undesa_status_df["status"].eq("SUCCESS").any()
+    any_oecd_success = oecd_status.get("status") == "SUCCESS"
+    any_ilostat_success = not ilostat_status_df.empty and ilostat_status_df["status"].eq("SUCCESS").any()
     obmigra_success = obmigra.get("status") == "SUCCESS"
-    return 0 if args.offline_audit or summary["world_bank_indicators_successful"] > 0 or policy_df.get("status", pd.Series(dtype=str)).eq("SUCCESS").any() or any_eurostat_success or obmigra_success else 2
+    return 0 if (
+        args.offline_audit
+        or summary["world_bank_indicators_successful"] > 0
+        or policy_df.get("status", pd.Series(dtype=str)).eq("SUCCESS").any()
+        or any_eurostat_success
+        or any_unhcr_success
+        or any_undesa_success
+        or any_oecd_success
+        or any_ilostat_success
+        or obmigra_success
+    ) else 2
 
 if __name__ == "__main__":
     raise SystemExit(main())
