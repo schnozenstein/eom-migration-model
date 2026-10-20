@@ -192,7 +192,7 @@ def test_ilostat_fetch_uses_official_rds_bulk_endpoint_and_caps_year(tmp_path, m
                 rows = ["id,indicator.label,freq,freq.label"]
                 for legacy_id, label in ILOSTAT_MIGRATION_INDICATORS.items():
                     rows.append(f"{current_ids[legacy_id]},{label},A,Annual")
-                return FakeResponse(200, "\\n".join(rows) + "\\n", url)
+                return FakeResponse(200, "\n".join(rows) + "\n", url)
             current_url[0] = url
             dataset_id = url.rsplit("/", 1)[-1].removesuffix(".rds")
             parsed_by_url[url] = pd.DataFrame({
@@ -213,7 +213,7 @@ def test_ilostat_fetch_uses_official_rds_bulk_endpoint_and_caps_year(tmp_path, m
     )
 
     assert len(statuses) == len(ILOSTAT_MIGRATION_INDICATORS) == 3
-    assert all(status["status"] == "SUCCESS" for status in statuses)
+    assert all(status["status"] == "SUCCESS" for status in statuses), statuses
     assert all(status["request_variant"] == "official_bulk_rds" for status in statuses)
     assert all(status["observation_end_queried"] == query_end_year for status in statuses)
     assert {status["indicator_code"] for status in statuses} == set(current_ids.values())
