@@ -74,6 +74,14 @@ jobs:
           python -m eom_empirical.fetch_world_bank --start 2010 --end "$(date -u +%Y)"
           python -m eom_empirical.fit_macro_model
 
+      - name: Build environmental and economic risk indicator panel
+        if: github.event_name != 'pull_request'
+        id: risk_panel
+        continue-on-error: true
+        env:
+          PYTHONPATH: src
+        run: python -m eom_empirical.build_risk_panel
+
       - name: Create human-readable report
         if: always()
         run: python scripts/create_daily_summary.py
