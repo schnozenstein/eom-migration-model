@@ -180,13 +180,13 @@ def test_ilostat_fetch_uses_official_csv_endpoint_and_caps_year(tmp_path):
                 rows = ["id,indicator.label,freq,freq.label"]
                 for legacy_id, label in ILOSTAT_MIGRATION_INDICATORS.items():
                     rows.append(f"{current_ids[legacy_id]},{label},A,Annual")
-                return FakeResponse("\\n".join(rows) + "\\n", url)
+                return FakeResponse("\n".join(rows) + "\n", url)
             dataset_id = params["id"]
             body = (
-                "ref_area,ref_area.label,indicator,sex,classif1,time,obs_value,source\\n"
-                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,2020,123.4,LFS\\n"
-                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year},234.5,LFS\\n"
-                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year + 1},999.9,LFS\\n"
+                "ref_area,ref_area.label,indicator,sex,classif1,time,obs_value,source\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,2020,123.4,LFS\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year},234.5,LFS\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year + 1},999.9,LFS\n"
             )
             return FakeResponse(body, url)
 
