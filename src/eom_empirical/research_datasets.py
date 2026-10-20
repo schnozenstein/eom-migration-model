@@ -348,10 +348,18 @@ def fetch_undesa_migrant_stock(session, root: Path, run_id: str) -> tuple[pd.Dat
                 df = _parse_undesa_bilateral_workbook(snapshot_path, run_id, iso_map)
             else:
                 df = _parse_undesa_workbook(snapshot_path, direction, run_id, iso_map)
-            outputs.append(df)
             status["status"] = "SUCCESS"
             status["rows_fetched"] = len(df)
-            status["countries_fetched"] = int(df["country_code_un"].nunique())
+            if direction == "bilateral":
+                status["countries_fetched"] = int(max(
+                    df["destination_code_un"].nunique(),
+                    df["origin_code_un"].nunique(),
+                ))
+                status["destination_countries_fetched"] = int(df["destination_code_un"].nunique())
+                status["origin_countries_fetched"] = int(df["origin_code_un"].nunique())
+            else:
+                status["countries_fetched"] = int(df["country_code_un"].nunique())
+            outputs.append(df)
         except Exception as exc:
             status["error"] = f"{type(exc).__name__}: {exc}"
         statuses.append(status)
