@@ -462,7 +462,7 @@ def fetch_oecd_migration_slice(session, root: Path, run_id: str, start_year: int
         return pd.DataFrame(), status
 
 
-ILOSTAT_API_URL = "https://rplumber.ilo.org/data/indicator/"
+ILOSTAT_API_URL = "https://rplumber.ilo.org/data/indicator"
 ILOSTAT_MIGRATION_INDICATORS = {
     "POP_XFRB_SEX_CBR_NB": "Working-age foreign-born population by sex and country of birth (thousands)",
     "EMP_XFRB_SEX_CBR_NB": "Employed foreign-born population by sex and country of birth (thousands)",
@@ -519,67 +519,112 @@ def fetch_ilostat_migration_focus(
             "geographies": 0,
             "observation_start": start_year,
             "observation_end_requested": end_year,
+            "observation_end_queried": min(int(end_year), datetime.now(timezone.utc).year - 1),
+            "request_variant": "",
             "sha256_response": "",
             "error": "",
             "output_path": "data/raw/ilostat_migrant_labour_focus.csv",
         }
-        try:
-            response = session.get(
-                url,
-                params={
-                    "id": indicator,
-                    "lang": "en",
-                    "type": "both",
-                    "format": ".csv",
-                    "timefrom": start_year,
-                    "timeto": end_year,
+        query_end_year = min(int(end_year), datetime.now(timezone.utc).year - 1)
+        request_variants = [
+            (
+                "bounded_dot_csv",
+                {
+                    "id": indicator, "lang": "en", "type": "both", "format": ".csv",
+                    "timefrom": start_year, "timeto": query_end_year,
                 },
-                timeout=(15, 90),
+            ),
+            (
+                "bounded_csv",
+                {
+                    "id": indicator, "lang": "en", "type": "both", "format": "csv",
+                    "timefrom": start_year, "timeto": query_end_year,
+                },
+            ),
+            # The API has occasionally rejected bounded requests with HTTP 400.
+            # Try its complete CSV series and apply the year window locally.
+            ("full_series_dot_csv", {"id": indicator, "lang": "en", "type": "both", "format": ".csv"}),
+            ("full_series_csv", {"id": indicator, "lang": "en", "type": "both", "format": "csv"}),
+        ]
+        parsed_raw = None
+        selected_variant = ""
+        failures: list[str] = []
+        for variant_name, params in request_variants:
+            response = None
+            try:
+                response = session.get(url, params=params, timeout=(15, 90))
+                try:
+                    response.raise_for_status()
+                except Exception as exc:
+                    detail = re.sub(r"\\s+", " ", str(getattr(response, "text", ""))).strip()[:300]
+                    status_code = getattr(response, "status_code", "unknown")
+                    raise RuntimeError(
+                        f"HTTP {status_code}; response body: {detail or str(exc)}"
+                    ) from exc
+
+                body = response.text
+                if not body.strip() or body.lstrip().lower().startswith(("<!doctype html", "<html")):
+                    raise ValueError("ILOSTAT API returned empty or HTML content instead of CSV")
+                from io import StringIO
+                candidate = pd.read_csv(StringIO(body), low_memory=False)
+                candidate.columns = [str(col).replace("\\ufeff", "").strip() for col in candidate.columns]
+                norm_columns = {_norm(col): str(col) for col in candidate.columns}
+                time_col = norm_columns.get("time")
+                value_col = norm_columns.get("obsvalue")
+                indicator_col = norm_columns.get("indicator")
+                area_col = norm_columns.get("refarea")
+                if not all((time_col, value_col, indicator_col, area_col)):
+                    raise ValueError(
+                        f"ILOSTAT schema missing required columns; columns={list(candidate.columns)[:30]}"
+                    )
+                candidate[time_col] = pd.to_numeric(candidate[time_col], errors="coerce")
+                candidate = candidate[
+                    candidate[time_col].between(start_year, query_end_year, inclusive="both")
+                ].copy()
+                if candidate.empty:
+                    raise ValueError(
+                        f"ILOSTAT response contained no rows between {start_year} and {query_end_year}"
+                    )
+                parsed_raw = candidate
+                selected_variant = variant_name
+                break
+            except Exception as exc:
+                failures.append(f"{variant_name}: {type(exc).__name__}: {exc}")
+
+        if parsed_raw is None:
+            raise RuntimeError("All ILOSTAT request variants failed: " + " | ".join(failures))
+
+        raw = parsed_raw
+        time_col = _find_column(raw.columns, ("time",))
+        value_col = _find_column(raw.columns, ("obs_value",))
+        indicator_col = _find_column(raw.columns, ("indicator",))
+        area_col = _find_column(raw.columns, ("ref_area",))
+        filtered = filter_ilostat_focus(raw)
+        if filtered.empty:
+            raise ValueError(
+                f"ILOSTAT returned {len(raw)} rows for {indicator} in years "
+                f"{start_year}-{query_end_year}, but none matched registered destination codes"
             )
-            response.raise_for_status()
-            from io import StringIO
-            body = response.text
-            if not body.strip() or body.lstrip().lower().startswith(("<!doctype html", "<html")):
-                raise ValueError("ILOSTAT API returned empty or HTML content instead of CSV")
-            raw = pd.read_csv(StringIO(body), low_memory=False)
-            raw.columns = [str(col).replace("\ufeff", "").strip() for col in raw.columns]
-            norm_columns = {_norm(col): str(col) for col in raw.columns}
-            time_col = norm_columns.get("time")
-            value_col = norm_columns.get("obsvalue")
-            indicator_col = norm_columns.get("indicator")
-            area_col = norm_columns.get("refarea")
-            if not all((time_col, value_col, indicator_col, area_col)):
-                raise ValueError(
-                    f"ILOSTAT schema missing required columns; columns={list(raw.columns)[:30]}"
-                )
-            raw[time_col] = pd.to_numeric(raw[time_col], errors="coerce")
-            raw = raw[raw[time_col].between(start_year, end_year, inclusive="both")].copy()
-            if raw.empty:
-                raise ValueError("ILOSTAT response contained no rows in requested time range")
-            filtered = filter_ilostat_focus(raw)
-            if filtered.empty:
-                raise ValueError("ILOSTAT returned data but none for registered national destination codes")
-            filtered["retrieved_utc"] = _now()
-            filtered["run_id"] = run_id
-            filtered["source_url"] = response.url
-            filtered["source_dataset"] = indicator
-            filtered["source_publisher"] = "International Labour Organization (ILOSTAT)"
-            # Avoid overwriting indicator values with strings; source labels and status
-            # columns remain as provided by ILOSTAT.
-            new_frames.append(filtered)
-            successful_ids.add(indicator)
-            time_values = pd.to_numeric(filtered[time_col], errors="coerce").dropna()
-            status.update({
-                "status": "SUCCESS",
-                "rows_fetched": len(raw),
-                "rows_focus": len(filtered),
-                "geographies": int(filtered[area_col].nunique()),
-                "observation_start": int(time_values.min()) if not time_values.empty else "",
-                "observation_end": int(time_values.max()) if not time_values.empty else "",
-                "sha256_response": hashlib.sha256(response.content).hexdigest(),
-            })
-        except Exception as exc:
-            status["error"] = f"{type(exc).__name__}: {exc}"
+        filtered["retrieved_utc"] = _now()
+        filtered["run_id"] = run_id
+        filtered["source_url"] = response.url
+        filtered["source_dataset"] = indicator
+        filtered["source_publisher"] = "International Labour Organization (ILOSTAT)"
+        new_frames.append(filtered)
+        successful_ids.add(indicator)
+        time_values = pd.to_numeric(filtered[time_col], errors="coerce").dropna()
+        status.update({
+            "status": "SUCCESS",
+            "rows_fetched": len(raw),
+            "rows_focus": len(filtered),
+            "geographies": int(filtered[area_col].nunique()),
+            "observation_start": int(time_values.min()) if not time_values.empty else "",
+            "observation_end": int(time_values.max()) if not time_values.empty else "",
+            "observation_end_queried": query_end_year,
+            "request_variant": selected_variant,
+            "sha256_response": hashlib.sha256(response.content).hexdigest(),
+            "error": "" if not failures else "Recovered after fallback: " + " | ".join(failures),
+        })
         statuses.append(status)
 
     fresh = pd.concat(new_frames, ignore_index=True, sort=False) if new_frames else pd.DataFrame()
