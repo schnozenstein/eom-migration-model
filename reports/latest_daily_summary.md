@@ -1,11 +1,11 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-20 13:54 UTC
+> Generated: 2026-10-20 14:00 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-20T135309Z`
-- **Refresh timestamp:** 2026-10-20T13:53:09.860801+00:00
+- **Latest refresh run:** `2026-10-20T135855Z`
+- **Refresh timestamp:** 2026-10-20T13:58:55.928557+00:00
 - **World Bank observations fetched:** 165984
 - **World Bank indicator requests:** 39 succeeded; 0 failed
 - **Brazil World Bank extract:** 624 fresh Brazil indicator-year rows
@@ -15,7 +15,7 @@
 - **OECD migration database slice:** SUCCESS; 290 focus-country rows retained
 - **ILOSTAT migrant-labour indicators:** 3 succeeded; 0 failed; 6469 focus rows
 - **Brazil OBMigra official source page:** SUCCESS (catalogue monitor only; report tables are not numerically parsed)
-- **Policy pages:** 10 succeeded; 1 failed
+- **Policy pages:** 11 succeeded; 0 failed
 - **Freshness dashboard:** 38 recent; 2 requiring attention out of 40 indicators
 - **Ranking recomputed during refresh:** No
 - **Forecast issued during refresh:** No
@@ -59,9 +59,9 @@ This is the latest stored macro-proxy ranking, not a personalised migration reco
 
 ### Destination coverage
 
-- **Registered destinations:** 48
+- **Registered destinations:** 46
 - **Destinations in stored macro ranking:** 20
-- **Registered destinations not in stored ranking:** 28
+- **Registered destinations not in stored ranking:** 26
 
 | Destination | ID | Coverage note |
 |---|---|---|
@@ -91,8 +91,6 @@ This is the latest stored macro-proxy ranking, not a personalised migration reco
 | Chile | CHL | Added 2026-10-20; Latin American economy and migration destination. |
 | Colombia | COL | Added 2026-10-20; major Latin American economy and migration-origin/destination comparator. |
 | Peru | PER | Added 2026-10-20; major Latin American economy. |
-| Pakistan | PAK | Added 2026-10-20; major South Asian economy and migration-origin comparator. |
-| Bangladesh | BGD | Added 2026-10-20; major South Asian economy and migration-origin comparator. |
 
 These destinations are registered but were not scored in the stored ranking. Registration or newly ingested source data does not automatically create a comparable score. Do not infer a rank for an unscored destination.
 
