@@ -1,22 +1,34 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-20 04:11 UTC
+> Generated: 2026-10-20 05:07 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-20T041050Z`
-- **Refresh timestamp:** 2026-10-20T04:10:50.702306+00:00
-- **World Bank observations fetched:** 76608
-- **World Bank indicator requests:** 18 succeeded; 0 failed
-- **Brazil World Bank extract:** 288 fresh Brazil indicator-year rows
-- **Eurostat Spain migration series:** 2 succeeded; 0 failed; 30 observed annual cells
+- **Latest refresh run:** `2026-10-20T050621Z`
+- **Refresh timestamp:** 2026-10-20T05:06:21.887016+00:00
+- **World Bank observations fetched:** 165984
+- **World Bank indicator requests:** 39 succeeded; 0 failed
+- **Brazil World Bank extract:** 624 fresh Brazil indicator-year rows
+- **Eurostat total migration flows:** 2 series succeeded; 0 failed; 1034 observed annual cells across up to 44 reporting geographies
+- **UNHCR forced-displacement extract:** SUCCESS; 242461 retained focus/origin rows
+- **UN DESA migrant-stock tables:** 3 of 3 files succeeded; 0 failed; 69264 normalized rows
+- **OECD migration database slice:** SUCCESS; 290 focus-country rows retained
+- **ILOSTAT migrant-labour indicators:** 0 succeeded; 3 failed; 0 focus rows
 - **Brazil OBMigra official source page:** SUCCESS (catalogue monitor only; report tables are not numerically parsed)
-- **Policy pages:** 8 succeeded; 3 failed
-- **Freshness dashboard:** 18 recent; 1 requiring attention out of 19 indicators
+- **Policy pages:** 10 succeeded; 1 failed
+- **Freshness dashboard:** 38 recent; 2 requiring attention out of 40 indicators
 - **Ranking recomputed during refresh:** No
 - **Forecast issued during refresh:** No
 
 A successful data refresh is not evidence that a ranking or forecast was recalculated.
+
+### Supplemental dataset notes
+
+- UN DESA International Migrant Stock 2024 is a stock measure at selected reference years (1990–2024), split by sex and direction (destination/origin); it is not an annual flow.
+- UNHCR forced-displacement counts include distinct population categories such as refugees, asylum-seekers and other groups; population types must not be summed or treated as voluntary economic migration.
+- OECD records preserve the original SDMX dimensions and labels from a bounded official query. The B11 measure code is not interpreted or added to the EOM score until its structure and definition are reviewed.
+- ILOSTAT migrant-labour series include migrant working-age stock, employment and inflow by sex and country of birth. Retain national source flags and notes; these surveys cover only a subset of countries/years and are not a fully harmonized bilateral flow panel.
+- Eurostat total immigration and emigration are stored across all reporting geographies; some rows may represent aggregate regions rather than independent countries.
 
 ## 2. Stored macro ranking
 
@@ -114,6 +126,7 @@ Missing QoL or visa data must remain missing, not be silently converted to zero.
 
 | Indicator | Latest observation year | Status |
 |---|---:|---|
+| NY.GDP.TOTL.RT.ZS | 2021 | STALE_OR_SLOW_RELEASE |
 | PA.NUS.PPPC.RF | 2023 | STALE_OR_SLOW_RELEASE |
 
 A recent retrieval timestamp does not guarantee a recent statistical observation. Some indicators are released with a delay, so check release schedules before labelling them defective.
@@ -138,3 +151,9 @@ A recent retrieval timestamp does not guarantee a recent statistical observation
 - `outputs/eom_v2_weight_sensitivity.csv`
 - `outputs/eom_joie_de_vivre_scores.csv`
 - `data/observations_history/world_bank_observations.csv`
+- `data/raw/eurostat_migration_flows.csv`
+- `data/raw/undesa_migrant_stock_long.csv`
+- `data/raw/unhcr_forced_displacement_focus.csv.gz`
+- `data/raw/oecd_migration_database_focus.csv`
+- `data/raw/ilostat_migrant_labour_focus.csv`
+- `metadata/eurostat_source_status.csv`, `metadata/undesa_source_status.csv`, `metadata/unhcr_source_status.csv`, `metadata/oecd_source_status.csv`, `metadata/ilostat_source_status.csv`
