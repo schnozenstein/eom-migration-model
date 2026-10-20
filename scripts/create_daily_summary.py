@@ -56,6 +56,7 @@ def main():
     unhcr_status = read_csv(ROOT / "metadata" / "unhcr_source_status.csv")
     undesa_status = read_csv(ROOT / "metadata" / "undesa_source_status.csv")
     oecd_status = read_csv(ROOT / "metadata" / "oecd_source_status.csv")
+    ilostat_status = read_csv(ROOT / "metadata" / "ilostat_source_status.csv")
 
     eurostat_succeeded = sum(r.get("status") == "SUCCESS" for r in eurostat_status)
     eurostat_failed = sum(r.get("status") == "FAILED" for r in eurostat_status)
@@ -68,6 +69,9 @@ def main():
     undesa_rows = sum(int(r.get("rows_fetched") or 0) for r in undesa_status)
     oecd_state = oecd_status[0].get("status", "Not reported") if oecd_status else "Not reported"
     oecd_rows = int(oecd_status[0].get("rows_focus") or 0) if oecd_status else 0
+    ilostat_succeeded = sum(r.get("status") == "SUCCESS" for r in ilostat_status)
+    ilostat_failed = sum(r.get("status") == "FAILED" for r in ilostat_status)
+    ilostat_rows = sum(int(r.get("rows_focus") or 0) for r in ilostat_status)
     obmigra_state = obmigra_status[0].get("status", "Not reported") if obmigra_status else "Not reported"
 
     recent = [r for r in dashboard if r.get("freshness_status") == "RECENT"]
@@ -95,6 +99,7 @@ def main():
         f"- **UNHCR forced-displacement extract:** {unhcr_state}; {unhcr_rows} retained focus/origin rows",
         f"- **UN DESA migrant-stock tables:** {undesa_succeeded} of 3 files succeeded; {undesa_failed} failed; {undesa_rows} normalized rows",
         f"- **OECD migration database slice:** {oecd_state}; {oecd_rows} focus-country rows retained",
+        f"- **ILOSTAT migrant-labour indicators:** {ilostat_succeeded} succeeded; {ilostat_failed} failed; {ilostat_rows} focus rows",
         f"- **Brazil OBMigra official source page:** {obmigra_state} (catalogue monitor only; report tables are not numerically parsed)",
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
         f"- **Freshness dashboard:** {len(recent)} recent; {len(attention)} requiring attention out of {len(dashboard)} indicators",
@@ -108,6 +113,7 @@ def main():
         "- UN DESA International Migrant Stock 2024 is a stock measure at selected reference years (1990–2024), split by sex and direction (destination/origin); it is not an annual flow.",
         "- UNHCR forced-displacement counts include distinct population categories such as refugees, asylum-seekers and other groups; population types must not be summed or treated as voluntary economic migration.",
         "- OECD records preserve the original SDMX dimensions and labels from a bounded official query. The B11 measure code is not interpreted or added to the EOM score until its structure and definition are reviewed.",
+        "- ILOSTAT migrant-labour series include migrant working-age stock, employment and inflow by sex and country of birth. Retain national source flags and notes; these surveys cover only a subset of countries/years and are not a fully harmonized bilateral flow panel.",
         "- Eurostat total immigration and emigration are stored across all reporting geographies; some rows may represent aggregate regions rather than independent countries.",
         "",
         "## 2. Stored macro ranking",
@@ -280,7 +286,8 @@ def main():
         "- `data/raw/undesa_migrant_stock_long.csv`",
         "- `data/raw/unhcr_forced_displacement_focus.csv`",
         "- `data/raw/oecd_migration_database_focus.csv`",
-        "- `metadata/eurostat_source_status.csv`, `metadata/undesa_source_status.csv`, `metadata/unhcr_source_status.csv`, `metadata/oecd_source_status.csv`",
+        "- `data/raw/ilostat_migrant_labour_focus.csv`",
+        "- `metadata/eurostat_source_status.csv`, `metadata/undesa_source_status.csv`, `metadata/unhcr_source_status.csv`, `metadata/oecd_source_status.csv`, `metadata/ilostat_source_status.csv`",
         "",
     ]
 
