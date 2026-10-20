@@ -462,7 +462,7 @@ def fetch_oecd_migration_slice(session, root: Path, run_id: str, start_year: int
         return pd.DataFrame(), status
 
 
-ILOSTAT_API_URL = "https://rplumber.ilo.org/data/indicator"
+ILOSTAT_API_URL = "https://rplumber.ilo.org/files/indicator"
 ILOSTAT_TOC_URL = "https://rplumber.ilo.org/metadata/toc/indicator"
 ILOSTAT_MIGRATION_INDICATORS = {
     "POP_XFRB_SEX_CBR_NB": "Working-age foreign-born population by sex and country of birth (thousands)",
@@ -622,68 +622,38 @@ def fetch_ilostat_migration_focus(
         else:
             status["id_resolution"] = "official_catalogue_label_match"
 
-        request_variants = [
-            (
-                "bounded_dot_csv",
-                {
-                    "id": dataset_id, "lang": "en", "type": "both", "format": ".csv",
-                    "timefrom": start_year, "timeto": query_end_year,
-                },
-            ),
-            (
-                "bounded_csv",
-                {
-                    "id": dataset_id, "lang": "en", "type": "both", "format": "csv",
-                    "timefrom": start_year, "timeto": query_end_year,
-                },
-            ),
-            ("full_series_dot_csv", {"id": dataset_id, "lang": "en", "type": "both", "format": ".csv"}),
-            ("full_series_csv", {"id": dataset_id, "lang": "en", "type": "both", "format": "csv"}),
-        ]
-        parsed_raw = None
-        selected_variant = ""
-        response = None
-        failures: list[str] = []
-        for variant_name, params in request_variants:
-            try:
-                response = session.get(ILOSTAT_API_URL, params=params, timeout=(15, 90))
-                try:
-                    response.raise_for_status()
-                except Exception as exc:
-                    detail = " ".join(str(getattr(response, "text", "")).split())[:300]
-                    status_code = getattr(response, "status_code", "unknown")
-                    raise RuntimeError(
-                        f"HTTP {status_code}; response body: {detail or str(exc)}"
-                    ) from exc
+        # ILOSTAT's supported bulk-download interface serves annual indicator
+        # datasets as gzip-compressed CSV files. The legacy /data/indicator
+        # endpoint rejects the old query parameters with HTTP 400.
+        from io import BytesIO
 
-                body = response.text
-                if not body.strip() or body.lstrip().lower().startswith(("<!doctype html", "<html")):
-                    raise ValueError("ILOSTAT API returned empty or HTML content instead of CSV")
-                from io import StringIO
-                candidate = pd.read_csv(StringIO(body), low_memory=False)
-                candidate.columns = [str(col).replace("\ufeff", "").strip() for col in candidate.columns]
-                norm_columns = {_norm(col): str(col) for col in candidate.columns}
-                time_col = norm_columns.get("time")
-                value_col = norm_columns.get("obsvalue")
-                indicator_col = norm_columns.get("indicator")
-                area_col = norm_columns.get("refarea")
-                if not all((time_col, value_col, indicator_col, area_col)):
-                    raise ValueError(
-                        f"ILOSTAT schema missing required columns; columns={list(candidate.columns)[:30]}"
-                    )
-                candidate[time_col] = pd.to_numeric(candidate[time_col], errors="coerce")
-                candidate = candidate[
-                    candidate[time_col].between(start_year, query_end_year, inclusive="both")
-                ].copy()
-                if candidate.empty:
-                    raise ValueError(
-                        f"ILOSTAT response contained no rows between {start_year} and {query_end_year}"
-                    )
-                parsed_raw = candidate
-                selected_variant = variant_name
-                break
-            except Exception as exc:
-                failures.append(f"{variant_name}: {type(exc).__name__}: {exc}")
+        data_url = f"https://rplumber.ilo.org/files/indicator/{dataset_id}.csv.gz"
+        parsed_raw = None
+        selected_variant = "official_bulk_csv_gzip"
+        response = None
+        try:
+            response = session.get(data_url, timeout=(15, 120))
+            response.raise_for_status()
+            if not response.content:
+                raise ValueError("ILOSTAT bulk endpoint returned an empty response")
+            candidate = pd.read_csv(BytesIO(response.content), compression="gzip", low_memory=False)
+            candidate.columns = [str(col).replace("\\ufeff", "").strip() for col in candidate.columns]
+            norm_columns = {_norm(col): str(col) for col in candidate.columns}
+            time_col = norm_columns.get("time")
+            value_col = norm_columns.get("obsvalue")
+            indicator_col = norm_columns.get("indicator")
+            area_col = norm_columns.get("refarea")
+            if not all((time_col, value_col, indicator_col, area_col)):
+                raise ValueError(
+                    f"ILOSTAT bulk CSV schema missing required columns; columns={list(candidate.columns)[:30]}"
+                )
+            candidate[time_col] = pd.to_numeric(candidate[time_col], errors="coerce")
+            candidate = candidate[candidate[time_col].between(start_year, query_end_year, inclusive="both")].copy()
+            if candidate.empty:
+                raise ValueError(f"ILOSTAT dataset had no rows between {start_year} and {query_end_year}")
+            parsed_raw = candidate
+        except Exception as exc:
+            failures = [f"official_bulk_csv_gzip: {type(exc).__name__}: {exc}"]
 
         if parsed_raw is None:
             status["error"] = "All ILOSTAT request variants failed: " + " | ".join(failures)
