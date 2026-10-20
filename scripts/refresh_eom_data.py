@@ -409,7 +409,7 @@ def main() -> int:
         undesa_data = pd.DataFrame()
         undesa_status = [{"source_id": f"UN_DESA_IMS_2024_{direction.upper()}", "source": "UN DESA Population Division", "dataset": f"International Migrant Stock 2024 — {direction}", "url": "", "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "countries_fetched": 0, "error": "Offline audit requested; no network call made", "output_path": "data/raw/undesa_migrant_stock_long.csv"} for direction in ("destination", "origin", "bilateral")]
         oecd_data = pd.DataFrame()
-        oecd_status = {"source_id": "OECD_DF_MIG_B11", "source": "OECD International migration database (SDMX)", "url": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.IMD,DSD_MIG@DF_MIG,/.W.A.B11._T...", "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "rows_focus": 0, "error": "Offline audit requested; no network call made", "output_path": "data/raw/oecd_migration_database_focus.csv"}
+        oecd_status = {"source_id": "OECD_DF_MIG_B11", "source": "OECD International migration database (SDMX)", "url": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.IMD,DSD_MIG@DF_MIG,1.0/.W.A.B11._T...", "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "rows_focus": 0, "error": "Offline audit requested; no network call made", "output_path": "data/raw/oecd_migration_database_focus.csv"}
         policy = []
     else:
         fresh, statuses = fetch_world_bank(session, run_id, args.start_year, args.end_year)
