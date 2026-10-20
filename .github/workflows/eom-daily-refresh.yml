@@ -111,23 +111,23 @@ jobs:
                   data/policy_page_state.json
           # Supplemental sources may be unavailable in an individual run. Stage their
           # last successful compact extracts only when a file exists.
-# UNHCR focus extract can exceed GitHub's 100 MB per-file limit.
+          # UNHCR focus extract can exceed GitHub's 100 MB per-file limit.
           # It remains available in the workflow artifact uploaded above; do not add it to Git history.
           for path in data/raw/undesa_migrant_stock_long.csv data/raw/oecd_migration_database_focus.csv data/raw/ilostat_migrant_labour_focus.csv; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.
-while IFS= read -r path; do
-  if [ -f "$path" ]; then
-    size=$(stat -c%s "$path")
-    if [ "$size" -ge 90000000 ]; then
-      echo "::error::Staged file $path is $size bytes; keep individual GitHub files below 90 MB."
-      exit 1
-    fi
-  fi
-done < <(git diff --cached --name-only)
+          while IFS= read -r path; do
+            if [ -f "$path" ]; then
+              size=$(stat -c%s "$path")
+              if [ "$size" -ge 90000000 ]; then
+                echo "::error::Staged file $path is $size bytes; keep individual GitHub files below 90 MB."
+                exit 1
+              fi
+            fi
+          done < <(git diff --cached --name-only)
 
-if ! git diff --cached --quiet; then
+          if ! git diff --cached --quiet; then
             git commit -m "Automated EOM data refresh"
             git push
           fi
