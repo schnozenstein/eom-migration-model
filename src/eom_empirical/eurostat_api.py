@@ -215,3 +215,175 @@ def fetch_spain_migration_flows(
             })
 
     return rows, statuses
+
+
+def _labels_by_code(payload: dict, dimension_id: str) -> dict[str, str]:
+    dimension = payload.get("dimension", {}).get(dimension_id, {})
+    labels = dimension.get("category", {}).get("label", {})
+    return {str(code): str(label) for code, label in labels.items()} if isinstance(labels, dict) else {}
+
+
+def parse_jsonstat_multi_geo_observations(
+    payload: dict,
+    *,
+    start_year: int,
+    end_year: int,
+) -> tuple[dict[tuple[str, int], float | None], dict[tuple[str, int], str], dict[str, str]]:
+    """Decode selected annual values across all geographies from a Eurostat response.
+
+    Keeps sparse/explicitly-missing values distinct. Other dimensions are constrained
+    using the same total-frequency/unit/age/sex filters as the Spain connector.
+    """
+    dimension_ids = [str(item) for item in payload.get("id", [])]
+    sizes = [int(item) for item in payload.get("size", [])]
+    if not dimension_ids or len(dimension_ids) != len(sizes):
+        raise ValueError("Eurostat response has invalid JSON-stat dimensions")
+    dimensions = {name.lower(): name for name in dimension_ids}
+    if "geo" not in dimensions or "time" not in dimensions:
+        raise ValueError("Eurostat response must include geo and time dimensions")
+
+    codes_by_position = {
+        name.lower(): _category_codes_by_position(payload, name)
+        for name in dimension_ids
+    }
+    if not codes_by_position["geo"] or not codes_by_position["time"]:
+        raise ValueError("Eurostat response is missing geo or time category indexes")
+    labels = _labels_by_code(payload, dimensions["geo"])
+    values: dict[tuple[str, int], float | None] = {}
+    flags: dict[tuple[str, int], str] = {}
+    status_map = payload.get("status") or payload.get("extension", {}).get("status", {})
+    if not isinstance(status_map, dict):
+        status_map = {}
+
+    for flat_position, raw_value in _value_items(payload):
+        if flat_position < 0 or flat_position >= math.prod(sizes):
+            raise ValueError("Eurostat JSON-stat cell index is outside the dimensions")
+        coordinates = {}
+        for offset, (dimension_id, size) in enumerate(zip(dimension_ids, sizes)):
+            stride = math.prod(sizes[offset + 1:]) if offset + 1 < len(sizes) else 1
+            position = (flat_position // stride) % size
+            coordinates[dimension_id.lower()] = codes_by_position[
+                dimension_id.lower()
+            ].get(position)
+        if any(
+            name in coordinates and coordinates[name] != expected
+            for name, expected in SELECTED_DIMENSIONS.items()
+        ):
+            continue
+        geo = coordinates.get("geo")
+        if not geo:
+            continue
+        try:
+            year = int(coordinates.get("time", ""))
+        except (TypeError, ValueError):
+            continue
+        if year < start_year or year > end_year:
+            continue
+        try:
+            value = None if raw_value is None else float(raw_value)
+        except (TypeError, ValueError):
+            value = None
+        key = (str(geo), year)
+        values[key] = value
+        flag = status_map.get(str(flat_position), status_map.get(flat_position, ""))
+        if isinstance(flag, dict):
+            flag = flag.get("label", flag.get("status", ""))
+        flags[key] = str(flag or "")
+    return values, flags, labels
+
+
+def fetch_eurostat_total_flows_all_geographies(
+    session,
+    *,
+    run_id: str,
+    start_year: int,
+    end_year: int,
+    snapshot_dir: Path,
+) -> tuple[list[dict], list[dict]]:
+    """Fetch total annual immigration/emigration for every reporting geography.
+
+    Keeps the datasets and definitions separate; this is a reporting-geography
+    extract and may contain EU/regional aggregates as well as national geographies.
+    """
+    rows: list[dict] = []
+    statuses: list[dict] = []
+    snapshot_dir.mkdir(parents=True, exist_ok=True)
+    for indicator, dataset in DATASETS:
+        url = f"{EUROSTAT_API_BASE}/{dataset}"
+        params = {
+            "lang": "EN",
+            "freq": "A",
+            "unit": "NR",
+            "age": "TOTAL",
+            "agedef": "REACH",
+            "sex": "T",
+            "sinceTimePeriod": start_year,
+            "untilTimePeriod": end_year,
+        }
+        try:
+            response = session.get(url, params=params, timeout=(8, 60))
+            response.raise_for_status()
+            payload = response.json()
+            if not isinstance(payload, dict) or "id" not in payload or "size" not in payload:
+                raise ValueError(f"Unexpected Eurostat JSON-stat response for {dataset}")
+            (snapshot_dir / f"{dataset}_all_geographies.json").write_text(
+                json.dumps(payload, ensure_ascii=False), encoding="utf-8"
+            )
+            observed, flags, geo_labels = parse_jsonstat_multi_geo_observations(
+                payload, start_year=start_year, end_year=end_year
+            )
+            retrieved = datetime.now(timezone.utc).isoformat()
+            geos = sorted(codes for codes in _category_codes_by_position(payload, "geo").values())
+            n_observed = 0
+            for geo in geos:
+                for year in range(start_year, end_year + 1):
+                    key = (geo, year)
+                    present = key in observed
+                    value = observed.get(key)
+                    n_observed += int(value is not None)
+                    rows.append({
+                        "geo_code": geo,
+                        "destination": geo_labels.get(geo, geo),
+                        "year": year,
+                        "indicator": indicator,
+                        "value": value,
+                        "source_cell_present": present,
+                        "observation_status": (
+                            "observed" if value is not None else
+                            ("missing_or_suppressed" if present else "not_returned_by_source")
+                        ),
+                        "source_flag": flags.get(key, ""),
+                        "source": "Eurostat Statistics API",
+                        "source_dataset": dataset,
+                        "source_url": response.url,
+                        "retrieved_utc": retrieved,
+                        "run_id": run_id,
+                    })
+            statuses.append({
+                "source_id": f"EUROSTAT_{dataset}",
+                "source": "Eurostat Statistics API",
+                "dataset": dataset,
+                "url": response.url,
+                "status": "SUCCESS",
+                "rows_fetched": len(geos) * (end_year - start_year + 1),
+                "observed_rows": int(n_observed),
+                "geographies_fetched": len(geos),
+                "observation_start": start_year,
+                "observation_end_requested": end_year,
+                "error": "",
+            })
+        except Exception as exc:
+            statuses.append({
+                "source_id": f"EUROSTAT_{dataset}",
+                "source": "Eurostat Statistics API",
+                "dataset": dataset,
+                "url": url,
+                "status": "FAILED",
+                "rows_fetched": 0,
+                "observed_rows": 0,
+                "geographies_fetched": 0,
+                "observation_start": start_year,
+                "observation_end_requested": end_year,
+                "error": f"{type(exc).__name__}: {exc}",
+            })
+    return rows, statuses
