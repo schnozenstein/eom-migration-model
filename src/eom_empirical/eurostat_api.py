@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import math
+import pandas as pd
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -387,3 +388,71 @@ def fetch_eurostat_total_flows_all_geographies(
                 "error": f"{type(exc).__name__}: {exc}",
             })
     return rows, statuses
+
+
+
+def merge_eurostat_history(existing: pd.DataFrame, incoming_rows: list[dict]) -> pd.DataFrame:
+    """Merge a retrieval without replacing prior observations with unreturned cells.
+
+    An omitted JSON-stat cell means the source did not return that observation in
+    this response; it is not a retraction. If a prior row exists for that
+    geography/indicator/year, keep it. An explicitly present value (including a
+    suppressed/missing value with a source flag) is allowed to replace it.
+    """
+    incoming = pd.DataFrame(incoming_rows)
+    if incoming.empty:
+        return existing.copy()
+    prior = existing.copy() if existing is not None else pd.DataFrame()
+    key_columns = ["geo_code", "indicator", "year"]
+    if not prior.empty and all(column in prior.columns for column in key_columns):
+        prior_keys_df = prior[key_columns].copy()
+        incoming_keys_df = incoming[key_columns].copy()
+
+        def normalized_keys(frame: pd.DataFrame) -> set[tuple[str, ...]]:
+            frame = frame.copy()
+            frame["year"] = pd.to_numeric(frame["year"], errors="coerce").astype("Int64").astype(str)
+            for column in ("geo_code", "indicator"):
+                frame[column] = frame[column].fillna("").astype(str).str.strip().str.upper()
+            return set(map(tuple, frame.to_numpy()))
+
+        prior_keys = normalized_keys(prior_keys_df)
+        incoming_keys = normalized_keys(incoming_keys_df)
+        present = (
+            incoming["source_cell_present"]
+            .astype(str)
+            .str.strip()
+            .str.lower()
+            .isin({"true", "1", "yes"})
+            if "source_cell_present" in incoming.columns
+            else pd.Series(True, index=incoming.index)
+        )
+        incoming_key_list = list(map(tuple, incoming_keys_df.fillna("").astype(str).to_numpy()))
+        # Compare normalized keys so years like 2020, 2020.0 and "2020" match.
+        normalized_key_list = []
+        normalized_years = pd.to_numeric(incoming_keys_df["year"], errors="coerce").astype("Int64").astype(str)
+        for i, row in incoming_keys_df.iterrows():
+            normalized_key_list.append((
+                str(row["geo_code"] or "").strip().upper(),
+                str(row["indicator"] or "").strip().upper(),
+                normalized_years.loc[i],
+            ))
+        keep_incoming = [
+            bool(present.loc[i]) or normalized_key_list[position] not in prior_keys
+            for position, i in enumerate(incoming.index)
+        ]
+        incoming = incoming.loc[keep_incoming].copy()
+
+    if incoming.empty:
+        return prior
+
+    combined = pd.concat([prior, incoming], ignore_index=True, sort=False)
+    if all(column in combined.columns for column in key_columns):
+        combined["_retrieved_sort"] = pd.to_datetime(
+            combined.get("retrieved_utc"), errors="coerce", utc=True
+        )
+        combined = (
+            combined.sort_values("_retrieved_sort", na_position="first")
+            .drop_duplicates(key_columns, keep="last")
+            .drop(columns=["_retrieved_sort"])
+        )
+    return combined.reset_index(drop=True)
