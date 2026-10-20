@@ -135,7 +135,7 @@ def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, d
         "observation_end": "",
         "sha256_full_export": "",
         "error": "",
-        "output_path": "data/raw/unhcr_forced_displacement_focus.csv",
+        "output_path": "data/raw/unhcr_forced_displacement_focus.csv.gz",
     }
     digest = hashlib.sha256()
     kept: list[pd.DataFrame] = []
@@ -189,7 +189,7 @@ def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, d
             raise ValueError("UNHCR export succeeded but no records matched the focus-country filter")
         result_path = root / "data" / "raw" / "unhcr_forced_displacement_focus.csv"
         result_path.parent.mkdir(parents=True, exist_ok=True)
-        result.to_csv(result_path, index=False)
+        result.to_csv(result_path, index=False, compression="gzip")
         period_col = _find_column(result.columns, ("time_period",))
         periods = result[period_col].dropna().astype(str) if period_col else pd.Series(dtype=str)
         row.update({
