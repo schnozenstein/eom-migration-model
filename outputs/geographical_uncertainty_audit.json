@@ -1,0 +1,30 @@
+{
+  "model_version": "EOM-geographical-uncertainty-v1",
+  "status": "blocked_by_evidence_gates",
+  "destinations_in_macro_baseline": 45,
+  "destinations_with_complete_geographic_inputs": 0,
+  "destinations_with_environment_economic_risk": 43,
+  "destinations_receiving_adjusted_rank": 0,
+  "geographic_components": {
+    "regional_conflict_exposure": 0.3,
+    "strategic_isolation": 0.2,
+    "critical_route_dependency": 0.15,
+    "natural_hazard_exposure": 0.2,
+    "cross_border_spillover": 0.15
+  },
+  "illustrative_weights": {
+    "environment_economic_risk": 0.25,
+    "geographical_uncertainty": 0.25
+  },
+  "weight_status": "scenario assumptions; not empirically estimated",
+  "input_file": "data/geographical_uncertainty_inputs.csv",
+  "template_file": "data/geographical_uncertainty_inputs_template.csv",
+  "output_file": "outputs/geographical_risk_adjusted_ranking.csv",
+  "method": "z-score macro energy + 0.25*z-score partial environmental/economic risk + 0.25*z-score geographic uncertainty; lower is better",
+  "safeguards": [
+    "blank values are unknown, never zero",
+    "no adjusted rank until all five geographic components and the risk score are present",
+    "geographic scores require source URLs, observation year and assessment date",
+    "this is a sensitivity/scenario ranking, not a migration probability or validated forecast"
+  ]
+}
