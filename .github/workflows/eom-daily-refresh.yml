@@ -64,6 +64,16 @@ jobs:
           PYTHONPATH: src
         run: python scripts/refresh_eom_data.py
 
+      - name: Recompute macro EOM ranking from current destination set
+        if: github.event_name != 'pull_request'
+        id: recompute_ranking
+        continue-on-error: true
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m eom_empirical.fetch_world_bank --start 2010 --end "$(date -u +%Y)"
+          python -m eom_empirical.fit_macro_model
+
       - name: Create human-readable report
         if: always()
         run: python scripts/create_daily_summary.py
@@ -87,6 +97,13 @@ jobs:
             metadata/ilostat_source_status.csv
             metadata/refresh_runs/*.json
             outputs/data_freshness_dashboard.csv
+            outputs/latest_macro_eom_ranking.csv
+            outputs/macro_backtest.json
+            outputs/macro_backtest_folds.csv
+            outputs/macro_backtest_predictions.csv
+            outputs/macro_model_coefficients_last_fold.csv
+            outputs/macro_backtest_rank_metrics.csv
+            data/raw/world_bank_long.csv
             data/raw/eurostat_migration_flows.csv
             data/raw/brazil_world_bank_macro.csv
             data/raw/undesa_migrant_stock_long.csv
@@ -115,6 +132,11 @@ jobs:
                   metadata/ilostat_source_status.csv \
                   metadata/refresh_runs/ \
                   outputs/data_freshness_dashboard.csv \
+                  outputs/latest_macro_eom_ranking.csv \
+                  outputs/macro_backtest.json \
+                  outputs/macro_backtest_folds.csv \
+                  outputs/macro_backtest_rank_metrics.csv \
+                  outputs/macro_model_coefficients_last_fold.csv \
                   data/historical_destination_year_panel.csv \
                   data/raw/eurostat_migration_flows.csv \
                   data/raw/brazil_world_bank_macro.csv \
@@ -143,8 +165,8 @@ jobs:
             git push
           fi
 
-      - name: Mark run failed if tests or data refresh failed
-        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure')
+      - name: Mark run failed if tests, data refresh, or ranking failed
+        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure')
         run: |
           echo "Daily report was generated, but tests or live data refresh failed. Inspect the source status CSV and step logs."
           exit 1
