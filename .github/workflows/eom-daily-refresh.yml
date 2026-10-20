@@ -79,7 +79,7 @@ jobs:
             data/raw/eurostat_migration_flows.csv
             data/raw/brazil_world_bank_macro.csv
             data/raw/undesa_migrant_stock_long.csv
-            data/raw/unhcr_forced_displacement_focus.csv
+            data/raw/unhcr_forced_displacement_focus.csv.gz
             data/raw/oecd_migration_database_focus.csv
             data/raw/ilostat_migrant_labour_focus.csv
             data/raw/snapshots/undesa/**/*.xlsx
@@ -111,10 +111,21 @@ jobs:
                   data/policy_page_state.json
           # Supplemental sources may be unavailable in an individual run. Stage their
           # last successful compact extracts only when a file exists.
-          for path in data/raw/undesa_migrant_stock_long.csv data/raw/unhcr_forced_displacement_focus.csv data/raw/oecd_migration_database_focus.csv data/raw/ilostat_migrant_labour_focus.csv; do
+          for path in data/raw/undesa_migrant_stock_long.csv data/raw/unhcr_forced_displacement_focus.csv.gz data/raw/oecd_migration_database_focus.csv data/raw/ilostat_migrant_labour_focus.csv; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
-          if ! git diff --cached --quiet; then
+          # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.
+while IFS= read -r path; do
+  if [ -f "$path" ]; then
+    size=$(stat -c%s "$path")
+    if [ "$size" -ge 90000000 ]; then
+      echo "::error::Staged file $path is $size bytes; keep individual GitHub files below 90 MB."
+      exit 1
+    fi
+  fi
+done < <(git diff --cached --name-only)
+
+if ! git diff --cached --quiet; then
             git commit -m "Automated EOM data refresh"
             git push
           fi
