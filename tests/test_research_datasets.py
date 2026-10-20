@@ -141,3 +141,67 @@ def test_ilostat_focus_filter_retains_origin_breakdown_and_source_flags():
     assert result.iloc[0]["classif1"] == "CBR_BRT_IND"
     assert result.iloc[0]["obs_status"] == "P"
     assert "source.label" in result.columns
+
+
+
+def test_ilostat_fetch_retries_api_format_and_caps_to_last_complete_year(tmp_path):
+    from datetime import datetime, timezone
+
+    from eom_empirical.research_datasets import (
+        ILOSTAT_MIGRATION_INDICATORS,
+        fetch_ilostat_migration_focus,
+    )
+
+    query_end_year = datetime.now(timezone.utc).year - 1
+
+    class FakeResponse:
+        def __init__(self, status_code, body, url):
+            self.status_code = status_code
+            self.text = body
+            self.content = body.encode("utf-8")
+            self.url = url
+
+        def raise_for_status(self):
+            if self.status_code >= 400:
+                raise RuntimeError(f"fake HTTP {self.status_code}")
+
+    class FakeSession:
+        def __init__(self):
+            self.calls = []
+
+        def get(self, url, params, timeout):
+            self.calls.append((url, dict(params), timeout))
+            if params.get("format") == ".csv":
+                return FakeResponse(400, "invalid CSV format token", url)
+
+            indicator = params["id"]
+            body = (
+                "ref_area,ref_area.label,indicator,sex,classif1,time,obs_value,source\n"
+                f"GBR,United Kingdom,{indicator},SEX_T,CBR_BRT_TOTAL,2020,123.4,LFS\n"
+                f"GBR,United Kingdom,{indicator},SEX_T,CBR_BRT_TOTAL,{query_end_year},234.5,LFS\n"
+                f"GBR,United Kingdom,{indicator},SEX_T,CBR_BRT_TOTAL,{query_end_year + 1},999.9,LFS\n"
+            )
+            return FakeResponse(200, body, url)
+
+    session = FakeSession()
+    fresh, statuses = fetch_ilostat_migration_focus(
+        session, tmp_path, "test-run", 2010, query_end_year + 1
+    )
+
+    assert len(statuses) == len(ILOSTAT_MIGRATION_INDICATORS) == 3
+    assert all(status["status"] == "SUCCESS" for status in statuses)
+    assert all(status["request_variant"] == "bounded_csv" for status in statuses)
+    assert all(status["observation_end_queried"] == query_end_year for status in statuses)
+    assert len(session.calls) == 2 * len(ILOSTAT_MIGRATION_INDICATORS)
+    assert all(call[1].get("timeto") == query_end_year for call in session.calls[::2])
+    assert fresh["time"].max() == query_end_year
+    assert (fresh["time"] < query_end_year + 1).all()
+    assert set(fresh["ref_area"]) == {"GBR"}
+
+
+def test_spain_policy_monitor_uses_current_official_portal():
+    from scripts.refresh_eom_data import POLICY_URLS
+
+    spain_rows = [row for row in POLICY_URLS if row[0] == "Spain"]
+    assert len(spain_rows) == 1
+    assert spain_rows[0][2] == "https://www.inclusion.gob.es/web/migraciones/home"
