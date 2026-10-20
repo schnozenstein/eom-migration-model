@@ -1,6 +1,17 @@
 name: EOM Daily Refresh
 
 on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/refresh_eom_data.py"
+      - "scripts/create_daily_summary.py"
+      - "src/eom_empirical/**"
+      - "data/destinations.csv"
+      - "data/historical_destination_year_panel.csv"
+      - "LIVE_DATA_PIPELINE.md"
+      - "tests/**"
+      - ".github/workflows/eom-daily-refresh.yml"
   workflow_dispatch:
   pull_request:
     paths:
