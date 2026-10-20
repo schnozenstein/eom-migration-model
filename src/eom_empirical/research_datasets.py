@@ -169,8 +169,11 @@ def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, d
                 origin = chunk[origin_col].fillna("").astype(str).str.upper().str.strip()
                 host_focus = host.isin(DESTINATION_CODES)
                 origin_focus = origin.isin(ORIGIN_CODES)
-                origin_total = origin.str.upper().isin(TOTAL_ORIGIN_CODES)
-                mask = (host_focus & (origin_focus | origin_total)) | origin_focus
+                # Keep every origin recorded for focus destinations, plus every
+                # destination/asylum location recorded for selected focus origins.
+                # Filtering origin categories at this point would drop valid flows
+                # from other origins into a focus destination.
+                mask = host_focus | origin_focus
                 selected = chunk.loc[mask].copy()
                 if selected.empty:
                     continue
