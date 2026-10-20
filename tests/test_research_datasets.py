@@ -144,8 +144,9 @@ def test_ilostat_focus_filter_retains_origin_breakdown_and_source_flags():
 
 
 
-def test_ilostat_fetch_resolves_current_annual_ids_retries_format_and_caps_year(tmp_path):
+def test_ilostat_fetch_uses_official_gzip_bulk_endpoint_and_caps_year(tmp_path):
     from datetime import datetime, timezone
+    import gzip
 
     from eom_empirical.research_datasets import (
         ILOSTAT_MIGRATION_INDICATORS,
@@ -161,10 +162,10 @@ def test_ilostat_fetch_resolves_current_annual_ids_retries_format_and_caps_year(
     }
 
     class FakeResponse:
-        def __init__(self, status_code, body, url):
+        def __init__(self, status_code, body, url, compressed=False):
             self.status_code = status_code
+            self.content = gzip.compress(body.encode("utf-8")) if compressed else body.encode("utf-8")
             self.text = body
-            self.content = body.encode("utf-8")
             self.url = url
 
         def raise_for_status(self):
@@ -175,25 +176,21 @@ def test_ilostat_fetch_resolves_current_annual_ids_retries_format_and_caps_year(
         def __init__(self):
             self.calls = []
 
-        def get(self, url, params, timeout):
-            self.calls.append((url, dict(params), timeout))
+        def get(self, url, params=None, timeout=None):
+            self.calls.append((url, dict(params or {}), timeout))
             if url == ILOSTAT_TOC_URL:
                 rows = ["id,indicator.label,freq,freq.label"]
                 for legacy_id, label in ILOSTAT_MIGRATION_INDICATORS.items():
                     rows.append(f"{current_ids[legacy_id]},{label},A,Annual")
-                return FakeResponse(200, "\n".join(rows) + "\n", url)
-
-            if params.get("format") == ".csv":
-                return FakeResponse(400, "invalid CSV format token", url)
-
-            dataset_id = params["id"]
+                return FakeResponse(200, "\\n".join(rows) + "\\n", url)
+            dataset_id = url.rsplit("/", 1)[-1].removesuffix(".csv.gz")
             body = (
-                "ref_area,ref_area.label,indicator,sex,classif1,time,obs_value,source\n"
-                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,2020,123.4,LFS\n"
-                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year},234.5,LFS\n"
-                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year + 1},999.9,LFS\n"
+                "ref_area,ref_area.label,indicator,sex,classif1,time,obs_value,source\\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,2020,123.4,LFS\\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year},234.5,LFS\\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year + 1},999.9,LFS\\n"
             )
-            return FakeResponse(200, body, url)
+            return FakeResponse(200, body, url, compressed=True)
 
     session = FakeSession()
     fresh, statuses = fetch_ilostat_migration_focus(
@@ -202,13 +199,13 @@ def test_ilostat_fetch_resolves_current_annual_ids_retries_format_and_caps_year(
 
     assert len(statuses) == len(ILOSTAT_MIGRATION_INDICATORS) == 3
     assert all(status["status"] == "SUCCESS" for status in statuses)
-    assert all(status["request_variant"] == "bounded_csv" for status in statuses)
+    assert all(status["request_variant"] == "official_bulk_csv_gzip" for status in statuses)
     assert all(status["observation_end_queried"] == query_end_year for status in statuses)
     assert {status["indicator_code"] for status in statuses} == set(current_ids.values())
     assert all(status["id_resolution"] == "official_catalogue_label_match" for status in statuses)
-    assert len(session.calls) == 1 + 2 * len(ILOSTAT_MIGRATION_INDICATORS)
+    assert len(session.calls) == 1 + len(ILOSTAT_MIGRATION_INDICATORS)
     assert session.calls[0][0] == ILOSTAT_TOC_URL
-    assert all(call[1].get("timeto") == query_end_year for call in session.calls[1::2])
+    assert all(call[0].endswith(".csv.gz") for call in session.calls[1:])
     assert fresh["time"].max() == query_end_year
     assert (fresh["time"] < query_end_year + 1).all()
     assert set(fresh["ref_area"]) == {"GBR"}
