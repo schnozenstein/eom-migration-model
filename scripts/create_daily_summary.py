@@ -53,10 +53,21 @@ def main():
     backtest = read_json(OUT / "macro_backtest.json")
     eurostat_status = read_csv(ROOT / "metadata" / "eurostat_source_status.csv")
     obmigra_status = read_csv(DATA.parent / "metadata" / "obmigra_source_status.csv")
+    unhcr_status = read_csv(ROOT / "metadata" / "unhcr_source_status.csv")
+    undesa_status = read_csv(ROOT / "metadata" / "undesa_source_status.csv")
+    oecd_status = read_csv(ROOT / "metadata" / "oecd_source_status.csv")
 
     eurostat_succeeded = sum(r.get("status") == "SUCCESS" for r in eurostat_status)
     eurostat_failed = sum(r.get("status") == "FAILED" for r in eurostat_status)
     eurostat_observed = sum(int(r.get("observed_rows") or 0) for r in eurostat_status)
+    eurostat_geos = max((int(r.get("geographies_fetched") or 0) for r in eurostat_status), default=0)
+    unhcr_state = unhcr_status[0].get("status", "Not reported") if unhcr_status else "Not reported"
+    unhcr_rows = int(unhcr_status[0].get("focus_rows") or 0) if unhcr_status else 0
+    undesa_succeeded = sum(r.get("status") == "SUCCESS" for r in undesa_status)
+    undesa_failed = sum(r.get("status") == "FAILED" for r in undesa_status)
+    undesa_rows = sum(int(r.get("rows_fetched") or 0) for r in undesa_status)
+    oecd_state = oecd_status[0].get("status", "Not reported") if oecd_status else "Not reported"
+    oecd_rows = int(oecd_status[0].get("rows_focus") or 0) if oecd_status else 0
     obmigra_state = obmigra_status[0].get("status", "Not reported") if obmigra_status else "Not reported"
 
     recent = [r for r in dashboard if r.get("freshness_status") == "RECENT"]
@@ -80,7 +91,10 @@ def main():
         f"- **World Bank observations fetched:** {manifest.get('world_bank_rows_fetched', 'Not reported')}",
         f"- **World Bank indicator requests:** {manifest.get('world_bank_indicators_successful', 'Not reported')} succeeded; {manifest.get('world_bank_indicators_failed', 'Not reported')} failed",
         f"- **Brazil World Bank extract:** {manifest.get('brazil_macro_rows_fetched', 'Not reported')} fresh Brazil indicator-year rows",
-        f"- **Eurostat Spain migration series:** {eurostat_succeeded} succeeded; {eurostat_failed} failed; {eurostat_observed} observed annual cells",
+        f"- **Eurostat total migration flows:** {eurostat_succeeded} series succeeded; {eurostat_failed} failed; {eurostat_observed} observed annual cells across up to {eurostat_geos} reporting geographies",
+        f"- **UNHCR forced-displacement extract:** {unhcr_state}; {unhcr_rows} retained focus/origin rows",
+        f"- **UN DESA migrant-stock tables:** {undesa_succeeded} of 2 files succeeded; {undesa_failed} failed; {undesa_rows} normalized rows",
+        f"- **OECD migration database slice:** {oecd_state}; {oecd_rows} focus-country rows retained",
         f"- **Brazil OBMigra official source page:** {obmigra_state} (catalogue monitor only; report tables are not numerically parsed)",
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
         f"- **Freshness dashboard:** {len(recent)} recent; {len(attention)} requiring attention out of {len(dashboard)} indicators",
@@ -88,6 +102,13 @@ def main():
         f"- **Forecast issued during refresh:** {yes_no(manifest.get('forecast_issued'))}",
         "",
         "A successful data refresh is not evidence that a ranking or forecast was recalculated.",
+        "",
+        "### Supplemental dataset notes",
+        "",
+        "- UN DESA International Migrant Stock 2024 is a stock measure at selected reference years (1990–2024), split by sex and direction (destination/origin); it is not an annual flow.",
+        "- UNHCR forced-displacement counts include distinct population categories such as refugees, asylum-seekers and other groups; population types must not be summed or treated as voluntary economic migration.",
+        "- OECD records preserve the original SDMX dimensions and labels from a bounded official query. The B11 measure code is not interpreted or added to the EOM score until its structure and definition are reviewed.",
+        "- Eurostat total immigration and emigration are stored across all reporting geographies; some rows may represent aggregate regions rather than independent countries.",
         "",
         "## 2. Stored macro ranking",
         "",
@@ -255,6 +276,11 @@ def main():
         "- `outputs/eom_v2_weight_sensitivity.csv`",
         "- `outputs/eom_joie_de_vivre_scores.csv`",
         "- `data/observations_history/world_bank_observations.csv`",
+        "- `data/raw/eurostat_migration_flows.csv`",
+        "- `data/raw/undesa_migrant_stock_long.csv`",
+        "- `data/raw/unhcr_forced_displacement_focus.csv`",
+        "- `data/raw/oecd_migration_database_focus.csv`",
+        "- `metadata/eurostat_source_status.csv`, `metadata/undesa_source_status.csv`, `metadata/unhcr_source_status.csv`, `metadata/oecd_source_status.csv`",
         "",
     ]
 
