@@ -18,7 +18,12 @@ from urllib3.util.retry import Retry
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from eom_empirical.eurostat_api import fetch_spain_migration_flows
+from eom_empirical.eurostat_api import fetch_eurostat_total_flows_all_geographies
+from eom_empirical.research_datasets import (
+    fetch_oecd_migration_slice,
+    fetch_undesa_migrant_stock,
+    fetch_unhcr_focus,
+)
 
 WB_BASE = "https://api.worldbank.org/v2"
 # Current identifiers for revised World Bank Worldwide Governance Indicators.
@@ -397,17 +402,28 @@ def main() -> int:
         fresh = pd.DataFrame()
         statuses = [{"source_id": f"WDI_{code}", "source": "World Bank Indicators API", "url": f"{WB_BASE}/country/all/indicator/{code}", "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "indicator": code, "observation_start": args.start_year, "observation_end_requested": args.end_year, "error": "Offline audit requested; no network call made"} for code in WB_INDICATORS]
         eurostat_rows = []
-        eurostat_status = [{"source_id": f"EUROSTAT_{dataset}", "source": "Eurostat Statistics API", "dataset": dataset, "url": f"https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}", "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "observed_rows": 0, "observation_start": args.start_year, "observation_end_requested": args.end_year, "error": "Offline audit requested; no network call made"} for _indicator, dataset in (("emigration_total", "migr_emi2"), ("immigration_total", "migr_imm8"))]
+        eurostat_status = [{"source_id": f"EUROSTAT_{dataset}", "source": "Eurostat Statistics API", "dataset": dataset, "url": f"https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{dataset}", "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "observed_rows": 0, "geographies_fetched": 0, "observation_start": args.start_year, "observation_end_requested": args.end_year, "error": "Offline audit requested; no network call made"} for _indicator, dataset in (("emigration_total", "migr_emi2"), ("immigration_total", "migr_imm8"))]
         obmigra = {"source_id": "BRAZIL_OBMIGRA_CATALOG", "source": "Brazil OBMigra consolidated migration statistics", "url": OBMIGRA_URL, "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "http_status": None, "content_sha256": "", "linked_data_assets": "", "linked_data_asset_count": 0, "error": "Offline audit requested; no network call made", "numeric_data_ingested": False}
+        unhcr_data = pd.DataFrame()
+        unhcr_status = {"source_id": "UNHCR_POPSTATS_OFFICIAL", "source": "UNHCR PopStatsOfficial", "url": "https://api-data.unhcr.org/api/v0/data/export/PopStatsOfficial", "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "source_rows": 0, "focus_rows": 0, "error": "Offline audit requested; no network call made", "output_path": "data/raw/unhcr_forced_displacement_focus.csv"}
+        undesa_data = pd.DataFrame()
+        undesa_status = [{"source_id": f"UN_DESA_IMS_2024_{direction.upper()}", "source": "UN DESA Population Division", "dataset": f"International Migrant Stock 2024 — {direction}", "url": "", "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "countries_fetched": 0, "error": "Offline audit requested; no network call made", "output_path": "data/raw/undesa_migrant_stock_long.csv"} for direction in ("destination", "origin")]
+        oecd_data = pd.DataFrame()
+        oecd_status = {"source_id": "OECD_DF_MIG_B11", "source": "OECD International migration database (SDMX)", "url": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.IMD,DSD_MIG@DF_MIG,/.W.A.B11._T...", "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "rows_focus": 0, "error": "Offline audit requested; no network call made", "output_path": "data/raw/oecd_migration_database_focus.csv"}
         policy = []
     else:
         fresh, statuses = fetch_world_bank(session, run_id, args.start_year, args.end_year)
-        eurostat_rows, eurostat_status = fetch_spain_migration_flows(
+        eurostat_rows, eurostat_status = fetch_eurostat_total_flows_all_geographies(
             session,
             run_id=run_id,
             start_year=args.start_year,
             end_year=args.end_year,
             snapshot_dir=ROOT / "data" / "raw" / "snapshots" / "eurostat" / run_id,
+        )
+        unhcr_data, unhcr_status = fetch_unhcr_focus(session, ROOT, run_id)
+        undesa_data, undesa_status = fetch_undesa_migrant_stock(session, ROOT, run_id)
+        oecd_data, oecd_status = fetch_oecd_migration_slice(
+            session, ROOT, run_id, args.start_year, args.end_year
         )
         obmigra = check_obmigra_source(session, run_id)
         policy = [] if args.skip_policy_watch else check_policy_sources(session, run_id)
@@ -432,9 +448,15 @@ def main() -> int:
     policy_df = pd.DataFrame(policy)
     eurostat_status_df = pd.DataFrame(eurostat_status)
     obmigra_df = pd.DataFrame([obmigra])
+    unhcr_status_df = pd.DataFrame([unhcr_status])
+    undesa_status_df = pd.DataFrame(undesa_status)
+    oecd_status_df = pd.DataFrame([oecd_status])
     atomic_csv(status_df, ROOT / "metadata" / "live_source_status.csv")
     atomic_csv(eurostat_status_df, ROOT / "metadata" / "eurostat_source_status.csv")
     atomic_csv(obmigra_df, ROOT / "metadata" / "obmigra_source_status.csv")
+    atomic_csv(unhcr_status_df, ROOT / "metadata" / "unhcr_source_status.csv")
+    atomic_csv(undesa_status_df, ROOT / "metadata" / "undesa_source_status.csv")
+    atomic_csv(oecd_status_df, ROOT / "metadata" / "oecd_source_status.csv")
     if policy:
         atomic_csv(policy_df, ROOT / "metadata" / "policy_page_watch_status.csv")
 
@@ -480,10 +502,19 @@ def main() -> int:
         "eurostat_series_successful": int((eurostat_status_df["status"] == "SUCCESS").sum()) if not eurostat_status_df.empty else 0,
         "eurostat_series_failed": int((eurostat_status_df["status"] == "FAILED").sum()) if not eurostat_status_df.empty else 0,
         "eurostat_observed_rows": int(eurostat_status_df["observed_rows"].sum()) if not eurostat_status_df.empty else 0,
+        "eurostat_geographies_fetched": int(eurostat_status_df["geographies_fetched"].max()) if "geographies_fetched" in eurostat_status_df and not eurostat_status_df.empty else 0,
+        "unhcr_source_status": unhcr_status.get("status", "Not reported"),
+        "unhcr_source_rows": int(unhcr_status.get("source_rows", 0) or 0),
+        "unhcr_focus_rows": int(unhcr_status.get("focus_rows", 0) or 0),
+        "undesa_source_successful": int(sum(row.get("status") == "SUCCESS" for row in undesa_status)),
+        "undesa_source_failed": int(sum(row.get("status") == "FAILED" for row in undesa_status)),
+        "undesa_stock_rows": int(len(undesa_data)),
+        "oecd_migration_status": oecd_status.get("status", "Not reported"),
+        "oecd_migration_rows": int(oecd_status.get("rows_focus", 0) or 0),
         "obmigra_source_status": obmigra.get("status", "Not reported"),
         "obmigra_numeric_data_ingested": False,
         "ranking_recomputed": False, "forecast_issued": False,
-        "note": "This is a source refresh, not model calibration. Eurostat total flows are kept separate from subgroup-specific series; OBMigra is source-page monitored only and is not numerically parsed. Failed sources preserve prior canonical data; a new ranking requires a separate validated run."}
+        "note": "This is a source refresh, not model calibration. Eurostat total flows are stored as a distinct all-geography series; UNHCR displacement data, UN DESA migrant stocks, and OECD migration database slices are stored separately from general immigration/emigration flows. OBMigra is source-page monitored only and is not numerically parsed. Failed sources preserve prior successful outputs; a new ranking requires a separate validated run."}
     out_dir = ROOT / "metadata" / "refresh_runs"; out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / f"{run_id}.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps(summary, indent=2))
