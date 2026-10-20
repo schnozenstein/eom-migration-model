@@ -62,3 +62,34 @@ def test_eurostat_multi_geo_parser_keeps_geo_year_keys_and_labels():
         ("PT", 2021): 102.0,
     }
     assert labels == {"ES": "Spain", "PT": "Portugal"}
+
+
+def test_undesa_bilateral_workbook_parses_origin_destination_pairs(tmp_path):
+    from eom_empirical.research_datasets import _parse_undesa_bilateral_workbook
+
+    path = tmp_path / "undesa_bilateral.xlsx"
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Table 1"
+    ws.append(["row_num", "destination", "destination_code", "origin", "origin_code"] + [None] * 24)
+    pair = [1, "Spain", 724, "India", 356]
+    pair += list(range(100, 108)) + list(range(200, 208)) + list(range(300, 308))
+    aggregate = [2, "Europe", 900, "India", 356]
+    aggregate += list(range(1000, 1008)) + list(range(2000, 2008)) + list(range(3000, 3008))
+    ws.append(pair)
+    ws.append(aggregate)
+    wb.save(path)
+
+    result = _parse_undesa_bilateral_workbook(
+        path, "test-run", {"spain": "ESP", "india": "IND"}
+    )
+
+    assert len(result) == 24
+    assert result["destination_code_un"].unique().tolist() == [724]
+    assert result["origin_code_un"].unique().tolist() == [356]
+    assert result["destination_code_iso3"].unique().tolist() == ["ESP"]
+    assert result["origin_code_iso3"].unique().tolist() == ["IND"]
+    both_1990 = result[(result["sex"] == "Total sexes") & (result["year"] == 1990)].iloc[0]
+    male_2024 = result[(result["sex"] == "Male") & (result["year"] == 2024)].iloc[0]
+    assert both_1990["migrant_stock_persons"] == 100
+    assert male_2024["migrant_stock_persons"] == 207
