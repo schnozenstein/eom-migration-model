@@ -46,6 +46,7 @@ def main():
 
     dashboard = read_csv(OUT / "data_freshness_dashboard.csv")
     ranking = read_csv(OUT / "latest_macro_eom_ranking.csv")
+    destinations = read_csv(DATA / "destinations.csv")
     sensitivity = read_csv(OUT / "eom_v2_weight_sensitivity.csv")
     qol = read_csv(OUT / "eom_joie_de_vivre_scores.csv")
     status = read_json(OUT / "eom_v2_run_status.json")
@@ -100,7 +101,8 @@ def main():
             "| Rank | Destination | Year | Macro score |",
             "|---:|---|---:|---:|",
         ]
-        for r in ranking[:10]:
+        # Report the full stored ranking; do not silently truncate at the top ten.
+        for r in ranking:
             lines.append(
                 f"| {r.get('energy_rank', '—')} | {r.get('destination_name', 'Unknown')} "
                 f"| {r.get('year', '—')} | {fmt(r.get('energy_equal_weight'))} |"
@@ -108,6 +110,40 @@ def main():
     else:
         lines.append("No stored macro ranking file or rows were available.")
 
+    ranked_ids = {str(r.get("destination_id", "")).strip().upper() for r in ranking}
+    unranked_destinations = [
+        d for d in destinations
+        if str(d.get("destination_id", "")).strip().upper()
+        and str(d.get("destination_id", "")).strip().upper() not in ranked_ids
+    ]
+    lines += [
+        "",
+        "### Destination coverage",
+        "",
+        f"- **Registered destinations:** {len(destinations)}",
+        f"- **Destinations in stored macro ranking:** {len(ranking)}",
+        f"- **Registered destinations not in stored ranking:** {len(unranked_destinations)}",
+        "",
+    ]
+    if unranked_destinations:
+        lines += [
+            "| Destination | ID | Coverage note |",
+            "|---|---|---|",
+        ]
+        for d in unranked_destinations:
+            note = (d.get("notes") or "").replace("|", "\\|").strip()
+            lines.append(
+                f"| {d.get('destination_name', 'Unknown')} | {d.get('destination_id', '—')} | "
+                f"{note or 'No comparable macro score in the stored ranking; not scored'} |"
+            )
+        lines += [
+            "",
+            "These destinations are registered but were not scored in the stored ranking. "
+            "Registration or newly ingested source data does not automatically create a comparable score. "
+            "Do not infer a rank for an unscored destination.",
+        ]
+    else:
+        lines.append("Every registered destination appears in the stored ranking.")
     lines += [
         "",
         "## 3. Historical model evaluation",
