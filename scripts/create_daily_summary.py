@@ -284,7 +284,7 @@ def main():
         "- `data/observations_history/world_bank_observations.csv`",
         "- `data/raw/eurostat_migration_flows.csv`",
         "- `data/raw/undesa_migrant_stock_long.csv`",
-        "- `data/raw/unhcr_forced_displacement_focus.csv`",
+        "- `data/raw/unhcr_forced_displacement_focus.csv.gz`",
         "- `data/raw/oecd_migration_database_focus.csv`",
         "- `data/raw/ilostat_migrant_labour_focus.csv`",
         "- `metadata/eurostat_source_status.csv`, `metadata/undesa_source_status.csv`, `metadata/unhcr_source_status.csv`, `metadata/oecd_source_status.csv`, `metadata/ilostat_source_status.csv`",
