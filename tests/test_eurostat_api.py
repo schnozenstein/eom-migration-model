@@ -59,3 +59,43 @@ def test_parser_rejects_invalid_dimension_metadata():
         assert "invalid JSON-stat dimensions" in str(exc)
     else:
         raise AssertionError("Expected malformed JSON-stat response to be rejected")
+
+
+
+def test_sparse_eurostat_merge_preserves_unreturned_prior_and_accepts_explicit_missing():
+    import pandas as pd
+    from eom_empirical.eurostat_api import merge_eurostat_history
+
+    existing = pd.DataFrame([
+        {
+            "geo_code": "ES", "indicator": "immigration_total", "year": 2021,
+            "value": 1500.0, "source_cell_present": True, "observation_status": "observed",
+            "retrieved_utc": "2026-10-19T10:00:00+00:00",
+        },
+        {
+            "geo_code": "ES", "indicator": "immigration_total", "year": 2020,
+            "value": 1300.0, "source_cell_present": True, "observation_status": "observed",
+            "retrieved_utc": "2026-10-19T10:00:00+00:00",
+        },
+    ])
+    incoming = [
+        {
+            "geo_code": "ES", "indicator": "immigration_total", "year": 2021,
+            "value": None, "source_cell_present": False, "observation_status": "not_returned_by_source",
+            "retrieved_utc": "2026-10-20T10:00:00+00:00",
+        },
+        {
+            "geo_code": "ES", "indicator": "immigration_total", "year": 2020,
+            "value": None, "source_cell_present": True, "observation_status": "missing_or_suppressed",
+            "source_flag": "s", "retrieved_utc": "2026-10-20T10:00:00+00:00",
+        },
+    ]
+
+    merged = merge_eurostat_history(existing, incoming)
+    by_year = merged.set_index("year")
+
+    assert by_year.loc[2021, "value"] == 1500.0
+    assert by_year.loc[2021, "observation_status"] == "observed"
+    assert pd.isna(by_year.loc[2020, "value"])
+    assert by_year.loc[2020, "observation_status"] == "missing_or_suppressed"
+    assert by_year.loc[2020, "source_flag"] == "s"
