@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DESTINATIONS = ROOT / "data" / "destinations.csv"
 PANEL = ROOT / "data" / "historical_destination_year_panel.csv"
 START_YEAR, END_YEAR = 1990, 2025
-SPECIAL_NAMES = {"EDI": "Scotland / Edinburgh (subnational)"}
+SPECIAL_NAMES = {"EDI": "Scotland / Edinburgh (subnational)", "IND": "India (baseline)"}
 
 registry = pd.read_csv(DESTINATIONS, dtype=str).fillna("")
 panel = pd.read_csv(PANEL)
@@ -25,8 +25,8 @@ for _, d in registry.iterrows():
             if c.startswith("missing_"):
                 row[c] = True
         row["data_level_note"] = (
-            "Scaffold only; Taiwan source coverage requires separate official-source "
-            "mapping; no value inferred" if code == "TWN" else
+            "Scaffold only; Taiwan source coverage requires separate official-source mapping; "
+            "no value inferred" if code == "TWN" else
             "Scaffold only; comparable source observations not yet integrated; no value inferred"
         )
         rows.append(row)
