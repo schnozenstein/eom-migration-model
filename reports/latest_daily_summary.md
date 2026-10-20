@@ -1,11 +1,11 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-20 14:07 UTC
+> Generated: 2026-10-20 14:54 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-20T140632Z`
-- **Refresh timestamp:** 2026-10-20T14:06:32.915605+00:00
+- **Latest refresh run:** `2026-10-20T145301Z`
+- **Refresh timestamp:** 2026-10-20T14:53:01.118010+00:00
 - **World Bank observations fetched:** 165984
 - **World Bank indicator requests:** 39 succeeded; 0 failed
 - **Brazil World Bank extract:** 624 fresh Brazil indicator-year rows
@@ -17,10 +17,12 @@
 - **Brazil OBMigra official source page:** SUCCESS (catalogue monitor only; report tables are not numerically parsed)
 - **Policy pages:** 10 succeeded; 1 failed
 - **Freshness dashboard:** 38 recent; 2 requiring attention out of 40 indicators
-- **Ranking recomputed during refresh:** No
+- **Macro ranking recomputed in this run:** Yes
+- **Macro ranking comparison year:** 2025
+- **Destinations scored / total:** 42 / 45
 - **Forecast issued during refresh:** No
 
-A successful data refresh is not evidence that a ranking or forecast was recalculated.
+Source refresh and model reranking are separate steps. Check the ranking status and comparison year above before treating this as a new ranking.
 
 ### Supplemental dataset notes
 
@@ -36,61 +38,61 @@ This is the latest stored macro-proxy ranking, not a personalised migration reco
 
 | Rank | Destination | Year | Macro score |
 |---:|---|---:|---:|
-| 1.0 | Singapore | 2023 | -8.481 |
-| 2.0 | Ireland | 2023 | -2.183 |
-| 3.0 | Norway | 2023 | -2.158 |
-| 4.0 | Japan | 2023 | -2.023 |
-| 5.0 | Switzerland | 2023 | -1.801 |
-| 6.0 | New Zealand | 2023 | -1.685 |
-| 7.0 | Hong Kong | 2023 | -1.681 |
-| 8.0 | Netherlands | 2023 | -1.319 |
-| 9.0 | Australia | 2023 | -1.235 |
-| 10.0 | Denmark | 2023 | -1.156 |
-| 11.0 | Czechia | 2023 | -0.916 |
-| 12.0 | Germany | 2023 | 0.331 |
-| 13.0 | Canada | 2023 | 0.630 |
-| 14.0 | Austria | 2023 | 1.363 |
-| 15.0 | Finland | 2023 | 1.403 |
-| 16.0 | Sweden | 2023 | 1.682 |
-| 17.0 | United Kingdom | 2023 | 1.726 |
-| 18.0 | United States | 2023 | 2.966 |
-| 19.0 | France | 2023 | 4.726 |
-| 20.0 | India | 2023 | 9.809 |
+| 1.0 | Singapore | 2025 | -7.011 |
+| 2.0 | Japan | 2025 | -4.344 |
+| 3.0 | Norway | 2025 | -3.828 |
+| 4.0 | Hong Kong | 2025 | -3.752 |
+| 5.0 | New Zealand | 2025 | -3.513 |
+| 6.0 | Ireland | 2025 | -3.347 |
+| 7.0 | South Korea | 2025 | -3.218 |
+| 8.0 | Australia | 2025 | -2.830 |
+| 9.0 | Denmark | 2025 | -2.784 |
+| 10.0 | Netherlands | 2025 | -2.748 |
+| 11.0 | Switzerland | 2025 | -2.725 |
+| 12.0 | Czechia | 2025 | -2.678 |
+| 13.0 | Finland | 2025 | -2.229 |
+| 14.0 | Sweden | 2025 | -2.175 |
+| 15.0 | Canada | 2025 | -2.091 |
+| 16.0 | Germany | 2025 | -1.642 |
+| 17.0 | Poland | 2025 | -1.526 |
+| 18.0 | Austria | 2025 | -1.484 |
+| 19.0 | Malaysia | 2025 | -1.326 |
+| 20.0 | Saudi Arabia | 2025 | -0.908 |
+| 21.0 | United Kingdom | 2025 | -0.852 |
+| 22.0 | Belgium | 2025 | -0.655 |
+| 23.0 | Portugal | 2025 | -0.312 |
+| 24.0 | Italy | 2025 | 0.144 |
+| 25.0 | United States | 2025 | 0.378 |
+| 26.0 | France | 2025 | 0.596 |
+| 27.0 | Chile | 2025 | 0.893 |
+| 28.0 | Spain | 2025 | 1.325 |
+| 29.0 | Thailand | 2025 | 1.846 |
+| 30.0 | Vietnam | 2025 | 1.933 |
+| 31.0 | Israel | 2025 | 1.938 |
+| 32.0 | China | 2025 | 2.059 |
+| 33.0 | Greece | 2025 | 2.216 |
+| 34.0 | Indonesia | 2025 | 3.225 |
+| 35.0 | India | 2025 | 3.594 |
+| 36.0 | Philippines | 2025 | 3.878 |
+| 37.0 | Türkiye | 2025 | 4.418 |
+| 38.0 | Mexico | 2025 | 4.547 |
+| 39.0 | Peru | 2025 | 4.631 |
+| 40.0 | Brazil | 2025 | 4.635 |
+| 41.0 | Colombia | 2025 | 5.604 |
+| 42.0 | South Africa | 2025 | 10.115 |
 
 ### Destination coverage
 
 - **Registered destinations:** 46
-- **Destinations in stored macro ranking:** 20
-- **Registered destinations not in stored ranking:** 26
+- **Destinations scored in stored macro ranking:** 42
+- **Registered destinations not in stored ranking:** 4
 
 | Destination | ID | Coverage note |
 |---|---|---|
-| Spain | ESP | Added 2026-10-19; national-level indicators only until harmonized flow coverage is verified. |
 | Edinburgh | EDI | Nested city option; compare conditionally within the UK or in a hierarchical model |
-| Brazil | BRA | Added 2026-10-20; macro series are available through the global World Bank pull. OBMigra remains source-page monitored until numeric table parsing is validated. |
-| China | CHN | Added 2026-10-20; major economy and migration comparator. |
-| Taiwan | TWN | Added 2026-10-20; major advanced economy; World Bank WDI coverage is limited or absent for many indicators, so use official Taiwan national statistics and preserve source-specific coverage. |
-| South Korea | KOR | Added 2026-10-20; major advanced economy and migration destination. |
-| Indonesia | IDN | Added 2026-10-20; major Southeast Asian economy. |
-| Malaysia | MYS | Added 2026-10-20; major Southeast Asian economy and migration destination. |
-| Thailand | THA | Added 2026-10-20; major Southeast Asian economy and migration destination. |
-| Vietnam | VNM | Added 2026-10-20; major manufacturing economy and migration-origin comparator. |
-| Philippines | PHL | Added 2026-10-20; major migration-origin and remittance economy. |
-| Mexico | MEX | Added 2026-10-20; major economy and migration-origin/destination comparator. |
-| South Africa | ZAF | Added 2026-10-20; major African economy. |
-| Saudi Arabia | SAU | Added 2026-10-20; major Gulf economy and migrant-labour destination. |
-| United Arab Emirates | ARE | Added 2026-10-20; major Gulf economy and migrant-labour destination; World Bank country code is ARE. |
-| Israel | ISR | Added 2026-10-20; advanced economy and migration destination. |
-| Poland | POL | Added 2026-10-20; major European economy and migration destination. |
-| Italy | ITA | Added 2026-10-20; major European economy and migration destination. |
-| Belgium | BEL | Added 2026-10-20; major European economy and migration destination. |
-| Portugal | PRT | Added 2026-10-20; European migration destination. |
-| Greece | GRC | Added 2026-10-20; European migration destination. |
-| Türkiye | TUR | Added 2026-10-20; major regional economy and migration destination. |
-| Argentina | ARG | Added 2026-10-20; major Latin American economy. |
-| Chile | CHL | Added 2026-10-20; Latin American economy and migration destination. |
-| Colombia | COL | Added 2026-10-20; major Latin American economy and migration-origin/destination comparator. |
-| Peru | PER | Added 2026-10-20; major Latin American economy. |
+| Taiwan | TWN | not ranked: one or more required macro components are missing for comparison year; Added 2026-10-20; major advanced economy; World Bank WDI coverage is limited or absent for many indicators, so use official Taiwan national statistics and preserve source-specific coverage. |
+| United Arab Emirates | ARE | not ranked: one or more required macro components are missing for comparison year; Added 2026-10-20; major Gulf economy and migrant-labour destination; World Bank country code is ARE. |
+| Argentina | ARG | not ranked: one or more required macro components are missing for comparison year; Added 2026-10-20; major Latin American economy. |
 
 These destinations are registered but were not scored in the stored ranking. Registration or newly ingested source data does not automatically create a comparable score. Do not infer a rank for an unscored destination.
 
@@ -99,14 +101,14 @@ These destinations are registered but were not scored in the stored ranking. Reg
 - **Evaluation status:** completed_expanding_origin_backtest
 - **Target:** next-year national net migration per 1,000 residents
 - **Evaluation method:** expanding-origin; each test year is predicted using only earlier target years; no random split
-- **Test observations:** 4174
-- **Destinations:** 177
-- **Rolling test origins:** 24
+- **Test observations:** 613
+- **Destinations:** 44
+- **Rolling test origins:** 14
 
 | Metric | EOM / Ridge | Persistence baseline | Country-mean baseline |
 |---|---:|---:|---:|
-| Mean absolute error (MAE; lower is better) | Ridge: 6.013 | 2.408 | 3.939 |
-| Rank correlation (higher is better) | EOM: 0.402; Ridge: 0.445 | 0.876 | Not reported |
+| Mean absolute error (MAE; lower is better) | Ridge: 4.022 | 2.363 | 2.804 |
+| Rank correlation (higher is better) | EOM: 0.515; Ridge: 0.438 | 0.806 | Not reported |
 
 **Interpretation:** These are historical, macro-level evaluation results, not a new forecast. The stored evaluation reports that persistence performs better than Ridge on MAE and rank correlation. Investigate baseline construction, sample comparability and forecast-time information availability before drawing strong conclusions.
 
