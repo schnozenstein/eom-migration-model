@@ -22,3 +22,28 @@ CZE,Czechia,country,,CZE,global_country,
 EDI,Edinburgh,city,GBR,,uk_nested,Nested city option; compare conditionally within the UK or in a hierarchical model
 IND,India,country,,IND,global_country,"Added 2026-10-16 as the 20th comparator by explicit user request; national macro comparison only, not an origin-specific migration estimate."
 BRA,Brazil,country,,BRA,global_country,"Added 2026-10-20; macro series are available through the global World Bank pull. OBMigra remains source-page monitored until numeric table parsing is validated."
+CHN,China,country,,CHN,global_country,Added 2026-10-20; major economy and migration comparator.
+TWN,Taiwan,region,,TWN,global_country,"Added 2026-10-20; major advanced economy; World Bank WDI coverage is limited or absent for many indicators, so use official Taiwan national statistics and preserve source-specific coverage."
+KOR,South Korea,country,,KOR,global_country,Added 2026-10-20; major advanced economy and migration destination.
+IDN,Indonesia,country,,IDN,global_country,Added 2026-10-20; major Southeast Asian economy.
+MYS,Malaysia,country,,MYS,global_country,Added 2026-10-20; major Southeast Asian economy and migration destination.
+THA,Thailand,country,,THA,global_country,Added 2026-10-20; major Southeast Asian economy and migration destination.
+VNM,Vietnam,country,,VNM,global_country,Added 2026-10-20; major manufacturing economy and migration-origin comparator.
+PHL,Philippines,country,,PHL,global_country,Added 2026-10-20; major migration-origin and remittance economy.
+MEX,Mexico,country,,MEX,global_country,Added 2026-10-20; major economy and migration-origin/destination comparator.
+ZAF,South Africa,country,,ZAF,global_country,Added 2026-10-20; major African economy.
+SAU,Saudi Arabia,country,,SAU,global_country,Added 2026-10-20; major Gulf economy and migrant-labour destination.
+ARE,United Arab Emirates,country,,ARE,global_country,Added 2026-10-20; major Gulf economy and migrant-labour destination; World Bank country code is ARE.
+ISR,Israel,country,,ISR,global_country,Added 2026-10-20; advanced economy and migration destination.
+POL,Poland,country,,POL,global_country,Added 2026-10-20; major European economy and migration destination.
+ITA,Italy,country,,ITA,global_country,Added 2026-10-20; major European economy and migration destination.
+BEL,Belgium,country,,BEL,global_country,Added 2026-10-20; major European economy and migration destination.
+PRT,Portugal,country,,PRT,global_country,Added 2026-10-20; European migration destination.
+GRC,Greece,country,,GRC,global_country,Added 2026-10-20; European migration destination.
+TUR,Türkiye,country,,TUR,global_country,Added 2026-10-20; major regional economy and migration destination.
+ARG,Argentina,country,,ARG,global_country,Added 2026-10-20; major Latin American economy.
+CHL,Chile,country,,CHL,global_country,Added 2026-10-20; Latin American economy and migration destination.
+COL,Colombia,country,,COL,global_country,Added 2026-10-20; major Latin American economy and migration-origin/destination comparator.
+PER,Peru,country,,PER,global_country,Added 2026-10-20; major Latin American economy.
+PAK,Pakistan,country,,PAK,global_country,Added 2026-10-20; major South Asian economy and migration-origin comparator.
+BGD,Bangladesh,country,,BGD,global_country,Added 2026-10-20; major South Asian economy and migration-origin comparator.
