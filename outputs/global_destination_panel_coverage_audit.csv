@@ -1,0 +1,10 @@
+dataset,indicator,expected_cells,observed_cells,missing_cells,coverage_pct,geographies_with_value,year_min,year_max
+historical_destination_year_panel.csv,un_migrant_stock_destination,1728,160,1568,9.26,20,1990,2024
+historical_destination_year_panel.csv,ilo_5wap_lfpr_15plus_total_pct,1728,228,1500,13.19,19,2014,2025
+historical_destination_year_panel.csv,ilo_dwap_lfpr_15plus_total_pct,1728,696,1032,40.28,20,1990,2025
+historical_destination_year_panel.csv,eurostat_emigration_total_flow_persons,1728,73,1655,4.22,12,2010,2024
+historical_destination_year_panel.csv,eurostat_immigration_total_by_birth_flow_persons,1728,58,1670,3.36,11,2019,2024
+historical_destination_year_panel.csv,eurostat_immigration_total_by_citizenship_flow_persons,1728,58,1670,3.36,11,2019,2024
+historical_destination_year_panel.csv,eurostat_emigration_total_by_birth_flow_persons,1728,65,1663,3.76,11,2019,2024
+historical_destination_year_panel.csv,eurostat_immigration_total_by_previous_residence_flow_persons,1728,67,1661,3.88,12,2019,2024
+historical_destination_year_panel.csv,eurostat_immigration_total_flow_persons,1728,15,1713,0.87,1,2010,2024
