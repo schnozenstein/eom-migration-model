@@ -622,21 +622,31 @@ def fetch_ilostat_migration_focus(
         else:
             status["id_resolution"] = "official_catalogue_label_match"
 
-        # ILOSTAT's supported bulk-download interface serves annual indicator
-        # datasets as gzip-compressed CSV files. The legacy /data/indicator
-        # endpoint rejects the old query parameters with HTTP 400.
-        from io import BytesIO
+        # ILOSTAT documents the indicator bulk endpoint as an RDS download
+        # (not CSV or CSV.GZ): https://rplumber.ilo.org/files/indicator/{id}.rds
+        # Read the RDS payload with pyreadr, then apply our own year bounds.
+        import tempfile
+        import pyreadr
 
-        data_url = f"https://rplumber.ilo.org/files/indicator/{dataset_id}.csv.gz"
+        data_url = f"{ILOSTAT_API_URL}/{dataset_id}.rds"
         parsed_raw = None
-        selected_variant = "official_bulk_csv_gzip"
+        selected_variant = "official_bulk_rds"
         response = None
+        failures = []
         try:
             response = session.get(data_url, timeout=(15, 120))
             response.raise_for_status()
             if not response.content:
                 raise ValueError("ILOSTAT bulk endpoint returned an empty response")
-            candidate = pd.read_csv(BytesIO(response.content), compression="gzip", low_memory=False)
+            with tempfile.NamedTemporaryFile(suffix=".rds") as temp_file:
+                temp_file.write(response.content)
+                temp_file.flush()
+                objects = pyreadr.read_r(temp_file.name)
+            if not objects:
+                raise ValueError("ILOSTAT RDS payload contained no data frame")
+            candidate = next(iter(objects.values()))
+            if not isinstance(candidate, pd.DataFrame):
+                candidate = pd.DataFrame(candidate)
             candidate.columns = [str(col).replace("\\ufeff", "").strip() for col in candidate.columns]
             norm_columns = {_norm(col): str(col) for col in candidate.columns}
             time_col = norm_columns.get("time")
@@ -645,7 +655,7 @@ def fetch_ilostat_migration_focus(
             area_col = norm_columns.get("refarea")
             if not all((time_col, value_col, indicator_col, area_col)):
                 raise ValueError(
-                    f"ILOSTAT bulk CSV schema missing required columns; columns={list(candidate.columns)[:30]}"
+                    f"ILOSTAT RDS schema missing required columns; columns={list(candidate.columns)[:30]}"
                 )
             candidate[time_col] = pd.to_numeric(candidate[time_col], errors="coerce")
             candidate = candidate[candidate[time_col].between(start_year, query_end_year, inclusive="both")].copy()
@@ -653,7 +663,7 @@ def fetch_ilostat_migration_focus(
                 raise ValueError(f"ILOSTAT dataset had no rows between {start_year} and {query_end_year}")
             parsed_raw = candidate
         except Exception as exc:
-            failures = [f"official_bulk_csv_gzip: {type(exc).__name__}: {exc}"]
+            failures.append(f"official_bulk_rds: {type(exc).__name__}: {exc}")
 
         if parsed_raw is None:
             status["error"] = "All ILOSTAT request variants failed: " + " | ".join(failures)
