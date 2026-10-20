@@ -43,7 +43,7 @@ OECD_MIGRATION_QUERY = (
     "OECD.ELS.IMD,DSD_MIG@DF_MIG,1.0/.W.A.B11._T..."
 )
 OECD_MIGRATION_DATAFLOW_URL = (
-    "https://sdmx.oecd.org/public/rest/dataflow/OECD.ELS.IMD/DSD_MIG@DF_MIG/"
+    "https://sdmx.oecd.org/public/rest/dataflow/OECD.ELS.IMD/DSD_MIG@DF_MIG/1.0?references=all"
 )
 
 DESTINATION_CODES = {
