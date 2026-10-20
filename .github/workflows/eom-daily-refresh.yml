@@ -111,7 +111,9 @@ jobs:
                   data/policy_page_state.json
           # Supplemental sources may be unavailable in an individual run. Stage their
           # last successful compact extracts only when a file exists.
-          for path in data/raw/undesa_migrant_stock_long.csv data/raw/unhcr_forced_displacement_focus.csv.gz data/raw/oecd_migration_database_focus.csv data/raw/ilostat_migrant_labour_focus.csv; do
+# UNHCR focus extract can exceed GitHub's 100 MB per-file limit.
+          # It remains available in the workflow artifact uploaded above; do not add it to Git history.
+          for path in data/raw/undesa_migrant_stock_long.csv data/raw/oecd_migration_database_focus.csv data/raw/ilostat_migrant_labour_focus.csv; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.
