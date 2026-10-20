@@ -27,6 +27,10 @@ UNDESA_FILES = {
         "undesa_pd_2024_ims_stock_by_sex_and_origin.xlsx",
         "https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2024_ims_stock_by_sex_and_origin.xlsx",
     ),
+    "bilateral": (
+        "undesa_pd_2024_ims_stock_by_sex_destination_and_origin.xlsx",
+        "https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2024_ims_stock_by_sex_destination_and_origin.xlsx",
+    ),
 }
 UNDESA_LANDING_URL = "https://www.un.org/development/desa/pd/content/international-migrant-stock"
 
@@ -242,6 +246,66 @@ def _parse_undesa_workbook(path: Path, direction: str, run_id: str, iso_map: dic
     return df
 
 
+
+def _parse_undesa_bilateral_workbook(path: Path, run_id: str, iso_map: dict[str, str]) -> pd.DataFrame:
+    """Parse the official bilateral origin-to-destination stock workbook.
+
+    The workbook contains country/area of destination, UN M49 destination code,
+    country/area of origin, UN M49 origin code, then eight years each for both
+    sexes, male and female. Regional aggregates are not emitted as country pairs.
+    """
+    years = (1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024)
+    sex_order = ("both", "male", "female")
+    raw = pd.read_excel(path, sheet_name="Table 1", header=None, engine="openpyxl")
+    if raw.shape[1] < 29:
+        raise ValueError(f"Unexpected UN DESA bilateral layout: expected >=29 columns, got {raw.shape[1]}")
+    output = []
+    for _, cells in raw.iterrows():
+        destination_name = cells.iloc[1] if len(cells) > 1 else None
+        destination_code = pd.to_numeric(pd.Series([cells.iloc[2]]), errors="coerce").iloc[0]
+        origin_name = cells.iloc[3] if len(cells) > 3 else None
+        origin_code = pd.to_numeric(pd.Series([cells.iloc[4]]), errors="coerce").iloc[0]
+        if (
+            pd.isna(destination_code) or pd.isna(origin_code)
+            or not float(destination_code).is_integer() or not float(origin_code).is_integer()
+            or int(destination_code) >= 900 or int(origin_code) >= 900
+        ):
+            continue
+        if not isinstance(destination_name, str) or not destination_name.strip():
+            continue
+        if not isinstance(origin_name, str) or not origin_name.strip():
+            continue
+        destination_name = destination_name.strip()
+        origin_name = origin_name.strip()
+        for sex_idx, sex in enumerate(sex_order):
+            for year_idx, year in enumerate(years):
+                col = 5 + (sex_idx * len(years)) + year_idx
+                value = pd.to_numeric(pd.Series([cells.iloc[col]]), errors="coerce").iloc[0]
+                output.append({
+                    "direction": "bilateral",
+                    "destination_name": destination_name,
+                    "destination_code_un": int(destination_code),
+                    "destination_code_iso3": iso_map.get(_country_name_key(destination_name), ""),
+                    "origin_name": origin_name,
+                    "origin_code_un": int(origin_code),
+                    "origin_code_iso3": iso_map.get(_country_name_key(origin_name), ""),
+                    "year": year,
+                    "sex": {"both": "Total sexes", "male": "Male", "female": "Female"}[sex],
+                    "migrant_stock_persons": None if pd.isna(value) else float(value),
+                    "measure_type": "bilateral_international_migrant_stock",
+                    "stock_direction": "origin_to_destination_stock",
+                    "source": "UN DESA Population Division",
+                    "source_dataset": "International Migrant Stock 2024",
+                    "source_url": UNDESA_LANDING_URL,
+                    "retrieved_utc": _now(),
+                    "run_id": run_id,
+                })
+    df = pd.DataFrame(output)
+    if df.empty:
+        raise ValueError("No bilateral country-pair rows parsed from UN DESA Table 1")
+    return df
+
+
 def fetch_undesa_migrant_stock(session, root: Path, run_id: str) -> tuple[pd.DataFrame, list[dict]]:
     """Download official 2024 UN DESA migrant-stock destination and origin tables."""
     snapshot_dir = root / "data" / "raw" / "snapshots" / "undesa" / run_id
@@ -280,7 +344,10 @@ def fetch_undesa_migrant_stock(session, root: Path, run_id: str) -> tuple[pd.Dat
             status["http_status"] = response.status_code
             status["sha256"] = hashlib.sha256(body).hexdigest()
             status["size_bytes"] = len(body)
-            df = _parse_undesa_workbook(snapshot_path, direction, run_id, iso_map)
+            if direction == "bilateral":
+                df = _parse_undesa_bilateral_workbook(snapshot_path, run_id, iso_map)
+            else:
+                df = _parse_undesa_workbook(snapshot_path, direction, run_id, iso_map)
             outputs.append(df)
             status["status"] = "SUCCESS"
             status["rows_fetched"] = len(df)
