@@ -162,11 +162,13 @@ def test_ilostat_fetch_uses_official_rds_bulk_endpoint_and_caps_year(tmp_path, m
         "EMP_XFRB_SEX_CBR_NB": "EMP_XFRB_SEX_CBR_NB_A",
         "POP_XFLB_SEX_CBR_NB": "POP_XFLB_SEX_CBR_NB_A",
     }
-    parsed_by_path = {}
+    parsed_by_url = {}
 
     def fake_read_r(path):
-        return {"ilostat": parsed_by_path[path]}
+        # The temporary file contains the payload from the most recent request.
+        return {"ilostat": parsed_by_url[current_url[0]]}
 
+    current_url = [None]
     monkeypatch.setattr(pyreadr, "read_r", fake_read_r)
 
     class FakeResponse:
@@ -191,8 +193,9 @@ def test_ilostat_fetch_uses_official_rds_bulk_endpoint_and_caps_year(tmp_path, m
                 for legacy_id, label in ILOSTAT_MIGRATION_INDICATORS.items():
                     rows.append(f"{current_ids[legacy_id]},{label},A,Annual")
                 return FakeResponse(200, "\\n".join(rows) + "\\n", url)
+            current_url[0] = url
             dataset_id = url.rsplit("/", 1)[-1].removesuffix(".rds")
-            parsed_by_path[next_path_key[0]] = pd.DataFrame({
+            parsed_by_url[url] = pd.DataFrame({
                 "ref_area": ["GBR", "GBR", "GBR"],
                 "ref_area.label": ["United Kingdom"] * 3,
                 "indicator": [dataset_id] * 3,
@@ -204,52 +207,7 @@ def test_ilostat_fetch_uses_official_rds_bulk_endpoint_and_caps_year(tmp_path, m
             })
             return FakeResponse(200, "rds-fixture", url)
 
-    # NamedTemporaryFile supplies a unique path to the mocked RDS reader.
-    import tempfile
-    original_named_temp_file = tempfile.NamedTemporaryFile
-
-    class FakeTempFile:
-        def __init__(self, *args, **kwargs):
-            self._real = original_named_temp_file(*args, **kwargs)
-            self.name = self._real.name
-        def __enter__(self):
-            return self
-        def __exit__(self, *args):
-            self._real.close()
-        def write(self, data):
-            return self._real.write(data)
-        def flush(self):
-            return self._real.flush()
-
-    next_path_key = [None]
-    def read_r_for_last_path(path):
-        return {"ilostat": parsed_by_path[path]}
-    monkeypatch.setattr(pyreadr, "read_r", read_r_for_last_path)
-
-    # The fake response's URL is also the stable key for the corresponding frame.
     session = FakeSession()
-    original_get = session.get
-    def tracked_get(url, params=None, timeout=None):
-        response = original_get(url, params=params, timeout=timeout)
-        if url != ILOSTAT_TOC_URL:
-            next_path_key[0] = url
-        return response
-    session.get = tracked_get
-
-    # Redirect frame lookup from temporary path to the requested dataset URL.
-    def mapped_read_r(path):
-        dataset_url = next(url for url, _, _ in session.calls if url.endswith(".rds") and url.rsplit("/", 1)[-1].removesuffix(".rds") in path_to_id(path))
-        return {"ilostat": parsed_by_path[dataset_url]}
-    path_to_url = {}
-    def map_temp_file(monkeypatch_path):
-        return [url for url, _, _ in session.calls if url.endswith(".rds")][-1:]
-    # Simpler deterministic RDS-reader stub: match by the most recent dataset request.
-    def latest_dataset_frame(path):
-        dataset_urls = [url for url, _, _ in session.calls if url.endswith(".rds")]
-        dataset_url = dataset_urls[-1]
-        return {"ilostat": parsed_by_path[dataset_url]}
-    monkeypatch.setattr(pyreadr, "read_r", latest_dataset_frame)
-
     fresh, statuses = fetch_ilostat_migration_focus(
         session, tmp_path, "test-run", 2010, query_end_year + 1
     )
