@@ -1,0 +1,17 @@
+{
+  "generated_at_utc": "2026-10-20T18:13:08.883099+00:00",
+  "latest_source_year": 2023,
+  "destinations_registered": 45,
+  "destinations_with_latest_year_record": 44,
+  "destinations_complete_all_three_indicators": 43,
+  "destinations_with_all_three_partial_risk_indicators": 43,
+  "full_risk_adjusted_ranking_published": false,
+  "reason": "This panel covers only environmental/economic proxies. Comparable geopolitical/conflict and social-instability measures are not yet integrated; no adjusted ranking is emitted.",
+  "indicators": {
+    "EN.ATM.PM25.MC.M3": "annual_pm25_exposure",
+    "NY.GDP.MKTP.KD.ZG": "real_gdp_growth_pct",
+    "EG.IMP.CONS.ZS": "net_energy_imports_pct_energy_use"
+  },
+  "source": "World Bank Indicators API",
+  "source_data_url": "https://data.worldbank.org/indicator/EN.ATM.PM25.MC.M3"
+}
