@@ -82,7 +82,9 @@ def main():
         and r.get("qol_score_status", "").startswith("scored")
     ]
 
-    ranking.sort(key=lambda r: float(r.get("energy_rank") or 999999))
+    ranked_rows = [r for r in ranking if (r.get("energy_rank") or "").strip() and (r.get("energy_equal_weight") or "").strip()]
+    unscored_rows_by_id = {str(r.get("destination_id", "")).strip().upper(): r for r in ranking if str(r.get("destination_id", "")).strip() and not (r.get("energy_rank") or "").strip()}
+    ranked_rows.sort(key=lambda r: float(r.get("energy_rank") or 999999))
     lines = [
         "# EOM Daily Research Report",
         "",
@@ -103,10 +105,12 @@ def main():
         f"- **Brazil OBMigra official source page:** {obmigra_state} (catalogue monitor only; report tables are not numerically parsed)",
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
         f"- **Freshness dashboard:** {len(recent)} recent; {len(attention)} requiring attention out of {len(dashboard)} indicators",
-        f"- **Ranking recomputed during refresh:** {yes_no(manifest.get('ranking_recomputed'))}",
+        f"- **Macro ranking recomputed in this run:** {yes_no(manifest.get('ranking_recomputed'))}",
+        f"- **Macro ranking comparison year:** {manifest.get('ranking_year', 'Not reported')}",
+        f"- **Destinations scored / total:** {manifest.get('ranking_destinations_scored', 'Not reported')} / {manifest.get('ranking_destinations_total', len(ranking))}",
         f"- **Forecast issued during refresh:** {yes_no(manifest.get('forecast_issued'))}",
         "",
-        "A successful data refresh is not evidence that a ranking or forecast was recalculated.",
+        "Source refresh and model reranking are separate steps. Check the ranking status and comparison year above before treating this as a new ranking.",
         "",
         "### Supplemental dataset notes",
         "",
@@ -123,13 +127,13 @@ def main():
         "",
     ]
 
-    if ranking:
+    if ranked_rows:
         lines += [
             "| Rank | Destination | Year | Macro score |",
             "|---:|---|---:|---:|",
         ]
         # Report the full stored ranking; do not silently truncate at the top ten.
-        for r in ranking:
+        for r in ranked_rows:
             lines.append(
                 f"| {r.get('energy_rank', '—')} | {r.get('destination_name', 'Unknown')} "
                 f"| {r.get('year', '—')} | {fmt(r.get('energy_equal_weight'))} |"
@@ -137,7 +141,7 @@ def main():
     else:
         lines.append("No stored macro ranking file or rows were available.")
 
-    ranked_ids = {str(r.get("destination_id", "")).strip().upper() for r in ranking}
+    ranked_ids = {str(r.get("destination_id", "")).strip().upper() for r in ranked_rows}
     unranked_destinations = [
         d for d in destinations
         if str(d.get("destination_id", "")).strip().upper()
@@ -148,7 +152,7 @@ def main():
         "### Destination coverage",
         "",
         f"- **Registered destinations:** {len(destinations)}",
-        f"- **Destinations in stored macro ranking:** {len(ranking)}",
+        f"- **Destinations scored in stored macro ranking:** {len(ranked_rows)}",
         f"- **Registered destinations not in stored ranking:** {len(unranked_destinations)}",
         "",
     ]
@@ -159,6 +163,10 @@ def main():
         ]
         for d in unranked_destinations:
             note = (d.get("notes") or "").replace("|", "\\|").strip()
+            unscored_row = unscored_rows_by_id.get(str(d.get("destination_id", "")).strip().upper(), {})
+            score_note = (unscored_row.get("score_status") or "").strip()
+            if score_note:
+                note = (score_note + ("; " + note if note else "")).replace("|", "\\|")
             lines.append(
                 f"| {d.get('destination_name', 'Unknown')} | {d.get('destination_id', '—')} | "
                 f"{note or 'No comparable macro score in the stored ranking; not scored'} |"

@@ -1,6 +1,7 @@
 """Create an equal-weight EOM macro score and expanding-origin backtest."""
 from __future__ import annotations
 from pathlib import Path
+from datetime import datetime, timezone
 import json
 import numpy as np
 import pandas as pd
@@ -36,8 +37,7 @@ def main() -> None:
     PROCESSED.mkdir(parents=True, exist_ok=True); OUTPUTS.mkdir(parents=True, exist_ok=True)
     wide.to_csv(PROCESSED / "macro_panel_wide.csv", index=False)
 
-    # Focus-country ranking: standardize within the explicit 19-destination choice set.
-    # Global country-year data remain available for macro backtesting below.
+    # Score the full registered country choice set, preserving destinations with missing inputs as unranked.
     energy_features = ["salary_proxy", "cost_proxy", "opportunity_proxy", "policy_proxy", "institution_proxy", "stability_proxy"]
     dest = pd.read_csv(ROOT / "data" / "destinations.csv", dtype=str).fillna("")
     focus = dest[dest["primary_choice_set"] == "global_country"].copy()
@@ -52,13 +52,40 @@ def main() -> None:
     focus_latest = focus_wide[focus_wide["year"] == latest_year].copy()
     complete = focus_latest[energy_features].notna().all(axis=1)
     scored = equal_weight_energy(focus_latest.loc[complete].copy())
-    # Preserve all focus destinations in the output; incomplete destinations are explicitly unranked.
-    base = focus_latest.merge(focus[["wb_country_code", "destination_id", "destination_name"]], left_on="country_code", right_on="wb_country_code", how="right")
+    # Start from the full registry so destinations without WDI records remain explicitly visible.
+    base = focus[["wb_country_code", "destination_id", "destination_name"]].merge(
+        focus_latest, left_on="wb_country_code", right_on="country_code", how="left"
+    )
+    base["year"] = latest_year
+    base["country_code"] = base["country_code"].fillna(base["wb_country_code"])
     scored_cols = ["country_code", "energy_equal_weight", "energy_rank", "score_status"]
-    result = base.merge(scored[scored_cols], on="country_code", how="left", suffixes=("", "_score"))
-    result["score_status"] = result["score_status"].fillna("not ranked: one or more EOM components missing")
+    result = base.merge(scored[scored_cols], on="country_code", how="left")
+    result["score_status"] = result["score_status"].fillna(
+        "not ranked: one or more required macro components are missing for comparison year"
+    )
     out_cols = ["destination_id", "destination_name", "country_code", "year", *energy_features, "energy_equal_weight", "energy_rank", "score_status"]
-    result[[c for c in out_cols if c in result.columns]].sort_values("energy_rank", na_position="last").to_csv(OUTPUTS / "latest_macro_eom_ranking.csv", index=False)
+    ranking_path = OUTPUTS / "latest_macro_eom_ranking.csv"
+    ranking_output = result[[c for c in out_cols if c in result.columns]].sort_values("energy_rank", na_position="last")
+    ranking_output.to_csv(ranking_path, index=False)
+
+    # Distinguish a successful source refresh from a genuine model reranking in the manifest.
+    manifests = sorted((ROOT / "metadata" / "refresh_runs").glob("*.json"))
+    if manifests:
+        manifest_path = manifests[-1]
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            manifest = {}
+        manifest.update({
+            "ranking_recomputed": True,
+            "ranking_year": latest_year,
+            "ranking_destinations_scored": int(complete.sum()),
+            "ranking_destinations_total": int(len(focus)),
+            "ranking_destinations_unscored": int(len(focus) - complete.sum()),
+            "ranking_run_at_utc": datetime.now(timezone.utc).isoformat(),
+            "ranking_method": "equal-weight standardized macro proxy; latest common year with at least 10 complete destinations"
+        })
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
     lagged, lag_cols = make_lagged_panel(wide)
     lagged = lagged.replace([np.inf, -np.inf], np.nan)

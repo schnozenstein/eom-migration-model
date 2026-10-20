@@ -5,11 +5,11 @@ import pandas as pd
 
 FEATURE_MAP = {
     "salary": "NY.GDP.PCAP.PP.KD",
-    "cost": "PA.NUS.PPPC.RF",
+    "cost": "PA.NUS.PRVT.PLI",
     "unemployment": "SL.UEM.TOTL.ZS",
-    "policy_proxy": "RQ.EST",
-    "institution_proxy": "GE.EST",
-    "stability": "PV.EST",
+    "policy_proxy": "GOV_WGI_RQ_EST",
+    "institution_proxy": "GOV_WGI_GE_EST",
+    "stability": "GOV_WGI_PV_EST",
     "population": "SP.POP.TOTL",
     "net_migration": "SM.POP.NETM",
 }
@@ -38,11 +38,13 @@ def add_derived_features(wide: pd.DataFrame) -> pd.DataFrame:
         out["net_migration_per_1000"] = np.nan
     # All model features are oriented so that larger = more attractive, except cost.
     out["salary_proxy"] = np.log(out["NY.GDP.PCAP.PP.KD"].where(out["NY.GDP.PCAP.PP.KD"] > 0))
-    out["cost_proxy"] = out.get("PA.NUS.PPPC.RF", np.nan)
+    # Prefer current household-consumption price levels and the 2026 WGI series.
+    # Fall back to legacy columns for reproducibility with previously downloaded panels.
+    out["cost_proxy"] = out["PA.NUS.PRVT.PLI"] if "PA.NUS.PRVT.PLI" in out else out.get("PA.NUS.PPPC.RF", np.nan)
     out["opportunity_proxy"] = -out.get("SL.UEM.TOTL.ZS", np.nan)
-    out["policy_proxy"] = out.get("RQ.EST", np.nan)
-    out["institution_proxy"] = out.get("GE.EST", np.nan)
-    out["stability_proxy"] = out.get("PV.EST", np.nan)
+    out["policy_proxy"] = out["GOV_WGI_RQ_EST"] if "GOV_WGI_RQ_EST" in out else out.get("RQ.EST", np.nan)
+    out["institution_proxy"] = out["GOV_WGI_GE_EST"] if "GOV_WGI_GE_EST" in out else out.get("GE.EST", np.nan)
+    out["stability_proxy"] = out["GOV_WGI_PV_EST"] if "GOV_WGI_PV_EST" in out else out.get("PV.EST", np.nan)
     return out
 
 
