@@ -14,7 +14,6 @@ INDICATORS = {
     "NY.GDP.PCAP.PP.KD": "GDP per capita, PPP (constant 2021 international $)",
     "NY.GDP.MKTP.PP.CD": "GDP, PPP (current international $)",
     "PA.NUS.PPP": "PPP conversion factor, GDP (LCU per international $)",
-    "PA.NUS.PPPC.RF": "Price level ratio of PPP conversion factor (GDP) to market exchange rate",
     "PA.NUS.PRVT.PP": "PPP conversion factor, household/private consumption (LCU per international $)",
     "SL.UEM.TOTL.ZS": "Unemployment, total (% of labor force, ILO modeled estimate)",
     "RQ.EST": "Regulatory quality estimate",
