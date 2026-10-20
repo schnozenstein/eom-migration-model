@@ -2,7 +2,7 @@
 
 ## What this adds
 
-- A daily, retrying World Bank Indicators API pull across 18 selected macro/labour/demographic indicators, including complementary PPP measures, with the requested end year defaulting to the current UTC year instead of being hard-coded to 2025.
+- A daily, retrying World Bank Indicators API pull across 38 selected macro/labour/demographic/education/health/digital/institutional indicators, including complementary PPP measures, with the requested end year defaulting to the current UTC year instead of being hard-coded to 2025.
 - Immutable run-level JSON response snapshots and a retrieval-vintage history table.
 - A canonical observation table that updates successful keys while retaining old rows when a source fails.
 - Per-indicator freshness and country-coverage dashboard, per-source status logs, and per-run machine-readable summaries.
@@ -40,3 +40,19 @@ Optional: `python scripts/refresh_eom_data.py --start-year 2015 --end-year 2026 
 
 - Spain (ESP) is now in `data/destinations.csv` and the maintained historical panel scaffold. Its numeric migration/QoL evidence remains explicitly missing until ingested; blanks are not zeros. Austria (AUT) was already in the destination set and is now monitored through the official Austrian Federal Government migration portal.
 - The PPP block includes GDP per capita at constant 2021 PPP, current PPP GDP, GDP PPP conversion factor and household/private-consumption PPP conversion factor. The legacy `PA.NUS.PPPC.RF` series is not polled because the live API returned an indicator-not-found/archived response; prior historical observations are not deleted. These measures remain separately named.
+
+
+## Dense global indicator expansion (2026-10-20)
+
+The World Bank indicator pull now covers 38 selected indicators across:
+- income and purchasing power parity (PPP);
+- macroeconomic growth, inflation, trade, FDI, remittances and natural-resource rents;
+- employment, unemployment, youth unemployment and sex-disaggregated labour-force participation;
+- education participation and public education spending;
+- internet access, population structure, urbanization and demographic change;
+- life expectancy, sex-specific life expectancy, fertility, infant mortality, crude birth/death rates and health spending;
+- institutional quality, political stability and government debt.
+
+The new indicators expand the raw evidence layer only. They are not automatically included in the existing EOM score; each feature needs a documented transformation, a consistent reference year, a coverage check and a sensitivity test before model use. Indicator requests that the World Bank retires or does not expose are recorded as failures rather than silently replaced by a similarly named measure.
+
+The Hong Kong and Switzerland policy-page monitors now use their official current press/latest-news paths. Spain's monitor uses the canonical English migration landing page. HTTP success is still a page-monitor signal, not proof that policy text was parsed or interpreted; content changes require review.
