@@ -20,6 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from eom_empirical.eurostat_api import fetch_eurostat_total_flows_all_geographies
 from eom_empirical.research_datasets import (
+    ILOSTAT_MIGRATION_INDICATORS,
+    fetch_ilostat_migration_focus,
     fetch_oecd_migration_slice,
     fetch_undesa_migrant_stock,
     fetch_unhcr_focus,
@@ -410,6 +412,8 @@ def main() -> int:
         undesa_status = [{"source_id": f"UN_DESA_IMS_2024_{direction.upper()}", "source": "UN DESA Population Division", "dataset": f"International Migrant Stock 2024 — {direction}", "url": "", "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "countries_fetched": 0, "error": "Offline audit requested; no network call made", "output_path": "data/raw/undesa_migrant_stock_long.csv"} for direction in ("destination", "origin", "bilateral")]
         oecd_data = pd.DataFrame()
         oecd_status = {"source_id": "OECD_DF_MIG_B11", "source": "OECD International migration database (SDMX)", "url": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.IMD,DSD_MIG@DF_MIG,1.0/.W.A.B11._T...", "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "rows_focus": 0, "error": "Offline audit requested; no network call made", "output_path": "data/raw/oecd_migration_database_focus.csv"}
+        ilostat_data = pd.DataFrame()
+        ilostat_status = [{"source_id": f"ILOSTAT_{code}", "source": "International Labour Organization (ILOSTAT)", "indicator_code": code, "indicator_label_expected": label, "url": "https://rplumber.ilo.org/data/indicator/", "checked_at_utc": utc_now().isoformat(), "status": "SKIPPED_OFFLINE", "rows_fetched": 0, "rows_focus": 0, "geographies": 0, "error": "Offline audit requested; no network call made", "output_path": "data/raw/ilostat_migrant_labour_focus.csv"} for code, label in ILOSTAT_MIGRATION_INDICATORS.items()]
         policy = []
     else:
         fresh, statuses = fetch_world_bank(session, run_id, args.start_year, args.end_year)
@@ -423,6 +427,9 @@ def main() -> int:
         unhcr_data, unhcr_status = fetch_unhcr_focus(session, ROOT, run_id)
         undesa_data, undesa_status = fetch_undesa_migrant_stock(session, ROOT, run_id)
         oecd_data, oecd_status = fetch_oecd_migration_slice(
+            session, ROOT, run_id, args.start_year, args.end_year
+        )
+        ilostat_data, ilostat_status = fetch_ilostat_migration_focus(
             session, ROOT, run_id, args.start_year, args.end_year
         )
         obmigra = check_obmigra_source(session, run_id)
@@ -451,12 +458,14 @@ def main() -> int:
     unhcr_status_df = pd.DataFrame([unhcr_status])
     undesa_status_df = pd.DataFrame(undesa_status)
     oecd_status_df = pd.DataFrame([oecd_status])
+    ilostat_status_df = pd.DataFrame(ilostat_status)
     atomic_csv(status_df, ROOT / "metadata" / "live_source_status.csv")
     atomic_csv(eurostat_status_df, ROOT / "metadata" / "eurostat_source_status.csv")
     atomic_csv(obmigra_df, ROOT / "metadata" / "obmigra_source_status.csv")
     atomic_csv(unhcr_status_df, ROOT / "metadata" / "unhcr_source_status.csv")
     atomic_csv(undesa_status_df, ROOT / "metadata" / "undesa_source_status.csv")
     atomic_csv(oecd_status_df, ROOT / "metadata" / "oecd_source_status.csv")
+    atomic_csv(ilostat_status_df, ROOT / "metadata" / "ilostat_source_status.csv")
     if policy:
         atomic_csv(policy_df, ROOT / "metadata" / "policy_page_watch_status.csv")
 
@@ -511,6 +520,10 @@ def main() -> int:
         "undesa_stock_rows": int(len(undesa_data)),
         "oecd_migration_status": oecd_status.get("status", "Not reported"),
         "oecd_migration_rows": int(oecd_status.get("rows_focus", 0) or 0),
+        "ilostat_indicators_successful": int((ilostat_status_df["status"] == "SUCCESS").sum()) if not ilostat_status_df.empty else 0,
+        "ilostat_indicators_failed": int((ilostat_status_df["status"] == "FAILED").sum()) if not ilostat_status_df.empty else 0,
+        "ilostat_rows_fetched": int(len(ilostat_data)),
+        "ilostat_rows_focus": int(ilostat_status_df["rows_focus"].sum()) if "rows_focus" in ilostat_status_df and not ilostat_status_df.empty else 0,
         "obmigra_source_status": obmigra.get("status", "Not reported"),
         "obmigra_numeric_data_ingested": False,
         "ranking_recomputed": False, "forecast_issued": False,
