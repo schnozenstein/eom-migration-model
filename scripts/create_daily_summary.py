@@ -93,7 +93,7 @@ def main():
         f"- **Brazil World Bank extract:** {manifest.get('brazil_macro_rows_fetched', 'Not reported')} fresh Brazil indicator-year rows",
         f"- **Eurostat total migration flows:** {eurostat_succeeded} series succeeded; {eurostat_failed} failed; {eurostat_observed} observed annual cells across up to {eurostat_geos} reporting geographies",
         f"- **UNHCR forced-displacement extract:** {unhcr_state}; {unhcr_rows} retained focus/origin rows",
-        f"- **UN DESA migrant-stock tables:** {undesa_succeeded} of 2 files succeeded; {undesa_failed} failed; {undesa_rows} normalized rows",
+        f"- **UN DESA migrant-stock tables:** {undesa_succeeded} of 3 files succeeded; {undesa_failed} failed; {undesa_rows} normalized rows",
         f"- **OECD migration database slice:** {oecd_state}; {oecd_rows} focus-country rows retained",
         f"- **Brazil OBMigra official source page:** {obmigra_state} (catalogue monitor only; report tables are not numerically parsed)",
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
