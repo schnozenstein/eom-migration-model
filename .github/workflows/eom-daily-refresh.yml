@@ -73,6 +73,7 @@ jobs:
             metadata/unhcr_source_status.csv
             metadata/undesa_source_status.csv
             metadata/oecd_source_status.csv
+            metadata/ilostat_source_status.csv
             metadata/refresh_runs/*.json
             outputs/data_freshness_dashboard.csv
             data/raw/eurostat_migration_flows.csv
@@ -80,6 +81,7 @@ jobs:
             data/raw/undesa_migrant_stock_long.csv
             data/raw/unhcr_forced_displacement_focus.csv
             data/raw/oecd_migration_database_focus.csv
+            data/raw/ilostat_migrant_labour_focus.csv
             data/raw/snapshots/undesa/**/*.xlsx
 
       - name: Commit report and refreshed data
@@ -99,6 +101,7 @@ jobs:
                   metadata/unhcr_source_status.csv \
                   metadata/undesa_source_status.csv \
                   metadata/oecd_source_status.csv \
+                  metadata/ilostat_source_status.csv \
                   metadata/refresh_runs/ \
                   outputs/data_freshness_dashboard.csv \
                   data/historical_destination_year_panel.csv \
@@ -108,7 +111,7 @@ jobs:
                   data/policy_page_state.json
           # Supplemental sources may be unavailable in an individual run. Stage their
           # last successful compact extracts only when a file exists.
-          for path in data/raw/undesa_migrant_stock_long.csv data/raw/unhcr_forced_displacement_focus.csv data/raw/oecd_migration_database_focus.csv; do
+          for path in data/raw/undesa_migrant_stock_long.csv data/raw/unhcr_forced_displacement_focus.csv data/raw/oecd_migration_database_focus.csv data/raw/ilostat_migrant_labour_focus.csv; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           if ! git diff --cached --quiet; then
