@@ -187,7 +187,7 @@ def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, d
         result = pd.concat(kept, ignore_index=True, sort=False) if kept else pd.DataFrame()
         if result.empty:
             raise ValueError("UNHCR export succeeded but no records matched the focus-country filter")
-        result_path = root / "data" / "raw" / "unhcr_forced_displacement_focus.csv"
+        result_path = root / "data" / "raw" / "unhcr_forced_displacement_focus.csv.gz"
         result_path.parent.mkdir(parents=True, exist_ok=True)
         result.to_csv(result_path, index=False, compression="gzip")
         period_col = _find_column(result.columns, ("time_period",))
