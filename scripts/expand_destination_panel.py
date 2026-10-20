@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Append missing destination-year scaffold rows without imputing observations.
-
-Reads the destination registry and existing panel, adds missing national/region
-destinations for 1990-2025, preserves all existing observations, and marks all
-source fields as missing until a verified ingestion populates them.
-"""
+"""Append missing destination-year scaffold rows without imputing observations."""
 from pathlib import Path
 import pandas as pd
 
@@ -19,28 +14,23 @@ panel = pd.read_csv(PANEL)
 existing = set(panel["destination"].astype(str))
 rows = []
 for _, d in registry.iterrows():
-    code = d["id"]
-    name = SPECIAL_NAMES.get(code, d["name"])
+    code = d["destination_id"]
+    name = SPECIAL_NAMES.get(code, d["destination_name"])
     if name in existing:
         continue
     for year in range(START_YEAR, END_YEAR + 1):
         row = {c: pd.NA for c in panel.columns}
-        row["destination"] = name
-        row["year"] = year
+        row["destination"], row["year"] = name, year
         for c in panel.columns:
             if c.startswith("missing_"):
                 row[c] = True
-        if "data_level_note" in panel.columns:
-            row["data_level_note"] = (
-                "Scaffold only; Taiwan source coverage requires separate official-source "
-                "mapping; no value inferred"
-                if code == "TWN"
-                else "Scaffold only; comparable source observations not yet integrated; "
-                     "no value inferred"
-            )
+        row["data_level_note"] = (
+            "Scaffold only; Taiwan source coverage requires separate official-source "
+            "mapping; no value inferred" if code == "TWN" else
+            "Scaffold only; comparable source observations not yet integrated; no value inferred"
+        )
         rows.append(row)
         existing.add(name)
-
 if rows:
     panel = pd.concat([panel, pd.DataFrame(rows, columns=panel.columns)], ignore_index=True)
 panel["year"] = panel["year"].astype(int)
