@@ -144,15 +144,21 @@ def test_ilostat_focus_filter_retains_origin_breakdown_and_source_flags():
 
 
 
-def test_ilostat_fetch_retries_api_format_and_caps_to_last_complete_year(tmp_path):
+def test_ilostat_fetch_resolves_current_annual_ids_retries_format_and_caps_year(tmp_path):
     from datetime import datetime, timezone
 
     from eom_empirical.research_datasets import (
         ILOSTAT_MIGRATION_INDICATORS,
+        ILOSTAT_TOC_URL,
         fetch_ilostat_migration_focus,
     )
 
     query_end_year = datetime.now(timezone.utc).year - 1
+    current_ids = {
+        "POP_XFRB_SEX_CBR_NB": "POP_XFRB_SEX_CBR_NB_A",
+        "EMP_XFRB_SEX_CBR_NB": "EMP_XFRB_SEX_CBR_NB_A",
+        "POP_XFLB_SEX_CBR_NB": "POP_XFLB_SEX_CBR_NB_A",
+    }
 
     class FakeResponse:
         def __init__(self, status_code, body, url):
@@ -171,15 +177,21 @@ def test_ilostat_fetch_retries_api_format_and_caps_to_last_complete_year(tmp_pat
 
         def get(self, url, params, timeout):
             self.calls.append((url, dict(params), timeout))
+            if url == ILOSTAT_TOC_URL:
+                rows = ["id,indicator.label,freq,freq.label"]
+                for legacy_id, label in ILOSTAT_MIGRATION_INDICATORS.items():
+                    rows.append(f"{current_ids[legacy_id]},{label},A,Annual")
+                return FakeResponse(200, "\n".join(rows) + "\n", url)
+
             if params.get("format") == ".csv":
                 return FakeResponse(400, "invalid CSV format token", url)
 
-            indicator = params["id"]
+            dataset_id = params["id"]
             body = (
                 "ref_area,ref_area.label,indicator,sex,classif1,time,obs_value,source\n"
-                f"GBR,United Kingdom,{indicator},SEX_T,CBR_BRT_TOTAL,2020,123.4,LFS\n"
-                f"GBR,United Kingdom,{indicator},SEX_T,CBR_BRT_TOTAL,{query_end_year},234.5,LFS\n"
-                f"GBR,United Kingdom,{indicator},SEX_T,CBR_BRT_TOTAL,{query_end_year + 1},999.9,LFS\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,2020,123.4,LFS\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year},234.5,LFS\n"
+                f"GBR,United Kingdom,{dataset_id},SEX_T,CBR_BRT_TOTAL,{query_end_year + 1},999.9,LFS\n"
             )
             return FakeResponse(200, body, url)
 
@@ -192,12 +204,14 @@ def test_ilostat_fetch_retries_api_format_and_caps_to_last_complete_year(tmp_pat
     assert all(status["status"] == "SUCCESS" for status in statuses)
     assert all(status["request_variant"] == "bounded_csv" for status in statuses)
     assert all(status["observation_end_queried"] == query_end_year for status in statuses)
-    assert len(session.calls) == 2 * len(ILOSTAT_MIGRATION_INDICATORS)
-    assert all(call[1].get("timeto") == query_end_year for call in session.calls[::2])
+    assert {status["indicator_code"] for status in statuses} == set(current_ids.values())
+    assert all(status["id_resolution"] == "official_catalogue_label_match" for status in statuses)
+    assert len(session.calls) == 1 + 2 * len(ILOSTAT_MIGRATION_INDICATORS)
+    assert session.calls[0][0] == ILOSTAT_TOC_URL
+    assert all(call[1].get("timeto") == query_end_year for call in session.calls[1::2])
     assert fresh["time"].max() == query_end_year
     assert (fresh["time"] < query_end_year + 1).all()
     assert set(fresh["ref_area"]) == {"GBR"}
-
 
 def test_spain_policy_monitor_uses_current_official_portal():
     from scripts.refresh_eom_data import POLICY_URLS
