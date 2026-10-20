@@ -59,11 +59,15 @@ def main() -> None:
             lambda s: s.rolling(5, min_periods=3).std(ddof=0))
     else:
         wide["gdp_growth_volatility_5y"] = np.nan
-    latest_year = int(wide["year"].max()) if not wide.empty else None
-    latest = wide[wide["year"] == latest_year].copy() if latest_year else wide.iloc[0:0].copy()
+    # Choose the latest year with at least 10 destinations complete across all three indicators.
+    # PM2.5 series currently ends earlier than some macro series, so max(year) alone would be misleading.
+    risk_cols = ["annual_pm25_exposure", "net_energy_imports_pct_energy_use", "gdp_growth_volatility_5y"]
+    complete_by_year = wide.groupby("year")[risk_cols].apply(lambda g: g.notna().all(axis=1).sum())
+    eligible_years = complete_by_year[complete_by_year >= min(10, len(codes))]
+    latest_year = int(eligible_years.index.max()) if not eligible_years.empty else None
+    latest = wide[wide["year"] == latest_year].copy() if latest_year is not None else wide.iloc[0:0].copy()
     # Higher risk means worse: higher PM2.5, greater energy import dependence, and higher growth volatility.
     # Do not treat low/negative net energy imports as risk-free; retain raw value and flag interpretive limits.
-    risk_cols = ["annual_pm25_exposure", "net_energy_imports_pct_energy_use", "gdp_growth_volatility_5y"]
     for col in risk_cols:
         if col in latest:
             latest[f"{col}_risk_z"] = zscore(latest[col])
@@ -86,6 +90,7 @@ def main() -> None:
         "latest_source_year": latest_year,
         "destinations_registered": int(len(focus)),
         "destinations_with_latest_year_record": int(out["year"].notna().sum()),
+        "destinations_complete_all_three_indicators": int(out["partial_risk_components_present"].eq(3).sum()) if "partial_risk_components_present" in out else 0,
         "destinations_with_all_three_partial_risk_indicators": int(out["risk_score_status"].eq("partial only: environmental/economic indicators present; geopolitical/social indicators not yet integrated").sum()),
         "full_risk_adjusted_ranking_published": False,
         "reason": "This panel covers only environmental/economic proxies. Comparable geopolitical/conflict and social-instability measures are not yet integrated; no adjusted ranking is emitted.",
