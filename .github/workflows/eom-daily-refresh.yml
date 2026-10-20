@@ -70,10 +70,17 @@ jobs:
             metadata/eurostat_source_status.csv
             metadata/obmigra_source_status.csv
             metadata/policy_page_watch_status.csv
+            metadata/unhcr_source_status.csv
+            metadata/undesa_source_status.csv
+            metadata/oecd_source_status.csv
             metadata/refresh_runs/*.json
             outputs/data_freshness_dashboard.csv
             data/raw/eurostat_migration_flows.csv
             data/raw/brazil_world_bank_macro.csv
+            data/raw/undesa_migrant_stock_long.csv
+            data/raw/unhcr_forced_displacement_focus.csv
+            data/raw/oecd_migration_database_focus.csv
+            data/raw/snapshots/undesa/**/*.xlsx
 
       - name: Commit report and refreshed data
         if: always() && github.event_name != 'pull_request'
@@ -89,6 +96,9 @@ jobs:
                   metadata/eurostat_source_status.csv \
                   metadata/obmigra_source_status.csv \
                   metadata/policy_page_watch_status.csv \
+                  metadata/unhcr_source_status.csv \
+                  metadata/undesa_source_status.csv \
+                  metadata/oecd_source_status.csv \
                   metadata/refresh_runs/ \
                   outputs/data_freshness_dashboard.csv \
                   data/historical_destination_year_panel.csv \
@@ -96,6 +106,11 @@ jobs:
                   data/raw/brazil_world_bank_macro.csv \
                   data/obmigra_page_state.json \
                   data/policy_page_state.json
+          # Supplemental sources may be unavailable in an individual run. Stage their
+          # last successful compact extracts only when a file exists.
+          for path in data/raw/undesa_migrant_stock_long.csv data/raw/unhcr_forced_displacement_focus.csv data/raw/oecd_migration_database_focus.csv; do
+            if [ -f "$path" ]; then git add "$path"; fi
+          done
           if ! git diff --cached --quiet; then
             git commit -m "Automated EOM data refresh"
             git push
