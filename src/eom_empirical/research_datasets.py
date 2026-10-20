@@ -40,7 +40,7 @@ UNDESA_LANDING_URL = "https://www.un.org/development/desa/pd/content/internation
 # the measure is attempted by this adapter.
 OECD_MIGRATION_QUERY = (
     "https://sdmx.oecd.org/public/rest/data/"
-    "OECD.ELS.IMD,DSD_MIG@DF_MIG,/.W.A.B11._T..."
+    "OECD.ELS.IMD,DSD_MIG@DF_MIG,1.0/.W.A.B11._T..."
 )
 OECD_MIGRATION_DATAFLOW_URL = (
     "https://sdmx.oecd.org/public/rest/dataflow/OECD.ELS.IMD/DSD_MIG@DF_MIG/"
