@@ -18,7 +18,7 @@ from urllib3.util.retry import Retry
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from eom_empirical.eurostat_api import fetch_eurostat_total_flows_all_geographies
+from eom_empirical.eurostat_api import fetch_eurostat_total_flows_all_geographies, merge_eurostat_history
 from eom_empirical.research_datasets import (
     ILOSTAT_MIGRATION_INDICATORS,
     fetch_ilostat_migration_focus,
@@ -472,17 +472,7 @@ def main() -> int:
     if eurostat_rows:
         eurostat_path = ROOT / "data" / "raw" / "eurostat_migration_flows.csv"
         existing_eurostat = pd.read_csv(eurostat_path) if eurostat_path.exists() else pd.DataFrame()
-        combined_eurostat = pd.concat(
-            [existing_eurostat, pd.DataFrame(eurostat_rows)], ignore_index=True, sort=False
-        )
-        combined_eurostat["_retrieved_sort"] = pd.to_datetime(
-            combined_eurostat.get("retrieved_utc"), errors="coerce", utc=True
-        )
-        combined_eurostat = (
-            combined_eurostat.sort_values("_retrieved_sort")
-            .drop_duplicates(["geo_code", "indicator", "year"], keep="last")
-            .drop(columns=["_retrieved_sort"])
-        )
+        combined_eurostat = merge_eurostat_history(existing_eurostat, eurostat_rows)
         atomic_csv(combined_eurostat, eurostat_path)
         integrate_eurostat_panel(eurostat_rows)
     # Freshness dashboard by indicator: last nonmissing observation year and destination coverage.
