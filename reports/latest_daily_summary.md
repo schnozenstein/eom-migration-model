@@ -1,11 +1,11 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-19 19:14 UTC
+> Generated: 2026-10-20 04:11 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-19T191348Z`
-- **Refresh timestamp:** 2026-10-19T19:13:48.463685+00:00
+- **Latest refresh run:** `2026-10-20T041050Z`
+- **Refresh timestamp:** 2026-10-20T04:10:50.702306+00:00
 - **World Bank observations fetched:** 76608
 - **World Bank indicator requests:** 18 succeeded; 0 failed
 - **Brazil World Bank extract:** 288 fresh Brazil indicator-year rows
@@ -34,6 +34,30 @@ This is the latest stored macro-proxy ranking, not a personalised migration reco
 | 8.0 | Netherlands | 2023 | -1.319 |
 | 9.0 | Australia | 2023 | -1.235 |
 | 10.0 | Denmark | 2023 | -1.156 |
+| 11.0 | Czechia | 2023 | -0.916 |
+| 12.0 | Germany | 2023 | 0.331 |
+| 13.0 | Canada | 2023 | 0.630 |
+| 14.0 | Austria | 2023 | 1.363 |
+| 15.0 | Finland | 2023 | 1.403 |
+| 16.0 | Sweden | 2023 | 1.682 |
+| 17.0 | United Kingdom | 2023 | 1.726 |
+| 18.0 | United States | 2023 | 2.966 |
+| 19.0 | France | 2023 | 4.726 |
+| 20.0 | India | 2023 | 9.809 |
+
+### Destination coverage
+
+- **Registered destinations:** 23
+- **Destinations in stored macro ranking:** 20
+- **Registered destinations not in stored ranking:** 3
+
+| Destination | ID | Coverage note |
+|---|---|---|
+| Spain | ESP | Added 2026-10-19; national-level indicators only until harmonized flow coverage is verified. |
+| Edinburgh | EDI | Nested city option; compare conditionally within the UK or in a hierarchical model |
+| Brazil | BRA | Added 2026-10-20; macro series are available through the global World Bank pull. OBMigra remains source-page monitored until numeric table parsing is validated. |
+
+These destinations are registered but were not scored in the stored ranking. Registration or newly ingested source data does not automatically create a comparable score. Do not infer a rank for an unscored destination.
 
 ## 3. Historical model evaluation
 
