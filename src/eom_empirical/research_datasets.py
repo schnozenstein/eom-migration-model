@@ -292,7 +292,21 @@ def fetch_undesa_migrant_stock(session, root: Path, run_id: str) -> tuple[pd.Dat
     if not result.empty:
         result_path = root / "data" / "raw" / "undesa_migrant_stock_long.csv"
         result_path.parent.mkdir(parents=True, exist_ok=True)
-        result.to_csv(result_path, index=False)
+        # If a temporary failure affects one workbook, retain that direction's
+        # prior canonical data while replacing any successfully refreshed direction.
+        successful_directions = {
+            row.get("dataset", "").rsplit(" — ", 1)[-1]
+            for row in statuses if row.get("status") == "SUCCESS"
+        }
+        old = pd.read_csv(result_path) if result_path.exists() else pd.DataFrame()
+        if not old.empty and successful_directions:
+            old = old[~old["direction"].astype(str).isin(successful_directions)]
+        combined = pd.concat([old, result], ignore_index=True, sort=False)
+        if not combined.empty:
+            combined = combined.drop_duplicates(
+                ["direction", "country_code_un", "year", "sex"], keep="last"
+            )
+        combined.to_csv(result_path, index=False)
     return result, statuses
 
 
