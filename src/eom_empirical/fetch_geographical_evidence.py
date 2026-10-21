@@ -37,7 +37,37 @@ def load_source() -> pd.DataFrame:
 
 def main() -> None:
     base = pd.read_csv(BASE)
-    source = load_source()
+    try:
+        source = load_source()
+    except Exception as exc:
+        # A transient source/network outage must not destroy last-known evidence or
+        # fail the entire daily pipeline. Keep the existing snapshot unchanged.
+        if INPUT.exists():
+            print(
+                f"WARNING: WorldRiskIndex fetch failed ({type(exc).__name__}: {exc}); "
+                f"preserving existing {INPUT.relative_to(ROOT)} unchanged. "
+                "Mark this source stale and inspect the workflow artifact."
+            )
+            return
+        # First-run outage: create an all-unknown hazard file, never zero exposure.
+        out = base[["destination_id", "destination_name", "country_code"]].copy()
+        out["natural_hazard_exposure"] = pd.NA
+        for component in [
+            "regional_conflict_exposure", "strategic_isolation",
+            "critical_route_dependency", "cross_border_spillover"
+        ]:
+            out[component] = pd.NA
+        out["source_name"] = SOURCE_NAME
+        out["source_url"] = SOURCE_URL
+        out["observation_year"] = SOURCE_YEAR
+        out["assessed_at_utc"] = datetime.now(timezone.utc).isoformat()
+        out["notes"] = f"Source unavailable; exposure unknown, not zero. Error: {type(exc).__name__}: {exc}"
+        out["scale_definition"] = "1=lowest exposure quintile; 2=second; 3=middle; 4=fourth; 5=highest; blank=unknown"
+        out["method_note"] = "WorldRiskIndex source unavailable during this run; no hazard scores imputed."
+        INPUT.parent.mkdir(parents=True, exist_ok=True)
+        out.to_csv(INPUT, index=False)
+        print(f"WARNING: WorldRiskIndex fetch failed; wrote {len(out)} rows with unknown hazard scores.")
+        return
     source["country_code"] = source["country_code"].astype(str).str.upper().str.strip()
     source["exposure"] = pd.to_numeric(source["exposure"], errors="coerce")
     source = source.dropna(subset=["country_code", "exposure"]).drop_duplicates("country_code")
