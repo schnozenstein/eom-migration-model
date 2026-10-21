@@ -132,6 +132,8 @@ jobs:
             outputs/geographical_risk_adjusted_ranking.csv
             outputs/geographical_uncertainty_audit.json
             data/geographical_uncertainty_inputs.csv
+            data/geopolitical_uncertainty_inputs.csv
+            data/geopolitical_uncertainty_inputs_template.csv
             data/geographical_uncertainty_inputs_template.csv
             outputs/macro_backtest.json
             outputs/macro_backtest_folds.csv
