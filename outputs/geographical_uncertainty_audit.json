@@ -1,11 +1,13 @@
 {
-  "model_version": "EOM-geographical-uncertainty-v1",
+  "model_version": "EOM-geographical-uncertainty-v2",
   "status": "blocked_by_evidence_gates",
   "destinations_in_macro_baseline": 45,
+  "destinations_with_all_four_geopolitical_components_and_provenance": 0,
+  "destinations_with_natural_hazard_exposure": 43,
   "destinations_with_complete_geographic_inputs": 0,
   "destinations_with_environment_economic_risk": 43,
   "destinations_receiving_adjusted_rank": 0,
-  "geographic_components": {
+  "geographic_component_weights": {
     "regional_conflict_exposure": 0.3,
     "strategic_isolation": 0.2,
     "critical_route_dependency": 0.15,
@@ -17,13 +19,15 @@
     "geographical_uncertainty": 0.25
   },
   "weight_status": "scenario assumptions; not empirically estimated",
-  "input_file": "data/geographical_uncertainty_inputs.csv",
-  "template_file": "data/geographical_uncertainty_inputs_template.csv",
+  "geopolitical_input_file": "data/geopolitical_uncertainty_inputs.csv",
+  "geopolitical_template_file": "data/geopolitical_uncertainty_inputs_template.csv",
+  "natural_hazard_input_file": "data/geographical_uncertainty_inputs.csv",
   "output_file": "outputs/geographical_risk_adjusted_ranking.csv",
   "method": "z-score macro energy + 0.25*z-score partial environmental/economic risk + 0.25*z-score geographic uncertainty; lower is better",
   "safeguards": [
     "blank values are unknown, never zero",
-    "no adjusted rank until all five geographic components and the risk score are present",
+    "natural-hazard refresh is separated from geopolitical evidence to prevent overwrites",
+    "no adjusted rank until all five geographic components, geopolitical provenance, and the risk score are present",
     "geographic scores require source URLs, observation year and assessment date",
     "this is a sensitivity/scenario ranking, not a migration probability or validated forecast"
   ]
