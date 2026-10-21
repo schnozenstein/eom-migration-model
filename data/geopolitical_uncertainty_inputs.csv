@@ -1,0 +1,46 @@
+destination_id,destination_name,country_code,regional_conflict_exposure,strategic_isolation,critical_route_dependency,cross_border_spillover,source_name,source_url,observation_year,assessed_at_utc,notes,scale_definition,method_note
+SGP,Singapore,SGP,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+JPN,Japan,JPN,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+NOR,Norway,NOR,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+HKG,Hong Kong,HKG,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+NZL,New Zealand,NZL,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+IRL,Ireland,IRL,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+KOR,South Korea,KOR,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+AUS,Australia,AUS,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+DNK,Denmark,DNK,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+NLD,Netherlands,NLD,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+CHE,Switzerland,CHE,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+CZE,Czechia,CZE,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+FIN,Finland,FIN,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+SWE,Sweden,SWE,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+CAN,Canada,CAN,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+DEU,Germany,DEU,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+POL,Poland,POL,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+AUT,Austria,AUT,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+MYS,Malaysia,MYS,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+SAU,Saudi Arabia,SAU,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+GBR,United Kingdom,GBR,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+BEL,Belgium,BEL,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+PRT,Portugal,PRT,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+ITA,Italy,ITA,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+USA,United States,USA,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+FRA,France,FRA,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+CHL,Chile,CHL,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+ESP,Spain,ESP,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+THA,Thailand,THA,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+VNM,Vietnam,VNM,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+ISR,Israel,ISR,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+CHN,China,CHN,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+GRC,Greece,GRC,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+IDN,Indonesia,IDN,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+IND,India,IND,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+PHL,Philippines,PHL,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+TUR,Türkiye,TUR,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+MEX,Mexico,MEX,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+PER,Peru,PER,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+BRA,Brazil,BRA,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+COL,Colombia,COL,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+ZAF,South Africa,ZAF,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+TWN,Taiwan,TWN,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+ARE,United Arab Emirates,ARE,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
+ARG,Argentina,ARG,,,,,,,,,,1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown,Separate score for each destination only when supported by comparable source evidence.
