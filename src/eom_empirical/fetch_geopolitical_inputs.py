@@ -23,7 +23,7 @@ import requests
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "outputs" / "latest_macro_eom_ranking.csv"
 INPUT = ROOT / "data" / "geopolitical_uncertainty_inputs.csv"
-WB_URL = "https://api.worldbank.org/v2/country/all/indicator/PV.EST?date=2024&format=json&per_page=20000"
+WB_URL = "https://api.worldbank.org/v2/country/all/indicator/PV.EST?date=2024&source=3&format=json&per_page=2000"
 LSCI_URL = "https://www.nationsinquiry.com/datasets/liner-shipping-connectivity/2026/data.csv"
 WB_NAME = "World Bank Worldwide Governance Indicators 2025 revision, PV.EST (2024 observation)"
 LSCI_NAME = "UNCTAD Liner Shipping Connectivity Index 2026 (CSV via Nations Inquiry)"
@@ -55,8 +55,12 @@ def load_world_bank() -> pd.DataFrame:
     response = requests.get(WB_URL, timeout=45)
     response.raise_for_status()
     payload = response.json()
+    if isinstance(payload, dict):
+        raise ValueError(f"Unexpected World Bank JSON object: {str(payload)[:500]}")
     if not isinstance(payload, list) or len(payload) < 2 or not isinstance(payload[1], list):
-        raise ValueError("Unexpected World Bank API response for PV.EST")
+        raise ValueError(f"Unexpected World Bank API response shape: {str(payload)[:500]}")
+    if not payload[1]:
+        raise ValueError(f"World Bank PV.EST returned no rows; metadata={str(payload[0])[:500]}")
     rows = []
     for item in payload[1]:
         code = str(item.get("countryiso3code", "")).upper()
@@ -65,7 +69,7 @@ def load_world_bank() -> pd.DataFrame:
             rows.append({"country_code": code, "raw_value": float(value)})
     frame = pd.DataFrame(rows).drop_duplicates("country_code")
     if frame.empty:
-        raise ValueError("World Bank PV.EST returned no usable ISO3 rows")
+        raise ValueError(f"World Bank PV.EST returned no usable ISO3 rows; sample={str(payload[1][:2])}")
     return frame
 
 
