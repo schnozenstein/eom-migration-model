@@ -187,7 +187,7 @@ jobs:
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Preserve the compact risk panel and coverage audit when the risk step produced them.
-          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv; do
+          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.
