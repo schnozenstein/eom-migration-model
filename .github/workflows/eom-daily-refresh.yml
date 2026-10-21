@@ -201,6 +201,12 @@ jobs:
 
           if ! git diff --cached --quiet; then
             git commit -m "Automated EOM data refresh"
+            # Data-generation steps may leave additional tracked files modified after staging.
+            # The artifact has already been uploaded, so stash these unstaged workspace changes
+            # before rebasing the committed output. Otherwise git rebase refuses to start.
+            if ! git diff --quiet; then
+              git stash push -m "EOM refresh unstaged workspace changes"
+            fi
             # A human or another workflow may have advanced main since checkout.
             # Rebase the generated commit and retry instead of losing this run's outputs.
             for attempt in 1 2 3; do
