@@ -1,11 +1,11 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-21 08:38 UTC
+> Generated: 2026-10-21 09:48 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-21T083557Z`
-- **Refresh timestamp:** 2026-10-21T08:35:57.652182+00:00
+- **Latest refresh run:** `2026-10-21T094713Z`
+- **Refresh timestamp:** 2026-10-21T09:47:13.282220+00:00
 - **World Bank observations fetched:** 165984
 - **World Bank indicator requests:** 39 succeeded; 0 failed
 - **Brazil World Bank extract:** 624 fresh Brazil indicator-year rows
@@ -15,7 +15,7 @@
 - **OECD migration database slice:** SUCCESS; 290 focus-country rows retained
 - **ILOSTAT migrant-labour indicators:** 3 succeeded; 0 failed; 6469 focus rows
 - **Brazil OBMigra official source page:** SUCCESS (catalogue monitor only; report tables are not numerically parsed)
-- **Policy pages:** 11 succeeded; 0 failed
+- **Policy pages:** 10 succeeded; 1 failed
 - **Freshness dashboard:** 38 recent; 2 requiring attention out of 40 indicators
 - **Macro ranking recomputed in this run:** Yes
 - **Macro ranking comparison year:** 2025
