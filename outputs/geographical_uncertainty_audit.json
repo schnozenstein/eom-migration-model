@@ -1,12 +1,52 @@
 {
-  "model_version": "EOM-geographical-uncertainty-v2",
+  "model_version": "EOM-geographical-uncertainty-v3",
   "status": "blocked_by_evidence_gates",
   "destinations_in_macro_baseline": 45,
-  "destinations_with_all_four_geopolitical_components_and_provenance": 0,
+  "destinations_with_all_four_geopolitical_components_and_component_level_provenance": 0,
   "destinations_with_natural_hazard_exposure": 43,
   "destinations_with_complete_geographic_inputs": 0,
   "destinations_with_environment_economic_risk": 43,
   "destinations_receiving_adjusted_rank": 0,
+  "geopolitical_component_coverage": {
+    "regional_conflict_exposure": 0,
+    "strategic_isolation": 42,
+    "critical_route_dependency": 0,
+    "cross_border_spillover": 0
+  },
+  "geopolitical_component_provenance_fields": {
+    "regional_conflict_exposure": [
+      "regional_conflict_exposure_source_name",
+      "regional_conflict_exposure_source_url",
+      "regional_conflict_exposure_observation_year",
+      "regional_conflict_exposure_assessed_at_utc",
+      "regional_conflict_exposure_notes",
+      "regional_conflict_exposure_raw_value_definition"
+    ],
+    "strategic_isolation": [
+      "strategic_isolation_source_name",
+      "strategic_isolation_source_url",
+      "strategic_isolation_observation_year",
+      "strategic_isolation_assessed_at_utc",
+      "strategic_isolation_notes",
+      "strategic_isolation_raw_value_definition"
+    ],
+    "critical_route_dependency": [
+      "critical_route_dependency_source_name",
+      "critical_route_dependency_source_url",
+      "critical_route_dependency_observation_year",
+      "critical_route_dependency_assessed_at_utc",
+      "critical_route_dependency_notes",
+      "critical_route_dependency_raw_value_definition"
+    ],
+    "cross_border_spillover": [
+      "cross_border_spillover_source_name",
+      "cross_border_spillover_source_url",
+      "cross_border_spillover_observation_year",
+      "cross_border_spillover_assessed_at_utc",
+      "cross_border_spillover_notes",
+      "cross_border_spillover_raw_value_definition"
+    ]
+  },
   "geographic_component_weights": {
     "regional_conflict_exposure": 0.3,
     "strategic_isolation": 0.2,
@@ -27,8 +67,9 @@
   "safeguards": [
     "blank values are unknown, never zero",
     "natural-hazard refresh is separated from geopolitical evidence to prevent overwrites",
-    "no adjusted rank until all five geographic components, geopolitical provenance, and the risk score are present",
-    "geographic scores require source URLs, observation year and assessment date",
+    "each geopolitical score must have its own source URL, observation year and assessment date",
+    "no adjusted rank until all five geographic components, component-level provenance, and risk score are present",
+    "regional conflict and strategic isolation currently use explicitly labelled proxies, not direct measurements",
     "this is a sensitivity/scenario ranking, not a migration probability or validated forecast"
   ]
 }
