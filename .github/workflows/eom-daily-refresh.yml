@@ -95,6 +95,14 @@ jobs:
           PYTHONPATH: src
         run: python -m eom_empirical.fetch_geographical_evidence
 
+      - name: Refresh source-backed geopolitical proxies
+        if: github.event_name != 'pull_request'
+        id: geopolitical_evidence
+        continue-on-error: true
+        env:
+          PYTHONPATH: src
+        run: python -m eom_empirical.fetch_geopolitical_inputs
+
       - name: Build geographic uncertainty adjustment (evidence-gated)
         if: github.event_name != 'pull_request'
         id: geographic_adjustment
