@@ -15,6 +15,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from io import BytesIO
 from math import ceil
+import numpy as np
 from pathlib import Path
 import json
 import pandas as pd
@@ -47,9 +48,8 @@ def quintile_score(values: pd.Series, higher_is_safer: bool) -> pd.Series:
     """Map comparable source values to 1 (lower exposure) ... 5 (higher exposure)."""
     numeric = pd.to_numeric(values, errors="coerce")
     pct = numeric.rank(method="average", pct=True)
-    risk_pct = 1 - pct if higher_is_safer else 1 - pct
-    # Both source measures have higher values associated with lower exposure.
-    return risk_pct.mul(5).apply(lambda x: ceil(x) if pd.notna(x) else pd.NA).clip(1, 5)
+    risk_pct = 1 - pct if higher_is_safer else pct
+    return risk_pct.mul(5).apply(lambda x: ceil(x) if pd.notna(x) else np.nan).clip(1, 5)
 
 
 def load_world_bank() -> pd.DataFrame:
