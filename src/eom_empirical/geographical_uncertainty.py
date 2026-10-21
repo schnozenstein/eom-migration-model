@@ -1,8 +1,8 @@
-""""Risk-adjust the EOM macro ranking using separately sourced geography inputs.
+"""Risk-adjust the EOM macro ranking using separately sourced geography inputs.
 
 Natural-hazard exposure is maintained by fetch_geographical_evidence.py.
-The four geopolitical components live in a separate input file so refreshing the
-hazard feed cannot erase human-reviewed geopolitical evidence. Blank is unknown.
+Geopolitical components are sourced independently; each component therefore has
+its own provenance fields. Blank values are unknown, never zero.
 """
 from __future__ import annotations
 from pathlib import Path
@@ -35,7 +35,15 @@ GEO_COMPONENTS = [
     "regional_conflict_exposure", "strategic_isolation",
     "critical_route_dependency", "cross_border_spillover"
 ]
-GEO_META = ["source_name", "source_url", "observation_year", "assessed_at_utc", "notes"]
+META_SUFFIXES = [
+    "source_name", "source_url", "observation_year",
+    "assessed_at_utc", "notes", "raw_value_definition"
+]
+GEO_META_BY_COMPONENT = {
+    component: [f"{component}_{suffix}" for suffix in META_SUFFIXES]
+    for component in GEO_COMPONENTS
+}
+ALL_GEO_META = [col for cols in GEO_META_BY_COMPONENT.values() for col in cols]
 
 
 def zscore(s: pd.Series) -> pd.Series:
@@ -50,12 +58,20 @@ def main() -> None:
     template = base[["destination_id", "destination_name", "country_code"]].copy()
     for c in GEO_COMPONENTS:
         template[c] = np.nan
-    for c in GEO_META:
-        template[c] = ""
-    template["scale_definition"] = "1=low exposure; 2=moderately low; 3=moderate; 4=high; 5=very high; blank=unknown"
+        template[f"{c}_raw_value"] = np.nan
+        for suffix in META_SUFFIXES:
+            template[f"{c}_{suffix}"] = ""
+    # Keep legacy aggregate fields for compatibility, but never use them as
+    # provenance for multiple components sourced from different datasets.
+    template["source_name"] = ""
+    template["source_url"] = ""
+    template["observation_year"] = ""
+    template["assessed_at_utc"] = ""
+    template["notes"] = ""
+    template["scale_definition"] = "1=lowest relative exposure proxy; 2=second; 3=middle; 4=fourth; 5=highest relative exposure proxy; blank=unknown"
     template["method_note"] = (
-        "Score only from comparable, cited evidence. Record the source and dates. "
-        "This file is separate from the automatically refreshed natural-hazard feed."
+        "Each score requires its own source name, URL, observation year, assessment date, "
+        "notes and raw-value definition. This file is separate from the natural-hazard feed."
     )
     template.to_csv(TEMPLATE, index=False)
 
@@ -66,10 +82,17 @@ def main() -> None:
     hazard = hazard[["destination_id", "natural_hazard_exposure"]].drop_duplicates("destination_id")
 
     geo = pd.read_csv(GEO_INPUT) if GEO_INPUT.exists() else template.copy()
-    for c in GEO_COMPONENTS + GEO_META:
+    for c in GEO_COMPONENTS:
         if c not in geo:
-            geo[c] = np.nan if c in GEO_COMPONENTS else ""
-    geo = geo[["destination_id"] + GEO_COMPONENTS + GEO_META].drop_duplicates("destination_id")
+            geo[c] = np.nan
+        for suffix in META_SUFFIXES:
+            col = f"{c}_{suffix}"
+            if col not in geo:
+                geo[col] = np.nan if suffix == "observation_year" else ""
+    selected = ["destination_id"] + GEO_COMPONENTS + [
+        f"{c}_raw_value" for c in GEO_COMPONENTS if f"{c}_raw_value" in geo.columns
+    ] + ALL_GEO_META
+    geo = geo[[c for c in selected if c in geo.columns]].drop_duplicates("destination_id")
 
     risk = pd.read_csv(RISK) if RISK.exists() else pd.DataFrame()
     if not risk.empty and {"destination_id", "environment_economic_partial_risk_score"}.issubset(risk.columns):
@@ -83,8 +106,16 @@ def main() -> None:
     joined = joined.merge(hazard, on="destination_id", how="left")
     joined = joined.merge(geo, on="destination_id", how="left", suffixes=("", "_geo"))
     geo_complete = joined[GEO_COMPONENTS].notna().all(axis=1)
-    geo_metadata_complete = joined[GEO_META].notna().all(axis=1)
-    geo_metadata_complete &= joined[GEO_META].astype(str).apply(lambda col: col.str.strip().ne("")).all(axis=1)
+    metadata_checks = []
+    for component, columns in GEO_META_BY_COMPONENT.items():
+        cols = [c for c in columns if c in joined.columns]
+        if len(cols) != len(columns):
+            metadata_checks.append(pd.Series(False, index=joined.index))
+        else:
+            ok = joined[cols].notna().all(axis=1)
+            ok &= joined[cols].astype(str).apply(lambda col: col.str.strip().ne("")).all(axis=1)
+            metadata_checks.append(ok)
+    geo_metadata_complete = pd.concat(metadata_checks, axis=1).all(axis=1)
     hazard_complete = pd.to_numeric(joined["natural_hazard_exposure"], errors="coerce").notna()
     complete_geo = geo_complete & geo_metadata_complete & hazard_complete
     complete_risk = pd.to_numeric(joined["environment_economic_partial_risk_score"], errors="coerce").notna()
@@ -105,19 +136,24 @@ def main() -> None:
     joined["ranking_status"] = np.where(
         eligible,
         "provisional risk-adjusted rank; illustrative weights; not calibrated",
-        "not ranked: source-backed geographic inputs and/or environmental-economic risk evidence incomplete"
+        "not ranked: one or more source-backed geographic components/provenance fields or environmental-economic risk inputs are incomplete"
     )
     joined.to_csv(ADJUSTED, index=False)
 
     audit = {
-        "model_version": "EOM-geographical-uncertainty-v2",
+        "model_version": "EOM-geographical-uncertainty-v3",
         "status": "ranked" if bool(eligible.any()) else "blocked_by_evidence_gates",
         "destinations_in_macro_baseline": int(len(base)),
-        "destinations_with_all_four_geopolitical_components_and_provenance": int((geo_complete & geo_metadata_complete).sum()),
+        "destinations_with_all_four_geopolitical_components_and_component_level_provenance": int((geo_complete & geo_metadata_complete).sum()),
         "destinations_with_natural_hazard_exposure": int(hazard_complete.sum()),
         "destinations_with_complete_geographic_inputs": int(complete_geo.sum()),
         "destinations_with_environment_economic_risk": int(complete_risk.sum()),
         "destinations_receiving_adjusted_rank": int(eligible.sum()),
+        "geopolitical_component_coverage": {
+            component: int(pd.to_numeric(joined[component], errors="coerce").notna().sum())
+            for component in GEO_COMPONENTS
+        },
+        "geopolitical_component_provenance_fields": GEO_META_BY_COMPONENT,
         "geographic_component_weights": WEIGHTS,
         "illustrative_weights": {"environment_economic_risk": RISK_WEIGHT, "geographical_uncertainty": GEOGRAPHY_WEIGHT},
         "weight_status": "scenario assumptions; not empirically estimated",
@@ -129,8 +165,9 @@ def main() -> None:
         "safeguards": [
             "blank values are unknown, never zero",
             "natural-hazard refresh is separated from geopolitical evidence to prevent overwrites",
-            "no adjusted rank until all five geographic components, geopolitical provenance, and the risk score are present",
-            "geographic scores require source URLs, observation year and assessment date",
+            "each geopolitical score must have its own source URL, observation year and assessment date",
+            "no adjusted rank until all five geographic components, component-level provenance, and risk score are present",
+            "regional conflict and strategic isolation currently use explicitly labelled proxies, not direct measurements",
             "this is a sensitivity/scenario ranking, not a migration probability or validated forecast"
         ]
     }
