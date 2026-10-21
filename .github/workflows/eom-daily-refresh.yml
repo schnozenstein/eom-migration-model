@@ -26,6 +26,11 @@ on:
   schedule:
     - cron: "17 5 * * *"
 
+concurrency:
+  # Prevent scheduled and push-triggered refreshes from committing to main simultaneously.
+  group: eom-daily-refresh-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -196,7 +201,25 @@ jobs:
 
           if ! git diff --cached --quiet; then
             git commit -m "Automated EOM data refresh"
-            git push
+            # A human or another workflow may have advanced main since checkout.
+            # Rebase the generated commit and retry instead of losing this run's outputs.
+            for attempt in 1 2 3; do
+              git fetch origin main
+              if ! git rebase origin/main; then
+                git rebase --abort || true
+                echo "::error::Generated-output commit conflicts with origin/main; preserve this run's artifact and resolve the conflicting files."
+                exit 1
+              fi
+              if git push origin HEAD:main; then
+                exit 0
+              fi
+              if [ "$attempt" -lt 3 ]; then
+                echo "Push attempt $attempt raced with a newer main commit; retrying after fetch/rebase."
+                sleep $((attempt * 2))
+              fi
+            done
+            echo "::error::Could not push refreshed outputs after 3 fetch/rebase attempts."
+            exit 1
           fi
 
       - name: Mark run failed if required pipeline stages failed
