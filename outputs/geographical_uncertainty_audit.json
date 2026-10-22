@@ -64,6 +64,7 @@
   "natural_hazard_input_file": "data/geographical_uncertainty_inputs.csv",
   "output_file": "outputs/geographical_risk_adjusted_ranking.csv",
   "method": "z-score macro energy + 0.25*z-score partial environmental/economic risk + 0.25*z-score geographic uncertainty; lower is better",
+  "geographical_uncertainty_aggregation": "weighted sum of the five configured components; min_count requires all five values, so missing components remain unknown",
   "safeguards": [
     "blank values are unknown, never zero",
     "natural-hazard refresh is separated from geopolitical evidence to prevent overwrites",
