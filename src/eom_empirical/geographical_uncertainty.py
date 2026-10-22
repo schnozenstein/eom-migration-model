@@ -120,7 +120,7 @@ def main() -> None:
     complete_geo = geo_complete & geo_metadata_complete & hazard_complete
     complete_risk = pd.to_numeric(joined["environment_economic_partial_risk_score"], errors="coerce").notna()
 
-    joined["geographical_uncertainty_raw"] = joined[list(WEIGHTS)].mean(axis=1, skipna=False)
+    joined["geographical_uncertainty_raw"] = joined[list(WEIGHTS)].mul(pd.Series(WEIGHTS)).sum(axis=1, min_count=len(WEIGHTS))
     joined["macro_energy_z"] = zscore(joined["energy_equal_weight"])
     joined["environment_economic_risk_z"] = zscore(joined["environment_economic_partial_risk_score"])
     joined["geographical_uncertainty_z"] = zscore(joined["geographical_uncertainty_raw"])
@@ -162,6 +162,7 @@ def main() -> None:
         "natural_hazard_input_file": str(HAZARD_INPUT.relative_to(ROOT)),
         "output_file": str(ADJUSTED.relative_to(ROOT)),
         "method": "z-score macro energy + 0.25*z-score partial environmental/economic risk + 0.25*z-score geographic uncertainty; lower is better",
+        "geographical_uncertainty_aggregation": "weighted sum of the five configured components; min_count requires all five values, so missing components remain unknown",
         "safeguards": [
             "blank values are unknown, never zero",
             "natural-hazard refresh is separated from geopolitical evidence to prevent overwrites",

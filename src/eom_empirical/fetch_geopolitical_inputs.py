@@ -23,7 +23,7 @@ import requests
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "outputs" / "latest_macro_eom_ranking.csv"
 INPUT = ROOT / "data" / "geopolitical_uncertainty_inputs.csv"
-WB_URL = "https://api.worldbank.org/v2/country/all/indicator/PV.EST?date=2024&source=3&format=json&per_page=2000"
+WB_URL = "https://api.worldbank.org/v2/country/all/indicator/PV.EST?date=2024&source=3&format=json&per_page=1000"
 LSCI_URL = "https://www.nationsinquiry.com/datasets/liner-shipping-connectivity/2026/data.csv"
 WB_NAME = "World Bank Worldwide Governance Indicators 2025 revision, PV.EST (2024 observation)"
 LSCI_NAME = "UNCTAD Liner Shipping Connectivity Index 2026 (CSV via Nations Inquiry)"
