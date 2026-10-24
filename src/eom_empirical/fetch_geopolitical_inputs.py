@@ -1,9 +1,9 @@
 """Refresh reproducible geopolitical proxies while preserving unknowns.
 
 Sources:
-- World Bank Worldwide Governance Indicators, Political Stability and Absence of
-  Violence/Terrorism estimate (PV.EST), 2024. This is a *proxy* for conflict
-  exposure, not a direct measure of regional conflict.
+- World Bank Worldwide Governance Indicators 2026 update, Political Stability
+  governance estimate (GOV_WGI_PV_EST), 2025 observation. This is a *proxy* for
+  conflict exposure, not a direct measure of regional conflict.
 - UNCTAD Liner Shipping Connectivity Index (LSCI), 2026. The inverse percentile
   is used as a proxy for strategic isolation; it is not route-dependency data.
 
@@ -23,16 +23,16 @@ import requests
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "outputs" / "latest_macro_eom_ranking.csv"
 INPUT = ROOT / "data" / "geopolitical_uncertainty_inputs.csv"
-WB_URL = "https://api.worldbank.org/v2/country/all/indicator/PV.EST?date=2024&source=3&format=json&per_page=1000"
+WB_URL = "https://api.worldbank.org/v2/country/all/indicator/GOV_WGI_PV_EST?date=2025&format=json&per_page=1000"
 LSCI_URL = "https://www.nationsinquiry.com/datasets/liner-shipping-connectivity/2026/data.csv"
-WB_NAME = "World Bank Worldwide Governance Indicators 2025 revision, PV.EST (2024 observation)"
+WB_NAME = "World Bank Worldwide Governance Indicators 2026 update, GOV_WGI_PV_EST (2025 observation)"
 LSCI_NAME = "UNCTAD Liner Shipping Connectivity Index 2026 (CSV via Nations Inquiry)"
 COMPONENTS = {
     "regional_conflict_exposure": {
         "source_name": WB_NAME,
         "source_url": WB_URL,
-        "observation_year": 2024,
-        "raw_value_definition": "Political Stability and Absence of Violence/Terrorism estimate; higher is more stable. Used only as a conflict-risk proxy, not direct regional-conflict exposure.",
+        "observation_year": 2025,
+        "raw_value_definition": "Political Stability - Governance estimate (approximately -2.5 to +2.5); higher is more stable. Used only as a conflict-risk proxy, not direct regional-conflict exposure.",
     },
     "strategic_isolation": {
         "source_name": LSCI_NAME,
@@ -60,7 +60,7 @@ def load_world_bank() -> pd.DataFrame:
     if not isinstance(payload, list) or len(payload) < 2 or not isinstance(payload[1], list):
         raise ValueError(f"Unexpected World Bank API response shape: {str(payload)[:500]}")
     if not payload[1]:
-        raise ValueError(f"World Bank PV.EST returned no rows; metadata={str(payload[0])[:500]}")
+        raise ValueError(f"World Bank GOV_WGI_PV_EST returned no rows; metadata={str(payload[0])[:500]}")
     rows = []
     for item in payload[1]:
         code = str(item.get("countryiso3code", "")).upper()
@@ -69,7 +69,7 @@ def load_world_bank() -> pd.DataFrame:
             rows.append({"country_code": code, "raw_value": float(value)})
     frame = pd.DataFrame(rows).drop_duplicates("country_code")
     if frame.empty:
-        raise ValueError(f"World Bank PV.EST returned no usable ISO3 rows; sample={str(payload[1][:2])}")
+        raise ValueError(f"World Bank GOV_WGI_PV_EST returned no usable ISO3 rows; sample={str(payload[1][:2])}")
     return frame
 
 
@@ -152,7 +152,7 @@ def main() -> None:
     failures = []
     try:
         out = apply_component(out, "regional_conflict_exposure", load_world_bank(), higher_is_safer=True)
-        print("Updated regional-conflict proxy from World Bank PV.EST.")
+        print("Updated regional-conflict proxy from World Bank GOV_WGI_PV_EST.")
     except Exception as exc:
         failures.append(f"World Bank PV.EST: {type(exc).__name__}: {exc}")
         print(f"WARNING: preserving previous regional-conflict proxy; {failures[-1]}")
@@ -177,7 +177,7 @@ def main() -> None:
     if "notes" not in out:
         out["notes"] = ""
     out["scale_definition"] = "1=lowest relative exposure proxy; 2=second; 3=middle; 4=fourth; 5=highest relative exposure proxy; blank=unknown"
-    out["method_note"] = "Source-specific proxy scores are quintiles. Regional conflict uses World Bank PV.EST (political stability proxy); strategic isolation uses inverse UNCTAD LSCI. Critical-route dependency and cross-border spillover remain unknown pending defensible comparable measures."
+    out["method_note"] = "Source-specific proxy scores are quintiles. Regional conflict uses World Bank GOV_WGI_PV_EST (WGI 2026 update; political stability proxy); strategic isolation uses inverse UNCTAD LSCI. Critical-route dependency and cross-border spillover remain unknown pending defensible comparable measures."
     INPUT.parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(INPUT, index=False)
     print(json.dumps({"rows": len(out), "source_failures": failures, "scored": {
