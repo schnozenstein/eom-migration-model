@@ -1,11 +1,11 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-25 06:26 UTC
+> Generated: 2026-10-25 09:49 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-25T062509Z`
-- **Refresh timestamp:** 2026-10-25T06:25:09.277759+00:00
+- **Latest refresh run:** `2026-10-25T094805Z`
+- **Refresh timestamp:** 2026-10-25T09:48:05.542727+00:00
 - **World Bank observations fetched:** 165984
 - **World Bank indicator requests:** 39 succeeded; 0 failed
 - **Brazil World Bank extract:** 624 fresh Brazil indicator-year rows
