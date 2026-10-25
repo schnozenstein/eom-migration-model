@@ -225,7 +225,7 @@ def _parse_undesa_workbook(path: Path, direction: str, run_id: str, iso_map: dic
         iso3 = iso_map.get(_country_name_key(name), "")
         for sex_idx, sex in enumerate(sex_order):
             for year_idx, year in enumerate(years):
-                col = 5 + (sex_idx * len(years)) + year_idx
+                col = 7 + (sex_idx * len(years)) + year_idx
                 value = pd.to_numeric(pd.Series([cells.iloc[col]]), errors="coerce").iloc[0]
                 output.append({
                     "direction": direction,
@@ -253,21 +253,23 @@ def _parse_undesa_workbook(path: Path, direction: str, run_id: str, iso_map: dic
 def _parse_undesa_bilateral_workbook(path: Path, run_id: str, iso_map: dict[str, str]) -> pd.DataFrame:
     """Parse the official bilateral origin-to-destination stock workbook.
 
-    The workbook contains country/area of destination, UN M49 destination code,
-    country/area of origin, UN M49 origin code, then eight years each for both
-    sexes, male and female. Regional aggregates are not emitted as country pairs.
+    The official Table 1 layout is: index, destination name, coverage, data type,
+    destination UN M49 code, origin name, origin UN M49 code, then 24 values
+    grouped by sex (total, male, female) and year (1990--2024). The coverage
+    and data-type columns are metadata, not geographic codes. Regional aggregates
+    are not emitted as country pairs.
     """
     years = (1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024)
     sex_order = ("both", "male", "female")
     raw = pd.read_excel(path, sheet_name="Table 1", header=None, engine="openpyxl")
-    if raw.shape[1] < 29:
-        raise ValueError(f"Unexpected UN DESA bilateral layout: expected >=29 columns, got {raw.shape[1]}")
+    if raw.shape[1] < 31:
+        raise ValueError(f"Unexpected UN DESA bilateral layout: expected >=31 columns, got {raw.shape[1]}")
     output = []
     for _, cells in raw.iterrows():
         destination_name = cells.iloc[1] if len(cells) > 1 else None
-        destination_code = pd.to_numeric(pd.Series([cells.iloc[2]]), errors="coerce").iloc[0]
-        origin_name = cells.iloc[3] if len(cells) > 3 else None
-        origin_code = pd.to_numeric(pd.Series([cells.iloc[4]]), errors="coerce").iloc[0]
+        destination_code = pd.to_numeric(pd.Series([cells.iloc[4]]), errors="coerce").iloc[0] if len(cells) > 4 else float("nan")
+        origin_name = cells.iloc[5] if len(cells) > 5 else None
+        origin_code = pd.to_numeric(pd.Series([cells.iloc[6]]), errors="coerce").iloc[0] if len(cells) > 6 else float("nan")
         if (
             pd.isna(destination_code) or pd.isna(origin_code)
             or not float(destination_code).is_integer() or not float(origin_code).is_integer()
