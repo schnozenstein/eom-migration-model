@@ -225,7 +225,7 @@ def _parse_undesa_workbook(path: Path, direction: str, run_id: str, iso_map: dic
         iso3 = iso_map.get(_country_name_key(name), "")
         for sex_idx, sex in enumerate(sex_order):
             for year_idx, year in enumerate(years):
-                col = 7 + (sex_idx * len(years)) + year_idx
+                col = 5 + (sex_idx * len(years)) + year_idx
                 value = pd.to_numeric(pd.Series([cells.iloc[col]]), errors="coerce").iloc[0]
                 output.append({
                     "direction": direction,
@@ -284,7 +284,7 @@ def _parse_undesa_bilateral_workbook(path: Path, run_id: str, iso_map: dict[str,
         origin_name = origin_name.strip()
         for sex_idx, sex in enumerate(sex_order):
             for year_idx, year in enumerate(years):
-                col = 5 + (sex_idx * len(years)) + year_idx
+                col = 7 + (sex_idx * len(years)) + year_idx
                 value = pd.to_numeric(pd.Series([cells.iloc[col]]), errors="coerce").iloc[0]
                 output.append({
                     "direction": "bilateral",
