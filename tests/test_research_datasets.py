@@ -71,10 +71,18 @@ def test_undesa_bilateral_workbook_parses_origin_destination_pairs(tmp_path):
     wb = Workbook()
     ws = wb.active
     ws.title = "Table 1"
-    ws.append(["row_num", "destination", "destination_code", "origin", "origin_code"] + [None] * 24)
-    pair = [1, "Spain", 724, "India", 356]
+    ws.append([
+        "Index",
+        "Region, development group, country or area of destination",
+        "Coverage",
+        "Data type",
+        "Location code of destination",
+        "Region, development group, country or area of origin",
+        "Location code of origin",
+    ] + [1990, 1995, 2000, 2005, 2010, 2015, 2020, 2024] * 3)
+    pair = [1, "Spain", "Country", "Estimate", 724, "India", 356]
     pair += list(range(100, 108)) + list(range(200, 208)) + list(range(300, 308))
-    aggregate = [2, "Europe", 900, "India", 356]
+    aggregate = [2, "Europe", "Region", "Estimate", 900, "India", 356]
     aggregate += list(range(1000, 1008)) + list(range(2000, 2008)) + list(range(3000, 3008))
     ws.append(pair)
     ws.append(aggregate)
