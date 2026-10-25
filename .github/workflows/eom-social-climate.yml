@@ -1,0 +1,73 @@
+name: EOM Social-Climate Sensitivity
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "scripts/build_mhsci.py"
+      - "scripts/build_mhsci_eom_sensitivity.py"
+      - "data/mhsci_initial_evidence.csv"
+      - "tests/test_mhsci*.py"
+      - ".github/workflows/eom-social-climate.yml"
+  pull_request:
+    paths:
+      - "scripts/build_mhsci.py"
+      - "scripts/build_mhsci_eom_sensitivity.py"
+      - "data/mhsci_initial_evidence.csv"
+      - "tests/test_mhsci*.py"
+      - ".github/workflows/eom-social-climate.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "47 6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: eom-social-climate-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  score:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest
+      - name: Run tests
+        env:
+          PYTHONPATH: src
+        run: python -m pytest -q
+      - name: Rebuild evidence-coded MHSCI
+        run: python scripts/build_mhsci.py
+      - name: Recalculate social-climate sensitivity scenarios
+        run: python scripts/build_mhsci_eom_sensitivity.py
+      - name: Upload social-climate outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: eom-social-climate-${{ github.run_id }}
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            outputs/mhsci_initial_ranking.csv
+            outputs/mhsci_adjusted_eom_sensitivity.csv
+            reports/mhsci_latest.md
+            reports/mhsci_eom_sensitivity.md
+      - name: Commit generated outputs
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs/mhsci_initial_ranking.csv outputs/mhsci_adjusted_eom_sensitivity.csv reports/mhsci_latest.md reports/mhsci_eom_sensitivity.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh EOM social-climate sensitivity scenarios"
+            git push origin HEAD:main
+          fi
