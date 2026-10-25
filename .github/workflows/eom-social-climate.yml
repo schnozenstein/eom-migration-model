@@ -62,7 +62,7 @@ jobs:
             reports/mhsci_latest.md
             reports/mhsci_eom_sensitivity.md
       - name: Commit generated outputs
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
