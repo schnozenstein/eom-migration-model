@@ -44,7 +44,7 @@ def test_world_bank_loader_accepts_standard_indicator_api_payload(monkeypatch):
                 ],
             ]
 
-    monkeypatch.setattr(geo_inputs.requests, "get", lambda *args, **kwargs: FakeResponse())
+    monkeypatch.setattr(geo_inputs, "get_with_retries", lambda *args, **kwargs: FakeResponse())
     frame = geo_inputs.load_world_bank()
     assert set(frame["country_code"]) == {"NZL", "SGP"}
     assert frame["raw_value"].notna().all()

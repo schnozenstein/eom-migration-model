@@ -19,6 +19,7 @@ from pathlib import Path
 import json
 import pandas as pd
 import requests
+from eom_empirical.http_utils import get_with_retries
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "outputs" / "latest_macro_eom_ranking.csv"
@@ -52,7 +53,7 @@ def quintile_score(values: pd.Series, higher_is_safer: bool) -> pd.Series:
 
 
 def load_world_bank() -> pd.DataFrame:
-    response = requests.get(WB_URL, timeout=45)
+    response = get_with_retries(WB_URL, timeout=(10, 45))
     response.raise_for_status()
     payload = response.json()
     if isinstance(payload, dict):
@@ -74,7 +75,7 @@ def load_world_bank() -> pd.DataFrame:
 
 
 def load_lsci() -> pd.DataFrame:
-    response = requests.get(LSCI_URL, timeout=45)
+    response = get_with_retries(LSCI_URL, timeout=(10, 45))
     response.raise_for_status()
     payload = response.content
     frame = None
