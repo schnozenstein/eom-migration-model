@@ -13,6 +13,7 @@ from io import BytesIO, StringIO
 from pathlib import Path
 import pandas as pd
 import requests
+from eom_empirical.http_utils import get_with_retries
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "outputs" / "latest_macro_eom_ranking.csv"
@@ -23,7 +24,7 @@ SOURCE_YEAR = 2025
 
 
 def load_source() -> pd.DataFrame:
-    response = requests.get(SOURCE_URL, timeout=45)
+    response = get_with_retries(SOURCE_URL, timeout=(10, 45))
     response.raise_for_status()
     payload = response.content
     # The distributor adds 11 lines of source notes before the CSV header.
