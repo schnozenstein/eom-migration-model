@@ -2,13 +2,15 @@
 
 ## What this adds
 
-- A daily, retrying World Bank Indicators API pull across 38 selected macro/labour/demographic/education/health/digital/institutional indicators, including complementary PPP measures, with the requested end year defaulting to the current UTC year instead of being hard-coded to 2025.
-- Immutable run-level JSON response snapshots and a retrieval-vintage history table.
+- A daily, retrying World Bank Indicators API pull across 39 selected macro/labour/demographic/education/health/digital/institutional indicators, including complementary PPP measures, with the requested end year defaulting to the current UTC year instead of being hard-coded to 2025.
+- Immutable raw response snapshots are retained per run in the workflow artifact.
+- `data/observations_history/world_bank_observations.csv.gz` is a compact revision ledger keyed by `country_code`, `indicator_code`, and `year`; unchanged observations are not re-appended.
+- `data/raw/world_bank_long.csv` is the full current WDI panel; `data/raw/world_bank_macro_focus.csv` is the separate 11-indicator macro-scoring input. These paths must not overwrite one another.
 - A canonical observation table that updates successful keys while retaining old rows when a source fails.
 - Per-indicator freshness and country-coverage dashboard, per-source status logs, and per-run machine-readable summaries.
 - Best-effort page-change monitoring of official immigration/work-permit landing pages. A content-hash change is a review signal, **not** an automatically interpreted policy change.
-- GitHub Actions daily workflow (05:17 UTC) plus manual dispatch. Once committed to a GitHub repository with Actions enabled and write permission, it commits snapshots and reports to the repo.
-- Offline unit tests for history deduplication, missingness and freshness labels.
+- GitHub Actions daily workflow (05:17 UTC) plus manual dispatch. It commits the compact revision ledger, macro-focus input, and selected lightweight outputs; raw snapshots and the full current WDI panel are preserved in workflow artifacts.
+- Offline unit tests cover stable aggregate keys, revision-only history compaction, missingness, and freshness labels.
 
 ## Run locally
 
@@ -23,7 +25,7 @@ Optional: `python scripts/refresh_eom_data.py --start-year 2015 --end-year 2026 
 
 1. Source refresh does **not** recalibrate model parameters, issue a forecast or establish causal effects. The GitHub Actions workflow runs a separate macro-ranking step; verify that step's result and the dated run record before describing the ranking as refreshed.
 2. World Bank indicators have different publication lags. The dashboard reports the latest observed year per indicator and must not imply all data are current-year.
-3. Spain total immigration and emigration are now fetched from Eurostat's official Statistics API (`migr_imm8` and `migr_emi2`) into a normalized, vintage-stamped CSV and the compatible fields in the historical panel. These totals remain distinct from flows classified by citizenship, birth or previous residence. OECD numeric ingestion is still future work. The official Brazil OBMigra catalogue page is monitored for source changes and data-asset links; its PDF/spreadsheet tables are not yet numerically parsed.
+3. Spain total immigration and emigration are now fetched from Eurostat's official Statistics API (`migr_imm8` and `migr_emi2`) into a normalized, vintage-stamped CSV and the compatible fields in the historical panel. These totals remain distinct from flows classified by citizenship, birth or previous residence. OECD numeric ingestion now runs as a bounded official SDMX query; the selected B11 measure remains definition-gated and is not automatically scored. The official Brazil OBMigra catalogue page is monitored for source changes and data-asset links; its PDF/spreadsheet tables are not yet numerically parsed.
 4. The GitHub Actions schedule is a deployable workflow, not an active schedule in this ZIP. It only runs after the project is pushed to a repository and Actions are enabled. If the execution environment blocks DNS/network access, the workflow will log failures and preserve prior data.
 5. The workflow is configured to commit refreshed data back to the repository. Review repository size/retention settings before running indefinitely because raw snapshots can accumulate.
 6. A full current-conditions ranking should only be produced after the pipeline reports adequate feature coverage and the ranking code uses actual latest observations with missingness/uncertainty penalties; this patch deliberately does not substitute stale values or invent data.
@@ -44,7 +46,7 @@ Optional: `python scripts/refresh_eom_data.py --start-year 2015 --end-year 2026 
 
 ## Dense global indicator expansion (2026-10-20)
 
-The World Bank indicator pull now covers 38 selected indicators across:
+The World Bank indicator pull now covers 39 selected indicators across:
 - income and purchasing power parity (PPP);
 - macroeconomic growth, inflation, trade, FDI, remittances and natural-resource rents;
 - employment, unemployment, youth unemployment and sex-disaggregated labour-force participation;
@@ -77,13 +79,14 @@ Three official ILOSTAT indicators are queried from the ILO data API: working-age
 The normalized compact output is `data/raw/ilostat_migrant_labour_focus.csv`, and per-indicator source/coverage statuses are written to `metadata/ilostat_source_status.csv`. Source labels, classification codes, notes and observation status are kept; failed individual indicator pulls do not remove the previously stored values for that indicator. These data often come from national labour-force surveys and have incomplete country/year coverage, so they should be treated as a separate evidence layer rather than assumed to be fully harmonized or inserted automatically into the EOM score.
 
 
-## Operational recovery check (2026-10-28)
+## Incremental WDI history migration and input separation (2026-10-28)
 
-At 2026-10-28 05:41 UTC, the latest committed refresh record visible on `main` was `metadata/refresh_runs/2026-10-27T155300Z.json`; no 2026-10-28 refresh record was present in the repository listing. The workflow is scheduled for 05:17 UTC and includes a separate macro-ranking step. The connected GitHub integration did not expose a workflow-dispatch operation, so this documentation correction is being pushed on `main` as an allowed workflow trigger because `LIVE_DATA_PIPELINE.md` is included in the workflow's push-path filters.
+The refresh keeps the full current WDI panel at `data/raw/world_bank_long.csv` and the 11-indicator macro scoring input at `data/raw/world_bank_macro_focus.csv`. The macro fetcher and model fitter use the latter; the full panel is not overwritten by ranking preparation.
 
-**This push is a trigger attempt, not evidence of a successful ETL.** Verify the resulting Actions run, source status, ranking-step outcome, and new dated refresh record before marking the run successful. If the run fails, preserve the prior ranking and report the exact failed stage.
+The compact ledger at `data/observations_history/world_bank_observations.csv.gz` retains the first observation for each natural key and later genuine value/status/definition revisions. When the ledger is absent during migration, the workflow locates the latest successful `eom-daily-report-<run_id>` artifact and reconstructs it from retained World Bank JSON snapshots. If neither a ledger nor a prior successful artifact is available, the workflow fails closed rather than silently resetting history.
 
+A known scoring-input issue remains: the broad all-country refresh excludes legacy indicator `PA.NUS.PPPC.RF`, while the separate macro-focus fetcher still requests it. This is a methodology/data-lineage limitation; weights and scores are not changed merely to force a different ranking. The official source definition and current API availability must be reconciled before changing that feature.
 
 ## Raw-source snapshot retention (2026-10-28)
 
-The daily workflow artifact is configured to include source snapshots under `data/raw/snapshots/<source>/<run_id>/` and the versioned World Bank observation history. UN DESA workbooks, World Bank JSON responses, Eurostat JSON-stat payloads, policy-page HTML, the OBMigra catalogue page, the full UNHCR export, the OECD SDMX CSV response, and ILOSTAT catalogue/data CSV responses are retained separately from normalized extracts. Verify the corresponding snapshot paths and hashes in each run artifact; failed or partial downloads must remain marked as failed and must not replace the last successful normalized extract.
+The daily workflow artifact includes source snapshots under `data/raw/snapshots/<source>/<run_id>/`, the full current WDI panel, the compressed WDI revision ledger, and the separate macro-focus input. UN DESA workbooks, World Bank JSON responses, Eurostat JSON-stat payloads, policy-page HTML, the OBMigra catalogue page, the full UNHCR export, the OECD SDMX CSV response, and ILOSTAT catalogue/data CSV responses are retained separately from normalized extracts. Verify the corresponding snapshot paths and hashes in each run artifact; failed or partial downloads must remain marked as failed and must not replace the last successful normalized extract.

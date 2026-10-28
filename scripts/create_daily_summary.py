@@ -45,6 +45,8 @@ def main():
     manifest = read_json(manifests[-1]) if manifests else {}
 
     dashboard = read_csv(OUT / "data_freshness_dashboard.csv")
+    macro_focus = read_csv(ROOT / "data" / "raw" / "world_bank_macro_focus.csv")
+    macro_focus_rows = len(macro_focus)
     ranking = read_csv(OUT / "latest_macro_eom_ranking.csv")
     destinations = read_csv(DATA / "destinations.csv")
     sensitivity = read_csv(OUT / "eom_v2_weight_sensitivity.csv")
@@ -96,6 +98,10 @@ def main():
         f"- **Refresh timestamp:** {manifest.get('run_at_utc', 'Not reported')}",
         f"- **World Bank observations fetched:** {manifest.get('world_bank_rows_fetched', 'Not reported')}",
         f"- **World Bank indicator requests:** {manifest.get('world_bank_indicators_successful', 'Not reported')} succeeded; {manifest.get('world_bank_indicators_failed', 'Not reported')} failed",
+        f"- **Normalized WDI panel:** {manifest.get('world_bank_rows_normalized', 'Not reported')} current rows; {manifest.get('world_bank_rows_without_iso3', 'Not reported')} aggregate rows use stable non-ISO3 source keys",
+        f"- **Persistent WDI revision ledger:** {manifest.get('world_bank_history_rows', 'Not reported')} rows; {manifest.get('world_bank_history_new_keys', 'Not reported')} new keys; {manifest.get('world_bank_history_value_revisions', 'Not reported')} value revisions; {manifest.get('world_bank_history_unchanged_rows_skipped', 'Not reported')} unchanged observations skipped",
+        f"- **WDI history migration this run:** {yes_no(manifest.get('world_bank_history_rebuilt_from_snapshots'))}; {manifest.get('world_bank_history_rows_restored_from_snapshots', 0)} rows restored from archived raw snapshots",
+        f"- **Macro scoring input:** `data/raw/world_bank_macro_focus.csv` ({macro_focus_rows} rows; separate 11-indicator destination input)",
         f"- **Brazil World Bank extract:** {manifest.get('brazil_macro_rows_fetched', 'Not reported')} fresh Brazil indicator-year rows",
         f"- **Eurostat total migration flows:** {eurostat_succeeded} series succeeded; {eurostat_failed} failed; {eurostat_observed} observed annual cells across up to {eurostat_geos} reporting geographies",
         f"- **UNHCR forced-displacement extract:** {unhcr_state}; {unhcr_rows} retained focus/origin rows",
@@ -289,7 +295,10 @@ def main():
         "- `outputs/eom_v2_run_status.json`",
         "- `outputs/eom_v2_weight_sensitivity.csv`",
         "- `outputs/eom_joie_de_vivre_scores.csv`",
-        "- `data/observations_history/world_bank_observations.csv`",
+        "- `data/observations_history/world_bank_observations.csv.gz`",
+        "- `data/raw/world_bank_long.csv` (full current WDI panel in workflow artifact)",
+        "- `data/raw/world_bank_macro_focus.csv` (separate macro scoring input)",
+        "- `metadata/wdi_history_rebuild_manifest.json`",
         "- `data/raw/eurostat_migration_flows.csv`",
         "- `data/raw/undesa_migrant_stock_long.csv`",
         "- `data/raw/unhcr_forced_displacement_focus.csv.gz`",

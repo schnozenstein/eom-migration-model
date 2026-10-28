@@ -148,16 +148,183 @@ def request_with_dns_retries(session: requests.Session, url: str, *, attempts: i
     ) from last_error
 
 
-def atomic_csv(df: pd.DataFrame, path: Path) -> None:
+def atomic_csv(df, path):
+    path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
-    df.to_csv(tmp, index=False)
+    compression = "gzip" if path.suffix == ".gz" else None
+    df.to_csv(tmp, index=False, compression=compression)
     tmp.replace(path)
+
+
+def stable_wdi_country_key(country_iso3, source_geo_id, region_id=None, country_name=None):
+    """Return a stable key for WDI country and aggregate entities."""
+    iso3 = str(country_iso3 or "").strip().upper()
+    source_id = str(source_geo_id or "").strip().upper()
+    region = str(region_id or "").strip().upper()
+    if len(iso3) == 3:
+        return iso3, ("WDI_AGGREGATE_CODE" if region == "NA" else "ISO3")
+    if source_id:
+        return f"WB_{source_id}", "WB_SOURCE_ID"
+    name = str(country_name or "unknown").strip().upper()
+    slug = re.sub(r"[^A-Z0-9]+", "_", name).strip("_") or "UNKNOWN"
+    return f"WB_NAME_{slug}", "WB_SOURCE_NAME"
+
+
+_WDI_LEGACY_AGGREGATE_IDS = {
+    "high income": "XD",
+    "low income": "XM",
+    "lower middle income": "XN",
+    "not classified": "XY",
+    "upper middle income": "XT",
+}
+_WDI_HISTORY_KEYS = ["country_code", "indicator_code", "year"]
+
+
+def _normalise_wdi_history_geo_keys(frame):
+    df = frame.copy()
+    required = [
+        "country_code", "country_code_type", "source_geo_id", "country_name_api",
+        "country_region_id", "country_region_name", "income_level_id", "income_level_name",
+        "lending_type_id", "lending_type_name", "indicator_code", "indicator_api_code",
+        "indicator_name_api", "year", "value", "source", "source_url", "retrieved_utc",
+        "run_id", "status", "api_lastupdated",
+    ]
+    for column in required:
+        if column not in df.columns:
+            df[column] = pd.Series(dtype="object") if df.empty else pd.NA
+    if df.empty:
+        return df, 0
+    codes = df["country_code"].fillna("").astype(str).str.strip()
+    blank = codes.eq("")
+    repaired = int(blank.sum())
+    for idx in df.index[blank]:
+        name_value = df.at[idx, "country_name_api"]
+        name = "" if pd.isna(name_value) else str(name_value).strip()
+        source_value = df.at[idx, "source_geo_id"]
+        source_id = "" if pd.isna(source_value) else str(source_value).strip().upper()
+        if not source_id:
+            source_id = _WDI_LEGACY_AGGREGATE_IDS.get(name.lower(), "")
+        if source_id:
+            df.at[idx, "country_code"] = f"WB_{source_id}"
+            df.at[idx, "source_geo_id"] = source_id
+            df.at[idx, "country_code_type"] = "WB_SOURCE_ID"
+        else:
+            slug = re.sub(r"[^A-Z0-9]+", "_", name.upper()).strip("_") or "UNKNOWN"
+            df.at[idx, "country_code"] = f"WB_NAME_{slug}"
+            df.at[idx, "country_code_type"] = "WB_SOURCE_NAME"
+    codes = df["country_code"].fillna("").astype(str).str.strip().str.upper()
+    df["country_code"] = codes
+    types = df["country_code_type"].fillna("").astype(str).str.strip()
+    missing_type = types.eq("")
+    df.loc[missing_type & codes.str.startswith("WB_"), "country_code_type"] = "WB_SOURCE_ID"
+    df.loc[missing_type & ~codes.str.startswith("WB_"), "country_code_type"] = "LEGACY_CODE_UNCLASSIFIED"
+    missing_source_id = df["source_geo_id"].isna() | df["source_geo_id"].fillna("").astype(str).str.strip().eq("")
+    wb_mask = codes.str.startswith("WB_")
+    df.loc[missing_source_id & wb_mask, "source_geo_id"] = codes[missing_source_id & wb_mask].str.replace("WB_", "", regex=False)
+    return df, repaired
+
+
+def _wdi_signature_series(frame):
+    def format_value(value):
+        if pd.isna(value):
+            return "<NA>"
+        try:
+            return format(float(value), ".15g")
+        except (TypeError, ValueError):
+            return str(value)
+    signature = frame["value"].map(format_value).astype(str)
+    for column in ["status", "indicator_name_api", "country_name_api"]:
+        signature = signature + "|" + frame[column].fillna("").astype(str)
+    return signature
+
+
+def compact_wdi_history(history, fresh):
+    """Keep the first WDI observation per natural key and only later real revisions."""
+    history_norm, repaired_history = _normalise_wdi_history_geo_keys(history)
+    fresh_norm, repaired_fresh = _normalise_wdi_history_geo_keys(fresh)
+    keys = list(_WDI_HISTORY_KEYS)
+    version_keys = ["run_id", *keys]
+    fresh_duplicates = int(fresh_norm.duplicated(version_keys).sum()) if not fresh_norm.empty else 0
+    if fresh_duplicates:
+        raise ValueError(f"World Bank fresh panel has {fresh_duplicates} duplicate run/natural-key rows: {version_keys}")
+    if not fresh_norm.empty and fresh_norm[keys].isna().any().any():
+        raise ValueError("World Bank fresh panel contains missing natural-key fields")
+    if not history_norm.empty and history_norm[keys].isna().any().any():
+        raise ValueError("World Bank history contains missing natural-key fields")
+
+    def latest_rows(frame):
+        if frame.empty:
+            return frame.copy()
+        temp = frame.copy()
+        temp["_sort_time"] = pd.to_datetime(temp["retrieved_utc"], errors="coerce", utc=True)
+        temp = temp.sort_values(["_sort_time", "run_id"], kind="mergesort")
+        return temp.drop_duplicates(keys, keep="last").drop(columns=["_sort_time"])
+
+    old_latest = latest_rows(history_norm)
+    old_index = pd.MultiIndex.from_frame(old_latest[keys]) if not old_latest.empty else pd.MultiIndex.from_arrays([[], [], []], names=keys)
+    fresh_unique = fresh_norm.drop_duplicates(keys)
+    fresh_index = pd.MultiIndex.from_frame(fresh_unique[keys]) if not fresh_unique.empty else pd.MultiIndex.from_arrays([[], [], []], names=keys)
+    new_keys = int(len(fresh_index.difference(old_index)))
+    common = fresh_index.intersection(old_index)
+    value_revisions = 0
+    if len(common):
+        old_sig = pd.Series(_wdi_signature_series(old_latest).to_numpy(), index=old_index)
+        fresh_sig = pd.Series(_wdi_signature_series(fresh_unique).to_numpy(), index=fresh_index)
+        value_revisions = int((old_sig.loc[common] != fresh_sig.loc[common]).sum())
+    fresh_run_count = int(fresh_norm["run_id"].nunique()) if not fresh_norm.empty else 0
+    unchanged_rows_skipped = max(0, int(len(fresh_norm) - new_keys - value_revisions))
+    if history_norm.empty and fresh_run_count > 1:
+        unchanged_rows_skipped = 0
+
+    combined = pd.concat([history_norm, fresh_norm], ignore_index=True, sort=False)
+    if combined.empty:
+        stats = {
+            "new_keys": 0, "value_revisions": 0, "unchanged_rows_skipped": 0,
+            "legacy_geo_rows_repaired": repaired_history + repaired_fresh,
+            "duplicate_keys_in_fresh": fresh_duplicates, "duplicate_version_keys": 0,
+            "history_rows_before": int(len(history_norm)), "history_rows_after": 0,
+            "unique_observation_keys": 0,
+        }
+        return combined, stats
+    combined["_sort_time"] = pd.to_datetime(combined["retrieved_utc"], errors="coerce", utc=True)
+    combined = combined.sort_values(["_sort_time", "run_id"], kind="mergesort")
+    combined["_signature"] = _wdi_signature_series(combined)
+    duplicate_mask = combined.duplicated(version_keys, keep=False)
+    duplicate_version_keys = 0
+    if duplicate_mask.any():
+        duplicate_groups = combined.loc[duplicate_mask].groupby(version_keys, dropna=False)["_signature"].nunique()
+        conflicting = duplicate_groups[duplicate_groups > 1]
+        if len(conflicting):
+            raise ValueError(f"World Bank history has conflicting values for {len(conflicting)} duplicate run/natural-key groups")
+        duplicate_version_keys = int(len(duplicate_groups))
+        combined = combined.drop_duplicates(version_keys, keep="last")
+    previous_signature = combined.groupby(keys, dropna=False)["_signature"].shift()
+    keep = previous_signature.isna() | combined["_signature"].ne(previous_signature)
+    compact = combined.loc[keep].drop(columns=["_sort_time", "_signature"]).copy()
+    compact = compact.sort_values(keys + ["retrieved_utc", "run_id"], kind="mergesort").reset_index(drop=True)
+    after_duplicates = int(compact.duplicated(version_keys).sum())
+    if after_duplicates:
+        raise ValueError(f"Compacted World Bank history has {after_duplicates} duplicate run/natural-key rows")
+    stats = {
+        "new_keys": new_keys,
+        "value_revisions": value_revisions,
+        "unchanged_rows_skipped": unchanged_rows_skipped,
+        "legacy_geo_rows_repaired": repaired_history + repaired_fresh,
+        "duplicate_keys_in_fresh": fresh_duplicates,
+        "duplicate_version_keys": duplicate_version_keys,
+        "history_rows_before": int(len(history_norm)),
+        "history_rows_after": int(len(compact)),
+        "unique_observation_keys": int(compact[keys].drop_duplicates().shape[0]),
+    }
+    return compact, stats
 
 
 def fetch_one_indicator(code: str, label: str, run_id: str, start: int, end: int) -> tuple[list[dict], dict]:
     session = session_with_retries()
     rows, statuses = [], []
+    request_urls, request_attempts = [], []
+    per_page_used = None
     snapshot_dir = ROOT / "data" / "raw" / "snapshots" / "world_bank" / run_id
     api_code = WB_API_CODE_OVERRIDES.get(code, code)
     url = f"{WB_BASE}/country/all/indicator/{api_code}"
@@ -167,16 +334,27 @@ def fetch_one_indicator(code: str, label: str, run_id: str, start: int, end: int
             last_error = None
             parsed = None
             for candidate_per_page in dict.fromkeys([per_page, 1000]):
+                params = {"date": f"{start}:{end}", "format": "json", "per_page": candidate_per_page, "page": page}
+                request_url = requests.Request("GET", url, params=params).prepare().url
+                attempt = {"url": request_url, "per_page": candidate_per_page, "page": page, "status": "ATTEMPTED", "http_status": None, "error": ""}
+                request_attempts.append(attempt)
+                per_page_used = candidate_per_page
                 try:
-                    r = request_with_dns_retries(session, url, params={"date": f"{start}:{end}", "format": "json", "per_page": candidate_per_page, "page": page}, timeout=(8, 30))
+                    r = request_with_dns_retries(session, url, params=params, timeout=(8, 30))
+                    attempt["url"] = r.url
+                    attempt["http_status"] = r.status_code
                     r.raise_for_status()
                     payload = r.json()
                     if not isinstance(payload, list) or len(payload) < 2 or not isinstance(payload[0], dict) or not (payload[1] is None or isinstance(payload[1], list)):
                         preview = (r.text or "").replace("\n", " ")[:400]
                         raise ValueError(f"Unexpected World Bank API response for {code}: HTTP {r.status_code}, content-type={r.headers.get('Content-Type')}, payload_type={type(payload).__name__}, body_preview={preview!r}")
+                    attempt["status"] = "SUCCESS"
+                    request_urls.append(r.url)
                     parsed = (r, payload, payload[0], payload[1] or [], candidate_per_page)
                     break
                 except Exception as exc:
+                    attempt["status"] = "FAILED"
+                    attempt["error"] = f"{type(exc).__name__}: {exc}"
                     last_error = exc
             if parsed is None:
                 raise last_error or ValueError(f"No valid World Bank response for {code}")
@@ -187,16 +365,33 @@ def fetch_one_indicator(code: str, label: str, run_id: str, start: int, end: int
                 c = item.get("country") or {}; im = item.get("indicator") or {}
                 year = item.get("date")
                 if not year: continue
-                rows.append({"country_code": (item.get("countryiso3code") or "").upper(), "country_name_api": c.get("value"),
-                    "indicator_code": code, "indicator_api_code": im.get("id", api_code), "indicator_name_api": im.get("value") or label, "year": int(year),
+                region = c.get("region") or {}
+                income = c.get("incomeLevel") or {}
+                lending = c.get("lendingType") or {}
+                source_geo_id = str(c.get("id") or "").strip().upper()
+                country_code, country_code_type = stable_wdi_country_key(item.get("countryiso3code"), source_geo_id, region.get("id"), c.get("value"))
+                rows.append({
+                    "country_code": country_code, "country_code_type": country_code_type,
+                    "source_geo_id": source_geo_id, "country_name_api": c.get("value"),
+                    "country_region_id": region.get("id"), "country_region_name": region.get("value"),
+                    "income_level_id": income.get("id"), "income_level_name": income.get("value"),
+                    "lending_type_id": lending.get("id"), "lending_type_name": lending.get("value"),
+                    "indicator_code": code, "indicator_api_code": im.get("id", api_code),
+                    "indicator_name_api": im.get("value") or label, "year": int(year),
                     "value": item.get("value"), "source": "World Bank Indicators API", "source_url": r.url,
                     "retrieved_utc": utc_now().isoformat(), "run_id": run_id,
-                    "status": "observed" if item.get("value") is not None else "missing"})
+                    "status": "observed" if item.get("value") is not None else "missing",
+                    "api_lastupdated": str(meta.get("lastupdated", "")),
+                })
             count += len(observations); pages = int(meta.get("pages", 1) or 1); page += 1
-        status = {"source_id": f"WDI_{code}", "source": "World Bank Indicators API", "url": url, "status": "SUCCESS",
+        status = {"source_id": f"WDI_{code}", "source": "World Bank Indicators API", "url": request_urls[0] if request_urls else (request_attempts[-1]["url"] if request_attempts else url),
+            "url_base": url, "request_urls": json.dumps(request_urls), "request_attempts": json.dumps(request_attempts, ensure_ascii=False),
+            "pages_fetched": len(request_urls), "per_page_used": per_page_used, "snapshot_dir": str(snapshot_dir.relative_to(ROOT)), "status": "SUCCESS",
             "rows_fetched": count, "indicator": code, "observation_start": start, "observation_end_requested": end, "error": ""}
     except Exception as e:
-        status = {"source_id": f"WDI_{code}", "source": "World Bank Indicators API", "url": url, "status": "FAILED",
+        status = {"source_id": f"WDI_{code}", "source": "World Bank Indicators API", "url": request_urls[0] if request_urls else (request_attempts[-1]["url"] if request_attempts else url),
+            "url_base": url, "request_urls": json.dumps(request_urls), "request_attempts": json.dumps(request_attempts, ensure_ascii=False),
+            "pages_fetched": len(request_urls), "per_page_used": per_page_used, "snapshot_dir": str(snapshot_dir.relative_to(ROOT)), "status": "FAILED",
             "rows_fetched": count, "indicator": code, "observation_start": start, "observation_end_requested": end, "error": f"{type(e).__name__}: {e}"}
     return rows, status
 
@@ -435,21 +630,41 @@ def main() -> int:
         obmigra = check_obmigra_source(session, run_id)
         policy = [] if args.skip_policy_watch else check_policy_sources(session, run_id)
     raw_path = ROOT / "data" / "raw" / "world_bank_long.csv"
-    history_path = ROOT / "data" / "observations_history" / "world_bank_observations.csv"
-    if not fresh.empty:
-        # Immutable-ish retrieval history: one record per retrieved vintage/run.
-        history = pd.concat([pd.read_csv(history_path) if history_path.exists() else pd.DataFrame(), fresh], ignore_index=True, sort=False)
-        if not history.empty:
-            history = history.drop_duplicates(subset=["run_id", "country_code", "indicator_code", "year"], keep="last")
-        atomic_csv(history, history_path)
-        # Canonical latest-observation table, retaining older records and never erasing on failure.
-        existing = pd.read_csv(raw_path) if raw_path.exists() else pd.DataFrame()
-        merged = pd.concat([existing, fresh], ignore_index=True, sort=False)
-        if not merged.empty:
-            merged["year"] = pd.to_numeric(merged["year"], errors="coerce")
-            merged["_retrieved_sort"] = pd.to_datetime(merged.get("retrieved_utc"), errors="coerce", utc=True)
-            merged = merged.sort_values("_retrieved_sort").drop_duplicates(["country_code", "indicator_code", "year"], keep="last").drop(columns=["_retrieved_sort"])
-            atomic_csv(merged, raw_path)
+    history_path = ROOT / "data" / "observations_history" / "world_bank_observations.csv.gz"
+    legacy_history_path = ROOT / "data" / "observations_history" / "world_bank_observations.csv"
+    if history_path.exists():
+        history = pd.read_csv(history_path, compression="gzip", low_memory=False)
+    elif legacy_history_path.exists():
+        history = pd.read_csv(legacy_history_path, low_memory=False)
+    else:
+        history = pd.DataFrame()
+    history, history_stats = compact_wdi_history(history, fresh)
+    atomic_csv(history, history_path)
+    if legacy_history_path.exists():
+        legacy_history_path.unlink()
+
+    # Current normalized panel: latest known values for failed indicators and current
+    # successful rows for refreshed indicators. Macro scoring uses a separate input file.
+    if history.empty and fresh.empty:
+        raise RuntimeError("No current or historical World Bank observations available; refusing to write an empty panel.")
+    keys = ["country_code", "indicator_code", "year"]
+    if history.empty:
+        latest_history = pd.DataFrame(columns=fresh.columns)
+    else:
+        latest_history = history.copy()
+        latest_history["_sort_time"] = pd.to_datetime(latest_history["retrieved_utc"], errors="coerce", utc=True)
+        latest_history = latest_history.sort_values(["_sort_time", "run_id"], kind="mergesort")
+        latest_history = latest_history.drop_duplicates(keys, keep="last").drop(columns=["_sort_time"])
+    canonical = pd.concat([latest_history, fresh], ignore_index=True, sort=False)
+    if not canonical.empty:
+        canonical["_sort_time"] = pd.to_datetime(canonical["retrieved_utc"], errors="coerce", utc=True)
+        canonical = canonical.sort_values(["_sort_time", "run_id"], kind="mergesort")
+        canonical = canonical.drop_duplicates(keys, keep="last").drop(columns=["_sort_time"])
+        duplicate_panel_keys = int(canonical.duplicated(keys).sum())
+        if duplicate_panel_keys:
+            raise ValueError(f"Canonical World Bank panel has {duplicate_panel_keys} duplicate natural keys.")
+    raw_path = ROOT / "data" / "raw" / "world_bank_long.csv"
+    atomic_csv(canonical, raw_path)
     brazil_macro_rows = update_brazil_macro_extract(fresh)
     status_df = pd.DataFrame(statuses)
     policy_df = pd.DataFrame(policy)
@@ -492,11 +707,31 @@ def main() -> int:
                 "observed_rows": int(len(obs)), "last_retrieval_utc": retrievals.max() if not retrievals.empty else "unknown_for_legacy_snapshot",
                 "freshness_status": "NO_OBSERVATIONS" if latest is None else ("CURRENT_YEAR" if latest >= run_dt.year else ("RECENT" if latest >= run_dt.year - 2 else "STALE_OR_SLOW_RELEASE"))})
     atomic_csv(pd.DataFrame(dashboard), ROOT / "outputs" / "data_freshness_dashboard.csv")
+    rebuild_manifest_path = ROOT / "metadata" / "wdi_history_rebuild_manifest.json"
+    try:
+        rebuild_manifest = json.loads(rebuild_manifest_path.read_text(encoding="utf-8"))
+    except Exception:
+        rebuild_manifest = {}
+    github_run_id = str(os.environ.get("GITHUB_RUN_ID", ""))
+    rebuilt_this_run = bool(github_run_id) and str(rebuild_manifest.get("rebuild_workflow_run_id", "")) == github_run_id
     summary = {"run_id": run_id, "run_at_utc": run_dt.isoformat(), "requested_year_range": [args.start_year, args.end_year],
         "world_bank_indicators_successful": int((status_df["status"] == "SUCCESS").sum()) if not status_df.empty else 0,
         "world_bank_indicators_failed": int((status_df["status"] == "FAILED").sum()) if not status_df.empty else 0,
         "offline_audit": bool(args.offline_audit),
-        "world_bank_rows_fetched": int(len(fresh)), "brazil_macro_rows_fetched": int(brazil_macro_rows), "policy_pages_successful": int((policy_df["status"] == "SUCCESS").sum()) if not policy_df.empty else 0,
+        "world_bank_rows_fetched": int(len(fresh)),
+        "world_bank_rows_normalized": int(len(canonical)),
+        "world_bank_rows_without_iso3": int(fresh["country_code_type"].eq("WB_SOURCE_ID").sum()) if "country_code_type" in fresh.columns else 0,
+        "world_bank_history_rows": int(len(history)),
+        "world_bank_history_new_keys": int(history_stats.get("new_keys", 0)),
+        "world_bank_history_value_revisions": int(history_stats.get("value_revisions", 0)),
+        "world_bank_history_unchanged_rows_skipped": int(history_stats.get("unchanged_rows_skipped", 0)),
+        "world_bank_history_legacy_geo_rows_repaired": int(history_stats.get("legacy_geo_rows_repaired", 0)),
+        "world_bank_history_duplicate_keys": int(history_stats.get("duplicate_keys_in_fresh", 0) + history_stats.get("duplicate_version_keys", 0)),
+        "world_bank_history_storage": "gzip compact revision ledger; unchanged observations not appended; raw snapshots retained per workflow artifact",
+        "world_bank_history_rebuilt_from_snapshots": rebuilt_this_run,
+        "world_bank_history_rows_restored_from_snapshots": int(rebuild_manifest.get("rows_restored_vs_legacy_history", 0)) if rebuilt_this_run else 0,
+        "world_bank_full_panel_path": "data/raw/world_bank_long.csv (current normalized panel; workflow artifact)",
+        "world_bank_macro_focus_path": "data/raw/world_bank_macro_focus.csv (separate 11-indicator scoring input)", "brazil_macro_rows_fetched": int(brazil_macro_rows), "policy_pages_successful": int((policy_df["status"] == "SUCCESS").sum()) if not policy_df.empty else 0,
         "policy_pages_failed": int((policy_df["status"] == "FAILED").sum()) if not policy_df.empty else 0,
         "eurostat_series_successful": int((eurostat_status_df["status"] == "SUCCESS").sum()) if not eurostat_status_df.empty else 0,
         "eurostat_series_failed": int((eurostat_status_df["status"] == "FAILED").sum()) if not eurostat_status_df.empty else 0,

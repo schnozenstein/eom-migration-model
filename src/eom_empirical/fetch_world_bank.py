@@ -14,7 +14,7 @@ from urllib3.util.retry import Retry
 
 ROOT = Path(__file__).resolve().parents[2]
 DESTINATIONS = ROOT / "data" / "destinations.csv"
-OUT = ROOT / "data" / "raw" / "world_bank_long.csv"
+OUT = ROOT / "data" / "raw" / "world_bank_macro_focus.csv"
 INDICATORS = {
     "NY.GDP.PCAP.PP.KD": "GDP per capita, PPP (constant 2021 international $)",
     "NY.GDP.MKTP.PP.CD": "GDP, PPP (current international $)",

@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "scripts/refresh_eom_data.py"
+      - "scripts/rebuild_wdi_history_from_snapshots.py"
       - "scripts/create_daily_summary.py"
       - "src/eom_empirical/**"
       - "data/destinations.csv"
@@ -16,6 +17,7 @@ on:
   pull_request:
     paths:
       - "scripts/refresh_eom_data.py"
+      - "scripts/rebuild_wdi_history_from_snapshots.py"
       - "scripts/create_daily_summary.py"
       - "src/eom_empirical/**"
       - "data/destinations.csv"
@@ -33,6 +35,7 @@ concurrency:
 
 permissions:
   contents: write
+  actions: read
 
 jobs:
   refresh:
@@ -65,6 +68,64 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m pytest -q
+
+      - name: Find latest successful ETL artifact for one-time WDI history migration
+        id: previous_wdi_artifact
+        if: hashFiles('data/observations_history/world_bank_observations.csv.gz') == ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const defaultBranch = context.payload.repository?.default_branch || "main";
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner, repo, workflow_id: "eom-daily-refresh.yml",
+              branch: defaultBranch, status: "success", per_page: 50
+            });
+            const currentRun = Number(process.env.GITHUB_RUN_ID);
+            const previous = runs.data.workflow_runs.find(r => r.id !== currentRun && r.head_branch === defaultBranch);
+            if (!previous) {
+              core.setOutput("found", "false");
+              core.warning("No prior successful daily ETL run was found; refusing to silently reset WDI history.");
+              return;
+            }
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner, repo, run_id: previous.id, per_page: 100
+            });
+            const expectedName = "eom-daily-report-" + previous.id;
+            const artifact = artifacts.data.artifacts.find(a => a.name === expectedName && !a.expired);
+            if (!artifact) {
+              core.setOutput("found", "false");
+              core.warning("No retained full ETL artifact found for run " + previous.id + ".");
+              return;
+            }
+            core.setOutput("found", "true");
+            core.setOutput("run_id", String(previous.id));
+            core.setOutput("artifact_id", String(artifact.id));
+            core.setOutput("artifact_name", artifact.name);
+            core.setOutput("artifact_digest", artifact.digest || "");
+
+      - name: Download prior ETL artifact for WDI history migration
+        if: steps.previous_wdi_artifact.outputs.found == 'true' && hashFiles('data/observations_history/world_bank_observations.csv.gz') == ''
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ steps.previous_wdi_artifact.outputs.artifact_id }}
+          run-id: ${{ steps.previous_wdi_artifact.outputs.run_id }}
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: previous-run-artifact
+
+      - name: Rebuild compact WDI history from archived raw snapshots
+        if: steps.previous_wdi_artifact.outputs.found == 'true' && hashFiles('data/observations_history/world_bank_observations.csv.gz') == ''
+        run: |
+          python scripts/rebuild_wdi_history_from_snapshots.py --input-root previous-run-artifact --output data/observations_history/world_bank_observations.csv.gz --source-artifact-run-id "${{ steps.previous_wdi_artifact.outputs.run_id }}" --source-artifact-name "${{ steps.previous_wdi_artifact.outputs.artifact_name }}" --source-artifact-digest "${{ steps.previous_wdi_artifact.outputs.artifact_digest }}" --rebuild-workflow-run-id "${{ github.run_id }}"
+
+      - name: Require persistent WDI revision ledger
+        run: |
+          if [ ! -s data/observations_history/world_bank_observations.csv.gz ]; then
+            echo "::error::No compact WDI history ledger exists and no prior artifact migration succeeded; refusing to reset historical state."
+            exit 1
+          fi
 
       - name: Refresh EOM data
         if: github.event_name != 'pull_request'
@@ -126,7 +187,7 @@ jobs:
         with:
           name: eom-daily-report-${{ github.run_id }}
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 90
           path: |
             reports/latest_daily_summary.md
             metadata/live_source_status.csv
@@ -154,13 +215,15 @@ jobs:
             outputs/macro_model_coefficients_last_fold.csv
             outputs/macro_backtest_rank_metrics.csv
             data/raw/world_bank_long.csv
+          data/raw/world_bank_macro_focus.csv
+          metadata/wdi_history_rebuild_manifest.json
             data/raw/eurostat_migration_flows.csv
             data/raw/brazil_world_bank_macro.csv
             data/raw/undesa_migrant_stock_long.csv
             data/raw/unhcr_forced_displacement_focus.csv.gz
             data/raw/oecd_migration_database_focus.csv
             data/raw/ilostat_migrant_labour_focus.csv
-            data/observations_history/world_bank_observations.csv
+            data/observations_history/world_bank_observations.csv.gz
             data/raw/snapshots/world_bank/**/*.json
             data/raw/snapshots/eurostat/**/*.json
             data/raw/snapshots/policy_pages/**/*.html
@@ -177,9 +240,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Commit lightweight operational outputs and intentionally small country/source extracts.
-          # The full all-country World Bank history and raw source snapshots are not committed
-          # because they exceed GitHub's 100 MB limit or grow every run. Full diagnostics remain
-          # available in the uploaded workflow artifact.
+          # The compact WDI revision ledger and macro-focus scoring input are committed.
+          # Raw snapshots and the full current WDI panel remain in the uploaded artifact.
           git add reports/latest_daily_summary.md \
                   metadata/live_source_status.csv \
                   metadata/eurostat_source_status.csv \
@@ -201,11 +263,12 @@ jobs:
                   data/raw/brazil_world_bank_macro.csv \
                   data/obmigra_page_state.json \
                   data/policy_page_state.json
+          git add -A data/observations_history/
           # Supplemental sources may be unavailable in an individual run. Stage their
           # last successful compact extracts only when a file exists.
           # UNHCR focus extract can exceed GitHub's 100 MB per-file limit.
           # It remains available in the workflow artifact uploaded above; do not add it to Git history.
-          for path in data/raw/undesa_migrant_stock_long.csv data/raw/oecd_migration_database_focus.csv data/raw/ilostat_migrant_labour_focus.csv; do
+          for path in data/raw/undesa_migrant_stock_long.csv data/raw/oecd_migration_database_focus.csv data/raw/ilostat_migrant_labour_focus.csv data/raw/world_bank_macro_focus.csv metadata/wdi_history_rebuild_manifest.json; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Preserve the compact risk panel and coverage audit when the risk step produced them.

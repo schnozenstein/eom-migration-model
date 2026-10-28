@@ -206,6 +206,7 @@ def test_ilostat_fetch_uses_official_csv_endpoint_and_caps_year(tmp_path):
     assert len(statuses) == len(ILOSTAT_MIGRATION_INDICATORS) == 3
     assert all(status["status"] == "SUCCESS" for status in statuses), statuses
     assert all(status["request_variant"] == "rplumber_csv_year_bounded" for status in statuses)
+    assert all("id=" in status["url"] and "timefrom=2010" in status["url"] for status in statuses)
     assert all(status["observation_end_queried"] == query_end_year for status in statuses)
     assert {status["indicator_code"] for status in statuses} == set(current_ids.values())
     assert all(status["id_resolution"] == "official_catalogue_label_match" for status in statuses)
@@ -307,6 +308,8 @@ def test_oecd_migration_response_is_preserved_as_raw_snapshot(tmp_path):
     snapshot_path = tmp_path / status["raw_snapshot_path"]
 
     assert status["status"] == "SUCCESS", status
+    assert "startPeriod=2010" in status["url"]
+    assert "dimensionAtObservation=AllDimensions" in status["url"]
     assert len(fresh) == 1
     assert snapshot_path.exists()
     assert snapshot_path.read_bytes() == body

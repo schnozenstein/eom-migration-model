@@ -412,11 +412,15 @@ def fetch_oecd_migration_slice(session, root: Path, run_id: str, start_year: int
         "dimensionAtObservation": "AllDimensions",
         "format": "csvfilewithlabels",
     }
+    request_url = requests.Request("GET", OECD_MIGRATION_QUERY, params=params).prepare().url
     status = {
         "source_id": "OECD_DF_MIG_B11",
         "source": "OECD International migration database (SDMX)",
         "dataset": "DSD_MIG@DF_MIG; official Explorer query selector .W.A.B11._T...",
-        "url": OECD_MIGRATION_QUERY,
+        "url": request_url,
+        "request_url": request_url,
+        "url_base": OECD_MIGRATION_QUERY,
+        "request_params": json.dumps(params, sort_keys=True),
         "metadata_url": OECD_MIGRATION_DATAFLOW_URL,
         "checked_at_utc": _now(),
         "status": "FAILED",
@@ -452,7 +456,7 @@ def fetch_oecd_migration_slice(session, root: Path, run_id: str, start_year: int
         if focus.empty:
             raise ValueError("OECD query returned data but no focus geographies were found in REF_AREA")
         focus["source"] = "OECD International migration database"
-        focus["source_url"] = response.url
+        focus["source_url"] = response.url if "?" in str(response.url) else request_url
         focus["metadata_url"] = OECD_MIGRATION_DATAFLOW_URL
         focus["retrieved_utc"] = _now()
         focus["run_id"] = run_id
@@ -463,6 +467,8 @@ def fetch_oecd_migration_slice(session, root: Path, run_id: str, start_year: int
         focus.to_csv(out, index=False)
         status.update({
             "status": "SUCCESS",
+            "url": response.url if "?" in str(response.url) else request_url,
+            "response_url": response.url,
             "rows_fetched": len(df),
             "rows_focus": len(focus),
             "observation_start": str(focus[time_col].min()),
@@ -474,7 +480,7 @@ def fetch_oecd_migration_slice(session, root: Path, run_id: str, start_year: int
         return pd.DataFrame(), status
 
 
-ILOSTAT_API_URL = "https://rplumber.ilo.org/files/indicator"
+ILOSTAT_API_URL = "https://rplumber.ilo.org/data/indicator"
 ILOSTAT_TOC_URL = "https://rplumber.ilo.org/metadata/toc/indicator"
 ILOSTAT_MIGRATION_INDICATORS = {
     "POP_XFRB_SEX_CBR_NB": "Working-age foreign-born population by sex and country of birth (thousands)",
@@ -657,6 +663,11 @@ def fetch_ilostat_migration_focus(
             "timefrom": int(start_year),
             "timeto": int(query_end_year),
         }
+        request_url = requests.Request("GET", data_url, params=params).prepare().url
+        status["url"] = request_url
+        status["request_url"] = request_url
+        status["url_base"] = data_url
+        status["request_params"] = json.dumps(params, sort_keys=True)
         parsed_raw = None
         selected_variant = "rplumber_csv_year_bounded"
         response = None
@@ -703,7 +714,7 @@ def fetch_ilostat_migration_focus(
 
             filtered["retrieved_utc"] = _now()
             filtered["run_id"] = run_id
-            filtered["source_url"] = response.url
+            filtered["source_url"] = response.url if "?" in str(response.url) else request_url
             filtered["source_dataset"] = dataset_id
             filtered["source_publisher"] = "International Labour Organization (ILOSTAT)"
             new_frames.append(filtered)
@@ -711,6 +722,8 @@ def fetch_ilostat_migration_focus(
             time_values = pd.to_numeric(filtered[time_col], errors="coerce").dropna()
             status.update({
                 "status": "SUCCESS",
+                "url": response.url if "?" in str(response.url) else request_url,
+                "response_url": response.url,
                 "rows_fetched": len(parsed_raw),
                 "rows_focus": len(filtered),
                 "geographies": int(filtered[area_col].nunique()),

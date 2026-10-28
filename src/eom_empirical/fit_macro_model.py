@@ -11,7 +11,7 @@ from .model import to_wide, add_derived_features, equal_weight_energy, make_lagg
 from .evaluation import expanding_origin_backtest
 
 ROOT = Path(__file__).resolve().parents[2]
-RAW = ROOT / "data" / "raw" / "world_bank_long.csv"
+RAW = ROOT / "data" / "raw" / "world_bank_macro_focus.csv"
 PROCESSED = ROOT / "data" / "processed"
 OUTPUTS = ROOT / "outputs"
 FEATURE_COLS = ["lag_salary_proxy", "lag_cost_proxy", "lag_opportunity_proxy", "lag_policy_proxy", "lag_institution_proxy", "lag_stability_proxy"]
