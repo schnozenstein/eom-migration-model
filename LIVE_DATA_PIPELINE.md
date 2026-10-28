@@ -21,7 +21,7 @@ Optional: `python scripts/refresh_eom_data.py --start-year 2015 --end-year 2026 
 
 ## Important limitations
 
-1. This run refreshes source evidence; it does **not** automatically recalibrate the EOM model, publish a ranking, issue a forecast or claim causal effects.
+1. Source refresh does **not** recalibrate model parameters, issue a forecast or establish causal effects. The GitHub Actions workflow runs a separate macro-ranking step; verify that step's result and the dated run record before describing the ranking as refreshed.
 2. World Bank indicators have different publication lags. The dashboard reports the latest observed year per indicator and must not imply all data are current-year.
 3. Spain total immigration and emigration are now fetched from Eurostat's official Statistics API (`migr_imm8` and `migr_emi2`) into a normalized, vintage-stamped CSV and the compatible fields in the historical panel. These totals remain distinct from flows classified by citizenship, birth or previous residence. OECD numeric ingestion is still future work. The official Brazil OBMigra catalogue page is monitored for source changes and data-asset links; its PDF/spreadsheet tables are not yet numerically parsed.
 4. The GitHub Actions schedule is a deployable workflow, not an active schedule in this ZIP. It only runs after the project is pushed to a repository and Actions are enabled. If the execution environment blocks DNS/network access, the workflow will log failures and preserve prior data.
@@ -34,7 +34,7 @@ Optional: `python scripts/refresh_eom_data.py --start-year 2015 --end-year 2026 
 - Added a small Eurostat Statistics API adapter for Spain's annual total immigration (`migr_imm8`) and emigration (`migr_emi2`) flows. API response snapshots are retained by run; the normalized table carries data values, flags, missingness, source URL, and retrieval timestamp.
 - Refreshed Spanish emigration is merged into the existing matching panel field. Immigration is stored in its own generic total-flow field to avoid conflating it with the existing birth/citizenship/previous-residence-specific measures.
 - Added Brazil to the destination registry and panel scaffold. The global World Bank pull is filtered into a compact, versioned `data/raw/brazil_world_bank_macro.csv` extract that the workflow can commit separately from the oversized all-country history. OBMigra's official statistics page is monitored, but numeric parsing from its reports remains an explicit follow-up task.
-- The refresh still never recalibrates or ranks automatically.
+- The refresh does not recalibrate model parameters or issue forecasts. The GitHub Actions workflow separately recomputes the macro ranking after the data-refresh step; that ranking must be audited independently.
 
 ## Country and PPP expansion (2026-10-19)
 
@@ -75,3 +75,10 @@ A successful source-status row means retrieval and basic schema checks succeeded
 Three official ILOSTAT indicators are queried from the ILO data API: working-age foreign-born population by sex and country of birth (`POP_XFRB_SEX_CBR_NB`), employed foreign-born population by sex and country of birth (`EMP_XFRB_SEX_CBR_NB`), and inflow of working-age foreign-born population by sex and country of birth (`POP_XFLB_SEX_CBR_NB`). Results are filtered to the maintained national destination set while retaining the complete country-of-birth classification and sex dimensions supplied by ILOSTAT.
 
 The normalized compact output is `data/raw/ilostat_migrant_labour_focus.csv`, and per-indicator source/coverage statuses are written to `metadata/ilostat_source_status.csv`. Source labels, classification codes, notes and observation status are kept; failed individual indicator pulls do not remove the previously stored values for that indicator. These data often come from national labour-force surveys and have incomplete country/year coverage, so they should be treated as a separate evidence layer rather than assumed to be fully harmonized or inserted automatically into the EOM score.
+
+
+## Operational recovery check (2026-10-28)
+
+At 2026-10-28 05:41 UTC, the latest committed refresh record visible on `main` was `metadata/refresh_runs/2026-10-27T155300Z.json`; no 2026-10-28 refresh record was present in the repository listing. The workflow is scheduled for 05:17 UTC and includes a separate macro-ranking step. The connected GitHub integration did not expose a workflow-dispatch operation, so this documentation correction is being pushed on `main` as an allowed workflow trigger because `LIVE_DATA_PIPELINE.md` is included in the workflow's push-path filters.
+
+**This push is a trigger attempt, not evidence of a successful ETL.** Verify the resulting Actions run, source status, ranking-step outcome, and new dated refresh record before marking the run successful. If the run fails, preserve the prior ranking and report the exact failed stage.
