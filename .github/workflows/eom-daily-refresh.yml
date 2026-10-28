@@ -289,6 +289,7 @@ jobs:
             data/outcome_ledger.csv
             data/prediction_outcome_join.csv
             metadata/source_audit_manifest.json
+            metadata/source_lineage_current.csv
             metadata/policy_event_delta_manifest.json
             metadata/prediction_ledger_manifest.json
             outputs/risk_indicator_panel.csv
@@ -364,7 +365,7 @@ jobs:
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Preserve the compact risk panel and coverage audit when the risk step produced them.
-          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv outputs/source_retrieval_audit.csv outputs/policy_event_delta.csv outputs/macro_ranking_delta.csv data/prediction_ledger.csv data/outcome_ledger.csv data/prediction_outcome_join.csv metadata/source_audit_manifest.json metadata/policy_event_delta_manifest.json metadata/prediction_ledger_manifest.json metadata/macro_ranking_delta_manifest.json; do
+          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv outputs/source_retrieval_audit.csv outputs/policy_event_delta.csv outputs/macro_ranking_delta.csv data/prediction_ledger.csv data/outcome_ledger.csv data/prediction_outcome_join.csv metadata/source_audit_manifest.json metadata/source_lineage_current.csv metadata/policy_event_delta_manifest.json metadata/prediction_ledger_manifest.json metadata/macro_ranking_delta_manifest.json; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.

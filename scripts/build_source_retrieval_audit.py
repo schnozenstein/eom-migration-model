@@ -19,6 +19,11 @@ FIELDS=[
 "rows_rejected","duplicate_rows","missing_values","missingness_pct","unchanged_rows_skipped",
 "sha256","raw_snapshot_path","normalized_output_path","counted_in_numeric_totals",
 "validation_status","error","notes"]
+LINEAGE_FIELDS=[
+"workflow_run_id","etl_run_id","source_id","publisher","source_type","dataset_id","exact_url","metadata_url",
+"retrieval_timestamp_utc","publication_release_date","observation_period_start","observation_period_end_observed",
+"definition","unit","geography_scope","origin_scope","destination_scope","cohort","revision_vintage","fetch_status",
+"http_status","sha256","raw_snapshot_path","normalized_output_path","notes"]
 
 WDI_UNITS={
 "BX.KLT.DINV.WD.GD.ZS":"% of GDP",
@@ -358,8 +363,19 @@ def main():
     output=OUT/"source_retrieval_audit.csv"
     with output.open("w",newline="",encoding="utf-8") as f:
         writer=csv.DictWriter(f,fieldnames=FIELDS); writer.writeheader(); writer.writerows(rows)
+    lineage_path=META/"source_lineage_current.csv"
+    with lineage_path.open("w",newline="",encoding="utf-8") as f:
+        writer=csv.DictWriter(f,fieldnames=LINEAGE_FIELDS); writer.writeheader()
+        writer.writerows({k:r.get(k,"") for k in LINEAGE_FIELDS} for r in rows)
+    legacy_lineage=META/"source_lineage_2026-10-13.csv"
+    legacy_lineage_rows=len(read_csv(legacy_lineage)) if legacy_lineage.exists() else 0
+    workflow_path=ROOT/".github"/"workflows"/"eom-daily-refresh.yml"
+    workflow_text=workflow_path.read_text(encoding="utf-8") if workflow_path.exists() else ""
+    schedule_match=re.search(r"""cron:\s*["']([^"']+)["']""",workflow_text)
+    scheduled_cron=schedule_match.group(1) if schedule_match else "not found"
     manifest={
     "workflow_run_id":workflow_id,"etl_run_id":etl_run_id,"etl_outcome":etl_outcome,
+    "workflow_event":os.environ.get("GITHUB_EVENT_NAME","unknown"),"scheduled_cron_utc":scheduled_cron,
     "refresh_manifest_matches_workflow_run":manifest_current,"generated_at_utc":datetime.now(timezone.utc).isoformat(),
     "source_records":len(rows),"source_failures_or_unknown_status":failures,
     "numeric_source_rows_fetched_sum_across_endpoints":numeric_fetched,
@@ -380,6 +396,11 @@ def main():
     "natural_key_duplicate_rows_across_audited_tables":dup_total,
     "validation_status":"PASS_WITH_WARNINGS" if failures or panel_dup or dup_total else "PASS",
     "revision_tracking_note":"The compact WDI ledger is versioned. Supplemental sources retain raw snapshots/current extracts; per-row revision ledgers are not yet implemented for every supplemental source.",
+    "source_lineage_current_path":str(lineage_path.relative_to(ROOT)),"source_lineage_current_rows":len(rows),
+    "source_lineage_current_sha256":sha256_file(lineage_path),
+    "legacy_source_lineage_registry_path":str(legacy_lineage.relative_to(ROOT)) if legacy_lineage.exists() else "",
+    "legacy_source_lineage_registry_rows":legacy_lineage_rows,
+    "legacy_source_lineage_registry_status":"preserved_legacy_registry" if legacy_lineage.exists() else "not_found",
     "output_path":str(output.relative_to(ROOT)),"output_sha256":sha256_file(output)}
     (META/"source_audit_manifest.json").write_text(json.dumps(manifest,indent=2,ensure_ascii=False),encoding="utf-8")
     print(json.dumps(manifest,indent=2))

@@ -105,3 +105,6 @@ Every scheduled refresh also snapshots the previous macro ranking and emits `out
 
 
 The consolidated audit uses dataset-specific natural keys where source dimensions are available. For UNHCR, the key includes the observed period, population type, asylum/origin geography at available administrative levels, sex/age, other disaggregation dimensions, unit/measure, reporting type, source series and coverage dates. A nonzero duplicate-key count is surfaced as a validation warning rather than silently treated as a pass.
+
+
+The daily source audit also writes metadata/source_lineage_current.csv from the exact current-run retrieval records. The legacy metadata/source_lineage_2026-10-13.csv is preserved unchanged; Git history and dated Library packages retain earlier lineage versions. The audit manifest records the actual workflow event and parses the scheduled UTC cron from the checked-in workflow file, so stale schedule metadata can be identified.
