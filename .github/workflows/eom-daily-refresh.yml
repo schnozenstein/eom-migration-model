@@ -40,6 +40,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        # Scheduled/push/manual runs can wait behind another refresh. Use the latest
+        # main after queueing so generated outputs are not based on a stale event SHA.
+        # PR checks still use the merge commit that triggered the check.
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.sha || 'main' }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
