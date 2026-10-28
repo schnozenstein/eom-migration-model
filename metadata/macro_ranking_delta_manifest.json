@@ -1,0 +1,23 @@
+{
+  "workflow_run_id": "40647703180",
+  "generated_at_utc": "2026-10-28T07:06:32.871937+00:00",
+  "recompute_outcome": "success",
+  "ranking_status": "RECOMPUTED",
+  "previous_ranking_available": true,
+  "comparison_valid": true,
+  "previous_rows": 45,
+  "current_rows": 45,
+  "compared_destinations": 45,
+  "scored_destinations": 42,
+  "unscored_destinations": 3,
+  "score_changed_rows": 0,
+  "rank_changed_rows": 0,
+  "rows_with_any_score_or_rank_change": 0,
+  "added_destinations": 0,
+  "removed_destinations": 0,
+  "data_cutoff": 2025,
+  "scoring_version": "equal-weight macro proxy; not a calibrated migration probability",
+  "code_version": "721724f065dc6b16121fed8bd600b4163b1a6439",
+  "output_path": "outputs/macro_ranking_delta.csv",
+  "notes": "If score/rank deltas are zero, the recomputation may still be valid; inputs and scoring dependencies must be audited before attributing stability to model quality."
+}

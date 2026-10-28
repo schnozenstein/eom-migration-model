@@ -1,15 +1,15 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-28 06:45 UTC
+> Generated: 2026-10-28 07:06 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-28T064427Z`
+- **Latest refresh run:** `2026-10-28T070502Z`
 - **ETL manifest matches this workflow run:** Yes
 - **Full ETL step outcome:** success
 - **Macro ranking step outcome:** success
 - **Freshness warning:** None
-- **Refresh timestamp:** 2026-10-28T06:44:27.884867+00:00
+- **Refresh timestamp:** 2026-10-28T07:05:02.610099+00:00
 - **World Bank observations fetched:** 165984
 - **World Bank indicator requests:** 39 succeeded; 0 failed
 - **Normalized WDI panel:** 165984 current rows; 3120 aggregate rows use stable non-ISO3 source keys
@@ -23,9 +23,16 @@
 - **OECD migration database slice:** SUCCESS; 290 focus-country rows retained
 - **ILOSTAT migrant-labour indicators:** 3 succeeded; 0 failed; 6469 focus rows
 - **Brazil OBMigra official source page:** SUCCESS (catalogue monitor only; report tables are not numerically parsed)
-- **Policy pages:** 10 succeeded; 1 failed
+- **Policy pages:** 11 succeeded; 0 failed
 - **Freshness dashboard:** 38 recent; 1 requiring attention out of 39 indicators
 - **Macro ranking recomputed in this run:** Yes
+- **Ranking delta audit:** RECOMPUTED; data cutoff 2025; 0 score changes and 0 rank changes across 45 destinations; 42 scored and 3 unscored.
+- **Consolidated source-retrieval audit:** 62 source records; 0 failed/unknown statuses; validation PASS.
+- **Numeric source rows fetched:** 1095164 across endpoints; 652213 normalized rows retained. These are source-record counts, not unique people.
+- **Panel validation:** 0 duplicate natural keys; 27778 missing values (16.7353% of panel cells).
+- **Policy-event delta:** 0 confirmed events; 7 page-content changes requiring review; 0 failed/unknown pages. Hash changes are not policy-event confirmation.
+- **Prediction/outcome ledger:** 0 production forecasts; 4176 versioned country-year outcomes; 0 forecast-outcome matches; 4176 new outcomes and 0 revisions.
+- **Prior WDI history recovery:** 7296 rows recovered from archived raw snapshots during the one-time migration; current run rebuild: No.
 - **Macro ranking comparison year:** 2025
 - **Destinations scored / total:** 42 / 45
 - **Forecast issued during refresh:** No
@@ -42,7 +49,7 @@ Source refresh and model reranking are separate steps. Check the ranking status 
 
 ## 2. Stored macro ranking
 
-This is the latest stored macro-proxy ranking, not a personalised migration recommendation. It does not include complete joie de vivre or individual visa-feasibility scoring.
+This is the latest stored macro-proxy ranking, not a personalised migration recommendation. It does not include complete quality-of-life or individual visa-feasibility scoring.
 
 | Rank | Destination | Year | Macro score |
 |---:|---|---:|---:|
@@ -169,7 +176,7 @@ A recent retrieval timestamp does not guarantee a recent statistical observation
 - Check observation years and source release schedules for indicators needing attention.
 - Investigate why the persistence baseline outperforms Ridge and EOM in the stored backtest.
 - Verify that every predictor would have been available at the forecast date; inspect missing-data handling and baseline definitions.
-- Obtain comparable, sourced wellbeing and work-life indicators before calculating joie de vivre scores.
+- Obtain comparable, sourced wellbeing and work-life indicators before calculating quality-of-life scores.
 - Add verified visa routes, eligibility, funds, language and study-to-work pathways for a defined applicant profile.
 - Recompute and validate the model separately before describing any ranking as new.
 
