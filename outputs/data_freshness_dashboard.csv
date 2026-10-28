@@ -1,41 +1,40 @@
 indicator_code,indicator_name,latest_observation_year,countries_with_latest_year,observed_rows,last_retrieval_utc,freshness_status
-BX.KLT.DINV.WD.GD.ZS,"Foreign direct investment, net inflows (% of GDP)",2025,228,3836,2026-10-28T05:59:14.874065+00:00,RECENT
-BX.TRF.PWKR.CD.DT,"Personal remittances, received (current US$)",2025,180,9852,2026-10-28T05:59:14.035507+00:00,RECENT
-FP.CPI.TOTL.ZG,"Inflation, consumer prices (annual %)",2025,216,11579,2026-10-28T05:59:13.859920+00:00,RECENT
-GC.DOD.TOTL.GD.ZS,"Central government debt, total (% of GDP)",2024,37,812,2026-10-28T05:59:14.786442+00:00,RECENT
-GE.EST,Government Effectiveness - Governance estimate (approx. -2.5 to +2.5),2025,205,5374,2026-10-28T05:59:13.547666+00:00,RECENT
-IT.NET.USER.ZS,Individuals using the Internet (% of population),2025,38,3368,2026-10-28T05:59:14.282115+00:00,RECENT
-NE.TRD.GNFS.ZS,Trade (% of GDP),2025,167,3481,2026-10-28T05:59:14.773653+00:00,RECENT
-NY.GDP.MKTP.KD.ZG,GDP growth (annual %),2025,234,14420,2026-10-28T05:59:13.797730+00:00,RECENT
-NY.GDP.MKTP.PP.CD,"GDP, PPP (current international $)",2025,229,3888,2026-10-28T05:59:13.614312+00:00,RECENT
-NY.GDP.PCAP.CD,GDP per capita (current US$),2025,234,14843,2026-10-28T05:59:13.873237+00:00,RECENT
-NY.GDP.PCAP.PP.KD,"GDP per capita, PPP (constant 2021 international $)",2025,233,8737,2026-10-28T05:59:13.665228+00:00,RECENT
-NY.GDP.TOTL.RT.ZS,Total natural resources rents (% of GDP),2021,241,3031,2026-10-28T05:59:14.873637+00:00,STALE_OR_SLOW_RELEASE
-PA.NUS.PPP,"PPP conversion factor, GDP (LCU per international $)",2025,185,3191,2026-10-28T05:59:13.637518+00:00,RECENT
-PA.NUS.PPPC.RF,,2023,192,6636,unknown_for_legacy_snapshot,STALE_OR_SLOW_RELEASE
-PA.NUS.PRVT.PP,"PPP conversion factor, households and NPISHs Final consumption expenditure (LCU per international $)",2025,168,3106,2026-10-28T05:59:13.482930+00:00,RECENT
-PV.EST,Political Stability - Governance estimate (approx. -2.5 to +2.5),2025,207,5450,2026-10-28T05:59:13.415612+00:00,RECENT
-RQ.EST,Regulatory Quality - Governance estimate (approx. -2.5 to +2.5),2025,205,5376,2026-10-28T05:59:13.355677+00:00,RECENT
-SE.SEC.ENRR,"School enrollment, secondary (% gross)",2025,9,2794,2026-10-28T05:59:14.143762+00:00,RECENT
-SE.TER.ENRR,"School enrollment, tertiary (% gross)",2025,9,2589,2026-10-28T05:59:14.107494+00:00,RECENT
-SE.XPD.TOTL.GD.ZS,"Government expenditure on education, total (% of GDP)",2025,2,2822,2026-10-28T05:59:14.242046+00:00,RECENT
-SH.XPD.CHEX.GD.ZS,Current health expenditure (% of GDP),2024,24,3332,2026-10-28T05:59:14.546115+00:00,RECENT
-SI.POV.GINI,Gini index,2025,4,1149,2026-10-28T05:59:14.227757+00:00,RECENT
-SL.EMP.TOTL.SP.ZS,"Employment to population ratio, 15+, total (%) (modeled ILO estimate)",2025,230,8243,2026-10-28T05:59:13.998064+00:00,RECENT
-SL.TLF.CACT.FE.ZS,"Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate)",2025,226,3698,2026-10-28T05:59:14.684563+00:00,RECENT
-SL.TLF.CACT.MA.ZS,"Labor force participation rate, male (% of male population ages 15+) (modeled ILO estimate)",2025,226,3698,2026-10-28T05:59:14.719509+00:00,RECENT
-SL.TLF.CACT.ZS,"Labor force participation rate, total (% of total population ages 15+) (modeled ILO estimate)",2025,230,8478,2026-10-28T05:59:13.962514+00:00,RECENT
-SL.UEM.1524.ZS,"Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate)",2025,226,3698,2026-10-28T05:59:14.675481+00:00,RECENT
-SL.UEM.TOTL.ZS,"Unemployment, total (% of total labor force) (modeled ILO estimate)",2025,230,8243,2026-10-28T05:59:13.546237+00:00,RECENT
-SM.POP.NETM,Net migration,2025,265,17522,2026-10-28T05:59:13.755985+00:00,RECENT
-SP.DYN.CBRT.IN,"Birth rate, crude (per 1,000 people)",2024,261,3930,2026-10-28T05:59:14.938314+00:00,RECENT
-SP.DYN.CDRT.IN,"Death rate, crude (per 1,000 people)",2024,261,3930,2026-10-28T05:59:14.926307+00:00,RECENT
-SP.DYN.IMRT.IN,"Mortality rate, infant (per 1,000 live births)",2024,240,3615,2026-10-28T05:59:14.432506+00:00,RECENT
-SP.DYN.LE00.FE.IN,"Life expectancy at birth, female (years)",2024,261,3930,2026-10-28T05:59:14.498605+00:00,RECENT
-SP.DYN.LE00.IN,"Life expectancy at birth, total (years)",2024,265,17221,2026-10-28T05:59:13.946790+00:00,RECENT
-SP.DYN.LE00.MA.IN,"Life expectancy at birth, male (years)",2024,261,3930,2026-10-28T05:59:14.580346+00:00,RECENT
-SP.DYN.TFRT.IN,"Fertility rate, total (births per woman)",2024,261,3930,2026-10-28T05:59:14.499918+00:00,RECENT
-SP.POP.1564.TO.ZS,Population ages 15-64 (% of total population),2025,265,17522,2026-10-28T05:59:14.083851+00:00,RECENT
-SP.POP.GROW,Population growth (annual %),2025,261,4191,2026-10-28T05:59:14.367201+00:00,RECENT
-SP.POP.TOTL,"Population, total",2025,265,17492,2026-10-28T05:59:13.701422+00:00,RECENT
-SP.URB.TOTL.IN.ZS,Urban population (% of total population),2025,261,4192,2026-10-28T05:59:14.315770+00:00,RECENT
+BX.KLT.DINV.WD.GD.ZS,"Foreign direct investment, net inflows (% of GDP)",2025,232,3884,2026-10-28T06:44:30.273621+00:00,RECENT
+BX.TRF.PWKR.CD.DT,"Personal remittances, received (current US$)",2025,180,3563,2026-10-28T06:44:29.226914+00:00,RECENT
+FP.CPI.TOTL.ZG,"Inflation, consumer prices (annual %)",2025,216,3708,2026-10-28T06:44:29.055836+00:00,RECENT
+GC.DOD.TOTL.GD.ZS,"Central government debt, total (% of GDP)",2024,37,812,2026-10-28T06:44:30.470838+00:00,RECENT
+GE.EST,Government Effectiveness - Governance estimate (approx. -2.5 to +2.5),2025,205,3269,2026-10-28T06:44:28.255093+00:00,RECENT
+IT.NET.USER.ZS,Individuals using the Internet (% of population),2025,42,3416,2026-10-28T06:44:29.506385+00:00,RECENT
+NE.TRD.GNFS.ZS,Trade (% of GDP),2025,170,3528,2026-10-28T06:44:30.296613+00:00,RECENT
+NY.GDP.MKTP.KD.ZG,GDP growth (annual %),2025,234,4087,2026-10-28T06:44:29.010175+00:00,RECENT
+NY.GDP.MKTP.PP.CD,"GDP, PPP (current international $)",2025,233,3936,2026-10-28T06:44:28.551061+00:00,RECENT
+NY.GDP.PCAP.CD,GDP per capita (current US$),2025,234,4107,2026-10-28T06:44:28.887846+00:00,RECENT
+NY.GDP.PCAP.PP.KD,"GDP per capita, PPP (constant 2021 international $)",2025,233,3929,2026-10-28T06:44:28.572316+00:00,RECENT
+NY.GDP.TOTL.RT.ZS,Total natural resources rents (% of GDP),2021,245,3067,2026-10-28T06:44:30.564603+00:00,STALE_OR_SLOW_RELEASE
+PA.NUS.PPP,"PPP conversion factor, GDP (LCU per international $)",2025,185,3191,2026-10-28T06:44:28.555533+00:00,RECENT
+PA.NUS.PRVT.PP,"PPP conversion factor, households and NPISHs Final consumption expenditure (LCU per international $)",2025,168,3106,2026-10-28T06:44:28.661791+00:00,RECENT
+PV.EST,Political Stability - Governance estimate (approx. -2.5 to +2.5),2025,207,3294,2026-10-28T06:44:28.833756+00:00,RECENT
+RQ.EST,Regulatory Quality - Governance estimate (approx. -2.5 to +2.5),2025,205,3269,2026-10-28T06:44:28.328421+00:00,RECENT
+SE.SEC.ENRR,"School enrollment, secondary (% gross)",2025,9,2839,2026-10-28T06:44:29.419928+00:00,RECENT
+SE.TER.ENRR,"School enrollment, tertiary (% gross)",2025,9,2631,2026-10-28T06:44:29.364520+00:00,RECENT
+SE.XPD.TOTL.GD.ZS,"Government expenditure on education, total (% of GDP)",2025,2,2862,2026-10-28T06:44:29.365354+00:00,RECENT
+SH.XPD.CHEX.GD.ZS,Current health expenditure (% of GDP),2024,24,3374,2026-10-28T06:44:30.102345+00:00,RECENT
+SI.POV.GINI,Gini index,2025,4,1149,2026-10-28T06:44:29.652434+00:00,RECENT
+SL.EMP.TOTL.SP.ZS,"Employment to population ratio, 15+, total (%) (modeled ILO estimate)",2025,230,3746,2026-10-28T06:44:29.049473+00:00,RECENT
+SL.TLF.CACT.FE.ZS,"Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate)",2025,230,3746,2026-10-28T06:44:30.268774+00:00,RECENT
+SL.TLF.CACT.MA.ZS,"Labor force participation rate, male (% of male population ages 15+) (modeled ILO estimate)",2025,230,3746,2026-10-28T06:44:30.345177+00:00,RECENT
+SL.TLF.CACT.ZS,"Labor force participation rate, total (% of total population ages 15+) (modeled ILO estimate)",2025,230,3746,2026-10-28T06:44:29.223112+00:00,RECENT
+SL.UEM.1524.ZS,"Unemployment, youth total (% of total labor force ages 15-24) (modeled ILO estimate)",2025,230,3746,2026-10-28T06:44:29.978908+00:00,RECENT
+SL.UEM.TOTL.ZS,"Unemployment, total (% of total labor force) (modeled ILO estimate)",2025,230,3746,2026-10-28T06:44:28.539416+00:00,RECENT
+SM.POP.NETM,Net migration,2025,265,4240,2026-10-28T06:44:28.749403+00:00,RECENT
+SP.DYN.CBRT.IN,"Birth rate, crude (per 1,000 people)",2024,265,3975,2026-10-28T06:44:30.522298+00:00,RECENT
+SP.DYN.CDRT.IN,"Death rate, crude (per 1,000 people)",2024,265,3975,2026-10-28T06:44:30.542623+00:00,RECENT
+SP.DYN.IMRT.IN,"Mortality rate, infant (per 1,000 live births)",2024,244,3660,2026-10-28T06:44:29.835600+00:00,RECENT
+SP.DYN.LE00.FE.IN,"Life expectancy at birth, female (years)",2024,265,3975,2026-10-28T06:44:29.974492+00:00,RECENT
+SP.DYN.LE00.IN,"Life expectancy at birth, total (years)",2024,265,3975,2026-10-28T06:44:29.566037+00:00,RECENT
+SP.DYN.LE00.MA.IN,"Life expectancy at birth, male (years)",2024,265,3975,2026-10-28T06:44:30.041064+00:00,RECENT
+SP.DYN.TFRT.IN,"Fertility rate, total (births per woman)",2024,265,3975,2026-10-28T06:44:29.860313+00:00,RECENT
+SP.POP.1564.TO.ZS,Population ages 15-64 (% of total population),2025,265,4240,2026-10-28T06:44:29.248164+00:00,RECENT
+SP.POP.GROW,Population growth (annual %),2025,265,4239,2026-10-28T06:44:29.678319+00:00,RECENT
+SP.POP.TOTL,"Population, total",2025,265,4240,2026-10-28T06:44:28.684684+00:00,RECENT
+SP.URB.TOTL.IN.ZS,Urban population (% of total population),2025,265,4240,2026-10-28T06:44:29.821596+00:00,RECENT

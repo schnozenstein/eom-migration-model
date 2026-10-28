@@ -1,19 +1,21 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-28 06:40 UTC
+> Generated: 2026-10-28 06:45 UTC
 
 ## 1. Executive summary
 
-- **Latest refresh run:** `2026-10-28T055913Z`
-- **ETL manifest matches this workflow run:** No
-- **Freshness warning:** This attempt did not write a matching ETL manifest; source counts and ranking status below are last stored outputs, not evidence of a fresh refresh.
-- **Refresh timestamp:** 2026-10-28T05:59:13.098565+00:00
+- **Latest refresh run:** `2026-10-28T064427Z`
+- **ETL manifest matches this workflow run:** Yes
+- **Full ETL step outcome:** success
+- **Macro ranking step outcome:** success
+- **Freshness warning:** None
+- **Refresh timestamp:** 2026-10-28T06:44:27.884867+00:00
 - **World Bank observations fetched:** 165984
 - **World Bank indicator requests:** 39 succeeded; 0 failed
-- **Normalized WDI panel:** Not reported current rows; Not reported aggregate rows use stable non-ISO3 source keys
-- **Persistent WDI revision ledger:** Not reported rows; Not reported new keys; Not reported value revisions; Not reported unchanged observations skipped
-- **WDI history migration this run:** Not reported; 0 rows restored from archived raw snapshots
-- **Macro scoring input:** `data/raw/world_bank_macro_focus.csv` (7744 rows; separate 11-indicator destination input)
+- **Normalized WDI panel:** 165984 current rows; 3120 aggregate rows use stable non-ISO3 source keys
+- **Persistent WDI revision ledger:** 165984 rows; 0 new keys; 0 value revisions; 165984 unchanged observations skipped
+- **WDI history migration this run:** No; 0 rows restored from archived raw snapshots
+- **Macro scoring input:** `data/raw/world_bank_macro_focus.csv` (7744 rows; fetched during this run; separate 11-indicator destination input)
 - **Brazil World Bank extract:** 624 fresh Brazil indicator-year rows
 - **Eurostat total migration flows:** 2 series succeeded; 0 failed; 1034 observed annual cells across up to 44 reporting geographies
 - **UNHCR forced-displacement extract:** SUCCESS; 242461 retained focus/origin rows
@@ -22,8 +24,8 @@
 - **ILOSTAT migrant-labour indicators:** 3 succeeded; 0 failed; 6469 focus rows
 - **Brazil OBMigra official source page:** SUCCESS (catalogue monitor only; report tables are not numerically parsed)
 - **Policy pages:** 10 succeeded; 1 failed
-- **Freshness dashboard:** 38 recent; 2 requiring attention out of 40 indicators
-- **Macro ranking recomputed in this run:** No
+- **Freshness dashboard:** 38 recent; 1 requiring attention out of 39 indicators
+- **Macro ranking recomputed in this run:** Yes
 - **Macro ranking comparison year:** 2025
 - **Destinations scored / total:** 42 / 45
 - **Forecast issued during refresh:** No
@@ -158,7 +160,6 @@ Missing QoL or visa data must remain missing, not be silently converted to zero.
 | Indicator | Latest observation year | Status |
 |---|---:|---|
 | NY.GDP.TOTL.RT.ZS | 2021 | STALE_OR_SLOW_RELEASE |
-| PA.NUS.PPPC.RF | 2023 | STALE_OR_SLOW_RELEASE |
 
 A recent retrieval timestamp does not guarantee a recent statistical observation. Some indicators are released with a delay, so check release schedules before labelling them defective.
 
