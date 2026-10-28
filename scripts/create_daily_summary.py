@@ -133,7 +133,8 @@ def main():
 
         f"- **Consolidated source-retrieval audit:** {source_audit_manifest.get('source_records', 'not generated')} source records; {source_audit_manifest.get('source_failures_or_unknown_status', 'unknown')} failed/unknown statuses; validation {source_audit_manifest.get('validation_status', 'not reported')}.",
         f"- **Numeric source rows fetched:** {source_audit_manifest.get('numeric_source_rows_fetched_sum_across_endpoints', 'not reported')} across endpoints; {source_audit_manifest.get('numeric_normalized_rows_sum_across_primary_datasets', 'not reported')} normalized rows retained. These are source-record counts, not unique people.",
-        f"- **Panel validation:** {source_audit_manifest.get('panel_duplicate_natural_keys', 'unknown')} duplicate natural keys; {source_audit_manifest.get('panel_missing_values', 'unknown')} missing values ({source_audit_manifest.get('panel_missingness_pct', 'unknown')}% of panel cells).",
+        f"- **Panel validation:** {source_audit_manifest.get('panel_duplicate_natural_keys', 'unknown')} duplicate WDI natural keys; {source_audit_manifest.get('panel_missing_values', 'unknown')} missing values ({source_audit_manifest.get('panel_missingness_pct', 'unknown')}% of panel cells).",
+        f"- **Cross-source natural-key audit:** {source_audit_manifest.get('natural_key_duplicate_rows_across_audited_tables', 'unknown')} duplicate-key rows across audited tables; audit validation {source_audit_manifest.get('validation_status', 'not reported')}.",
         f"- **Policy-event delta:** {policy_delta_manifest.get('confirmed_policy_events', 'not reported')} confirmed events; {policy_delta_manifest.get('content_changed_pages', 'not reported')} page-content changes requiring review; {policy_delta_manifest.get('failed_or_unknown_pages', 'not reported')} failed/unknown pages. Hash changes are not policy-event confirmation.",
         f"- **Prediction/outcome ledger:** {prediction_manifest.get('prediction_rows', 'not reported')} production forecasts; {prediction_manifest.get('outcome_rows', 'not reported')} versioned country-year outcomes; {prediction_manifest.get('matched_outcomes', 'not reported')} forecast-outcome matches; {prediction_manifest.get('outcome_rows_inserted', 'not reported')} new outcomes and {prediction_manifest.get('outcome_rows_revised', 'not reported')} revisions.",
         f"- **Prior WDI history recovery:** {history_rebuild_manifest.get('rows_restored_vs_legacy_history', 0)} rows recovered from archived raw snapshots during the one-time migration; current run rebuild: {yes_no(manifest.get('world_bank_history_rebuilt_from_snapshots'))}.",
@@ -265,7 +266,7 @@ def main():
         "",
         "These draws are a weight-sensitivity exercise, not a statistical confidence interval.",
         "",
-        "## 5. Joie de vivre and visa feasibility",
+        "## 5. Quality of life and visa feasibility",
         "",
         f"- **Destinations in QoL input file:** {len(qol)}",
         f"- **Destinations with a recorded scored QoL value:** {len(scored_qol)}",
@@ -330,6 +331,50 @@ def main():
         "- `data/raw/oecd_migration_database_focus.csv`",
         "- `data/raw/ilostat_migrant_labour_focus.csv`",
         "- `metadata/eurostat_source_status.csv`, `metadata/undesa_source_status.csv`, `metadata/unhcr_source_status.csv`, `metadata/oecd_source_status.csv`, `metadata/ilostat_source_status.csv`",
+        "- `outputs/source_retrieval_audit.csv` and `metadata/source_audit_manifest.json`",
+        "- `outputs/policy_event_delta.csv` and `metadata/policy_event_delta_manifest.json`",
+        "- `outputs/macro_ranking_delta.csv` and `metadata/macro_ranking_delta_manifest.json`",
+        "- `data/prediction_ledger.csv`, `data/outcome_ledger.csv`, `data/prediction_outcome_join.csv`, and `metadata/prediction_ledger_manifest.json`",
+        "",
+    ]
+
+    # Full per-source endpoint/release evidence; the CSV remains the machine-readable audit.
+    source_audit_rows = read_csv(OUT / "source_retrieval_audit.csv")
+    def md_cell(value):
+        return str(value if value not in (None, "") else "—").replace("|", "\\|").replace("\r", " ").replace("\n", " ")
+    lines += [
+        "## 9. Source endpoint, release and validation audit",
+        "",
+        "Exact current-run URLs and per-source counts follow. Source-record totals are not unique people. A release/vintage of 'not exposed' means the source endpoint did not provide a publication date in the captured status metadata. The CSV is the authoritative machine-readable record.",
+        "",
+        "| Source | Exact URL | Release/vintage | Observation period | Fetch status | Fetched / normalized | Inserted / updated / rejected | Duplicate keys / missing values |",
+        "|---|---|---|---|---|---:|---:|---:|",
+    ]
+    for r in source_audit_rows:
+        url = r.get("exact_url", "")
+        url_cell = f"[{md_cell(url)}]({url})" if url else "—"
+        start = r.get("observation_period_start", "") or "—"
+        end = r.get("observation_period_end_observed", "") or r.get("observation_period_end_requested", "") or "—"
+        period = start if start == end or end == "—" else f"{start}–{end}"
+        status_text = str(r.get("fetch_status", "—") or "—")
+        if r.get("http_status"):
+            status_text += f" (HTTP {r['http_status']})"
+        fetched = r.get("rows_fetched", "") or "not reported"
+        normalized = r.get("rows_normalized", "") or "not reported"
+        inserted = r.get("rows_inserted", "") or "not tracked"
+        updated = r.get("rows_updated", "") or "not tracked"
+        rejected = r.get("rows_rejected", "") or "not tracked"
+        dup = r.get("duplicate_rows", "") or "—"
+        missing = r.get("missing_values", "") or "—"
+        release = r.get("publication_release_date", "") or r.get("revision_vintage", "") or "not exposed"
+        lines.append(
+            f"| {md_cell(r.get('source_id',''))} | {url_cell} | {md_cell(release)} | {md_cell(period)} "
+            f"| {md_cell(status_text)} | {md_cell(f'{fetched} / {normalized}')} "
+            f"| {md_cell(f'{inserted} / {updated} / {rejected}')} | {md_cell(f'{dup} / {missing}')} |"
+        )
+    lines += [
+        "",
+        "Hash changes on policy pages are review flags, not confirmed policy events. Supplemental tables retain raw snapshots, but not all yet have per-row revision ledgers. Country-year outcomes remain a fallback because a globally harmonized bilateral flow panel is not yet complete.",
         "",
     ]
 

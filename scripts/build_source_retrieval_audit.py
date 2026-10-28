@@ -139,7 +139,7 @@ def natural_duplicates(df,source):
     "Eurostat":["geo_code","year","indicator","source_dataset"],
     "OECD":["REF_AREA","MEASURE","FREQ","TIME_PERIOD","UNIT_MEASURE","UNIT_MULT","SEX","BIRTH_PLACE","CITIZENSHIP","EDUCATION_LEV"],
     "ILOSTAT":["ref_area","indicator","sex","classif1","time"],
-    "UNHCR":["time_period","pop_type","ref_area_adm0","area_ori_adm0","sex","age","urbanisation","setting","unit_measure","unit_comp","data_series","data_source","reporting_type"],
+    "UNHCR":["time_period","time_period_format","pop_type","pop_type_O","ref_area_region_unhcr","ref_area_adm0","ref_area_adm1","ref_area_adm2","ref_area_place","area_ori_region_unhcr","area_ori_adm0","area_ori_adm1","area_ori_adm2","area_ori_place","area_ori_O","sex","age","urbanisation","setting","nationality","disability","other_disag","other_disag_O","unit_measure","unit_mult","unit_comp","nature","reporting_type","deviations","compiling_org","data_series","data_source","date_coverage_start","date_coverage_end"],
     "UN DESA":["direction","country_code_un","origin_code_un","destination_code_un","year","sex"],
     "Brazil WDI":["country_code","indicator_code","year"],
     "PolicyPage":["url"],"OBMigra":["url"]}
@@ -378,7 +378,7 @@ def main():
     "wdi_history_duplicates":as_int(refresh.get("world_bank_history_duplicate_keys")),
     "one_time_wdi_history_rows_restored_from_snapshots":as_int(rebuild.get("rows_restored_vs_legacy_history")),
     "natural_key_duplicate_rows_across_audited_tables":dup_total,
-    "validation_status":"PASS_WITH_WARNINGS" if failures or panel_dup else "PASS",
+    "validation_status":"PASS_WITH_WARNINGS" if failures or panel_dup or dup_total else "PASS",
     "revision_tracking_note":"The compact WDI ledger is versioned. Supplemental sources retain raw snapshots/current extracts; per-row revision ledgers are not yet implemented for every supplemental source.",
     "output_path":str(output.relative_to(ROOT)),"output_sha256":sha256_file(output)}
     (META/"source_audit_manifest.json").write_text(json.dumps(manifest,indent=2,ensure_ascii=False),encoding="utf-8")

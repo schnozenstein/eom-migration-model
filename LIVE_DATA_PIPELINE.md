@@ -102,3 +102,6 @@ Each refresh emits `outputs/source_retrieval_audit.csv` and `metadata/source_aud
 
 
 Every scheduled refresh also snapshots the previous macro ranking and emits `outputs/macro_ranking_delta.csv` plus `metadata/macro_ranking_delta_manifest.json`. This records whether recomputation actually succeeded, the data cutoff, scored/unscored coverage, and score/rank changes. A zero-delta ranking is reported as stable only after a successful recomputation; it is not treated as proof of predictive validity.
+
+
+The consolidated audit uses dataset-specific natural keys where source dimensions are available. For UNHCR, the key includes the observed period, population type, asylum/origin geography at available administrative levels, sex/age, other disaggregation dimensions, unit/measure, reporting type, source series and coverage dates. A nonzero duplicate-key count is surfaced as a validation warning rather than silently treated as a pass.
