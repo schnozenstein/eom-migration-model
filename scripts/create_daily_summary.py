@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -43,6 +44,9 @@ def yes_no(value):
 def main():
     manifests = sorted(MANIFEST_DIR.glob("*.json")) if MANIFEST_DIR.exists() else []
     manifest = read_json(manifests[-1]) if manifests else {}
+    current_workflow_run_id = str(os.environ.get("GITHUB_RUN_ID", ""))
+    manifest_workflow_run_id = str(manifest.get("github_workflow_run_id", ""))
+    manifest_is_current = (not current_workflow_run_id) or (manifest_workflow_run_id == current_workflow_run_id)
 
     dashboard = read_csv(OUT / "data_freshness_dashboard.csv")
     macro_focus = read_csv(ROOT / "data" / "raw" / "world_bank_macro_focus.csv")
@@ -95,6 +99,8 @@ def main():
         "## 1. Executive summary",
         "",
         f"- **Latest refresh run:** `{manifest.get('run_id', 'Not reported')}`",
+        f"- **ETL manifest matches this workflow run:** {yes_no(manifest_is_current)}",
+        f"- **Freshness warning:** {'None' if manifest_is_current else 'This attempt did not write a matching ETL manifest; source counts and ranking status below are last stored outputs, not evidence of a fresh refresh.'}",
         f"- **Refresh timestamp:** {manifest.get('run_at_utc', 'Not reported')}",
         f"- **World Bank observations fetched:** {manifest.get('world_bank_rows_fetched', 'Not reported')}",
         f"- **World Bank indicator requests:** {manifest.get('world_bank_indicators_successful', 'Not reported')} succeeded; {manifest.get('world_bank_indicators_failed', 'Not reported')} failed",
@@ -111,7 +117,7 @@ def main():
         f"- **Brazil OBMigra official source page:** {obmigra_state} (catalogue monitor only; report tables are not numerically parsed)",
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
         f"- **Freshness dashboard:** {len(recent)} recent; {len(attention)} requiring attention out of {len(dashboard)} indicators",
-        f"- **Macro ranking recomputed in this run:** {yes_no(manifest.get('ranking_recomputed'))}",
+        f"- **Macro ranking recomputed in this run:** {yes_no(manifest_is_current and manifest.get('ranking_recomputed'))}",
         f"- **Macro ranking comparison year:** {manifest.get('ranking_year', 'Not reported')}",
         f"- **Destinations scored / total:** {manifest.get('ranking_destinations_scored', 'Not reported')} / {manifest.get('ranking_destinations_total', len(ranking))}",
         f"- **Forecast issued during refresh:** {yes_no(manifest.get('forecast_issued'))}",

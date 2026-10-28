@@ -34,6 +34,17 @@ def rebuild(input_root: Path, output_path: Path, source_artifact_run_id: str,
             source_artifact_name: str, source_artifact_digest: str,
             rebuild_workflow_run_id: str) -> dict:
     input_root = input_root.resolve()
+    if not (input_root / "data" / "raw" / "snapshots" / "world_bank").exists():
+        candidates = sorted(
+            path for path in input_root.rglob("world_bank")
+            if path.is_dir()
+            and path.parent.name == "snapshots"
+            and path.parent.parent.name == "raw"
+            and path.parent.parent.parent.name == "data"
+        )
+        if not candidates:
+            raise RuntimeError(f"No World Bank raw snapshot directory found under downloaded artifact root {input_root}")
+        input_root = candidates[0].parents[3]
     legacy_history_path = input_root / "data" / "observations_history" / "world_bank_observations.csv"
     legacy_rows = 0
     url_time_map = {}

@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
+import requests
 
 UNHCR_EXPORT_URL = "https://api-data.unhcr.org/api/v0/data/export/PopStatsOfficial"
 UNHCR_METADATA_URL = "https://api-data.unhcr.org/api/v0/metadata/PopStatsOfficial"

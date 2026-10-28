@@ -714,7 +714,7 @@ def main() -> int:
         rebuild_manifest = {}
     github_run_id = str(os.environ.get("GITHUB_RUN_ID", ""))
     rebuilt_this_run = bool(github_run_id) and str(rebuild_manifest.get("rebuild_workflow_run_id", "")) == github_run_id
-    summary = {"run_id": run_id, "run_at_utc": run_dt.isoformat(), "requested_year_range": [args.start_year, args.end_year],
+    summary = {"run_id": run_id, "run_at_utc": run_dt.isoformat(), "requested_year_range": [args.start_year, args.end_year], "github_workflow_run_id": str(os.environ.get("GITHUB_RUN_ID", "")),
         "world_bank_indicators_successful": int((status_df["status"] == "SUCCESS").sum()) if not status_df.empty else 0,
         "world_bank_indicators_failed": int((status_df["status"] == "FAILED").sum()) if not status_df.empty else 0,
         "offline_audit": bool(args.offline_audit),

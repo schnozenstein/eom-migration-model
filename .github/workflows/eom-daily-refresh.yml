@@ -130,6 +130,7 @@ jobs:
           python scripts/rebuild_wdi_history_from_snapshots.py --input-root previous-run-artifact --output data/observations_history/world_bank_observations.csv.gz --source-artifact-run-id "${{ steps.previous_wdi_artifact.outputs.run_id }}" --source-artifact-name "${{ steps.previous_wdi_artifact.outputs.artifact_name }}" --source-artifact-digest "${{ steps.previous_wdi_artifact.outputs.artifact_digest }}" --rebuild-workflow-run-id "${{ github.run_id }}"
 
       - name: Require persistent WDI revision ledger
+        if: always()
         run: |
           if [ ! -s data/observations_history/world_bank_observations.csv.gz ]; then
             echo "::error::No compact WDI history ledger exists and no prior artifact migration succeeded; refusing to reset historical state."
@@ -272,7 +273,9 @@ jobs:
                   data/raw/brazil_world_bank_macro.csv \
                   data/obmigra_page_state.json \
                   data/policy_page_state.json
-          git add -A data/observations_history/
+          if [ -d data/observations_history ]; then
+            git add -A data/observations_history/
+          fi
           # Supplemental sources may be unavailable in an individual run. Stage their
           # last successful compact extracts only when a file exists.
           # UNHCR focus extract can exceed GitHub's 100 MB per-file limit.
