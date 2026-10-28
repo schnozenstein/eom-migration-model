@@ -1,8 +1,8 @@
 {
-  "workflow_run_id": "40648422121",
-  "etl_run_id": "2026-10-28T071130Z",
+  "workflow_run_id": "40649210300",
+  "etl_run_id": "2026-10-28T071858Z",
   "etl_outcome": "success",
-  "generated_at_utc": "2026-10-28T07:12:33.052724+00:00",
+  "generated_at_utc": "2026-10-28T07:19:52.806280+00:00",
   "baseline_available": true,
   "policy_pages_checked": 11,
   "content_changed_pages": 7,
