@@ -1,0 +1,1 @@
+forecast_id,issue_date,target,target_period,horizon,geography_id,geography_name,model_version,forecast_value,outcome_value,outcome_vintage,outcome_recorded_at_utc,signed_error_outcome_minus_forecast,absolute_error,join_status,data_cutoff

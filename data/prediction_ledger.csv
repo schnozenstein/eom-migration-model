@@ -1,0 +1,1 @@
+forecast_id,issue_date,target,target_period,horizon,geography_id,geography_name,model_version,point_forecast,lower_bound,upper_bound,uncertainty_method,assumptions,data_cutoff,source_vintage,calibration_status,validation_status,issued_by_run_id,status,notes
