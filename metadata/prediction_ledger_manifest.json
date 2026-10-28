@@ -1,6 +1,6 @@
 {
-  "workflow_run_id": "40649210300",
-  "generated_at_utc": "2026-10-28T07:19:57.218904+00:00",
+  "workflow_run_id": "40649663001",
+  "generated_at_utc": "2026-10-28T07:24:50.893765+00:00",
   "etl_outcome": "success",
   "prediction_rows": 0,
   "outcome_rows": 4176,
