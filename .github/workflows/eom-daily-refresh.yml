@@ -69,9 +69,18 @@ jobs:
           PYTHONPATH: src
         run: python -m pytest -q
 
+      - name: Check whether the compact WDI history ledger already exists
+        id: check_wdi_ledger
+        run: |
+          if [ -s data/observations_history/world_bank_observations.csv.gz ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Find latest successful ETL artifact for one-time WDI history migration
         id: previous_wdi_artifact
-        if: hashFiles('data/observations_history/world_bank_observations.csv.gz') == ''
+        if: steps.check_wdi_ledger.outputs.exists == 'false'
         uses: actions/github-script@v7
         with:
           script: |
@@ -106,7 +115,7 @@ jobs:
             core.setOutput("artifact_digest", artifact.digest || "");
 
       - name: Download prior ETL artifact for WDI history migration
-        if: steps.previous_wdi_artifact.outputs.found == 'true' && hashFiles('data/observations_history/world_bank_observations.csv.gz') == ''
+        if: steps.previous_wdi_artifact.outputs.found == 'true' && steps.check_wdi_ledger.outputs.exists == 'false'
         uses: actions/download-artifact@v4
         with:
           artifact-ids: ${{ steps.previous_wdi_artifact.outputs.artifact_id }}
@@ -116,7 +125,7 @@ jobs:
           path: previous-run-artifact
 
       - name: Rebuild compact WDI history from archived raw snapshots
-        if: steps.previous_wdi_artifact.outputs.found == 'true' && hashFiles('data/observations_history/world_bank_observations.csv.gz') == ''
+        if: steps.previous_wdi_artifact.outputs.found == 'true' && steps.check_wdi_ledger.outputs.exists == 'false'
         run: |
           python scripts/rebuild_wdi_history_from_snapshots.py --input-root previous-run-artifact --output data/observations_history/world_bank_observations.csv.gz --source-artifact-run-id "${{ steps.previous_wdi_artifact.outputs.run_id }}" --source-artifact-name "${{ steps.previous_wdi_artifact.outputs.artifact_name }}" --source-artifact-digest "${{ steps.previous_wdi_artifact.outputs.artifact_digest }}" --rebuild-workflow-run-id "${{ github.run_id }}"
 
