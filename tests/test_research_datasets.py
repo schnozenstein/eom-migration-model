@@ -228,7 +228,7 @@ def test_spain_policy_monitor_uses_current_official_portal():
 
     spain_rows = [row for row in POLICY_URLS if row[0] == "Spain"]
     assert len(spain_rows) == 1
-    assert spain_rows[0][1] == "Ministry of Inclusion, Social Security and Migration news"
+    assert spain_rows[0][1] == "La Moncloa press releases — Inclusion, Social Security and Migration"
     assert spain_rows[0][2] == "https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx"
 
 

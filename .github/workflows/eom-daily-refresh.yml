@@ -49,6 +49,8 @@ permissions:
 
 jobs:
   refresh:
+    # Generated-output commits must not launch a second full refresh.
+    if: github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'Automated EOM data refresh')
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -380,7 +382,7 @@ jobs:
           done < <(git diff --cached --name-only)
 
           if ! git diff --cached --quiet; then
-            git commit -m "Automated EOM data refresh"
+            git commit -m "Automated EOM data refresh [skip ci]"
             # Data-generation steps may leave additional tracked files modified after staging.
             # The artifact has already been uploaded, so stash these unstaged workspace changes
             # before rebasing the committed output. Otherwise git rebase refuses to start.

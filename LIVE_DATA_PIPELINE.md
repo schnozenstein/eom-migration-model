@@ -111,3 +111,6 @@ The daily source audit also writes metadata/source_lineage_current.csv from the 
 
 
 The scheduled UTC cron is parsed from the YAML schedule list item (not from comments), and the source-retrieval timestamp falls back to the ETL run timestamp only when a source-specific retrieval time is not exposed. Such fallback timestamps remain run-level approximations, not source publication dates.
+
+
+Generated-output commits use a skip-CI marker and the refresh job has a push-message guard, preventing the pipeline from recursively rerunning on its own data/report commits. A code or human-authored push still triggers the pipeline; scheduled and manual events remain eligible.
