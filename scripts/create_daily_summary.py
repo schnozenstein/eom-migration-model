@@ -52,6 +52,10 @@ def main():
     freshness_warning = "None" if manifest_is_current and etl_outcome == "success" else "The full ETL did not write a current manifest; source/panel counts below are last stored values. Ranking status is reported from the actual ranking step outcome."
 
     dashboard = read_csv(OUT / "data_freshness_dashboard.csv")
+    source_audit_manifest = read_json(META / "source_audit_manifest.json")
+    policy_delta_manifest = read_json(META / "policy_event_delta_manifest.json")
+    prediction_manifest = read_json(META / "prediction_ledger_manifest.json")
+    history_rebuild_manifest = read_json(META / "wdi_history_rebuild_manifest.json")
     macro_focus = read_csv(ROOT / "data" / "raw" / "world_bank_macro_focus.csv")
     macro_focus_rows = len(macro_focus)
     ranking = read_csv(OUT / "latest_macro_eom_ranking.csv")
@@ -123,6 +127,12 @@ def main():
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
         f"- **Freshness dashboard:** {len(recent)} recent; {len(attention)} requiring attention out of {len(dashboard)} indicators",
         f"- **Macro ranking recomputed in this run:** {yes_no(ranking_outcome == 'success')}",
+        f"- **Consolidated source-retrieval audit:** {source_audit_manifest.get('source_records', 'not generated')} source records; {source_audit_manifest.get('source_failures_or_unknown_status', 'unknown')} failed/unknown statuses; validation {source_audit_manifest.get('validation_status', 'not reported')}.",
+        f"- **Numeric source rows fetched:** {source_audit_manifest.get('numeric_source_rows_fetched_sum_across_endpoints', 'not reported')} across endpoints; {source_audit_manifest.get('numeric_normalized_rows_sum_across_primary_datasets', 'not reported')} normalized rows retained. These are source-record counts, not unique people.",
+        f"- **Panel validation:** {source_audit_manifest.get('panel_duplicate_natural_keys', 'unknown')} duplicate natural keys; {source_audit_manifest.get('panel_missing_values', 'unknown')} missing values ({source_audit_manifest.get('panel_missingness_pct', 'unknown')}% of panel cells).",
+        f"- **Policy-event delta:** {policy_delta_manifest.get('confirmed_policy_events', 'not reported')} confirmed events; {policy_delta_manifest.get('content_changed_pages', 'not reported')} page-content changes requiring review; {policy_delta_manifest.get('failed_or_unknown_pages', 'not reported')} failed/unknown pages. Hash changes are not policy-event confirmation.",
+        f"- **Prediction/outcome ledger:** {prediction_manifest.get('prediction_rows', 'not reported')} production forecasts; {prediction_manifest.get('outcome_rows', 'not reported')} versioned country-year outcomes; {prediction_manifest.get('matched_outcomes', 'not reported')} forecast-outcome matches; {prediction_manifest.get('outcome_rows_inserted', 'not reported')} new outcomes and {prediction_manifest.get('outcome_rows_revised', 'not reported')} revisions.",
+        f"- **Prior WDI history recovery:** {history_rebuild_manifest.get('rows_restored_vs_legacy_history', 0)} rows recovered from archived raw snapshots during the one-time migration; current run rebuild: {yes_no(manifest.get('world_bank_history_rebuilt_from_snapshots'))}.",
         f"- **Macro ranking comparison year:** {manifest.get('ranking_year', 'Not reported')}",
         f"- **Destinations scored / total:** {manifest.get('ranking_destinations_scored', 'Not reported')} / {manifest.get('ranking_destinations_total', len(ranking))}",
         f"- **Forecast issued during refresh:** {yes_no(manifest.get('forecast_issued'))}",
@@ -140,7 +150,7 @@ def main():
         "## 2. Stored macro ranking",
         "",
         "This is the latest stored macro-proxy ranking, not a personalised migration recommendation. "
-        "It does not include complete joie de vivre or individual visa-feasibility scoring.",
+        "It does not include complete quality-of-life or individual visa-feasibility scoring.",
         "",
     ]
 
@@ -293,7 +303,7 @@ def main():
         "- Check observation years and source release schedules for indicators needing attention.",
         "- Investigate why the persistence baseline outperforms Ridge and EOM in the stored backtest.",
         "- Verify that every predictor would have been available at the forecast date; inspect missing-data handling and baseline definitions.",
-        "- Obtain comparable, sourced wellbeing and work-life indicators before calculating joie de vivre scores.",
+        "- Obtain comparable, sourced wellbeing and work-life indicators before calculating quality-of-life scores.",
         "- Add verified visa routes, eligibility, funds, language and study-to-work pathways for a defined applicant profile.",
         "- Recompute and validate the model separately before describing any ranking as new.",
         "",

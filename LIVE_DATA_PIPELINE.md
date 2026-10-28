@@ -90,3 +90,12 @@ A known scoring-input issue remains: the broad all-country refresh excludes lega
 ## Raw-source snapshot retention (2026-10-28)
 
 The daily workflow artifact includes source snapshots under `data/raw/snapshots/<source>/<run_id>/`, the full current WDI panel, the compressed WDI revision ledger, and the separate macro-focus input. UN DESA workbooks, World Bank JSON responses, Eurostat JSON-stat payloads, policy-page HTML, the OBMigra catalogue page, the full UNHCR export, the OECD SDMX CSV response, and ILOSTAT catalogue/data CSV responses are retained separately from normalized extracts. Verify the corresponding snapshot paths and hashes in each run artifact; failed or partial downloads must remain marked as failed and must not replace the last successful normalized extract.
+
+
+## Incremental research audit and forecast/outcome ledgers
+
+Each refresh emits `outputs/source_retrieval_audit.csv` and `metadata/source_audit_manifest.json` with source URLs, retrieval timestamps, source vintage/hash, observation period, definitions, units where exposed, geography/origin/destination/cohort dimensions, row counts, missingness and duplicate checks. Numeric source totals exclude derived subsets to avoid double counting. The compact WDI ledger is versioned; supplemental sources currently retain raw snapshots and normalized extracts but do not all have per-row revision ledgers.
+
+`outputs/policy_event_delta.csv` compares the previous page state to current official page hashes. A changed hash is only a manual-review trigger, not proof of a policy event. Announcement date, effective date, affected cohort and mechanism remain blank until a specific official notice is identified. No causal estimate is inferred from page changes.
+
+`data/outcome_ledger.csv` stores versioned national net-migration-per-1,000 outcomes derived from World Bank `SM.POP.NETM` and `SP.POP.TOTL`. This is a country-year fallback, not bilateral origin-destination flow. `data/prediction_ledger.csv` is the production forecast ledger; no forecast is emitted merely to populate it. `data/prediction_outcome_join.csv` joins matured observed outcomes to previously issued forecasts when matching forecasts exist. Historical backtest predictions remain separate from the production forecast ledger.

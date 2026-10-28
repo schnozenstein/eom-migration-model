@@ -7,6 +7,10 @@ on:
       - "scripts/refresh_eom_data.py"
       - "scripts/rebuild_wdi_history_from_snapshots.py"
       - "scripts/create_daily_summary.py"
+      - "scripts/build_source_retrieval_audit.py"
+      - "scripts/build_policy_event_delta.py"
+      - "scripts/maintain_prediction_ledger.py"
+      - "tests/test_incremental_ledgers.py"
       - "src/eom_empirical/**"
       - "data/destinations.csv"
       - "data/historical_destination_year_panel.csv"
@@ -19,6 +23,10 @@ on:
       - "scripts/refresh_eom_data.py"
       - "scripts/rebuild_wdi_history_from_snapshots.py"
       - "scripts/create_daily_summary.py"
+      - "scripts/build_source_retrieval_audit.py"
+      - "scripts/build_policy_event_delta.py"
+      - "scripts/maintain_prediction_ledger.py"
+      - "tests/test_incremental_ledgers.py"
       - "src/eom_empirical/**"
       - "data/destinations.csv"
       - "data/historical_destination_year_panel.csv"
@@ -137,6 +145,16 @@ jobs:
             exit 1
           fi
 
+      - name: Snapshot previous policy-page state for a verifiable delta
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          mkdir -p "$RUNNER_TEMP"
+          if [ -f data/policy_page_state.json ]; then
+            cp data/policy_page_state.json "$RUNNER_TEMP/eom_policy_state_pre_run.json"
+          else
+            printf '{}' > "$RUNNER_TEMP/eom_policy_state_pre_run.json"
+          fi
+
       - name: Refresh EOM data
         if: github.event_name != 'pull_request'
         id: refresh_data
@@ -144,6 +162,30 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/refresh_eom_data.py
+
+      - name: Build conservative policy-event delta
+        if: always() && github.event_name != 'pull_request'
+        id: policy_delta
+        continue-on-error: true
+        env:
+          EOM_ETL_OUTCOME: \${{ steps.refresh_data.outcome }}
+        run: python scripts/build_policy_event_delta.py --previous-state "$RUNNER_TEMP/eom_policy_state_pre_run.json"
+
+      - name: Build consolidated source-retrieval audit
+        if: always() && github.event_name != 'pull_request'
+        id: source_audit
+        continue-on-error: true
+        env:
+          EOM_ETL_OUTCOME: \${{ steps.refresh_data.outcome }}
+        run: python scripts/build_source_retrieval_audit.py
+
+      - name: Maintain prediction and outcome ledgers
+        if: always() && github.event_name != 'pull_request'
+        id: prediction_ledger
+        continue-on-error: true
+        env:
+          EOM_ETL_OUTCOME: \${{ steps.refresh_data.outcome }}
+        run: python scripts/maintain_prediction_ledger.py
 
       - name: Recompute macro EOM ranking from current destination set
         if: github.event_name != 'pull_request'
@@ -193,6 +235,9 @@ jobs:
           PYTHONPATH: src
           EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
           EOM_RANKING_RECOMPUTE_OUTCOME: ${{ steps.recompute_ranking.outcome }}
+          EOM_SOURCE_AUDIT_OUTCOME: ${{ steps.source_audit.outcome }}
+          EOM_POLICY_DELTA_OUTCOME: ${{ steps.policy_delta.outcome }}
+          EOM_PREDICTION_LEDGER_OUTCOME: ${{ steps.prediction_ledger.outcome }}
         run: python scripts/create_daily_summary.py
 
       - name: Upload daily report and diagnostics
@@ -215,6 +260,14 @@ jobs:
             metadata/refresh_runs/*.json
             outputs/data_freshness_dashboard.csv
             outputs/latest_macro_eom_ranking.csv
+            outputs/source_retrieval_audit.csv
+            outputs/policy_event_delta.csv
+            data/prediction_ledger.csv
+            data/outcome_ledger.csv
+            data/prediction_outcome_join.csv
+            metadata/source_audit_manifest.json
+            metadata/policy_event_delta_manifest.json
+            metadata/prediction_ledger_manifest.json
             outputs/risk_indicator_panel.csv
             outputs/risk_coverage_audit.json
             outputs/geographical_risk_adjusted_ranking.csv
@@ -268,6 +321,14 @@ jobs:
                   metadata/refresh_runs/ \
                   outputs/data_freshness_dashboard.csv \
                   outputs/latest_macro_eom_ranking.csv \
+                  outputs/source_retrieval_audit.csv \
+                  outputs/policy_event_delta.csv \
+                  data/prediction_ledger.csv \
+                  data/outcome_ledger.csv \
+                  data/prediction_outcome_join.csv \
+                  metadata/source_audit_manifest.json \
+                  metadata/policy_event_delta_manifest.json \
+                  metadata/prediction_ledger_manifest.json \
                   outputs/macro_backtest.json \
                   outputs/macro_backtest_folds.csv \
                   outputs/macro_backtest_rank_metrics.csv \
@@ -332,7 +393,7 @@ jobs:
           fi
 
       - name: Mark run failed if required pipeline stages failed
-        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure')
+        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure' || steps.source_audit.outcome == 'failure' || steps.policy_delta.outcome == 'failure' || steps.prediction_ledger.outcome == 'failure')
         run: |
           echo "Daily report was generated, but a required test, data refresh, ranking, risk panel, or geographic evidence stage failed. Inspect the step logs."
           exit 1
