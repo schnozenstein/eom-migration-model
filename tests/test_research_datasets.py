@@ -238,8 +238,8 @@ def test_unhcr_export_is_preserved_as_raw_snapshot(tmp_path):
     from eom_empirical.research_datasets import UNHCR_EXPORT_URL, fetch_unhcr_focus
 
     body = (
-        "time_period,ref_area_adm0,area_ori_adm0,obs_value,record_id\\n"
-        "2024,SGP,IND,123,rec1\\n"
+        "time_period,ref_area_adm0,area_ori_adm0,obs_value,record_id\n"
+        "2024,SGP,IND,123,rec1\n"
     ).encode("utf-8")
 
     class FakeResponse:
@@ -285,8 +285,8 @@ def test_oecd_migration_response_is_preserved_as_raw_snapshot(tmp_path):
     from eom_empirical.research_datasets import OECD_MIGRATION_QUERY, fetch_oecd_migration_slice
 
     body = (
-        "REF_AREA,TIME_PERIOD,OBS_VALUE\\n"
-        "GBR,2024,12\\n"
+        "REF_AREA,TIME_PERIOD,OBS_VALUE\n"
+        "GBR,2024,12\n"
     ).encode("utf-8")
 
     class FakeResponse:

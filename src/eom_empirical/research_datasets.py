@@ -116,10 +116,9 @@ def _focus_name_to_iso3(root: Path) -> dict[str, str]:
 def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, dict]:
     """Stream the official UNHCR series and retain destination/origin-relevant rows.
 
-    The source series is hundreds of thousands of records. It is streamed to a
-    temporary file, then read in chunks; the complete source is not committed.
-    The compact focus extract contains all reported population types and keeps
-    the original dimensions, source labels, footnotes and units.
+    The source series is hundreds of thousands of records. The complete CSV is
+    preserved as a run-specific raw snapshot and parsed in chunks. The compact
+    focus extract keeps the original dimensions, source labels, footnotes and units.
     """
     row = {
         "source_id": "UNHCR_POPSTATS_OFFICIAL",
@@ -162,32 +161,32 @@ def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, d
                         tmp.write(block)
         partial_path.replace(snapshot_path)
         for chunk in pd.read_csv(snapshot_path, chunksize=50_000, low_memory=False):
-                total_rows += len(chunk)
-                period_col = _find_column(chunk.columns, ("time_period",))
-                host_col = _find_column(chunk.columns, ("ref_area_adm0",))
-                origin_col = _find_column(chunk.columns, ("area_ori_adm0",))
-                value_col = _find_column(chunk.columns, ("obs_value",))
-                if not all((period_col, host_col, origin_col, value_col)):
-                    raise ValueError(f"UNHCR export schema missing required columns; found {list(chunk.columns)[:30]}")
-                host = chunk[host_col].fillna("").astype(str).str.upper().str.strip()
-                origin = chunk[origin_col].fillna("").astype(str).str.upper().str.strip()
-                host_focus = host.isin(DESTINATION_CODES)
-                origin_focus = origin.isin(ORIGIN_CODES)
-                # Keep every origin recorded for focus destinations, plus every
-                # destination/asylum location recorded for selected focus origins.
-                # Filtering origin categories at this point would drop valid flows
-                # from other origins into a focus destination.
-                mask = host_focus | origin_focus
-                selected = chunk.loc[mask].copy()
-                if selected.empty:
-                    continue
-                selected["source"] = UNHCR_LABEL
-                selected["source_url"] = UNHCR_EXPORT_URL
-                selected["metadata_url"] = UNHCR_METADATA_URL
-                selected["retrieved_utc"] = _now()
-                selected["run_id"] = run_id
-                selected["source_vintage"] = "UNHCR Data API export; latest available"
-                kept.append(selected)
+            total_rows += len(chunk)
+            period_col = _find_column(chunk.columns, ("time_period",))
+            host_col = _find_column(chunk.columns, ("ref_area_adm0",))
+            origin_col = _find_column(chunk.columns, ("area_ori_adm0",))
+            value_col = _find_column(chunk.columns, ("obs_value",))
+            if not all((period_col, host_col, origin_col, value_col)):
+                raise ValueError(f"UNHCR export schema missing required columns; found {list(chunk.columns)[:30]}")
+            host = chunk[host_col].fillna("").astype(str).str.upper().str.strip()
+            origin = chunk[origin_col].fillna("").astype(str).str.upper().str.strip()
+            host_focus = host.isin(DESTINATION_CODES)
+            origin_focus = origin.isin(ORIGIN_CODES)
+            # Keep every origin recorded for focus destinations, plus every
+            # destination/asylum location recorded for selected focus origins.
+            # Filtering origin categories at this point would drop valid flows
+            # from other origins into a focus destination.
+            mask = host_focus | origin_focus
+            selected = chunk.loc[mask].copy()
+            if selected.empty:
+                continue
+            selected["source"] = UNHCR_LABEL
+            selected["source_url"] = UNHCR_EXPORT_URL
+            selected["metadata_url"] = UNHCR_METADATA_URL
+            selected["retrieved_utc"] = _now()
+            selected["run_id"] = run_id
+            selected["source_vintage"] = "UNHCR Data API export; latest available"
+            kept.append(selected)
         result = pd.concat(kept, ignore_index=True, sort=False) if kept else pd.DataFrame()
         if result.empty:
             raise ValueError("UNHCR export succeeded but no records matched the focus-country filter")
