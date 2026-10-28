@@ -1,13 +1,19 @@
 # EOM Daily Research Report
 
-> Generated: 2026-10-28 06:00 UTC
+> Generated: 2026-10-28 06:40 UTC
 
 ## 1. Executive summary
 
 - **Latest refresh run:** `2026-10-28T055913Z`
+- **ETL manifest matches this workflow run:** No
+- **Freshness warning:** This attempt did not write a matching ETL manifest; source counts and ranking status below are last stored outputs, not evidence of a fresh refresh.
 - **Refresh timestamp:** 2026-10-28T05:59:13.098565+00:00
 - **World Bank observations fetched:** 165984
 - **World Bank indicator requests:** 39 succeeded; 0 failed
+- **Normalized WDI panel:** Not reported current rows; Not reported aggregate rows use stable non-ISO3 source keys
+- **Persistent WDI revision ledger:** Not reported rows; Not reported new keys; Not reported value revisions; Not reported unchanged observations skipped
+- **WDI history migration this run:** Not reported; 0 rows restored from archived raw snapshots
+- **Macro scoring input:** `data/raw/world_bank_macro_focus.csv` (7744 rows; separate 11-indicator destination input)
 - **Brazil World Bank extract:** 624 fresh Brazil indicator-year rows
 - **Eurostat total migration flows:** 2 series succeeded; 0 failed; 1034 observed annual cells across up to 44 reporting geographies
 - **UNHCR forced-displacement extract:** SUCCESS; 242461 retained focus/origin rows
@@ -17,7 +23,7 @@
 - **Brazil OBMigra official source page:** SUCCESS (catalogue monitor only; report tables are not numerically parsed)
 - **Policy pages:** 10 succeeded; 1 failed
 - **Freshness dashboard:** 38 recent; 2 requiring attention out of 40 indicators
-- **Macro ranking recomputed in this run:** Yes
+- **Macro ranking recomputed in this run:** No
 - **Macro ranking comparison year:** 2025
 - **Destinations scored / total:** 42 / 45
 - **Forecast issued during refresh:** No
@@ -175,7 +181,10 @@ A recent retrieval timestamp does not guarantee a recent statistical observation
 - `outputs/eom_v2_run_status.json`
 - `outputs/eom_v2_weight_sensitivity.csv`
 - `outputs/eom_joie_de_vivre_scores.csv`
-- `data/observations_history/world_bank_observations.csv`
+- `data/observations_history/world_bank_observations.csv.gz`
+- `data/raw/world_bank_long.csv` (full current WDI panel in workflow artifact)
+- `data/raw/world_bank_macro_focus.csv` (separate macro scoring input)
+- `metadata/wdi_history_rebuild_manifest.json`
 - `data/raw/eurostat_migration_flows.csv`
 - `data/raw/undesa_migrant_stock_long.csv`
 - `data/raw/unhcr_forced_displacement_focus.csv.gz`

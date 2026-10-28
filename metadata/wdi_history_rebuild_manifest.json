@@ -1,0 +1,835 @@
+{
+  "created_at_utc": "2026-10-28T06:39:51.813853+00:00",
+  "rebuild_workflow_run_id": "40645132958",
+  "source_artifact_run_id": "40640736816",
+  "source_artifact_name": "eom-daily-report-40640736816",
+  "source_artifact_digest": "sha256:f631cd50472f1ee8ed9a47b92b46b2efecdc475cbb01d9d1213bb92bd72e4651",
+  "source_artifact_root": "eom-daily-report-40640736816",
+  "source_snapshot_run_ids": [
+    "2026-10-17T192440Z",
+    "2026-10-17T200205Z",
+    "2026-10-18T074947Z",
+    "2026-10-18T094109Z",
+    "2026-10-19T035323Z",
+    "2026-10-19T045049Z",
+    "2026-10-28T055913Z"
+  ],
+  "source_snapshot_files": 114,
+  "raw_snapshot_observation_rows": 485184,
+  "legacy_history_rows": 477888,
+  "rows_restored_vs_legacy_history": 7296,
+  "unique_observation_keys": 165984,
+  "ledger_rows": 165984,
+  "duplicate_keys_within_run": 0,
+  "duplicate_version_keys": 0,
+  "keys_with_multiple_versions": 0,
+  "extra_revision_rows": 0,
+  "current_run_id": "2026-10-28T055913Z",
+  "current_run_rows": 165984,
+  "current_run_indicator_count": 39,
+  "current_run_source_entity_count": 266,
+  "current_run_synthetic_source_id_rows": 3120,
+  "current_run_missing_value_observations": 27778,
+  "ledger_sha256": "1aa14f7e74ddd27bce4715b7138f25a8d756946bce88486905ba634196a8b65d",
+  "snapshot_hashes": [
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "BX.TRF.PWKR.CD.DT",
+      "file": "BX_TRF_PWKR_CD_DT_page_1.json",
+      "rows": 4256,
+      "sha256": "d9fa7a07298d6515b8f889e7c223d704c1cef00e15749195e9289df684e806ec"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "FP.CPI.TOTL.ZG",
+      "file": "FP_CPI_TOTL_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "8216c674cd8b98694c679ce4e50a3d3661398547ec76ea40e863fcfa532ef5d6"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "NY.GDP.MKTP.KD.ZG",
+      "file": "NY_GDP_MKTP_KD_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "f42f514281399fa7a635cf1200ebbd3033640d0757d539586032064e18f97878"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "NY.GDP.PCAP.CD",
+      "file": "NY_GDP_PCAP_CD_page_1.json",
+      "rows": 4256,
+      "sha256": "b2c01c8dcf2cf9a7c8266fd63a313ca669bbcb0ab3fb0a5b126c40bb6dc8a2d6"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "NY.GDP.PCAP.PP.KD",
+      "file": "NY_GDP_PCAP_PP_KD_page_1.json",
+      "rows": 4256,
+      "sha256": "315802ae3536419e7b28dcc766cf11b9fe6cd4369011258fc9e67f5b0dadc8be"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "SL.EMP.TOTL.SP.ZS",
+      "file": "SL_EMP_TOTL_SP_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "14094655cf74ff9a42d772a9425a06efb5049fd5951d25916d4ec106d94d8f7f"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "SL.TLF.CACT.ZS",
+      "file": "SL_TLF_CACT_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "1ee7daebe9810443d6657820bd2aaabfcfc5f3b73f44a575e717de45c10fd27a"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "SL.UEM.TOTL.ZS",
+      "file": "SL_UEM_TOTL_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "9a8bb3c58eabb6adfe4d6018a6e388165ead66d58bc7e9d50b7f1896567b10ad"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "SM.POP.NETM",
+      "file": "SM_POP_NETM_page_1.json",
+      "rows": 4256,
+      "sha256": "942b997333263bf9beaaf2e5aa9100e6ce160e6ad392884658d8f5334c8dd110"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "SP.DYN.LE00.IN",
+      "file": "SP_DYN_LE00_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "6d2b66ee8f1b9e32a2f9c806a332ead7b93244368416f99a0afe27a312021003"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "SP.POP.1564.TO.ZS",
+      "file": "SP_POP_1564_TO_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "caf34d598817c5f2b39fe56736b94a92f567eac3ef78ae69c4c779686d43ec2a"
+    },
+    {
+      "run_id": "2026-10-17T192440Z",
+      "indicator_code": "SP.POP.TOTL",
+      "file": "SP_POP_TOTL_page_1.json",
+      "rows": 4256,
+      "sha256": "dd1b414eefec9a42bc91745e598397769099a6e502a3e75f754c6631f64bf3f5"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "BX.TRF.PWKR.CD.DT",
+      "file": "BX_TRF_PWKR_CD_DT_page_1.json",
+      "rows": 4256,
+      "sha256": "d9fa7a07298d6515b8f889e7c223d704c1cef00e15749195e9289df684e806ec"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "FP.CPI.TOTL.ZG",
+      "file": "FP_CPI_TOTL_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "8216c674cd8b98694c679ce4e50a3d3661398547ec76ea40e863fcfa532ef5d6"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "NY.GDP.MKTP.KD.ZG",
+      "file": "NY_GDP_MKTP_KD_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "f42f514281399fa7a635cf1200ebbd3033640d0757d539586032064e18f97878"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "NY.GDP.PCAP.CD",
+      "file": "NY_GDP_PCAP_CD_page_1.json",
+      "rows": 4256,
+      "sha256": "b2c01c8dcf2cf9a7c8266fd63a313ca669bbcb0ab3fb0a5b126c40bb6dc8a2d6"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "NY.GDP.PCAP.PP.KD",
+      "file": "NY_GDP_PCAP_PP_KD_page_1.json",
+      "rows": 4256,
+      "sha256": "315802ae3536419e7b28dcc766cf11b9fe6cd4369011258fc9e67f5b0dadc8be"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "SL.EMP.TOTL.SP.ZS",
+      "file": "SL_EMP_TOTL_SP_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "14094655cf74ff9a42d772a9425a06efb5049fd5951d25916d4ec106d94d8f7f"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "SL.TLF.CACT.ZS",
+      "file": "SL_TLF_CACT_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "1ee7daebe9810443d6657820bd2aaabfcfc5f3b73f44a575e717de45c10fd27a"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "SL.UEM.TOTL.ZS",
+      "file": "SL_UEM_TOTL_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "9a8bb3c58eabb6adfe4d6018a6e388165ead66d58bc7e9d50b7f1896567b10ad"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "SM.POP.NETM",
+      "file": "SM_POP_NETM_page_1.json",
+      "rows": 4256,
+      "sha256": "942b997333263bf9beaaf2e5aa9100e6ce160e6ad392884658d8f5334c8dd110"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "SP.DYN.LE00.IN",
+      "file": "SP_DYN_LE00_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "6d2b66ee8f1b9e32a2f9c806a332ead7b93244368416f99a0afe27a312021003"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "SP.POP.1564.TO.ZS",
+      "file": "SP_POP_1564_TO_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "caf34d598817c5f2b39fe56736b94a92f567eac3ef78ae69c4c779686d43ec2a"
+    },
+    {
+      "run_id": "2026-10-17T200205Z",
+      "indicator_code": "SP.POP.TOTL",
+      "file": "SP_POP_TOTL_page_1.json",
+      "rows": 4256,
+      "sha256": "dd1b414eefec9a42bc91745e598397769099a6e502a3e75f754c6631f64bf3f5"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "BX.TRF.PWKR.CD.DT",
+      "file": "BX_TRF_PWKR_CD_DT_page_1.json",
+      "rows": 4256,
+      "sha256": "d9fa7a07298d6515b8f889e7c223d704c1cef00e15749195e9289df684e806ec"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "FP.CPI.TOTL.ZG",
+      "file": "FP_CPI_TOTL_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "8216c674cd8b98694c679ce4e50a3d3661398547ec76ea40e863fcfa532ef5d6"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "NY.GDP.MKTP.KD.ZG",
+      "file": "NY_GDP_MKTP_KD_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "f42f514281399fa7a635cf1200ebbd3033640d0757d539586032064e18f97878"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "NY.GDP.PCAP.CD",
+      "file": "NY_GDP_PCAP_CD_page_1.json",
+      "rows": 4256,
+      "sha256": "b2c01c8dcf2cf9a7c8266fd63a313ca669bbcb0ab3fb0a5b126c40bb6dc8a2d6"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "NY.GDP.PCAP.PP.KD",
+      "file": "NY_GDP_PCAP_PP_KD_page_1.json",
+      "rows": 4256,
+      "sha256": "315802ae3536419e7b28dcc766cf11b9fe6cd4369011258fc9e67f5b0dadc8be"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "SL.EMP.TOTL.SP.ZS",
+      "file": "SL_EMP_TOTL_SP_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "14094655cf74ff9a42d772a9425a06efb5049fd5951d25916d4ec106d94d8f7f"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "SL.TLF.CACT.ZS",
+      "file": "SL_TLF_CACT_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "1ee7daebe9810443d6657820bd2aaabfcfc5f3b73f44a575e717de45c10fd27a"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "SL.UEM.TOTL.ZS",
+      "file": "SL_UEM_TOTL_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "9a8bb3c58eabb6adfe4d6018a6e388165ead66d58bc7e9d50b7f1896567b10ad"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "SM.POP.NETM",
+      "file": "SM_POP_NETM_page_1.json",
+      "rows": 4256,
+      "sha256": "942b997333263bf9beaaf2e5aa9100e6ce160e6ad392884658d8f5334c8dd110"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "SP.DYN.LE00.IN",
+      "file": "SP_DYN_LE00_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "6d2b66ee8f1b9e32a2f9c806a332ead7b93244368416f99a0afe27a312021003"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "SP.POP.1564.TO.ZS",
+      "file": "SP_POP_1564_TO_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "caf34d598817c5f2b39fe56736b94a92f567eac3ef78ae69c4c779686d43ec2a"
+    },
+    {
+      "run_id": "2026-10-18T074947Z",
+      "indicator_code": "SP.POP.TOTL",
+      "file": "SP_POP_TOTL_page_1.json",
+      "rows": 4256,
+      "sha256": "dd1b414eefec9a42bc91745e598397769099a6e502a3e75f754c6631f64bf3f5"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "BX.TRF.PWKR.CD.DT",
+      "file": "BX_TRF_PWKR_CD_DT_page_1.json",
+      "rows": 4256,
+      "sha256": "d9fa7a07298d6515b8f889e7c223d704c1cef00e15749195e9289df684e806ec"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "FP.CPI.TOTL.ZG",
+      "file": "FP_CPI_TOTL_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "8216c674cd8b98694c679ce4e50a3d3661398547ec76ea40e863fcfa532ef5d6"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "NY.GDP.MKTP.KD.ZG",
+      "file": "NY_GDP_MKTP_KD_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "f42f514281399fa7a635cf1200ebbd3033640d0757d539586032064e18f97878"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "NY.GDP.PCAP.CD",
+      "file": "NY_GDP_PCAP_CD_page_1.json",
+      "rows": 4256,
+      "sha256": "b2c01c8dcf2cf9a7c8266fd63a313ca669bbcb0ab3fb0a5b126c40bb6dc8a2d6"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "NY.GDP.PCAP.PP.KD",
+      "file": "NY_GDP_PCAP_PP_KD_page_1.json",
+      "rows": 4256,
+      "sha256": "315802ae3536419e7b28dcc766cf11b9fe6cd4369011258fc9e67f5b0dadc8be"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "SL.EMP.TOTL.SP.ZS",
+      "file": "SL_EMP_TOTL_SP_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "14094655cf74ff9a42d772a9425a06efb5049fd5951d25916d4ec106d94d8f7f"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "SL.TLF.CACT.ZS",
+      "file": "SL_TLF_CACT_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "1ee7daebe9810443d6657820bd2aaabfcfc5f3b73f44a575e717de45c10fd27a"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "SL.UEM.TOTL.ZS",
+      "file": "SL_UEM_TOTL_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "9a8bb3c58eabb6adfe4d6018a6e388165ead66d58bc7e9d50b7f1896567b10ad"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "SM.POP.NETM",
+      "file": "SM_POP_NETM_page_1.json",
+      "rows": 4256,
+      "sha256": "942b997333263bf9beaaf2e5aa9100e6ce160e6ad392884658d8f5334c8dd110"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "SP.DYN.LE00.IN",
+      "file": "SP_DYN_LE00_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "6d2b66ee8f1b9e32a2f9c806a332ead7b93244368416f99a0afe27a312021003"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "SP.POP.1564.TO.ZS",
+      "file": "SP_POP_1564_TO_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "caf34d598817c5f2b39fe56736b94a92f567eac3ef78ae69c4c779686d43ec2a"
+    },
+    {
+      "run_id": "2026-10-18T094109Z",
+      "indicator_code": "SP.POP.TOTL",
+      "file": "SP_POP_TOTL_page_1.json",
+      "rows": 4256,
+      "sha256": "dd1b414eefec9a42bc91745e598397769099a6e502a3e75f754c6631f64bf3f5"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "BX.TRF.PWKR.CD.DT",
+      "file": "BX_TRF_PWKR_CD_DT_page_1.json",
+      "rows": 4256,
+      "sha256": "d9fa7a07298d6515b8f889e7c223d704c1cef00e15749195e9289df684e806ec"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "FP.CPI.TOTL.ZG",
+      "file": "FP_CPI_TOTL_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "8216c674cd8b98694c679ce4e50a3d3661398547ec76ea40e863fcfa532ef5d6"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "NY.GDP.MKTP.KD.ZG",
+      "file": "NY_GDP_MKTP_KD_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "f42f514281399fa7a635cf1200ebbd3033640d0757d539586032064e18f97878"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "NY.GDP.PCAP.CD",
+      "file": "NY_GDP_PCAP_CD_page_1.json",
+      "rows": 4256,
+      "sha256": "b2c01c8dcf2cf9a7c8266fd63a313ca669bbcb0ab3fb0a5b126c40bb6dc8a2d6"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "NY.GDP.PCAP.PP.KD",
+      "file": "NY_GDP_PCAP_PP_KD_page_1.json",
+      "rows": 4256,
+      "sha256": "315802ae3536419e7b28dcc766cf11b9fe6cd4369011258fc9e67f5b0dadc8be"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "SL.EMP.TOTL.SP.ZS",
+      "file": "SL_EMP_TOTL_SP_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "14094655cf74ff9a42d772a9425a06efb5049fd5951d25916d4ec106d94d8f7f"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "SL.TLF.CACT.ZS",
+      "file": "SL_TLF_CACT_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "1ee7daebe9810443d6657820bd2aaabfcfc5f3b73f44a575e717de45c10fd27a"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "SL.UEM.TOTL.ZS",
+      "file": "SL_UEM_TOTL_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "9a8bb3c58eabb6adfe4d6018a6e388165ead66d58bc7e9d50b7f1896567b10ad"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "SM.POP.NETM",
+      "file": "SM_POP_NETM_page_1.json",
+      "rows": 4256,
+      "sha256": "942b997333263bf9beaaf2e5aa9100e6ce160e6ad392884658d8f5334c8dd110"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "SP.DYN.LE00.IN",
+      "file": "SP_DYN_LE00_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "6d2b66ee8f1b9e32a2f9c806a332ead7b93244368416f99a0afe27a312021003"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "SP.POP.1564.TO.ZS",
+      "file": "SP_POP_1564_TO_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "caf34d598817c5f2b39fe56736b94a92f567eac3ef78ae69c4c779686d43ec2a"
+    },
+    {
+      "run_id": "2026-10-19T035323Z",
+      "indicator_code": "SP.POP.TOTL",
+      "file": "SP_POP_TOTL_page_1.json",
+      "rows": 4256,
+      "sha256": "dd1b414eefec9a42bc91745e598397769099a6e502a3e75f754c6631f64bf3f5"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "BX.TRF.PWKR.CD.DT",
+      "file": "BX_TRF_PWKR_CD_DT_page_1.json",
+      "rows": 4256,
+      "sha256": "d9fa7a07298d6515b8f889e7c223d704c1cef00e15749195e9289df684e806ec"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "FP.CPI.TOTL.ZG",
+      "file": "FP_CPI_TOTL_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "8216c674cd8b98694c679ce4e50a3d3661398547ec76ea40e863fcfa532ef5d6"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "GE.EST",
+      "file": "GE_EST_page_1.json",
+      "rows": 4256,
+      "sha256": "a30c7d188b7eee2792f0bda7f4804cd34785e0884916fda5ad0b37b35e4ec273"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "NY.GDP.MKTP.KD.ZG",
+      "file": "NY_GDP_MKTP_KD_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "f42f514281399fa7a635cf1200ebbd3033640d0757d539586032064e18f97878"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "NY.GDP.PCAP.CD",
+      "file": "NY_GDP_PCAP_CD_page_1.json",
+      "rows": 4256,
+      "sha256": "b2c01c8dcf2cf9a7c8266fd63a313ca669bbcb0ab3fb0a5b126c40bb6dc8a2d6"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "NY.GDP.PCAP.PP.KD",
+      "file": "NY_GDP_PCAP_PP_KD_page_1.json",
+      "rows": 4256,
+      "sha256": "315802ae3536419e7b28dcc766cf11b9fe6cd4369011258fc9e67f5b0dadc8be"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "PV.EST",
+      "file": "PV_EST_page_1.json",
+      "rows": 4256,
+      "sha256": "b36c19e7206a4a555c9a49674da71b17d97609944696f36d4bd131536780336d"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "RQ.EST",
+      "file": "RQ_EST_page_1.json",
+      "rows": 4256,
+      "sha256": "012bf6e3bcaba6894d81f6c6041e774f058f2db759d736fa8d0bdb6fc983659b"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "SL.EMP.TOTL.SP.ZS",
+      "file": "SL_EMP_TOTL_SP_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "14094655cf74ff9a42d772a9425a06efb5049fd5951d25916d4ec106d94d8f7f"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "SL.TLF.CACT.ZS",
+      "file": "SL_TLF_CACT_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "1ee7daebe9810443d6657820bd2aaabfcfc5f3b73f44a575e717de45c10fd27a"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "SL.UEM.TOTL.ZS",
+      "file": "SL_UEM_TOTL_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "9a8bb3c58eabb6adfe4d6018a6e388165ead66d58bc7e9d50b7f1896567b10ad"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "SM.POP.NETM",
+      "file": "SM_POP_NETM_page_1.json",
+      "rows": 4256,
+      "sha256": "942b997333263bf9beaaf2e5aa9100e6ce160e6ad392884658d8f5334c8dd110"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "SP.DYN.LE00.IN",
+      "file": "SP_DYN_LE00_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "6d2b66ee8f1b9e32a2f9c806a332ead7b93244368416f99a0afe27a312021003"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "SP.POP.1564.TO.ZS",
+      "file": "SP_POP_1564_TO_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "caf34d598817c5f2b39fe56736b94a92f567eac3ef78ae69c4c779686d43ec2a"
+    },
+    {
+      "run_id": "2026-10-19T045049Z",
+      "indicator_code": "SP.POP.TOTL",
+      "file": "SP_POP_TOTL_page_1.json",
+      "rows": 4256,
+      "sha256": "dd1b414eefec9a42bc91745e598397769099a6e502a3e75f754c6631f64bf3f5"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "BX.KLT.DINV.WD.GD.ZS",
+      "file": "BX_KLT_DINV_WD_GD_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "d9fb3423fcb22b62e692ab9d39c10a83f7a9dcb1e82282ebe0c456baa977e817"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "BX.TRF.PWKR.CD.DT",
+      "file": "BX_TRF_PWKR_CD_DT_page_1.json",
+      "rows": 4256,
+      "sha256": "d9fa7a07298d6515b8f889e7c223d704c1cef00e15749195e9289df684e806ec"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "FP.CPI.TOTL.ZG",
+      "file": "FP_CPI_TOTL_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "8216c674cd8b98694c679ce4e50a3d3661398547ec76ea40e863fcfa532ef5d6"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "GC.DOD.TOTL.GD.ZS",
+      "file": "GC_DOD_TOTL_GD_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "67c4cbefc0c2694e9f29e17e4cc1584123f3ad6e05ad317b808b225f8c7e9aaf"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "GE.EST",
+      "file": "GE_EST_page_1.json",
+      "rows": 4256,
+      "sha256": "a30c7d188b7eee2792f0bda7f4804cd34785e0884916fda5ad0b37b35e4ec273"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "IT.NET.USER.ZS",
+      "file": "IT_NET_USER_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "0d38b870bdc2bd6964ec59f4eab42f82ff9929e39f3ed58411beafb2c70906be"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "NE.TRD.GNFS.ZS",
+      "file": "NE_TRD_GNFS_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "6c29039a86ffef37234871ecf5567ee33f066d79e6da46dac41e2ec07909e567"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "NY.GDP.MKTP.KD.ZG",
+      "file": "NY_GDP_MKTP_KD_ZG_page_1.json",
+      "rows": 4256,
+      "sha256": "f42f514281399fa7a635cf1200ebbd3033640d0757d539586032064e18f97878"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "NY.GDP.MKTP.PP.CD",
+      "file": "NY_GDP_MKTP_PP_CD_page_1.json",
+      "rows": 4256,
+      "sha256": "ad9c223232c2291f5597a912b5b1292adff86326337ea797aebdfdf28f4412d6"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "NY.GDP.PCAP.CD",
+      "file": "NY_GDP_PCAP_CD_page_1.json",
+      "rows": 4256,
+      "sha256": "b2c01c8dcf2cf9a7c8266fd63a313ca669bbcb0ab3fb0a5b126c40bb6dc8a2d6"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "NY.GDP.PCAP.PP.KD",
+      "file": "NY_GDP_PCAP_PP_KD_page_1.json",
+      "rows": 4256,
+      "sha256": "315802ae3536419e7b28dcc766cf11b9fe6cd4369011258fc9e67f5b0dadc8be"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "NY.GDP.TOTL.RT.ZS",
+      "file": "NY_GDP_TOTL_RT_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "3111f7dfaa839060e41631a57d80491e656ce7b45015b87b6ca2fffb82f480f5"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "PA.NUS.PPP",
+      "file": "PA_NUS_PPP_page_1.json",
+      "rows": 4256,
+      "sha256": "e3143fe5a890ddb3d881b87eb20c175913eb45506ce9ffbb97f53a071b3d5e57"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "PA.NUS.PRVT.PP",
+      "file": "PA_NUS_PRVT_PP_page_1.json",
+      "rows": 4256,
+      "sha256": "db7c28514a4009c0a6bfd7119c870928c19e672f6e1df814c179e76ecc016465"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "PV.EST",
+      "file": "PV_EST_page_1.json",
+      "rows": 4256,
+      "sha256": "b36c19e7206a4a555c9a49674da71b17d97609944696f36d4bd131536780336d"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "RQ.EST",
+      "file": "RQ_EST_page_1.json",
+      "rows": 4256,
+      "sha256": "012bf6e3bcaba6894d81f6c6041e774f058f2db759d736fa8d0bdb6fc983659b"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SE.SEC.ENRR",
+      "file": "SE_SEC_ENRR_page_1.json",
+      "rows": 4256,
+      "sha256": "128f8f16e8fe16ef0398ed16ee473d31361f1bdc3a42c03acb922de5183e0ea2"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SE.TER.ENRR",
+      "file": "SE_TER_ENRR_page_1.json",
+      "rows": 4256,
+      "sha256": "4dd8fc4383b750255ccb74fe62fcc5c07d5694b8339166e3247c1c352a049412"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SE.XPD.TOTL.GD.ZS",
+      "file": "SE_XPD_TOTL_GD_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "c4560f5787b83931448d723d5f8fdb7853585becb73d97c7f06a76750b2b7147"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SH.XPD.CHEX.GD.ZS",
+      "file": "SH_XPD_CHEX_GD_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "04029d794c34bf8ea1bef2b2a394ed75e5ea2f8baea445b28b9c1bb4e6aed66f"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SI.POV.GINI",
+      "file": "SI_POV_GINI_page_1.json",
+      "rows": 4256,
+      "sha256": "59e003b809cbca6e9b71210f4d08640230cddd208fe3589a1c5bb54bf77349a1"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SL.EMP.TOTL.SP.ZS",
+      "file": "SL_EMP_TOTL_SP_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "14094655cf74ff9a42d772a9425a06efb5049fd5951d25916d4ec106d94d8f7f"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SL.TLF.CACT.FE.ZS",
+      "file": "SL_TLF_CACT_FE_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "c45a465bf02f1ee0daff9873f40028259e356c1b8486b37fe56f6dcaae9370ca"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SL.TLF.CACT.MA.ZS",
+      "file": "SL_TLF_CACT_MA_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "736c3dd5d05c03068edf213c359906f8a0283592b0d40f1a1d5fb707dbd28da3"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SL.TLF.CACT.ZS",
+      "file": "SL_TLF_CACT_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "1ee7daebe9810443d6657820bd2aaabfcfc5f3b73f44a575e717de45c10fd27a"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SL.UEM.1524.ZS",
+      "file": "SL_UEM_1524_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "4cabba13287af548a8d0bfea57a7014839eef9e3f2a88d21108e158142e9eb49"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SL.UEM.TOTL.ZS",
+      "file": "SL_UEM_TOTL_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "9a8bb3c58eabb6adfe4d6018a6e388165ead66d58bc7e9d50b7f1896567b10ad"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SM.POP.NETM",
+      "file": "SM_POP_NETM_page_1.json",
+      "rows": 4256,
+      "sha256": "942b997333263bf9beaaf2e5aa9100e6ce160e6ad392884658d8f5334c8dd110"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.DYN.CBRT.IN",
+      "file": "SP_DYN_CBRT_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "55f27f86681af18767e9202e819d2e8bac9ac1b43b3f30bc1191afc7d1faff44"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.DYN.CDRT.IN",
+      "file": "SP_DYN_CDRT_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "224867cd78bb0f7453d9523d99f0dd8d54a7996d178ca7d00b91c8a6ddcf8b72"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.DYN.IMRT.IN",
+      "file": "SP_DYN_IMRT_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "6a892e2f881a850377efb664c1535166dea2fc990d550c5d49db4aaeb5f0a65c"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.DYN.LE00.FE.IN",
+      "file": "SP_DYN_LE00_FE_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "23779a62b043c01fad3dca116c7c5e616a61871c8a2ea367153f17c3c31dea59"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.DYN.LE00.IN",
+      "file": "SP_DYN_LE00_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "6d2b66ee8f1b9e32a2f9c806a332ead7b93244368416f99a0afe27a312021003"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.DYN.LE00.MA.IN",
+      "file": "SP_DYN_LE00_MA_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "29b00b229cfacd7944dd570a32a91a1c393187be614adc2a06ba139ff97815bd"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.DYN.TFRT.IN",
+      "file": "SP_DYN_TFRT_IN_page_1.json",
+      "rows": 4256,
+      "sha256": "bf9c5231898aa7253427f3c99e00cafd3e119cb529b5901d07572f3967acdae7"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.POP.1564.TO.ZS",
+      "file": "SP_POP_1564_TO_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "caf34d598817c5f2b39fe56736b94a92f567eac3ef78ae69c4c779686d43ec2a"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.POP.GROW",
+      "file": "SP_POP_GROW_page_1.json",
+      "rows": 4256,
+      "sha256": "c099dba2bcb8d53b24156cd43af193c3cacadb48b77e3e591bec7f18f08fa70e"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.POP.TOTL",
+      "file": "SP_POP_TOTL_page_1.json",
+      "rows": 4256,
+      "sha256": "dd1b414eefec9a42bc91745e598397769099a6e502a3e75f754c6631f64bf3f5"
+    },
+    {
+      "run_id": "2026-10-28T055913Z",
+      "indicator_code": "SP.URB.TOTL.IN.ZS",
+      "file": "SP_URB_TOTL_IN_ZS_page_1.json",
+      "rows": 4256,
+      "sha256": "e49771fbc155b778ea20477acc9e371f2d402063263e81139747ff9a0c8ac771"
+    }
+  ],
+  "note": "One-time migration rebuilt normalized observations from raw source snapshots because the legacy blank-ISO3 natural key collapsed distinct World Bank aggregates. Unchanged observation values are stored once; only later revisions are retained."
+}
