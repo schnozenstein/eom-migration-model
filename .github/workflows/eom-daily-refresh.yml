@@ -189,6 +189,10 @@ jobs:
 
       - name: Create human-readable report
         if: always()
+        env:
+          PYTHONPATH: src
+          EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
+          EOM_RANKING_RECOMPUTE_OUTCOME: ${{ steps.recompute_ranking.outcome }}
         run: python scripts/create_daily_summary.py
 
       - name: Upload daily report and diagnostics

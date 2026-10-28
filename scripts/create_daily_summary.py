@@ -47,6 +47,9 @@ def main():
     current_workflow_run_id = str(os.environ.get("GITHUB_RUN_ID", ""))
     manifest_workflow_run_id = str(manifest.get("github_workflow_run_id", ""))
     manifest_is_current = (not current_workflow_run_id) or (manifest_workflow_run_id == current_workflow_run_id)
+    etl_outcome = str(os.environ.get("EOM_ETL_OUTCOME", "unknown")).lower()
+    ranking_outcome = str(os.environ.get("EOM_RANKING_RECOMPUTE_OUTCOME", "unknown")).lower()
+    freshness_warning = "None" if manifest_is_current and etl_outcome == "success" else "The full ETL did not write a current manifest; source/panel counts below are last stored values. Ranking status is reported from the actual ranking step outcome."
 
     dashboard = read_csv(OUT / "data_freshness_dashboard.csv")
     macro_focus = read_csv(ROOT / "data" / "raw" / "world_bank_macro_focus.csv")
@@ -100,14 +103,16 @@ def main():
         "",
         f"- **Latest refresh run:** `{manifest.get('run_id', 'Not reported')}`",
         f"- **ETL manifest matches this workflow run:** {yes_no(manifest_is_current)}",
-        f"- **Freshness warning:** {'None' if manifest_is_current else 'This attempt did not write a matching ETL manifest; source counts and ranking status below are last stored outputs, not evidence of a fresh refresh.'}",
+        f"- **Full ETL step outcome:** {etl_outcome}",
+        f"- **Macro ranking step outcome:** {ranking_outcome}",
+        f"- **Freshness warning:** {freshness_warning}",
         f"- **Refresh timestamp:** {manifest.get('run_at_utc', 'Not reported')}",
         f"- **World Bank observations fetched:** {manifest.get('world_bank_rows_fetched', 'Not reported')}",
         f"- **World Bank indicator requests:** {manifest.get('world_bank_indicators_successful', 'Not reported')} succeeded; {manifest.get('world_bank_indicators_failed', 'Not reported')} failed",
         f"- **Normalized WDI panel:** {manifest.get('world_bank_rows_normalized', 'Not reported')} current rows; {manifest.get('world_bank_rows_without_iso3', 'Not reported')} aggregate rows use stable non-ISO3 source keys",
         f"- **Persistent WDI revision ledger:** {manifest.get('world_bank_history_rows', 'Not reported')} rows; {manifest.get('world_bank_history_new_keys', 'Not reported')} new keys; {manifest.get('world_bank_history_value_revisions', 'Not reported')} value revisions; {manifest.get('world_bank_history_unchanged_rows_skipped', 'Not reported')} unchanged observations skipped",
         f"- **WDI history migration this run:** {yes_no(manifest.get('world_bank_history_rebuilt_from_snapshots'))}; {manifest.get('world_bank_history_rows_restored_from_snapshots', 0)} rows restored from archived raw snapshots",
-        f"- **Macro scoring input:** `data/raw/world_bank_macro_focus.csv` ({macro_focus_rows} rows; separate 11-indicator destination input)",
+        f"- **Macro scoring input:** `data/raw/world_bank_macro_focus.csv` ({macro_focus_rows} rows; {'fetched during this run' if ranking_outcome == 'success' else 'last stored input'}; separate 11-indicator destination input)",
         f"- **Brazil World Bank extract:** {manifest.get('brazil_macro_rows_fetched', 'Not reported')} fresh Brazil indicator-year rows",
         f"- **Eurostat total migration flows:** {eurostat_succeeded} series succeeded; {eurostat_failed} failed; {eurostat_observed} observed annual cells across up to {eurostat_geos} reporting geographies",
         f"- **UNHCR forced-displacement extract:** {unhcr_state}; {unhcr_rows} retained focus/origin rows",
@@ -117,7 +122,7 @@ def main():
         f"- **Brazil OBMigra official source page:** {obmigra_state} (catalogue monitor only; report tables are not numerically parsed)",
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
         f"- **Freshness dashboard:** {len(recent)} recent; {len(attention)} requiring attention out of {len(dashboard)} indicators",
-        f"- **Macro ranking recomputed in this run:** {yes_no(manifest_is_current and manifest.get('ranking_recomputed'))}",
+        f"- **Macro ranking recomputed in this run:** {yes_no(ranking_outcome == 'success')}",
         f"- **Macro ranking comparison year:** {manifest.get('ranking_year', 'Not reported')}",
         f"- **Destinations scored / total:** {manifest.get('ranking_destinations_scored', 'Not reported')} / {manifest.get('ranking_destinations_total', len(ranking))}",
         f"- **Forecast issued during refresh:** {yes_no(manifest.get('forecast_issued'))}",
