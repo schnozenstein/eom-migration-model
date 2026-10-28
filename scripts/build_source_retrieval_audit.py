@@ -360,6 +360,13 @@ def main():
     failures=sum(1 for r in rows if r.get("source_type") not in {"derived_subset"} and r.get("fetch_status") and not success(r.get("fetch_status",""),r.get("http_status","")))
     dup_total=sum(as_int(r.get("duplicate_rows")) for r in rows if r.get("duplicate_rows")!="")
     rebuild=read_json(META/"wdi_history_rebuild_manifest.json")
+    timestamp_fallback_ids=[]
+    for row in rows:
+        if not row.get("retrieval_timestamp_utc"):
+            row["retrieval_timestamp_utc"]=row.get("etl_run_id") or etl_run_id
+            row["notes"]=(str(row.get("notes",""))+" Retrieval/derivation timestamp fallback: ETL run timestamp used because a source-specific timestamp is not applicable or was not exposed.").strip()
+            timestamp_fallback_ids.append(row.get("source_id","unknown"))
+    timestamp_blank_rows=sum(not row.get("retrieval_timestamp_utc") for row in rows)
     output=OUT/"source_retrieval_audit.csv"
     with output.open("w",newline="",encoding="utf-8") as f:
         writer=csv.DictWriter(f,fieldnames=FIELDS); writer.writeheader(); writer.writerows(rows)
@@ -394,7 +401,10 @@ def main():
     "wdi_history_duplicates":as_int(refresh.get("world_bank_history_duplicate_keys")),
     "one_time_wdi_history_rows_restored_from_snapshots":as_int(rebuild.get("rows_restored_vs_legacy_history")),
     "natural_key_duplicate_rows_across_audited_tables":dup_total,
-    "validation_status":"PASS_WITH_WARNINGS" if failures or panel_dup or dup_total else "PASS",
+    "retrieval_timestamp_fallback_rows":len(timestamp_fallback_ids),
+    "retrieval_timestamp_fallback_source_ids":timestamp_fallback_ids,
+    "retrieval_timestamp_blank_rows":timestamp_blank_rows,
+    "validation_status":"PASS_WITH_WARNINGS" if failures or panel_dup or dup_total or timestamp_blank_rows else "PASS",
     "revision_tracking_note":"The compact WDI ledger is versioned. Supplemental sources retain raw snapshots/current extracts; per-row revision ledgers are not yet implemented for every supplemental source.",
     "source_lineage_current_path":str(lineage_path.relative_to(ROOT)),"source_lineage_current_rows":len(rows),
     "source_lineage_current_sha256":sha256_file(lineage_path),

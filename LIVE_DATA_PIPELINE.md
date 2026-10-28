@@ -114,3 +114,6 @@ The scheduled UTC cron is parsed from the YAML schedule list item (not from comm
 
 
 Generated-output commits use a skip-CI marker and the refresh job has a push-message guard, preventing the pipeline from recursively rerunning on its own data/report commits. A code or human-authored push still triggers the pipeline; scheduled and manual events remain eligible.
+
+
+The consolidated source audit fills any blank retrieval timestamp with the current ETL run timestamp and annotates the row; it records the fallback count and source IDs. This is explicitly a run/derivation timestamp, not a source publication date. Remaining blank timestamps are included in the audit validation gate.
