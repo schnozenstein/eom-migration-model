@@ -26,7 +26,7 @@
   "train_rows_max": 613,
   "ridge_mae": 4.022241138311762,
   "ridge_rmse": 6.456942416046194,
-  "ridge_r2": 0.06071628441382282,
+  "ridge_r2": 0.06071628441382304,
   "country_mean_baseline_mae": 2.8041942752435918,
   "persistence_baseline_mae": 2.363202471389279,
   "eom_equal_weight_energy_rank_spearman": 0.5154288389319945,

@@ -1,11 +1,11 @@
 {
-  "workflow_run_id": "40647703180",
-  "etl_run_id": "2026-10-28T070502Z",
+  "workflow_run_id": "40648422121",
+  "etl_run_id": "2026-10-28T071130Z",
   "etl_outcome": "success",
   "refresh_manifest_matches_workflow_run": true,
-  "generated_at_utc": "2026-10-28T07:06:28.883797+00:00",
+  "generated_at_utc": "2026-10-28T07:12:37.013136+00:00",
   "source_records": 62,
-  "source_failures_or_unknown_status": 0,
+  "source_failures_or_unknown_status": 1,
   "numeric_source_rows_fetched_sum_across_endpoints": 1095164,
   "numeric_normalized_rows_sum_across_primary_datasets": 652213,
   "derived_rows_excluded_from_numeric_totals": true,
@@ -24,9 +24,9 @@
   "wdi_history_unchanged_rows_skipped": 165984,
   "wdi_history_duplicates": 0,
   "one_time_wdi_history_rows_restored_from_snapshots": 7296,
-  "natural_key_duplicate_rows_across_audited_tables": 82698,
-  "validation_status": "PASS",
+  "natural_key_duplicate_rows_across_audited_tables": 0,
+  "validation_status": "PASS_WITH_WARNINGS",
   "revision_tracking_note": "The compact WDI ledger is versioned. Supplemental sources retain raw snapshots/current extracts; per-row revision ledgers are not yet implemented for every supplemental source.",
   "output_path": "outputs/source_retrieval_audit.csv",
-  "output_sha256": "0c1fdaac97d67534ab1b092b1d7be9e5e31bad02b9886718d4a8f18b66a2e665"
+  "output_sha256": "79ee7b31c97e0ee05221dd58bb8020f32799304944f90382a78ecc66df84ef3c"
 }
