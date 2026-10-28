@@ -184,7 +184,7 @@ def main():
             source_id=f"WDI:{code}",publisher="World Bank",source_type="numeric_api",dataset_id=code,
             exact_url=url,request_urls_json=json.dumps(urls,ensure_ascii=False),
             metadata_url="https://api.worldbank.org/v2/indicator/"+code,
-            retrieval_timestamp_utc=first(st,"checked_at_utc","retrieved_utc"),
+            retrieval_timestamp_utc=first(st,"checked_at_utc","retrieved_utc","retrieved_at_utc","retrieval_timestamp_utc",default=etl_run_id),
             publication_release_date=release or "not exposed by endpoint",
             observation_period_start=str(int(years.min())) if len(years.dropna()) else "",
             observation_period_end_requested=first(st,"observation_end_requested",default="2026"),
@@ -215,7 +215,7 @@ def main():
         rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
             source_id=f"Eurostat:{dataset}",publisher="Eurostat",source_type="numeric_api",dataset_id=dataset,
             exact_url=first(st,"url"),request_urls_json=json.dumps([first(st,"url")]),
-            retrieval_timestamp_utc=first(st,"checked_at_utc","retrieved_utc"),
+            retrieval_timestamp_utc=first(st,"checked_at_utc","retrieved_utc","retrieved_at_utc","retrieval_timestamp_utc",default=etl_run_id),
             publication_release_date=first(st,"release_date",default="not exposed by dataset API"),
             observation_period_start=first(st,"observation_start"),observation_period_end_requested=first(st,"observation_end_requested"),
             observation_period_end_observed=first(st,"observation_end"),
@@ -282,7 +282,7 @@ def main():
                 source_id=f"{publisher}:{dataset}",publisher=publisher,source_type=source_type,dataset_id=dataset,
                 exact_url=url,request_urls_json=json.dumps([url]) if url else "",
                 metadata_url=first(st,"metadata_url","catalogue_url"),
-                retrieval_timestamp_utc=first(st,"checked_at_utc","retrieved_utc","retrieval_timestamp_utc"),
+                retrieval_timestamp_utc=first(st,"checked_at_utc","retrieved_utc","retrieved_at_utc","retrieval_timestamp_utc",default=etl_run_id),
                 publication_release_date=release,observation_period_start=obs_start,
                 observation_period_end_requested=first(st,"observation_end_requested"),observation_period_end_observed=obs_end,
                 definition=defn,unit=unit,geography_scope=geo,
@@ -305,7 +305,7 @@ def main():
         rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
             source_id="OBMigra:official_page_monitor",publisher="OBMigra / Brazilian government migration observatory",
             source_type="catalogue_page_monitor",dataset_id="official migration statistics page",exact_url=url,
-            request_urls_json=json.dumps([url]) if url else "",retrieval_timestamp_utc=first(st,"checked_at_utc"),
+            request_urls_json=json.dumps([url]) if url else "",retrieval_timestamp_utc=first(st,"checked_at_utc","retrieved_utc","retrieved_at_utc","retrieval_timestamp_utc",default=etl_run_id),
             publication_release_date="not applicable",definition="Official catalogue/page monitor only; no numeric table ingestion from this page.",
             unit="not applicable",geography_scope="Brazil",revision_vintage=first(st,"content_sha256"),
             fetch_status=status,http_status=first(st,"http_status"),rows_fetched=0,rows_normalized=0,
@@ -322,7 +322,7 @@ def main():
             source_id=f"PolicyPage:{first(st,'country',default='unknown')}:{first(st,'source_label','label',default='official page')}",
             publisher=first(st,"source_label","label",default="official immigration authority"),source_type="policy_page_monitor",
             dataset_id=first(st,"source_label","label"),exact_url=url,request_urls_json=json.dumps([url]) if url else "",
-            retrieval_timestamp_utc=first(st,"checked_at_utc"),
+            retrieval_timestamp_utc=first(st,"checked_at_utc","retrieved_utc","retrieved_at_utc","retrieval_timestamp_utc",default=etl_run_id),
             publication_release_date="not extracted; manual event review required",
             observation_period_start=first(st,"checked_at_utc"),observation_period_end_observed=first(st,"checked_at_utc"),
             definition="Official policy/news page hash monitor; a hash change is a review trigger, not a confirmed policy event.",
@@ -371,7 +371,7 @@ def main():
     legacy_lineage_rows=len(read_csv(legacy_lineage)) if legacy_lineage.exists() else 0
     workflow_path=ROOT/".github"/"workflows"/"eom-daily-refresh.yml"
     workflow_text=workflow_path.read_text(encoding="utf-8") if workflow_path.exists() else ""
-    schedule_match=re.search(r"""cron:\s*["']([^"']+)["']""",workflow_text)
+    schedule_match=re.search(r"""^\s*-\s*cron:\s*["']([^"']+)["']""",workflow_text,re.MULTILINE)
     scheduled_cron=schedule_match.group(1) if schedule_match else "not found"
     manifest={
     "workflow_run_id":workflow_id,"etl_run_id":etl_run_id,"etl_outcome":etl_outcome,

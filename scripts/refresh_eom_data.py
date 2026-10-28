@@ -83,7 +83,7 @@ POLICY_URLS = [
     ("Japan", "Immigration Services Agency", "https://www.moj.go.jp/isa/"),
     ("Switzerland", "State Secretariat for Migration latest news", "https://www.sem.admin.ch/sem/en/home/sem/aktuell.html"),
     ("Austria", "Austrian Federal Government migration portal", "https://www.migration.gv.at/en/welcome/"),
-    ("Spain", "Ministry of Inclusion, Social Security and Migration news", "https://www.inclusion.gob.es/es/web/migraciones/vivir-en-espana/noticias"),
+    ("Spain", "La Moncloa press releases — Inclusion, Social Security and Migration", "https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx"),
 ]
 
 OBMIGRA_URL = "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/obmigra-1/relatorios-obmigra/dados-consolidados/2025"

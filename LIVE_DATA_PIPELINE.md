@@ -108,3 +108,6 @@ The consolidated audit uses dataset-specific natural keys where source dimension
 
 
 The daily source audit also writes metadata/source_lineage_current.csv from the exact current-run retrieval records. The legacy metadata/source_lineage_2026-10-13.csv is preserved unchanged; Git history and dated Library packages retain earlier lineage versions. The audit manifest records the actual workflow event and parses the scheduled UTC cron from the checked-in workflow file, so stale schedule metadata can be identified.
+
+
+The scheduled UTC cron is parsed from the YAML schedule list item (not from comments), and the source-retrieval timestamp falls back to the ETL run timestamp only when a source-specific retrieval time is not exposed. Such fallback timestamps remain run-level approximations, not source publication dates.
