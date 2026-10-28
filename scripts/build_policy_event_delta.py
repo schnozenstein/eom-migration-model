@@ -6,6 +6,9 @@ from datetime import datetime,timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]; META=ROOT/"metadata"; OUT=ROOT/"outputs"
 FIELDS=["workflow_run_id","etl_run_id","country","publisher_or_page_label","source_url","final_url","retrieval_timestamp_utc","fetch_status","http_status","previous_content_sha256","current_content_sha256","content_hash_changed","event_status","confirmed_policy_event","event_type","announcement_date","effective_date","affected_cohort","mechanism","counterfactual_design","causal_estimate_status","notes"]
+def norm_http(value):
+    try: return str(int(float(str(value).strip())))
+    except Exception: return str(value or "").strip()
 def read_json(path):
     try:return json.loads(Path(path).read_text(encoding="utf-8"))
     except Exception:return {}
@@ -19,7 +22,7 @@ def build_policy_delta(previous_state,current_rows,workflow_run_id="",etl_outcom
         url=(st.get("url") or "").strip(); final=(st.get("final_url") or "").strip()
         previous=previous_state.get(url) or previous_state.get(final) or {}
         old=str(previous.get("content_sha256","") or ""); new=str(st.get("content_sha256","") or "")
-        status=str(st.get("status","UNKNOWN") or "UNKNOWN").upper(); http=str(st.get("http_status","") or "")
+        status=str(st.get("status","UNKNOWN") or "UNKNOWN").upper(); http=norm_http(st.get("http_status",""))
         good=status in {"SUCCESS","OK","PASS","200"} and (not http or http=="200") and bool(new)
         changed=bool(old and new and old!=new)
         if str(etl_outcome).lower()!="success":
@@ -33,7 +36,7 @@ def build_policy_delta(previous_state,current_rows,workflow_run_id="",etl_outcom
         else:
             event_status="NO_HASH_CHANGE"; note="No content hash change detected; this does not prove no policy change elsewhere."
         rows.append({"workflow_run_id":workflow_run_id,"etl_run_id":etl_run_id,"country":st.get("country",""),
-        "publisher_or_page_label":st.get("label",""),"source_url":url,"final_url":final,
+        "publisher_or_page_label":st.get("source_label") or st.get("label",""),"source_url":url,"final_url":final,
         "retrieval_timestamp_utc":st.get("checked_at_utc",""),"fetch_status":status,"http_status":http,
         "previous_content_sha256":old,"current_content_sha256":new,"content_hash_changed":str(changed).lower(),
         "event_status":event_status,"confirmed_policy_event":"false","event_type":"","announcement_date":"",

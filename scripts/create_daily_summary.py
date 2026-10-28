@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+META = ROOT / "metadata"
 OUT = ROOT / "outputs"
 DATA = ROOT / "data"
 MANIFEST_DIR = ROOT / "metadata" / "refresh_runs"
@@ -56,6 +57,7 @@ def main():
     policy_delta_manifest = read_json(META / "policy_event_delta_manifest.json")
     prediction_manifest = read_json(META / "prediction_ledger_manifest.json")
     history_rebuild_manifest = read_json(META / "wdi_history_rebuild_manifest.json")
+    ranking_delta_manifest = read_json(META / "macro_ranking_delta_manifest.json")
     macro_focus = read_csv(ROOT / "data" / "raw" / "world_bank_macro_focus.csv")
     macro_focus_rows = len(macro_focus)
     ranking = read_csv(OUT / "latest_macro_eom_ranking.csv")
@@ -127,6 +129,8 @@ def main():
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
         f"- **Freshness dashboard:** {len(recent)} recent; {len(attention)} requiring attention out of {len(dashboard)} indicators",
         f"- **Macro ranking recomputed in this run:** {yes_no(ranking_outcome == 'success')}",
+        f"- **Ranking delta audit:** {ranking_delta_manifest.get('ranking_status', 'not recorded')}; data cutoff {ranking_delta_manifest.get('data_cutoff', 'unknown')}; {ranking_delta_manifest.get('score_changed_rows', 'unknown')} score changes and {ranking_delta_manifest.get('rank_changed_rows', 'unknown')} rank changes across {ranking_delta_manifest.get('compared_destinations', 'unknown')} destinations; {ranking_delta_manifest.get('scored_destinations', 'unknown')} scored and {ranking_delta_manifest.get('unscored_destinations', 'unknown')} unscored.",
+
         f"- **Consolidated source-retrieval audit:** {source_audit_manifest.get('source_records', 'not generated')} source records; {source_audit_manifest.get('source_failures_or_unknown_status', 'unknown')} failed/unknown statuses; validation {source_audit_manifest.get('validation_status', 'not reported')}.",
         f"- **Numeric source rows fetched:** {source_audit_manifest.get('numeric_source_rows_fetched_sum_across_endpoints', 'not reported')} across endpoints; {source_audit_manifest.get('numeric_normalized_rows_sum_across_primary_datasets', 'not reported')} normalized rows retained. These are source-record counts, not unique people.",
         f"- **Panel validation:** {source_audit_manifest.get('panel_duplicate_natural_keys', 'unknown')} duplicate natural keys; {source_audit_manifest.get('panel_missing_values', 'unknown')} missing values ({source_audit_manifest.get('panel_missingness_pct', 'unknown')}% of panel cells).",

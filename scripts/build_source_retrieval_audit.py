@@ -92,13 +92,19 @@ def sha256_file(path):
 def rel(path):
     try: return str(Path(path).resolve().relative_to(ROOT.resolve()))
     except Exception: return str(path or "")
+def norm_http(value):
+    try: return str(int(float(str(value).strip())))
+    except Exception: return str(value or "").strip()
 def success(status,http=""):
-    return str(status).upper() in {"SUCCESS","OK","PASS","200"} and (not str(http).strip() or str(http).strip()=="200")
+    h=norm_http(http)
+    return str(status).upper() in {"SUCCESS","OK","PASS","200"} and (not h or h=="200")
 def blank_row(run_id,etl_run_id,etl_outcome,**kwargs):
     r={k:"" for k in FIELDS}
     r.update({"workflow_run_id":run_id,"etl_run_id":etl_run_id,"etl_outcome":etl_outcome,
     "counted_in_numeric_totals":"false","validation_status":"NOT_ASSESSED"})
     r.update({k:("" if v is None else v) for k,v in kwargs.items() if k in r})
+    if r.get("http_status"):
+        r["http_status"]=norm_http(r["http_status"])
     return r
 def snapshot_for(source,tokens=None,explicit=""):
     if explicit:
@@ -133,8 +139,8 @@ def natural_duplicates(df,source):
     "Eurostat":["geo_code","year","indicator","source_dataset"],
     "OECD":["REF_AREA","MEASURE","FREQ","TIME_PERIOD","UNIT_MEASURE","UNIT_MULT","SEX","BIRTH_PLACE","CITIZENSHIP","EDUCATION_LEV"],
     "ILOSTAT":["ref_area","indicator","sex","classif1","time"],
-    "UNHCR":["country_of_asylum","country_of_origin","year","population_type","sex","age"],
-    "UN DESA":["direction","origin_code_iso3","destination_code_iso3","country_code_iso3","year","sex"],
+    "UNHCR":["time_period","pop_type","ref_area_adm0","area_ori_adm0","sex","age","urbanisation","setting","unit_measure","unit_comp","data_series","data_source","reporting_type"],
+    "UN DESA":["direction","country_code_un","origin_code_un","destination_code_un","year","sex"],
     "Brazil WDI":["country_code","indicator_code","year"],
     "PolicyPage":["url"],"OBMigra":["url"]}
     keys=[c for c in candidates.get(source,[]) if c in df.columns]
@@ -228,22 +234,32 @@ def main():
         st_df=read_csv(META/status_name); data_path=ROOT/output_rel; data=read_csv(data_path)
         for st in st_df.to_dict("records") if not st_df.empty else []:
             dataset=first(st,"indicator","dataset","table_type","source_dataset","direction",default=publisher)
+            if publisher=="UN DESA":
+                sid=first(st,"source_id")
+                suffix=sid.rsplit("_",1)[-1].lower() if sid else ""
+                dataset=suffix if suffix in {"destination","origin","bilateral"} else first(st,"dataset",default=publisher)
             g=data
             if publisher=="ILOSTAT" and not data.empty and "indicator" in data.columns:
                 code=first(st,"indicator","indicator_code")
                 if code: g=data[data["indicator"].astype(str).eq(code)]
             elif publisher=="UN DESA" and not data.empty and "direction" in data.columns:
-                direction=first(st,"direction","table_type")
-                if direction: g=data[data["direction"].astype(str).eq(direction)]
+                direction=dataset
+                g=data[data["direction"].astype(str).eq(direction)]
             n,missing,miss=numeric_stats(g,["OBS_VALUE","obs_value","migrant_stock_persons","value","population"])
             dup=natural_duplicates(g,publisher); status=first(st,"status",default="UNKNOWN")
             url=first(st,"url","data_url","download_url")
-            snap=snapshot_for(snap_source,None,first(st,"raw_snapshot_path","download_path","snapshot_path"))
+            snap_tokens=None
+            if publisher=="UN DESA":
+                snap_tokens={"destination":["by_sex_and_destination"],"origin":["by_sex_and_origin"],"bilateral":["destination_and_origin"]}.get(dataset)
+            snap=snapshot_for(snap_source,snap_tokens,first(st,"raw_snapshot_path","download_path","snapshot_path"))
             sh=first(st,"sha256_response","sha256_full_export","source_data_sha256","sha256","source_sha256") or (sha256_file(snap) if snap else "")
             label=first(st,"indicator_label_expected","dataset","table_type","indicator",default=dataset)
             obs_start=first(st,"observation_start"); obs_end=first(st,"observation_end","observation_end_requested")
             if publisher=="UN DESA":
                 yrs=re.findall(r"\d{4}",first(st,"observation_years"))
+                if n and "year" in g.columns:
+                    numeric_years=pd.to_numeric(g["year"],errors="coerce").dropna()
+                    if len(numeric_years): yrs=[str(int(numeric_years.min())),str(int(numeric_years.max()))]
                 if yrs: obs_start,obs_end=min(yrs),max(yrs)
             if n and publisher=="ILOSTAT" and "time" in g.columns:
                 yrs=pd.to_numeric(g["time"].astype(str).str.slice(0,4),errors="coerce").dropna()
@@ -298,9 +314,9 @@ def main():
         token=hashlib.sha256(url.encode("utf-8")).hexdigest()[:16] if url else ""
         snap=snapshot_for("policy_pages",[token]) if token else None
         rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
-            source_id=f"PolicyPage:{first(st,'country',default='unknown')}:{first(st,'label',default='official page')}",
-            publisher=first(st,"label",default="official immigration authority"),source_type="policy_page_monitor",
-            dataset_id=first(st,"label"),exact_url=url,request_urls_json=json.dumps([url]) if url else "",
+            source_id=f"PolicyPage:{first(st,'country',default='unknown')}:{first(st,'source_label','label',default='official page')}",
+            publisher=first(st,"source_label","label",default="official immigration authority"),source_type="policy_page_monitor",
+            dataset_id=first(st,"source_label","label"),exact_url=url,request_urls_json=json.dumps([url]) if url else "",
             retrieval_timestamp_utc=first(st,"checked_at_utc"),
             publication_release_date="not extracted; manual event review required",
             observation_period_start=first(st,"checked_at_utc"),observation_period_end_observed=first(st,"checked_at_utc"),

@@ -45,3 +45,17 @@ def test_policy_hash_change_is_review_trigger_not_event():
     assert baseline and rows[0]["event_status"]=="CONTENT_CHANGED_REVIEW_REQUIRED" and rows[0]["confirmed_policy_event"]=="false"
     rows,_=build_policy_delta(prev,[dict(current[0],status="FAILED",http_status="403",content_sha256="")],"r1","success","t1")
     assert rows[0]["event_status"]=="UNKNOWN_FETCH_FAILED"
+
+
+from build_macro_ranking_delta import build_ranking_delta
+
+def test_macro_ranking_delta_records_stability_without_forcing_changes():
+    previous=[{"destination_id":"AAA","destination_name":"A","country_code":"AAA","year":"2025","energy_equal_weight":"-1.0","energy_rank":"1","score_status":"macro proxy"}]
+    current=[{"destination_id":"AAA","destination_name":"A","country_code":"AAA","year":"2025","energy_equal_weight":"-1.0","energy_rank":"1","score_status":"macro proxy"}]
+    rows,valid=build_ranking_delta(previous,current,"success","run1","sha1")
+    assert valid and len(rows)==1 and rows[0]["change_type"]=="UNCHANGED"
+    assert rows[0]["score_delta"]=="0"
+    rows,valid=build_ranking_delta(previous,[dict(current[0],energy_equal_weight="-2.0",energy_rank="2")],"success","run2","sha2")
+    assert valid and rows[0]["change_type"]=="SCORE_AND_RANK_CHANGED"
+    rows,valid=build_ranking_delta(previous,current,"failure","run3","sha3")
+    assert not valid and rows[0]["change_type"]=="NOT_COMPARABLE"

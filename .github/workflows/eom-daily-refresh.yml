@@ -10,6 +10,7 @@ on:
       - "scripts/build_source_retrieval_audit.py"
       - "scripts/build_policy_event_delta.py"
       - "scripts/maintain_prediction_ledger.py"
+      - "scripts/build_macro_ranking_delta.py"
       - "tests/test_incremental_ledgers.py"
       - "src/eom_empirical/**"
       - "data/destinations.csv"
@@ -26,6 +27,7 @@ on:
       - "scripts/build_source_retrieval_audit.py"
       - "scripts/build_policy_event_delta.py"
       - "scripts/maintain_prediction_ledger.py"
+      - "scripts/build_macro_ranking_delta.py"
       - "tests/test_incremental_ledgers.py"
       - "src/eom_empirical/**"
       - "data/destinations.csv"
@@ -168,7 +170,7 @@ jobs:
         id: policy_delta
         continue-on-error: true
         env:
-          EOM_ETL_OUTCOME: \${{ steps.refresh_data.outcome }}
+          EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
         run: python scripts/build_policy_event_delta.py --previous-state "$RUNNER_TEMP/eom_policy_state_pre_run.json"
 
       - name: Build consolidated source-retrieval audit
@@ -176,7 +178,7 @@ jobs:
         id: source_audit
         continue-on-error: true
         env:
-          EOM_ETL_OUTCOME: \${{ steps.refresh_data.outcome }}
+          EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
         run: python scripts/build_source_retrieval_audit.py
 
       - name: Maintain prediction and outcome ledgers
@@ -184,8 +186,18 @@ jobs:
         id: prediction_ledger
         continue-on-error: true
         env:
-          EOM_ETL_OUTCOME: \${{ steps.refresh_data.outcome }}
+          EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
         run: python scripts/maintain_prediction_ledger.py
+
+      - name: Snapshot previous macro ranking for score/rank delta
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          mkdir -p "$RUNNER_TEMP"
+          if [ -f outputs/latest_macro_eom_ranking.csv ]; then
+            cp outputs/latest_macro_eom_ranking.csv "$RUNNER_TEMP/eom_ranking_pre_run.csv"
+          else
+            : > "$RUNNER_TEMP/eom_ranking_pre_run.csv"
+          fi
 
       - name: Recompute macro EOM ranking from current destination set
         if: github.event_name != 'pull_request'
@@ -196,6 +208,14 @@ jobs:
         run: |
           python -m eom_empirical.fetch_world_bank --start 2010 --end "$(date -u +%Y)"
           python -m eom_empirical.fit_macro_model
+
+      - name: Build macro ranking score/rank delta
+        if: always() && github.event_name != 'pull_request'
+        id: ranking_delta
+        continue-on-error: true
+        env:
+          EOM_RANKING_RECOMPUTE_OUTCOME: ${{ steps.recompute_ranking.outcome }}
+        run: python scripts/build_macro_ranking_delta.py --previous-ranking "$RUNNER_TEMP/eom_ranking_pre_run.csv"
 
       - name: Build environmental and economic risk indicator panel
         if: github.event_name != 'pull_request'
@@ -238,6 +258,7 @@ jobs:
           EOM_SOURCE_AUDIT_OUTCOME: ${{ steps.source_audit.outcome }}
           EOM_POLICY_DELTA_OUTCOME: ${{ steps.policy_delta.outcome }}
           EOM_PREDICTION_LEDGER_OUTCOME: ${{ steps.prediction_ledger.outcome }}
+          EOM_RANKING_DELTA_OUTCOME: ${{ steps.ranking_delta.outcome }}
         run: python scripts/create_daily_summary.py
 
       - name: Upload daily report and diagnostics
@@ -260,6 +281,8 @@ jobs:
             metadata/refresh_runs/*.json
             outputs/data_freshness_dashboard.csv
             outputs/latest_macro_eom_ranking.csv
+            outputs/macro_ranking_delta.csv
+            metadata/macro_ranking_delta_manifest.json
             outputs/source_retrieval_audit.csv
             outputs/policy_event_delta.csv
             data/prediction_ledger.csv
@@ -321,14 +344,6 @@ jobs:
                   metadata/refresh_runs/ \
                   outputs/data_freshness_dashboard.csv \
                   outputs/latest_macro_eom_ranking.csv \
-                  outputs/source_retrieval_audit.csv \
-                  outputs/policy_event_delta.csv \
-                  data/prediction_ledger.csv \
-                  data/outcome_ledger.csv \
-                  data/prediction_outcome_join.csv \
-                  metadata/source_audit_manifest.json \
-                  metadata/policy_event_delta_manifest.json \
-                  metadata/prediction_ledger_manifest.json \
                   outputs/macro_backtest.json \
                   outputs/macro_backtest_folds.csv \
                   outputs/macro_backtest_rank_metrics.csv \
@@ -349,7 +364,7 @@ jobs:
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Preserve the compact risk panel and coverage audit when the risk step produced them.
-          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv; do
+          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv outputs/source_retrieval_audit.csv outputs/policy_event_delta.csv outputs/macro_ranking_delta.csv data/prediction_ledger.csv data/outcome_ledger.csv data/prediction_outcome_join.csv metadata/source_audit_manifest.json metadata/policy_event_delta_manifest.json metadata/prediction_ledger_manifest.json metadata/macro_ranking_delta_manifest.json; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.
@@ -393,7 +408,7 @@ jobs:
           fi
 
       - name: Mark run failed if required pipeline stages failed
-        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure' || steps.source_audit.outcome == 'failure' || steps.policy_delta.outcome == 'failure' || steps.prediction_ledger.outcome == 'failure')
+        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure' || steps.source_audit.outcome == 'failure' || steps.policy_delta.outcome == 'failure' || steps.prediction_ledger.outcome == 'failure' || steps.ranking_delta.outcome == 'failure')
         run: |
           echo "Daily report was generated, but a required test, data refresh, ranking, risk panel, or geographic evidence stage failed. Inspect the step logs."
           exit 1
