@@ -40,12 +40,35 @@
     "mean_of_yearly_persistence_mae": 2.3994364615503034,
     "years_scored": 24
   },
-  "fresh_numeric_ingestion": "blocked in prior v7 run by DNS/network resolution; no new observations claimed",
+  "fresh_numeric_ingestion": "Successful in GitHub Actions run #144 on 2026-10-28 (refresh run_id 2026-10-28T055913Z). This refresh fetched 165,984 World Bank API rows across 39 successful indicator requests; refreshed Eurostat, UN DESA, UNHCR, OECD and ILOSTAT source tables. It is not model calibration. The macro ranking recomputation succeeded but the published scores/ranks were identical to the previous output.",
   "combined_v2_ranking": "not produced: wellbeing and feasibility evidence incomplete",
   "next_required_inputs": [
     "official comparable wellbeing/life-evaluation series",
     "annual hours/work-life balance",
     "verified visa route and eligibility by profile",
     "housing/rent and after-tax occupation-specific salary"
-  ]
+  ],
+  "latest_full_etl": {
+    "run_date": "2026-10-28",
+    "run_id": "2026-10-28T055913Z",
+    "github_actions_run_number": 144,
+    "github_actions_run_id": 40640736816,
+    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/40640736816",
+    "event": "push",
+    "head_sha_at_run_start": "63e9b445dd5208e18f12e4330d79a19ceed040c8",
+    "output_commit": "58e9678c5239264ee13a1f7c44394745e01c234b",
+    "completed_at_utc": "2026-10-28T06:00:41Z",
+    "tests": "66 passed in 2.70s",
+    "ranking_recomputed": true,
+    "ranking_comparison_year": 2025,
+    "ranking_rows": 45,
+    "scored_destinations": 42,
+    "unscored_destinations": 3,
+    "score_changes": 0,
+    "rank_changes": 0,
+    "forecast_issued": false,
+    "calibration_status": "uncalibrated",
+    "note": "The scheduled event for 2026-10-28 was not present in the latest Actions run list; this successful full pipeline run was push-triggered."
+  },
+  "last_status_refresh": "2026-10-28"
 }
