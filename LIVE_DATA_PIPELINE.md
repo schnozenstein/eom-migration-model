@@ -82,3 +82,8 @@ The normalized compact output is `data/raw/ilostat_migrant_labour_focus.csv`, an
 At 2026-10-28 05:41 UTC, the latest committed refresh record visible on `main` was `metadata/refresh_runs/2026-10-27T155300Z.json`; no 2026-10-28 refresh record was present in the repository listing. The workflow is scheduled for 05:17 UTC and includes a separate macro-ranking step. The connected GitHub integration did not expose a workflow-dispatch operation, so this documentation correction is being pushed on `main` as an allowed workflow trigger because `LIVE_DATA_PIPELINE.md` is included in the workflow's push-path filters.
 
 **This push is a trigger attempt, not evidence of a successful ETL.** Verify the resulting Actions run, source status, ranking-step outcome, and new dated refresh record before marking the run successful. If the run fails, preserve the prior ranking and report the exact failed stage.
+
+
+## Raw-source snapshot retention (2026-10-28)
+
+The daily workflow artifact is configured to include source snapshots under `data/raw/snapshots/<source>/<run_id>/` and the versioned World Bank observation history. UN DESA workbooks, World Bank JSON responses, Eurostat JSON-stat payloads, policy-page HTML, the OBMigra catalogue page, the full UNHCR export, the OECD SDMX CSV response, and ILOSTAT catalogue/data CSV responses are retained separately from normalized extracts. Verify the corresponding snapshot paths and hashes in each run artifact; failed or partial downloads must remain marked as failed and must not replace the last successful normalized extract.

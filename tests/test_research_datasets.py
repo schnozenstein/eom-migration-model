@@ -217,6 +217,10 @@ def test_ilostat_fetch_uses_official_csv_endpoint_and_caps_year(tmp_path):
     assert fresh["time"].max() == query_end_year
     assert (fresh["time"] < query_end_year + 1).all()
     assert set(fresh["ref_area"]) == {"GBR"}
+    snapshot_dir = tmp_path / "data" / "raw" / "snapshots" / "ilostat" / "test-run"
+    assert (snapshot_dir / "indicator_catalogue.csv").exists()
+    for dataset_id in current_ids.values():
+        assert (snapshot_dir / f"{dataset_id}.csv").exists()
 
 def test_spain_policy_monitor_uses_current_official_portal():
     from scripts.refresh_eom_data import POLICY_URLS
@@ -225,3 +229,85 @@ def test_spain_policy_monitor_uses_current_official_portal():
     assert len(spain_rows) == 1
     assert spain_rows[0][1] == "Ministry of Inclusion, Social Security and Migration news"
     assert spain_rows[0][2] == "https://www.inclusion.gob.es/es/web/guest/comunicacion/noticias"
+
+
+
+def test_unhcr_export_is_preserved_as_raw_snapshot(tmp_path):
+    import hashlib
+
+    from eom_empirical.research_datasets import UNHCR_EXPORT_URL, fetch_unhcr_focus
+
+    body = (
+        "time_period,ref_area_adm0,area_ori_adm0,obs_value,record_id\\n"
+        "2024,SGP,IND,123,rec1\\n"
+    ).encode("utf-8")
+
+    class FakeResponse:
+        headers = {"Content-Type": "text/csv"}
+        url = UNHCR_EXPORT_URL
+
+        def __init__(self, content):
+            self.content = content
+
+        def raise_for_status(self):
+            return None
+
+        def iter_content(self, chunk_size=1024 * 1024):
+            yield self.content
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+    class FakeSession:
+        def get(self, url, headers=None, timeout=None, stream=False):
+            assert url == UNHCR_EXPORT_URL
+            assert stream is True
+            return FakeResponse(body)
+
+    fresh, status = fetch_unhcr_focus(FakeSession(), tmp_path, "test-run")
+    snapshot_path = tmp_path / status["raw_snapshot_path"]
+
+    assert status["status"] == "SUCCESS", status
+    assert status["source_rows"] == 1
+    assert status["focus_rows"] == 1
+    assert snapshot_path.exists()
+    assert snapshot_path.read_bytes() == body
+    assert status["sha256_full_export"] == hashlib.sha256(body).hexdigest()
+    assert len(fresh) == 1
+
+
+def test_oecd_migration_response_is_preserved_as_raw_snapshot(tmp_path):
+    import hashlib
+
+    from eom_empirical.research_datasets import OECD_MIGRATION_QUERY, fetch_oecd_migration_slice
+
+    body = (
+        "REF_AREA,TIME_PERIOD,OBS_VALUE\\n"
+        "GBR,2024,12\\n"
+    ).encode("utf-8")
+
+    class FakeResponse:
+        def __init__(self, content, url):
+            self.content = content
+            self.text = content.decode("utf-8")
+            self.url = url
+
+        def raise_for_status(self):
+            return None
+
+    class FakeSession:
+        def get(self, url, params=None, timeout=None):
+            assert url == OECD_MIGRATION_QUERY
+            return FakeResponse(body, url)
+
+    fresh, status = fetch_oecd_migration_slice(FakeSession(), tmp_path, "test-run", 2010, 2025)
+    snapshot_path = tmp_path / status["raw_snapshot_path"]
+
+    assert status["status"] == "SUCCESS", status
+    assert len(fresh) == 1
+    assert snapshot_path.exists()
+    assert snapshot_path.read_bytes() == body
+    assert status["sha256_response"] == hashlib.sha256(body).hexdigest()

@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import hashlib
 import re
-import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -136,6 +135,7 @@ def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, d
         "sha256_full_export": "",
         "error": "",
         "output_path": "data/raw/unhcr_forced_displacement_focus.csv.gz",
+        "raw_snapshot_path": f"data/raw/snapshots/unhcr/{run_id}/PopStatsOfficial.csv",
     }
     digest = hashlib.sha256()
     kept: list[pd.DataFrame] = []
@@ -145,7 +145,12 @@ def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, d
             "User-Agent": "EOM-Research-ETL/2.2 (+reproducible academic research)",
             "Accept": "text/csv,*/*",
         }
-        with tempfile.NamedTemporaryFile(prefix="eom_unhcr_", suffix=".csv", delete=True) as tmp:
+        snapshot_dir = root / "data" / "raw" / "snapshots" / "unhcr" / run_id
+        snapshot_dir.mkdir(parents=True, exist_ok=True)
+        snapshot_path = snapshot_dir / "PopStatsOfficial.csv"
+        partial_path = snapshot_dir / "PopStatsOfficial.csv.part"
+        row["raw_snapshot_path"] = str(snapshot_path.relative_to(root))
+        with partial_path.open("wb") as tmp:
             with session.get(UNHCR_EXPORT_URL, headers=headers, timeout=(15, 180), stream=True) as response:
                 response.raise_for_status()
                 content_type = str(response.headers.get("Content-Type", "")).lower()
@@ -155,9 +160,8 @@ def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, d
                     if block:
                         digest.update(block)
                         tmp.write(block)
-            tmp.flush()
-            tmp.seek(0)
-            for chunk in pd.read_csv(tmp.name, chunksize=50_000, low_memory=False):
+        partial_path.replace(snapshot_path)
+        for chunk in pd.read_csv(snapshot_path, chunksize=50_000, low_memory=False):
                 total_rows += len(chunk)
                 period_col = _find_column(chunk.columns, ("time_period",))
                 host_col = _find_column(chunk.columns, ("ref_area_adm0",))
@@ -201,6 +205,9 @@ def fetch_unhcr_focus(session, root: Path, run_id: str) -> tuple[pd.DataFrame, d
             "sha256_full_export": digest.hexdigest(),
         })
     except Exception as exc:
+        partial_path = root / "data" / "raw" / "snapshots" / "unhcr" / run_id / "PopStatsOfficial.csv.part"
+        if partial_path.exists():
+            partial_path.unlink(missing_ok=True)
         row["error"] = f"{type(exc).__name__}: {exc}"
     return (result if "result" in locals() and not result.empty else pd.DataFrame()), row
 
@@ -420,10 +427,14 @@ def fetch_oecd_migration_slice(session, root: Path, run_id: str, start_year: int
         "observation_end_requested": end_year,
         "error": "",
         "output_path": "data/raw/oecd_migration_database_focus.csv",
+        "raw_snapshot_path": f"data/raw/snapshots/oecd/{run_id}/international_migration_database.csv",
     }
     try:
         response = session.get(OECD_MIGRATION_QUERY, params=params, timeout=(15, 120))
         response.raise_for_status()
+        snapshot_path = root / "data" / "raw" / "snapshots" / "oecd" / run_id / "international_migration_database.csv"
+        snapshot_path.parent.mkdir(parents=True, exist_ok=True)
+        snapshot_path.write_bytes(response.content)
         text = response.text
         if not text.strip() or text.lstrip().lower().startswith(("<!doctype html", "<html")):
             raise ValueError("OECD API returned empty or HTML content instead of a CSV series")
@@ -473,7 +484,7 @@ ILOSTAT_MIGRATION_INDICATORS = {
 }
 
 
-def fetch_ilostat_annual_dataset_ids(session) -> dict[str, str]:
+def fetch_ilostat_annual_dataset_ids(session, snapshot_dir: Path | None = None) -> dict[str, str]:
     """Resolve current annual dataset IDs by official ILOSTAT catalogue labels.
 
     Legacy IDs are intentionally not trusted: ILOSTAT has deprecated some older
@@ -488,6 +499,9 @@ def fetch_ilostat_annual_dataset_ids(session) -> dict[str, str]:
     )
     response.raise_for_status()
     body = response.text
+    if snapshot_dir is not None:
+        snapshot_dir.mkdir(parents=True, exist_ok=True)
+        (snapshot_dir / "indicator_catalogue.csv").write_bytes(response.content)
     if not body.strip() or body.lstrip().startswith("<"):
         raise ValueError("ILOSTAT indicator catalogue returned empty or non-CSV content")
     catalog = pd.read_csv(StringIO(body), low_memory=False)
@@ -573,8 +587,10 @@ def fetch_ilostat_migration_focus(
     new_frames: list[pd.DataFrame] = []
     statuses: list[dict] = []
     successful_ids: set[str] = set()
+    snapshot_dir = root / "data" / "raw" / "snapshots" / "ilostat" / run_id
+    snapshot_dir.mkdir(parents=True, exist_ok=True)
     try:
-        current_dataset_ids = fetch_ilostat_annual_dataset_ids(session)
+        current_dataset_ids = fetch_ilostat_annual_dataset_ids(session, snapshot_dir=snapshot_dir)
         catalogue_error = ""
     except Exception as exc:
         current_dataset_ids = {}
@@ -603,6 +619,8 @@ def fetch_ilostat_migration_focus(
             "sha256_response": "",
             "error": "",
             "output_path": "data/raw/ilostat_migrant_labour_focus.csv",
+            "catalogue_snapshot_path": f"data/raw/snapshots/ilostat/{run_id}/indicator_catalogue.csv",
+            "raw_snapshot_path": "",
         }
 
         if not dataset_id:
@@ -629,6 +647,8 @@ def fetch_ilostat_migration_focus(
         # refresh; CSV avoids that native parser and supports bounded year queries.
         from io import BytesIO
 
+        snapshot_path = snapshot_dir / f"{dataset_id}.csv"
+        status["raw_snapshot_path"] = str(snapshot_path.relative_to(root))
         data_url = "https://rplumber.ilo.org/data/indicator"
         params = {
             "id": dataset_id,
@@ -645,6 +665,7 @@ def fetch_ilostat_migration_focus(
         try:
             response = session.get(data_url, params=params, timeout=(15, 120))
             response.raise_for_status()
+            snapshot_path.write_bytes(response.content)
             if not response.content:
                 raise ValueError("ILOSTAT data endpoint returned an empty response")
             candidate = pd.read_csv(BytesIO(response.content), low_memory=False)
