@@ -224,8 +224,8 @@ jobs:
             outputs/macro_model_coefficients_last_fold.csv
             outputs/macro_backtest_rank_metrics.csv
             data/raw/world_bank_long.csv
-          data/raw/world_bank_macro_focus.csv
-          metadata/wdi_history_rebuild_manifest.json
+            data/raw/world_bank_macro_focus.csv
+            metadata/wdi_history_rebuild_manifest.json
             data/raw/eurostat_migration_flows.csv
             data/raw/brazil_world_bank_macro.csv
             data/raw/undesa_migrant_stock_long.csv
