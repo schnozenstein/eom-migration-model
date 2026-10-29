@@ -117,3 +117,7 @@ Generated-output commits use a skip-CI marker and the refresh job has a push-mes
 
 
 The consolidated source audit fills any blank retrieval timestamp with the current ETL run timestamp and annotates the row; it records the fallback count and source IDs. This is explicitly a run/derivation timestamp, not a source publication date. Remaining blank timestamps are included in the audit validation gate.
+
+## Scheduled-run audit and manual ETL trigger (2026-10-29)
+
+At 2026-10-29T05:41Z, the latest visible `EOM Daily Refresh` run was push-triggered run #156 (2026-10-28T07:33Z–07:36Z); no schedule-triggered daily-refresh run for 2026-10-29 was visible after the configured `17 5 * * *` UTC time. The connected GitHub action surface used by this audit exposes repository-content writes and workflow-run reads, but no workflow-dispatch operation. To request a fresh end-to-end run without changing model weights or manufacturing data, this audit note is committed on the workflow's watched `LIVE_DATA_PIPELINE.md` path, which triggers the existing push workflow. This action is a manual trigger workaround, not a repair or proof of the schedule. The run ID, ETL, ranking-recompute step, tests, and artifacts must be inspected separately before declaring success.
