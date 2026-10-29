@@ -40,7 +40,7 @@
     "mean_of_yearly_persistence_mae": 2.3994364615503034,
     "years_scored": 24
   },
-  "fresh_numeric_ingestion": "Successful in GitHub Actions run #144 on 2026-10-28 (refresh run_id 2026-10-28T055913Z). This refresh fetched 165,984 World Bank API rows across 39 successful indicator requests; refreshed Eurostat, UN DESA, UNHCR, OECD and ILOSTAT source tables. It is not model calibration. The macro ranking recomputation succeeded but the published scores/ranks were identical to the previous output.",
+  "fresh_numeric_ingestion": "Successful in GitHub Actions run #157 on 2026-10-29 (refresh run_id 2026-10-29T054345Z). The run fetched 1,095,164 numeric source rows across endpoints; normalized 652,213 primary-source rows, plus a 624-row derived Brazil subset excluded from primary totals. All 39 World Bank indicator requests, 2 Eurostat total-flow series, UNHCR, 3 UN DESA tables, OECD, 3 ILOSTAT indicators and 11 policy-page checks succeeded. This is source refresh, not calibration. Macro scores/ranks were identical to the prior output.",
   "combined_v2_ranking": "not produced: wellbeing and feasibility evidence incomplete",
   "next_required_inputs": [
     "official comparable wellbeing/life-evaluation series",
@@ -49,6 +49,29 @@
     "housing/rent and after-tax occupation-specific salary"
   ],
   "latest_full_etl": {
+    "run_date": "2026-10-29",
+    "run_id": "2026-10-29T054345Z",
+    "github_actions_run_number": 157,
+    "github_actions_run_id": 40824985778,
+    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/40824985778",
+    "event": "push",
+    "head_sha_at_run_start": "d18a7f557abf42814fc363759e2ab08e9039e64f",
+    "output_commit": "62d35c648fd78729947ea29e2ab16221694e69ff",
+    "completed_at_utc": "2026-10-29T05:46:18Z",
+    "tests": "73 passed in 2.26s",
+    "ranking_recomputed": true,
+    "ranking_comparison_year": 2025,
+    "ranking_rows": 45,
+    "scored_destinations": 42,
+    "unscored_destinations": 3,
+    "score_changes": 0,
+    "rank_changes": 0,
+    "forecast_issued": false,
+    "calibration_status": "uncalibrated",
+    "note": "Successful push-triggered recovery run. The configured daily schedule (17 5 * * * UTC) had no run visible for 2026-10-29 at the audit cutoff; this run does not prove the schedule is fixed. WDI history had 0 new keys and 0 value revisions. Macro ranking was recomputed successfully and remained byte-for-byte unchanged."
+  },
+  "last_status_refresh": "2026-10-29",
+  "previous_full_etl": {
     "run_date": "2026-10-28",
     "run_id": "2026-10-28T055913Z",
     "github_actions_run_number": 144,
@@ -70,5 +93,20 @@
     "calibration_status": "uncalibrated",
     "note": "The scheduled event for 2026-10-28 was not present in the latest Actions run list; this successful full pipeline run was push-triggered."
   },
-  "last_status_refresh": "2026-10-28"
+  "manual_policy_review": {
+    "checked_on": "2026-10-29",
+    "records_added": 5,
+    "evidence_log_rows_before": 26,
+    "evidence_log_rows_after": 31,
+    "dated_event_file": "data/policy_events_added_2026-10-29.csv",
+    "commits": [
+      "2074976b2e0dfeddf65fdf82eaa60e0087aff87b",
+      "f3e9ae5e79db860d8b20a1e1b61a8d0b280589c8"
+    ],
+    "note": "Five New Zealand cohort-specific policy provisions were manually verified from official Immigration New Zealand pages. No causal effects or numeric macro adjustments were assigned."
+  },
+  "year_balanced_backtest_status": {
+    "status": "stored_metrics_not_recomputed_in_run_157",
+    "note": "The year-balanced metrics in this status artifact are retained from the prior stored evaluation. Run #157's current expanding-origin metrics are in outputs/macro_backtest.json; do not treat the year-balanced section as a new result from run #157."
+  }
 }
