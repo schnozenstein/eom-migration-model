@@ -40,7 +40,7 @@
     "mean_of_yearly_persistence_mae": 2.3994364615503034,
     "years_scored": 24
   },
-  "fresh_numeric_ingestion": "Successful in GitHub Actions run #157 on 2026-10-29 (refresh run_id 2026-10-29T054345Z). The run fetched 1,095,164 numeric source rows across endpoints; normalized 652,213 primary-source rows, plus a 624-row derived Brazil subset excluded from primary totals. All 39 World Bank indicator requests, 2 Eurostat total-flow series, UNHCR, 3 UN DESA tables, OECD, 3 ILOSTAT indicators and 11 policy-page checks succeeded. This is source refresh, not calibration. Macro scores/ranks were identical to the prior output.",
+  "fresh_numeric_ingestion": "Successful in GitHub Actions run #159 on 2026-10-30 (refresh run_id 2026-10-30T054653Z). 1,095,164 numeric source rows fetched; 652,213 primary-source rows normalized plus a 624-row derived Brazil subset excluded from primary totals. All 39 World Bank indicators, 2 Eurostat total-flow series, UNHCR, 3 UN DESA tables, OECD, 3 ILOSTAT indicators and 11 policy-page checks succeeded. Cross-run stable values were unchanged except UNHCR _lastEditTime metadata. Source refresh is not calibration.",
   "combined_v2_ranking": "not produced: wellbeing and feasibility evidence incomplete",
   "next_required_inputs": [
     "official comparable wellbeing/life-evaluation series",
@@ -49,16 +49,16 @@
     "housing/rent and after-tax occupation-specific salary"
   ],
   "latest_full_etl": {
-    "run_date": "2026-10-29",
-    "run_id": "2026-10-29T054345Z",
-    "github_actions_run_number": 157,
-    "github_actions_run_id": 40824985778,
-    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/40824985778",
+    "run_date": "2026-10-30",
+    "run_id": "2026-10-30T054653Z",
+    "github_actions_run_number": 159,
+    "github_actions_run_id": 41010241358,
+    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/41010241358",
     "event": "push",
-    "head_sha_at_run_start": "d18a7f557abf42814fc363759e2ab08e9039e64f",
-    "output_commit": "62d35c648fd78729947ea29e2ab16221694e69ff",
-    "completed_at_utc": "2026-10-29T05:46:18Z",
-    "tests": "73 passed in 2.26s",
+    "head_sha_at_run_start": "d35aad7ac783d4462b7f277cb0bfd3b4ec302cb9",
+    "output_commit": "f381056899d0620d150db324e09f24ea704009e9",
+    "completed_at_utc": "2026-10-30T05:48:57Z",
+    "tests": "73 passed in 2.11s",
     "ranking_recomputed": true,
     "ranking_comparison_year": 2025,
     "ranking_rows": 45,
@@ -68,20 +68,20 @@
     "rank_changes": 0,
     "forecast_issued": false,
     "calibration_status": "uncalibrated",
-    "note": "Successful push-triggered recovery run. The configured daily schedule (17 5 * * * UTC) had no run visible for 2026-10-29 at the audit cutoff; this run does not prove the schedule is fixed. WDI history had 0 new keys and 0 value revisions. Macro ranking was recomputed successfully and remained byte-for-byte unchanged."
+    "note": "Fresh ETL and ranking recomputation succeeded. WDI history had 0 new keys and 0 value revisions; supplemental source stable values were unchanged except UNHCR edit-time metadata. One UK refugee sponsorship event was manually confirmed as a separate humanitarian cohort; no causal estimate or macro score adjustment."
   },
-  "last_status_refresh": "2026-10-29",
+  "last_status_refresh": "2026-10-30",
   "previous_full_etl": {
-    "run_date": "2026-10-28",
-    "run_id": "2026-10-28T055913Z",
-    "github_actions_run_number": 144,
-    "github_actions_run_id": 40640736816,
-    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/40640736816",
-    "event": "push",
-    "head_sha_at_run_start": "63e9b445dd5208e18f12e4330d79a19ceed040c8",
-    "output_commit": "58e9678c5239264ee13a1f7c44394745e01c234b",
-    "completed_at_utc": "2026-10-28T06:00:41Z",
-    "tests": "66 passed in 2.70s",
+    "run_date": "2026-10-29",
+    "run_id": "2026-10-29T113622Z",
+    "github_actions_run_number": 158,
+    "github_actions_run_id": 40866563704,
+    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/40866563704",
+    "event": "schedule",
+    "head_sha_at_run_start": "dbb064636b82e9fee3074812b6ceb5a726c85cc7",
+    "output_commit": "2fe82e505b8b0e092b2d5031ff2ea4fce6366963",
+    "completed_at_utc": "2026-10-29T11:39:03Z",
+    "tests": "73 passed in 2.28s",
     "ranking_recomputed": true,
     "ranking_comparison_year": 2025,
     "ranking_rows": 45,
@@ -91,7 +91,7 @@
     "rank_changes": 0,
     "forecast_issued": false,
     "calibration_status": "uncalibrated",
-    "note": "The scheduled event for 2026-10-28 was not present in the latest Actions run list; this successful full pipeline run was push-triggered."
+    "note": "Scheduled run; created substantially later than the configured 05:17 UTC cron time, so schedule dispatch may be delayed."
   },
   "manual_policy_review": {
     "checked_on": "2026-10-29",
@@ -108,5 +108,35 @@
   "year_balanced_backtest_status": {
     "status": "stored_metrics_not_recomputed_in_run_157",
     "note": "The year-balanced metrics in this status artifact are retained from the prior stored evaluation. Run #157's current expanding-origin metrics are in outputs/macro_backtest.json; do not treat the year-balanced section as a new result from run #157."
+  },
+  "manual_policy_review_latest": {
+    "checked_on": "2026-10-30",
+    "records_added": 1,
+    "source_pages_reviewed": 4,
+    "dated_event_file": "data/policy_events_added_2026-10-30.csv",
+    "event": "UK refugee sponsorship routes; lead sponsor applications opened 2026-10-29; beneficiary routes phased in 2027.",
+    "causal_estimate": "none",
+    "macro_score_adjustment": "none",
+    "note": "Humanitarian refugee cohort only; not a general visa route for nationals residing in their country of origin."
+  },
+  "schedule_status": {
+    "cron_utc": "17 5 * * *",
+    "latest_schedule_run_number": 158,
+    "latest_schedule_run_at_utc": "2026-10-29T11:35:30Z",
+    "2026_10_30_schedule_event_visible_at_audit_cutoff": false,
+    "manual_push_run_number": 159,
+    "schedule_reliability": "under observation; no repair claimed"
+  },
+  "latest_data_audit": {
+    "current_source_audit_rows": 62,
+    "success_statuses": 61,
+    "derived_statuses": 1,
+    "failed_or_unknown_statuses": 0,
+    "cumulative_source_audit_rows": 770,
+    "cumulative_duplicate_keys": 0,
+    "wdi_new_keys": 0,
+    "wdi_value_revisions": 0,
+    "macro_ranking_score_changes": 0,
+    "macro_ranking_rank_changes": 0
   }
 }
