@@ -1,0 +1,172 @@
+{
+  "model_version": "EOM-general-v2-architecture-2026-10-17",
+  "run_status": "completed_with_data_gates",
+  "legacy_macro_ranking_preserved": true,
+  "legacy_ranking_file": "outputs/latest_macro_eom_ranking.csv",
+  "joie_de_vivre": {
+    "weights": {
+      "life_evaluation": 0.25,
+      "work_life_balance": 0.2,
+      "social_connection": 0.15,
+      "autonomy": 0.15,
+      "leisure_cultural_access": 0.15,
+      "everyday_environment": 0.1
+    },
+    "weight_status": "illustrative, not estimated",
+    "destinations_with_complete_inputs": 0,
+    "destinations_in_input_template": 20,
+    "score_output": "outputs/eom_joie_de_vivre_scores.csv",
+    "interpretation": "separate subsystem; no score if any required component is missing"
+  },
+  "feasibility": {
+    "origin_country_default": "India",
+    "scored_destinations": 0,
+    "reason": "No verified person-specific visa-route/eligibility/funds/language inputs supplied; template created rather than fabricate scores.",
+    "input_template": "data/migration_feasibility_inputs_template.csv"
+  },
+  "uncertainty": {
+    "weight_sensitivity_draws": 2000,
+    "range": "each existing macro component weight independently perturbed uniformly from 0.8 to 1.2; signs held fixed",
+    "output": "outputs/eom_v2_weight_sensitivity.csv",
+    "not_a_confidence_interval": true
+  },
+  "year_balanced_backtest": {
+    "output": "outputs/eom_v2_year_balanced_backtest.csv",
+    "mean_of_yearly_eom_attraction_spearman": 0.40305925635243095,
+    "mean_of_yearly_ridge_spearman": 0.4478993074729998,
+    "mean_of_yearly_persistence_spearman": 0.8698594294414433,
+    "mean_of_yearly_ridge_mae": 6.004375609020207,
+    "mean_of_yearly_country_mean_mae": 3.9321009456496046,
+    "mean_of_yearly_persistence_mae": 2.3994364615503034,
+    "years_scored": 24
+  },
+  "fresh_numeric_ingestion": "Successful in GitHub Actions run #159 on 2026-10-30 (refresh run_id 2026-10-30T054653Z). 1,095,164 numeric source rows fetched; 652,213 primary-source rows normalized plus a 624-row derived Brazil subset excluded from primary totals. All 39 World Bank indicators, 2 Eurostat total-flow series, UNHCR, 3 UN DESA tables, OECD, 3 ILOSTAT indicators and 11 policy-page checks succeeded. Cross-run stable values were unchanged except UNHCR _lastEditTime metadata. Source refresh is not calibration.",
+  "combined_v2_ranking": "not produced: wellbeing and feasibility evidence incomplete",
+  "next_required_inputs": [
+    "official comparable wellbeing/life-evaluation series",
+    "annual hours/work-life balance",
+    "verified visa route and eligibility by profile",
+    "housing/rent and after-tax occupation-specific salary"
+  ],
+  "latest_full_etl": {
+    "run_date": "2026-10-31",
+    "run_id": "2026-10-31T054256Z",
+    "github_actions_run_number": 161,
+    "github_actions_run_id": 41173640242,
+    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/41173640242",
+    "event": "push",
+    "head_sha_at_run_start": "1416c98fea94bdb04bcb7ef86d7e27b9574e05e0",
+    "output_commit": "7dcd9cd4336173c42d7751a2ba7728870ff86ebb",
+    "completed_at_utc": "2026-10-31T05:46:40Z",
+    "tests": "73 passed in 1.80s",
+    "ranking_recomputed": true,
+    "ranking_comparison_year": 2025,
+    "ranking_rows": 45,
+    "scored_destinations": 42,
+    "unscored_destinations": 3,
+    "score_changes": 0,
+    "rank_changes": 0,
+    "forecast_issued": false,
+    "calibration_status": "uncalibrated",
+    "note": "Fresh ETL and macro ranking recomputation succeeded. World Bank fetched/normalized 165,984 rows; WDI history had 0 new natural keys and 0 value revisions. 11 official policy pages succeeded; 8 hashes changed and were manually reviewed, with no newly confirmed policy event. Sixteen manually extracted Ireland processing-frontier and Singapore 3Q labour-market observations were appended to the operational-indicator snapshot, not to the macro scoring panel. No causal estimate or macro-score adjustment."
+  },
+  "last_status_refresh": "2026-10-31",
+  "previous_full_etl": {
+    "run_date": "2026-10-30",
+    "run_id": "2026-10-30T112744Z",
+    "github_actions_run_number": 160,
+    "github_actions_run_id": 41048158534,
+    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/41048158534",
+    "event": "schedule",
+    "head_sha_at_run_start": "7d650b73278221b4ca8fe8049b66013937518a6a",
+    "output_commit": "7d8595a620f9ea1fa7830e371c842eab5ca74178",
+    "completed_at_utc": "2026-10-30T11:29:47Z",
+    "ranking_recomputed": true,
+    "note": "Scheduled run #160 completed successfully; ranking recomputation step completed successfully. It ran approximately 6 hours 10 minutes after the configured 05:17 UTC cron."
+  },
+  "manual_policy_review": {
+    "checked_on": "2026-10-29",
+    "records_added": 5,
+    "evidence_log_rows_before": 26,
+    "evidence_log_rows_after": 31,
+    "dated_event_file": "data/policy_events_added_2026-10-29.csv",
+    "commits": [
+      "2074976b2e0dfeddf65fdf82eaa60e0087aff87b",
+      "f3e9ae5e79db860d8b20a1e1b61a8d0b280589c8"
+    ],
+    "note": "Five New Zealand cohort-specific policy provisions were manually verified from official Immigration New Zealand pages. No causal effects or numeric macro adjustments were assigned."
+  },
+  "year_balanced_backtest_status": {
+    "status": "stored_metrics_not_recomputed_in_run_157",
+    "note": "The year-balanced metrics in this status artifact are retained from the prior stored evaluation. Run #157's current expanding-origin metrics are in outputs/macro_backtest.json; do not treat the year-balanced section as a new result from run #157."
+  },
+  "manual_policy_review_latest": {
+    "checked_on": "2026-10-30",
+    "records_added": 1,
+    "source_pages_reviewed": 4,
+    "dated_event_file": "data/policy_events_added_2026-10-30.csv",
+    "event": "UK refugee sponsorship routes; lead sponsor applications opened 2026-10-29; beneficiary routes phased in 2027.",
+    "causal_estimate": "none",
+    "macro_score_adjustment": "none",
+    "note": "Humanitarian refugee cohort only; not a general visa route for nationals residing in their country of origin."
+  },
+  "schedule_status": {
+    "cron_utc": "17 5 * * *",
+    "latest_schedule_run_number": 160,
+    "latest_schedule_run_id": 41048158534,
+    "latest_schedule_run_at_utc": "2026-10-30T11:26:58Z",
+    "latest_schedule_run_completed_at_utc": "2026-10-30T11:29:47Z",
+    "schedule_delay_from_nominal_minutes": 369,
+    "schedule_reliability": "under observation; 30 October scheduled run was delayed by about 6h 10m; no 31 October scheduled run visible at audit cutoff; 31 October manual push run #161 succeeded; no schedule repair claimed"
+  },
+  "latest_data_audit": {
+    "current_source_audit_rows": 62,
+    "success_statuses": 61,
+    "derived_statuses": 1,
+    "failed_or_unknown_statuses": 0,
+    "numeric_source_rows_fetched_sum_across_endpoints": 1095164,
+    "primary_numeric_normalized_rows": 652213,
+    "derived_brazil_rows_excluded_from_primary_total": 624,
+    "wdi_new_keys": 0,
+    "wdi_value_revisions": 0,
+    "wdi_unchanged_rows_skipped": 165984,
+    "wdi_duplicate_keys": 0,
+    "panel_rows": 165984,
+    "panel_indicators": 39,
+    "panel_geographies": 266,
+    "panel_iso3_geographies": 261,
+    "panel_missing_values": 27778,
+    "panel_missingness_pct": 16.7353,
+    "macro_ranking_score_changes": 0,
+    "macro_ranking_rank_changes": 0,
+    "policy_pages_checked": 11,
+    "policy_page_hash_changes": 8,
+    "confirmed_new_policy_events": 0,
+    "manual_operational_snapshot_rows_added": 16,
+    "manual_operational_snapshot_breakdown": {
+      "ireland_processing_frontiers": 7,
+      "singapore_labour_market_release": 9
+    },
+    "manual_observations_added_to_macro_scoring_panel": 0,
+    "validation_status": "PASS"
+  },
+  "latest_manual_policy_review": {
+    "checked_on": "2026-10-31",
+    "official_pages_with_hash_changes_reviewed": 8,
+    "new_confirmed_policy_events": 0,
+    "duplicates_avoided": 4,
+    "operational_snapshot_records_added": 16,
+    "dated_file": "data/policy_manual_review_2026-10-31.csv",
+    "source_capture": "data/raw/manual_snapshots/2026-10-31/official_release_capture.md",
+    "note": "Canada high-wage Express Entry, UK modern-slavery victim rule/Immigration and Asylum Bill, and NZ student/India-FTA items were already logged. Ireland processing frontiers and Singapore labour release were recorded as operational indicators, not policy shocks. No causal effects or country macro adjustments assigned."
+  },
+  "latest_manual_source_addendum": {
+    "dated_file": "outputs/source_retrieval_audit_manual_addendum_2026-10-31.csv",
+    "records": 2,
+    "sources": [
+      "Singapore MOM Labour Market Advance Release 3Q 2026",
+      "Ireland DETE employment-permit processing-date frontiers"
+    ],
+    "note": "Manually structured official excerpts; not bulk API downloads; excluded from automated numeric-source row totals and macro-scoring panel."
+  }
+}
