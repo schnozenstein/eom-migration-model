@@ -49,16 +49,16 @@
     "housing/rent and after-tax occupation-specific salary"
   ],
   "latest_full_etl": {
-    "run_date": "2026-10-30",
-    "run_id": "2026-10-30T054653Z",
-    "github_actions_run_number": 159,
-    "github_actions_run_id": 41010241358,
-    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/41010241358",
+    "run_date": "2026-10-31",
+    "run_id": "2026-10-31T054256Z",
+    "github_actions_run_number": 161,
+    "github_actions_run_id": 41173640242,
+    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/41173640242",
     "event": "push",
-    "head_sha_at_run_start": "d35aad7ac783d4462b7f277cb0bfd3b4ec302cb9",
-    "output_commit": "f381056899d0620d150db324e09f24ea704009e9",
-    "completed_at_utc": "2026-10-30T05:48:57Z",
-    "tests": "73 passed in 2.11s",
+    "head_sha_at_run_start": "1416c98fea94bdb04bcb7ef86d7e27b9574e05e0",
+    "output_commit": "7dcd9cd4336173c42d7751a2ba7728870ff86ebb",
+    "completed_at_utc": "2026-10-31T05:46:40Z",
+    "tests": "73 passed in 1.80s",
     "ranking_recomputed": true,
     "ranking_comparison_year": 2025,
     "ranking_rows": 45,
@@ -68,30 +68,21 @@
     "rank_changes": 0,
     "forecast_issued": false,
     "calibration_status": "uncalibrated",
-    "note": "Fresh ETL and ranking recomputation succeeded. WDI history had 0 new keys and 0 value revisions; supplemental source stable values were unchanged except UNHCR edit-time metadata. One UK refugee sponsorship event was manually confirmed as a separate humanitarian cohort; no causal estimate or macro score adjustment."
+    "note": "Fresh ETL and macro ranking recomputation succeeded. World Bank fetched/normalized 165,984 rows; WDI history had 0 new natural keys and 0 value revisions. 11 official policy pages succeeded; 8 hashes changed and were manually reviewed, with no newly confirmed policy event. Sixteen manually extracted Ireland processing-frontier and Singapore 3Q labour-market observations were appended to the operational-indicator snapshot, not to the macro scoring panel. No causal estimate or macro-score adjustment."
   },
-  "last_status_refresh": "2026-10-30",
+  "last_status_refresh": "2026-10-31",
   "previous_full_etl": {
-    "run_date": "2026-10-29",
-    "run_id": "2026-10-29T113622Z",
-    "github_actions_run_number": 158,
-    "github_actions_run_id": 40866563704,
-    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/40866563704",
+    "run_date": "2026-10-30",
+    "run_id": "2026-10-30T112744Z",
+    "github_actions_run_number": 160,
+    "github_actions_run_id": 41048158534,
+    "github_actions_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/41048158534",
     "event": "schedule",
-    "head_sha_at_run_start": "dbb064636b82e9fee3074812b6ceb5a726c85cc7",
-    "output_commit": "2fe82e505b8b0e092b2d5031ff2ea4fce6366963",
-    "completed_at_utc": "2026-10-29T11:39:03Z",
-    "tests": "73 passed in 2.28s",
+    "head_sha_at_run_start": "7d650b73278221b4ca8fe8049b66013937518a6a",
+    "output_commit": "7d8595a620f9ea1fa7830e371c842eab5ca74178",
+    "completed_at_utc": "2026-10-30T11:29:47Z",
     "ranking_recomputed": true,
-    "ranking_comparison_year": 2025,
-    "ranking_rows": 45,
-    "scored_destinations": 42,
-    "unscored_destinations": 3,
-    "score_changes": 0,
-    "rank_changes": 0,
-    "forecast_issued": false,
-    "calibration_status": "uncalibrated",
-    "note": "Scheduled run; created substantially later than the configured 05:17 UTC cron time, so schedule dispatch may be delayed."
+    "note": "Scheduled run #160 completed successfully; ranking recomputation step completed successfully. It ran approximately 6 hours 10 minutes after the configured 05:17 UTC cron."
   },
   "manual_policy_review": {
     "checked_on": "2026-10-29",
@@ -121,22 +112,61 @@
   },
   "schedule_status": {
     "cron_utc": "17 5 * * *",
-    "latest_schedule_run_number": 158,
-    "latest_schedule_run_at_utc": "2026-10-29T11:35:30Z",
-    "2026_10_30_schedule_event_visible_at_audit_cutoff": false,
-    "manual_push_run_number": 159,
-    "schedule_reliability": "under observation; no repair claimed"
+    "latest_schedule_run_number": 160,
+    "latest_schedule_run_id": 41048158534,
+    "latest_schedule_run_at_utc": "2026-10-30T11:26:58Z",
+    "latest_schedule_run_completed_at_utc": "2026-10-30T11:29:47Z",
+    "schedule_delay_from_nominal_minutes": 369,
+    "schedule_reliability": "under observation; 30 October scheduled run was delayed by about 6h 10m; no 31 October scheduled run visible at audit cutoff; 31 October manual push run #161 succeeded; no schedule repair claimed"
   },
   "latest_data_audit": {
     "current_source_audit_rows": 62,
     "success_statuses": 61,
     "derived_statuses": 1,
     "failed_or_unknown_statuses": 0,
-    "cumulative_source_audit_rows": 770,
-    "cumulative_duplicate_keys": 0,
+    "numeric_source_rows_fetched_sum_across_endpoints": 1095164,
+    "primary_numeric_normalized_rows": 652213,
+    "derived_brazil_rows_excluded_from_primary_total": 624,
     "wdi_new_keys": 0,
     "wdi_value_revisions": 0,
+    "wdi_unchanged_rows_skipped": 165984,
+    "wdi_duplicate_keys": 0,
+    "panel_rows": 165984,
+    "panel_indicators": 39,
+    "panel_geographies": 266,
+    "panel_iso3_geographies": 261,
+    "panel_missing_values": 27778,
+    "panel_missingness_pct": 16.7353,
     "macro_ranking_score_changes": 0,
-    "macro_ranking_rank_changes": 0
+    "macro_ranking_rank_changes": 0,
+    "policy_pages_checked": 11,
+    "policy_page_hash_changes": 8,
+    "confirmed_new_policy_events": 0,
+    "manual_operational_snapshot_rows_added": 16,
+    "manual_operational_snapshot_breakdown": {
+      "ireland_processing_frontiers": 7,
+      "singapore_labour_market_release": 9
+    },
+    "manual_observations_added_to_macro_scoring_panel": 0,
+    "validation_status": "PASS"
+  },
+  "latest_manual_policy_review": {
+    "checked_on": "2026-10-31",
+    "official_pages_with_hash_changes_reviewed": 8,
+    "new_confirmed_policy_events": 0,
+    "duplicates_avoided": 4,
+    "operational_snapshot_records_added": 16,
+    "dated_file": "data/policy_manual_review_2026-10-31.csv",
+    "source_capture": "data/raw/manual_snapshots/2026-10-31/official_release_capture.md",
+    "note": "Canada high-wage Express Entry, UK modern-slavery victim rule/Immigration and Asylum Bill, and NZ student/India-FTA items were already logged. Ireland processing frontiers and Singapore labour release were recorded as operational indicators, not policy shocks. No causal effects or country macro adjustments assigned."
+  },
+  "latest_manual_source_addendum": {
+    "dated_file": "outputs/source_retrieval_audit_manual_addendum_2026-10-31.csv",
+    "records": 2,
+    "sources": [
+      "Singapore MOM Labour Market Advance Release 3Q 2026",
+      "Ireland DETE employment-permit processing-date frontiers"
+    ],
+    "note": "Manually structured official excerpts; not bulk API downloads; excluded from automated numeric-source row totals and macro-scoring panel."
   }
 }
