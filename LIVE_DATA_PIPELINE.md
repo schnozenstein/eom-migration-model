@@ -133,3 +133,8 @@ No 2026-10-30 daily-refresh run was visible after the configured 17 5 * * * UTC 
 ## Daily run audit and manual trigger — 2026-10-31
 
 At 2026-10-31T05:41Z, the latest visible default-branch automated EOM data-refresh commit was 2026-10-30T11:29:35Z (run 160 output); no 2026-10-31 schedule-generated output was visible in the repository audit. The configured cron is 17 5 * * * UTC. The connected GitHub action surface does not expose a workflow-dispatch operation, so this dated audit note is committed to the watched LIVE_DATA_PIPELINE.md path to request a fresh end-to-end run through the existing push trigger. This is a manual trigger workaround, not a schedule repair. Verify the actual run ID, source retrieval, ETL, ranking recomputation step, tests, artifact and commit before claiming success.
+
+
+## Daily run audit and manual trigger — 2026-11-01
+
+At 2026-11-01T05:49Z, the latest visible EOM Daily Refresh was scheduled run #162 (GitHub Actions run 41194873448), created 2026-10-31T10:58:01Z and completed 2026-10-31T11:00:47Z. No 2026-11-01 schedule-generated run was visible at this audit cutoff after the configured 17 5 * * * UTC schedule time. The connected GitHub action surface exposes repository-content writes and workflow-run reads but no workflow-dispatch write, so this dated audit note is committed to the watched LIVE_DATA_PIPELINE.md path to request a fresh end-to-end run through the existing push trigger. This is a manual trigger workaround, not a schedule repair. Verify run ID, ETL, ranking-recompute step, tests, artifacts, and repository commit before declaring success.
