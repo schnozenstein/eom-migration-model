@@ -84,6 +84,8 @@ POLICY_URLS = [
     ("Switzerland", "State Secretariat for Migration latest news", "https://www.sem.admin.ch/sem/en/home/sem/aktuell.html"),
     ("Austria", "Austrian Federal Government migration portal", "https://www.migration.gv.at/en/welcome/"),
     ("Spain", "La Moncloa press releases — Inclusion, Social Security and Migration", "https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx"),
+    ("Poland", "Office for Foreigners — residence permits and MOS system", "https://www.gov.pl/web/udsc-en/basic-information-about-the-mos-system"),
+    ("Poland", "Polish work permits — official MOS guidance", "https://www.mos.cudzoziemcy.gov.pl/en/categories-information/doing-the-job/work-permit/"),
 ]
 
 OBMIGRA_URL = "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/obmigra-1/relatorios-obmigra/dados-consolidados/2025"
