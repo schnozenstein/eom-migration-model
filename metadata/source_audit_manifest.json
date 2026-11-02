@@ -1,13 +1,13 @@
 {
-  "workflow_run_id": "41303884050",
-  "etl_run_id": "2026-11-01T115411Z",
+  "workflow_run_id": "41377559271",
+  "etl_run_id": "2026-11-02T022511Z",
   "etl_outcome": "success",
-  "workflow_event": "schedule",
+  "workflow_event": "push",
   "scheduled_cron_utc": "17 5 * * *",
   "refresh_manifest_matches_workflow_run": true,
-  "generated_at_utc": "2026-11-01T11:55:34.211445+00:00",
-  "source_records": 62,
-  "source_failures_or_unknown_status": 0,
+  "generated_at_utc": "2026-11-02T02:26:26.231415+00:00",
+  "source_records": 64,
+  "source_failures_or_unknown_status": 2,
   "numeric_source_rows_fetched_sum_across_endpoints": 1095164,
   "numeric_normalized_rows_sum_across_primary_datasets": 652213,
   "derived_rows_excluded_from_numeric_totals": true,
@@ -32,14 +32,14 @@
     "Derived:Brazil_WDI_subset"
   ],
   "retrieval_timestamp_blank_rows": 0,
-  "validation_status": "PASS",
+  "validation_status": "PASS_WITH_WARNINGS",
   "revision_tracking_note": "The compact WDI ledger is versioned. Supplemental sources retain raw snapshots/current extracts; per-row revision ledgers are not yet implemented for every supplemental source.",
   "source_lineage_current_path": "metadata/source_lineage_current.csv",
-  "source_lineage_current_rows": 62,
-  "source_lineage_current_sha256": "37e8ce1744419f5e3e4a7f700e28ee1ba4764e61ed0ce4ceec3bba2f8ba0707b",
+  "source_lineage_current_rows": 64,
+  "source_lineage_current_sha256": "382f15fe9233c987a41a9e3f888459371cfb7f6624d86d9d4dbf325ff1a6e519",
   "legacy_source_lineage_registry_path": "metadata/source_lineage_2026-10-13.csv",
   "legacy_source_lineage_registry_rows": 8,
   "legacy_source_lineage_registry_status": "preserved_legacy_registry",
   "output_path": "outputs/source_retrieval_audit.csv",
-  "output_sha256": "0d4de0da464ff6bd9646f899c3128907c1e0eeee9d8f7b20a409fdb8719da69e"
+  "output_sha256": "ba316ea91d73d479ddbf85f4c2b473f8e60f7798bc97bb483ec762c14709869f"
 }
