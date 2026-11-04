@@ -1,0 +1,24 @@
+{
+  "run_date": "2026-11-04",
+  "package_version": "v26",
+  "library_destination": "/EOM_Daily_Runs",
+  "artifact": {
+    "name": "EOM_GitHub_Remote_Workflow_Artifact_2026-11-04_run169.zip",
+    "library_path": "/EOM_Daily_Runs/EOM_GitHub_Remote_Workflow_Artifact_2026-11-04_run169.zip",
+    "library_file_id": "libfile_7f76d33ba5748191aa5bc044c3868938",
+    "file_id": "file_0000000025ec81f5836fa55d7a64273b",
+    "upload_status": "succeeded",
+    "bytes": 70494788,
+    "github_artifact_id": 13299785422,
+    "github_artifact_sha256": "sha256:20d9aef9f6065935d3907bf1cf17ab0c5a32bf5a026186b0b584166a03b93536"
+  },
+  "separate_dated_files": {
+    "report": "https://github.com/schnozenstein/eom-migration-model/blob/main/reports/EOM_General_Migration_Model_Daily_Report_2026-11-04_v26.md",
+    "manifest": "https://github.com/schnozenstein/eom-migration-model/blob/main/metadata/EOM_Run_Manifest_2026-11-04_v26.json",
+    "source_audit": "https://github.com/schnozenstein/eom-migration-model/blob/main/outputs/EOM_Source_Retrieval_Audit_2026-11-04_run169.csv",
+    "policy_delta": "https://github.com/schnozenstein/eom-migration-model/blob/main/outputs/EOM_Policy_Event_Delta_2026-11-04_run169.csv",
+    "ranking_delta": "https://github.com/schnozenstein/eom-migration-model/blob/main/outputs/EOM_Macro_Ranking_Delta_2026-11-04_run169.csv",
+    "manual_policy_review": "https://github.com/schnozenstein/eom-migration-model/blob/main/outputs/EOM_Manual_Policy_Research_Addendum_2026-11-04_v26.csv"
+  },
+  "note": "The full workflow artifact contains raw snapshots, normalized extracts, source audit, policy delta, ranking delta, ledger snapshots, report and diagnostics. Individual dated text/CSV artifacts are preserved in the GitHub default branch. Library is persistent archive storage, not an ETL server."
+}
