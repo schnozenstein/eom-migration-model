@@ -1,11 +1,11 @@
 {
-  "workflow_run_id": "42170376186",
-  "etl_run_id": "2026-11-06T054704Z",
+  "workflow_run_id": "42221999070",
+  "etl_run_id": "2026-11-06T130109Z",
   "etl_outcome": "success",
-  "workflow_event": "push",
+  "workflow_event": "schedule",
   "scheduled_cron_utc": "17 5 * * *",
   "refresh_manifest_matches_workflow_run": true,
-  "generated_at_utc": "2026-11-06T05:48:12.724414+00:00",
+  "generated_at_utc": "2026-11-06T13:02:41.539988+00:00",
   "source_records": 64,
   "source_failures_or_unknown_status": 1,
   "numeric_source_rows_fetched_sum_across_endpoints": 1095164,
@@ -36,10 +36,10 @@
   "revision_tracking_note": "The compact WDI ledger is versioned. Supplemental sources retain raw snapshots/current extracts; per-row revision ledgers are not yet implemented for every supplemental source.",
   "source_lineage_current_path": "metadata/source_lineage_current.csv",
   "source_lineage_current_rows": 64,
-  "source_lineage_current_sha256": "9393116504c324b1ce5cc40ecacf9a33654f0866631767eb407397607746aa9b",
+  "source_lineage_current_sha256": "83625fda6d5c7fce966b68c1dccf65e1c39e76b8a42f6d024aaae2879f219d25",
   "legacy_source_lineage_registry_path": "metadata/source_lineage_2026-10-13.csv",
   "legacy_source_lineage_registry_rows": 8,
   "legacy_source_lineage_registry_status": "preserved_legacy_registry",
   "output_path": "outputs/source_retrieval_audit.csv",
-  "output_sha256": "bf1815a269b661f174ce070ed71ca1d46f4cdb11bb0fda8a9de79f7e90403821"
+  "output_sha256": "209fe5bb418842467b1fbd81b08fc7a186c39a89b2172da63006b1c28bf6bd86"
 }
