@@ -31,7 +31,10 @@
       "Values are rounded to one decimal thousand persons.",
       "Origin panel includes only the ten origins selected as highest net migration in the 2026 Jan–September release.",
       "CBS release label 'country of origin' is preserved; do not infer nationality or country of birth."
-    ]
+    ],
+    "validated_in_ci": true,
+    "validation_tests": 4,
+    "validation_outcome": "4 CBS-specific tests passed in final 78-test suite"
   },
   "policy_review": {
     "manual_events": 5,
@@ -50,13 +53,64 @@
     "scheduled_nov7_run_visible_at_audit_time": false,
     "last_scheduled_run_was_late": true,
     "push_trigger_test_path": "tests/test_cbs_nl_release_panel_2026_11_07.py",
-    "note": "A push-triggered full refresh will be used as a corrective execution because the 7 November schedule-triggered run was not visible at the audit cutoff. This does not repair cron reliability."
+    "note": "A push-triggered full refresh will be used as a corrective execution because the 7 November schedule-triggered run was not visible at the audit cutoff. This does not repair cron reliability.",
+    "manual_push_workflow_run_id": 42344354545,
+    "manual_push_workflow_run_number": 177,
+    "manual_push_workflow_event": "push",
+    "manual_push_workflow_conclusion": "success",
+    "manual_push_workflow_created_at_utc": "2026-11-07T05:49:46Z",
+    "manual_push_workflow_completed_at_utc": "2026-11-07T05:52:33Z",
+    "manual_push_code_commit": "f1953b9c826bece3480e48370227956342c4a1a4",
+    "output_commit": "cc97f6bfc267c17faa306df31eec64dc63bd4f75",
+    "tests": "78 passed",
+    "etl_run_id": "2026-11-07T055101Z",
+    "full_etl_outcome": "success",
+    "macro_ranking_recompute_outcome": "success",
+    "ranking_delta_outcome": "success",
+    "manual_trigger_recovery_note": "First push attempt #175 failed the newly added CBS data-contract tests; CSV origin-year mapping and boolean checks were corrected. A pending duplicate run #176 was cancelled by concurrency; final run #177 passed all 78 tests and completed the full pipeline."
   },
   "model": {
     "status": "UNVALIDATED",
     "production_forecasts": 0,
     "parameter_fitting": false,
     "causal_estimates": 0,
-    "note": "No EOM equations or weights changed. CBS YTD panel is supplementary and excluded from annual macro ranking and annual backtest."
+    "note": "No EOM equations or weights changed. CBS YTD panel is supplementary and excluded from annual macro ranking and annual backtest.",
+    "backtest": {
+      "method": "expanding-origin chronological",
+      "origins": 14,
+      "test_years": "2012-2025",
+      "observations": 613,
+      "destinations": 44,
+      "ridge_mae": 4.0222411383,
+      "country_mean_mae": 2.8041942752,
+      "persistence_mae": 2.3632024714,
+      "eom_rank_spearman": 0.5154288389,
+      "persistence_rank_spearman": 0.8064290337
+    }
+  },
+  "ranking": {
+    "year": 2025,
+    "recomputed": true,
+    "destinations_compared": 45,
+    "destinations_scored": 42,
+    "destinations_unscored": 3,
+    "score_changes": 0,
+    "rank_changes": 0,
+    "top10": [
+      "Singapore",
+      "Japan",
+      "Norway",
+      "Hong Kong",
+      "New Zealand",
+      "Ireland",
+      "South Korea",
+      "Australia",
+      "Denmark",
+      "Netherlands"
+    ],
+    "exclusions": [
+      "Pakistan",
+      "Bangladesh"
+    ]
   }
 }
