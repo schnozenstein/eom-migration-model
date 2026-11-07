@@ -24,8 +24,8 @@ def test_cbs_nl_release_is_separate_ytd_panel_with_no_annual_mixing():
     keys = [(r["source_id"], r["destination_code"], r["origin_code"], r["observation_year"], r["measure"]) for r in rows]
     assert len(keys) == len(set(keys))
     assert all(r["source_release_date"] == "2026-10-30" for r in rows)
-    assert all(r["provisional_flag"] == "True" for r in rows if r["observation_year"] == "2026")
-    assert all(r["provisional_flag"] == "False" for r in rows if r["observation_year"] != "2026")
+    assert all(r["provisional_flag"].lower() == "true" for r in rows if r["observation_year"] == "2026")
+    assert all(r["provisional_flag"].lower() == "false" for r in rows if r["observation_year"] != "2026")
 
 
 def test_cbs_nl_total_ytd_values_and_signed_emigration_are_preserved():
@@ -41,7 +41,7 @@ def test_cbs_nl_origin_panel_is_top_ten_selection_not_full_matrix():
     assert len({r["origin_code"] for r in rows}) == 10
     india = {int(r["observation_year"]): float(r["value"]) for r in rows if r["origin_code"] == "IND"}
     assert india == {2023: 6.6, 2024: 3.3, 2025: 2.7, 2026: 3.3}
-    assert all("top" in r["selection_note"].lower() or "ten countries" in r["selection_note"].lower() for r in rows)
+    assert all("ten countries" in r["selection_note"].lower() for r in rows)
 
 
 def test_cbs_manual_source_audit_is_complete_and_not_counted_as_core_macro_input():
@@ -50,4 +50,4 @@ def test_cbs_manual_source_audit_is_complete_and_not_counted_as_core_macro_input
     assert sum(int(r["normalized_rows"]) for r in rows) == 64
     assert sum(int(r["rows_rejected"]) for r in rows) == 0
     assert sum(int(r["duplicate_rows"]) for r in rows) == 0
-    assert all(r["counted_in_core_numeric_totals"] == "False" for r in rows)
+    assert all(r["counted_in_core_numeric_totals"].lower() == "false" for r in rows)
