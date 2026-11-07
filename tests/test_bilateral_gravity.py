@@ -16,7 +16,7 @@ def jsonstat_fixture():
             "time": {"category": {"index": {"2020": 0, "2021": 1}}}
         },
         "value": {"0": 12, "7": 0},
-        "status": {"7": "p"}
+        "status": {"1": "c", "7": "p"}
     }
 
 
@@ -27,6 +27,9 @@ def test_jsonstat_sparse_parser_decodes_dimensions_and_flags():
     assert (row0.geo, row0.partner, row0.time, row0.value) == ("NL", "DE", "2020", 12)
     assert (row7.geo, row7.partner, row7.time, row7.value) == ("UK", "IN", "2021", 0)
     assert row7.observation_status == "p"
+    suppressed = frame.loc[frame.flat_index == 1].iloc[0]
+    assert pd.isna(suppressed.value)
+    assert suppressed.observation_status == "c"
 
 
 def test_iso2_special_cases_and_aggregate_exclusion():

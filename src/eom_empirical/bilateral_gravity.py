@@ -55,22 +55,32 @@ def parse_jsonstat(payload: dict, dataset: str) -> pd.DataFrame:
     if any(len(c) != int(n) for c, n in zip(categories, sizes)):
         raise ValueError(f"{dataset}: dimension size mismatch")
     values, statuses = payload.get("value", {}), payload.get("status", {})
-    items = values.items() if isinstance(values, dict) else enumerate(values)
+    if isinstance(values, dict):
+        value_map = {str(k): v for k, v in values.items()}
+    elif isinstance(values, list):
+        value_map = {str(i): v for i, v in enumerate(values) if v is not None}
+    else:
+        raise ValueError(f"{dataset}: value must be a list or sparse object")
+    if isinstance(statuses, dict):
+        status_map = {str(k): v for k, v in statuses.items()}
+    elif isinstance(statuses, list):
+        status_map = {str(i): v for i, v in enumerate(statuses) if v not in (None, "")}
+    else:
+        status_map = {}
+    # A status can exist for a suppressed/missing cell whose numeric value is
+    # absent from the sparse value map. Preserve that cell in the raw parse.
+    indices = sorted(set(value_map) | set(status_map), key=int)
     total = int(np.prod(sizes))
     strides = [int(np.prod(sizes[i + 1:])) for i in range(len(sizes))]
     rows = []
-    for index, value in items:
-        index = int(index)
+    for index_text in indices:
+        index = int(index_text)
         if index < 0 or index >= total:
             raise ValueError(f"{dataset}: invalid flat index")
         coords = [(index // stride) % int(size) for stride, size in zip(strides, sizes)]
         row = {dim: categories[i][coords[i]] for i, dim in enumerate(ids)}
-        if isinstance(statuses, dict):
-            flag = statuses.get(str(index), "")
-        elif isinstance(statuses, list) and index < len(statuses):
-            flag = statuses[index]
-        else:
-            flag = ""
+        value = value_map.get(index_text)
+        flag = status_map.get(index_text, "")
         row.update({"value": value, "observation_status": str(flag or ""), "flat_index": index})
         rows.append(row)
     return pd.DataFrame(rows)
@@ -127,8 +137,13 @@ def fetch_eurostat(dataset: str, start: int, end: int, snapshot_dir: Path):
     status = {"dataset":dataset, "publisher":"Eurostat", "url":url,
               "resolved_url":response.url, "query_params":params,
               "retrieved_at_utc":retrieved, "status":"SUCCESS",
-              "http_status":response.status_code, "numeric_cells":int(parsed["value"].notna().sum()),
+              "publication_release_date":"not exposed in the response; Eurostat metadata states annual flow breakdowns by previous/next residence are released in March T+1",
+              "observation_period":f"{start}-{end}", "definition":"annual count of immigration by country of previous usual residence" if dataset == MAIN_DATASET else "annual count of emigration by country of next usual residence",
+              "unit":"persons (Eurostat unit NR)", "geography":"reporting country and partner country; international country pairs only",
+              "http_status":response.status_code, "returned_cells":int(len(parsed)),
+              "numeric_cells":int(parsed["value"].notna().sum()),
               "status_flagged_cells":int(parsed["observation_status"].ne("").sum()),
+              "missing_or_suppressed_cells":int((parsed["value"].isna() & parsed["observation_status"].ne("")).sum()),
               "raw_snapshot":str(raw_path.relative_to(ROOT)), "raw_size_bytes":raw_path.stat().st_size}
     return parsed, status
 
@@ -155,6 +170,11 @@ def fetch_geodist(snapshot_dir: Path):
     frame["iso_d"] = frame["iso_d"].astype(str).str.upper()
     frame = frame.drop_duplicates(["iso_o","iso_d"])
     audit = {"publisher":"CEPII", "url":CEPII_URL, "retrieved_at_utc":utc_now(),
+             "publication_release_date":"downloadable file vintage not exposed; reference methodology Mayer & Zignago (2011), CEPII Working Paper 2011-25",
+             "observation_period":"cross-sectional dyadic geography; no migration observation period",
+             "definition":"bilateral distance in kilometres, contiguity and common official language",
+             "unit":"kilometres for distance; binary indicators for contiguity and common official language",
+             "geography":"225-country dyadic database per CEPII description",
              "status":"SUCCESS", "rows":int(len(frame)), "distance_field":distance,
              "raw_snapshot":str(path.relative_to(ROOT)), "raw_size_bytes":path.stat().st_size,
              "license":"Etalab Open License 2.0 per CEPII download page"}
@@ -475,6 +495,10 @@ def run(start_year=2010,end_year=2024):
         "countries": features.attrs.get("source_countries"),
         "observation_year_range": [features.attrs.get("source_year_min"), features.attrs.get("source_year_max")],
         "energy_nonmissing_country_years": features.attrs.get("energy_nonmissing_rows"),
+        "observation_period": [features.attrs.get("source_year_min"), features.attrs.get("source_year_max")],
+        "unit": "GDP per capita PPP constant 2021 international dollars; population persons; EOM energy is a standardized dimensionless macro proxy",
+        "source_urls": sorted(pd.read_csv(ROOT / "data/raw/world_bank_macro_focus.csv").source_url.dropna().unique().tolist()) if (ROOT / "data/raw/world_bank_macro_focus.csv").exists() else [],
+        "release_vintage": "World Bank API last-updated metadata in the raw WDI export; per-indicator values retained in the daily ETL lineage",
         "cost_proxy": "PA.NUS.PRVT.PLI; GDP per capita PPP, population and five other terms follow src/eom_empirical/model.py"
     }
     panel=prepare_panel(all_flows,geodist,features)
