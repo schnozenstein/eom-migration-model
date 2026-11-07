@@ -1,0 +1,81 @@
+{
+  "status": "completed_expanding_origin_bilateral_benchmark",
+  "target": "annual persons immigrating to reporting destination whose previous usual residence was origin country",
+  "primary_source": "migr_imm5prv",
+  "flow_direction": "origin=partner previous usual residence; destination=reporting geo",
+  "feature_timing": "GDP, population and EOM features from t-1; migration flow from t",
+  "benchmark": "Poisson pseudo-maximum-likelihood GLM with origin and destination fixed effects",
+  "EOM_comparison": "same PPML gravity specification plus equal-weight EOM energy-origin minus energy-destination gap",
+  "EOM_gap_interpretation": "positive means destination EOM energy is lower; stronger attractor under paper sign convention",
+  "same_complete_case_test_sample": true,
+  "gravity_ppml": {
+    "n": 5196,
+    "mae": 1714.0506052394485,
+    "rmse": 5211.4399391155375,
+    "poisson_deviance": 1453.7798990518083,
+    "spearman": 0.8856251843269166
+  },
+  "gravity_plus_eom_ppml": {
+    "n": 5196,
+    "mae": 1679.1395970407589,
+    "rmse": 5123.243635668261,
+    "poisson_deviance": 1407.9299206390917,
+    "spearman": 0.8857650109398114
+  },
+  "pair_persistence": {
+    "n": 5101,
+    "mae": 531.0690060772398,
+    "rmse": 2536.643893204789,
+    "poisson_deviance": 202.1804340068629,
+    "spearman": 0.9909785363352955
+  },
+  "EOM_minus_gravity_MAE_cluster_bootstrap": {
+    "clusters": 526,
+    "repetitions": 300,
+    "mean_mae_difference": 35.90575128721322,
+    "ci95": [
+      12.622959690286956,
+      62.34226800581475
+    ],
+    "positive_favours_eom": true
+  },
+  "complete_case_rows": 6132,
+  "origins": 43,
+  "destinations": 15,
+  "years": [
+    2011,
+    2024
+  ],
+  "rows_scored": 5196,
+  "scored_years": [
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "folds_attempted": 12,
+  "folds_scored": 12,
+  "duplicate_pair_year_rows_removed": 0,
+  "sample_selection": "Only observed numeric, non-suppressed pair-year cells with complete t-1 WDI and CEPII features; missing/suppressed values are not zero-imputed.",
+  "persistence_sample": "Only scored pairs with an actual observed t-1 flow; absent prior pair-years are not assigned zero.",
+  "interpretation_guardrail": "Predictive comparison, not causal. Current equal-weight EOM macro proxy overlaps GDP/labour/institutional gravity covariates; incremental association does not validate the full EOM theory.",
+  "retrieval_run_id": "2026-11-07T112134Z",
+  "data_cutoff_utc": "2026-11-07T11:21:59.500738+00:00",
+  "source_failures": [],
+  "reverse_flow_crosscheck_rows": 58839,
+  "direction_reconciliation": {
+    "matched_pair_years": 5165,
+    "correlation": 0.8699683188057883,
+    "median_absolute_difference_persons": 118.0,
+    "median_absolute_percentage_difference": 54.263565891472865,
+    "interpretation": "source reconciliation only; series are not summed and discrepancies are not treated as model errors"
+  }
+}
