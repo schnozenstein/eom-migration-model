@@ -308,6 +308,7 @@ jobs:
             data/bilateral/eurostat_od_flows_history.csv.gz
             data/raw/snapshots/eurostat_bilateral/**/*.json.gz
             data/raw/snapshots/cepii_geodist/**/*.xls
+            data/raw/snapshots/cepii_geodist/**/*.zip
             metadata/macro_ranking_delta_manifest.json
             outputs/source_retrieval_audit.csv
             outputs/policy_event_delta.csv
