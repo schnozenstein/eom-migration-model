@@ -210,13 +210,24 @@ def append_history(rows: pd.DataFrame, path: Path = HISTORY):
             "duplicates_in_run":duplicates,"history_rows":len(old)}
 
 
-def load_wdi_features(path: Path = WDI) -> pd.DataFrame:
+def load_wdi_features(path: Path | None = None) -> pd.DataFrame:
+    # The compact macro-focus extract contains the exact 11 model indicators for the
+    # registered country set. Prefer it to world_bank_long.csv, whose country_region_id
+    # field is blank even on many country records in the current source export.
+    macro_focus = ROOT / "data/raw/world_bank_macro_focus.csv"
+    if path is None:
+        path = macro_focus if macro_focus.exists() else WDI
     if not path.exists():
-        raise FileNotFoundError(f"Missing refreshed WDI extract: {path}")
+        raise FileNotFoundError(f"Missing refreshed World Bank feature panel: {path}")
     from .model import to_wide, add_derived_features, equal_weight_energy
     long = pd.read_csv(path, low_memory=False)
-    if "country_region_id" in long:
-        long = long[long["country_region_id"].notna()].copy()
+    if "country_region_id" in long and "indicator_api_code" in long:
+        valid = long["country_code"].astype(str).str.upper().map(
+            lambda code: bool(code == "XKX" or pycountry.countries.get(alpha_3=code))
+        )
+        long = long[valid].copy()
+    if "country_code" not in long or "indicator_code" not in long:
+        raise ValueError(f"Unsupported WDI feature schema in {path}")
     wide = add_derived_features(to_wide(long))
     energies = []
     for year, group in wide.groupby("year"):
@@ -233,7 +244,14 @@ def load_wdi_features(path: Path = WDI) -> pd.DataFrame:
         "energy_equal_weight":"eom_energy"})
     for col in ["gdp_pc_ppp","population","eom_energy"]:
         result[col] = pd.to_numeric(result[col],errors="coerce")
-    return result.replace([np.inf,-np.inf],np.nan)
+    result = result.replace([np.inf,-np.inf],np.nan)
+    result.attrs["source_file"] = str(path.relative_to(ROOT))
+    result.attrs["source_rows"] = int(len(long))
+    result.attrs["source_countries"] = int(result["country_iso3"].nunique())
+    result.attrs["source_year_min"] = int(result["year"].min()) if not result.empty else None
+    result.attrs["source_year_max"] = int(result["year"].max()) if not result.empty else None
+    result.attrs["energy_nonmissing_rows"] = int(result["eom_energy"].notna().sum())
+    return result
 
 
 def prepare_panel(flows: pd.DataFrame, geodist: pd.DataFrame, features: pd.DataFrame):
@@ -388,8 +406,9 @@ def evaluate(panel: pd.DataFrame):
 def run(start_year=2010,end_year=2024):
     stamp=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M%SZ")
     dated=datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    euro_dir=ROOT/"data/raw/snapshots/eurostat_bilateral"/dated
-    ce_dir=ROOT/"data/raw/snapshots/cepii_geodist"/dated
+    # Timestamped snapshots prevent same-day reruns from overwriting source bytes.
+    euro_dir=ROOT/"data/raw/snapshots/eurostat_bilateral"/stamp
+    ce_dir=ROOT/"data/raw/snapshots/cepii_geodist"/stamp
     audit={"run_id":stamp,"retrieved_at_utc":utc_now(),"start_year":start_year,"end_year":end_year,
         "sources":[],"numeric_rows_fetched":0,"status":"started"}
     tables=[]; failures=[]
@@ -417,6 +436,15 @@ def run(start_year=2010,end_year=2024):
         "history_rows":history["history_rows"]})
     geodist,ce_audit=fetch_geodist(ce_dir); audit["sources"].append(ce_audit)
     features=load_wdi_features()
+    audit["wdi_feature_source"] = {
+        "file": features.attrs.get("source_file"),
+        "publisher": "World Bank Indicators API via preceding ETL",
+        "rows_loaded": features.attrs.get("source_rows"),
+        "countries": features.attrs.get("source_countries"),
+        "observation_year_range": [features.attrs.get("source_year_min"), features.attrs.get("source_year_max")],
+        "energy_nonmissing_country_years": features.attrs.get("energy_nonmissing_rows"),
+        "cost_proxy": "PA.NUS.PRVT.PLI; GDP per capita PPP, population and five other terms follow src/eom_empirical/model.py"
+    }
     panel=prepare_panel(all_flows,geodist,features)
     summary,pred,folds,coef=evaluate(panel)
     summary.update({"retrieval_run_id":stamp,"data_cutoff_utc":utc_now(),
