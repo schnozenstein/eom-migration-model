@@ -67,8 +67,8 @@
   "sample_selection": "Only observed numeric, non-suppressed pair-year cells with complete t-1 WDI and CEPII features; missing/suppressed values are not zero-imputed.",
   "persistence_sample": "Only scored pairs with an actual observed t-1 flow; absent prior pair-years are not assigned zero.",
   "interpretation_guardrail": "Predictive comparison, not causal. Current equal-weight EOM macro proxy overlaps GDP/labour/institutional gravity covariates; incremental association does not validate the full EOM theory.",
-  "retrieval_run_id": "2026-11-07T112134Z",
-  "data_cutoff_utc": "2026-11-07T11:21:59.500738+00:00",
+  "retrieval_run_id": "2026-11-07T112406Z",
+  "data_cutoff_utc": "2026-11-07T11:24:26.417768+00:00",
   "source_failures": [],
   "reverse_flow_crosscheck_rows": 58839,
   "direction_reconciliation": {
