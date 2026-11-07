@@ -95,3 +95,14 @@ See `LIVE_DATA_PIPELINE.md`. `scripts/refresh_eom_data.py` now requests the curr
 ## PPP parameter coverage (2026-10-19)
 
 The live World Bank refresh now collects complementary PPP measures: GDP per capita at constant 2021 international dollars (`NY.GDP.PCAP.PP.KD`), GDP at current PPP international dollars (`NY.GDP.MKTP.PP.CD`), the GDP PPP conversion factor (`PA.NUS.PPP`), and the household/private-consumption PPP conversion factor (`PA.NUS.PRVT.PP`). These are distinct concepts, not interchangeable “PPP scores.” The legacy GDP price-level-ratio code (`PA.NUS.PPPC.RF`) returned an API “not found or archived” error in the 19 October run and is no longer actively polled pending re-verification; previously stored observations remain. Spain is added as a focus destination; Austria was already in the focus set and now also has official policy-page monitoring.
+
+
+## Bilateral gravity benchmark research programme
+
+The current country-year net-migration evaluation is a fallback outcome, not a bilateral migration test. The research programme therefore adds a first OD-year benchmark using Eurostat immigration by country of previous usual residence (`migr_imm5prv`): partner = origin, reporting geography = destination. Eurostat emigration by country of next usual residence (`migr_emi3nxt`) is stored separately for directional reconciliation and is never added as a second copy of the same flow.
+
+The workflow runs `scripts/run_bilateral_gravity_benchmark.py` after the daily numeric refresh. It archives raw Eurostat JSON-stat snapshots and a CEPII GeoDist snapshot, appends observations/revisions to `data/bilateral/eurostat_od_flows_history.csv.gz`, and writes benchmark metrics, predictions, folds, coefficients and a source audit. Features are lagged one year. Missing or suppressed OD cells are not coded as zero.
+
+The first benchmark is PPML gravity with origin/destination fixed effects, population, GDP per capita PPP, distance, contiguity, common official language and a time trend. The nested EOM test adds the equal-weight EOM energy-origin minus energy-destination gap to the identical specification and evaluates both models on matching expanding-origin held-out years. Pair persistence is also reported only where the previous year's flow was observed.
+
+This is a first empirical operationalization, not the full theory. The observed-cell sample can be selected; European bilateral coverage is incomplete outside reporting countries; the EOM composite overlaps with macro controls; and predictive performance is not a causal effect. Read `RESEARCH_PROGRAM.md` for the staged research gates. Daily reports should emphasize new evidence and model learning, not routine reranking.
