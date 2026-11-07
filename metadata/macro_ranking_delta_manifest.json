@@ -1,6 +1,6 @@
 {
-  "workflow_run_id": "42344207747",
-  "generated_at_utc": "2026-11-07T05:50:05.021559+00:00",
+  "workflow_run_id": "42344354545",
+  "generated_at_utc": "2026-11-07T05:52:13.068183+00:00",
   "recompute_outcome": "success",
   "ranking_status": "RECOMPUTED",
   "previous_ranking_available": true,
@@ -17,7 +17,7 @@
   "removed_destinations": 0,
   "data_cutoff": 2025,
   "scoring_version": "equal-weight macro proxy; not a calibrated migration probability",
-  "code_version": "c1e499b9e9cbf9e698d935c14d6a3feccdb54944",
+  "code_version": "f1953b9c826bece3480e48370227956342c4a1a4",
   "output_path": "outputs/macro_ranking_delta.csv",
   "notes": "If score/rank deltas are zero, the recomputation may still be valid; inputs and scoring dependencies must be audited before attributing stability to model quality."
 }
