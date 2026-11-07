@@ -1,3 +1,4 @@
+# CBS YTD release panel validation; corrected origin-year mapping checked against the official release.
 from __future__ import annotations
 
 import csv
