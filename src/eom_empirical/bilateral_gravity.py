@@ -1,6 +1,6 @@
 """Incremental bilateral migration-flow ingestion and gravity/EOM benchmark."""
 from __future__ import annotations
-import gzip, hashlib, io, json, math, warnings
+import gzip, hashlib, io, json, math, warnings, zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -12,7 +12,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[2]
 EUROSTAT_BASE = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data"
-CEPII_URL = "https://www.cepii.fr/DATA_DOWNLOAD/gravity/dist_cepii.xls"
+CEPII_URL = "https://www.cepii.fr/distance/dist_cepii.zip"
 MAIN_DATASET, CHECK_DATASET = "migr_imm5prv", "migr_emi3nxt"
 HISTORY = ROOT / "data/bilateral/eurostat_od_flows_history.csv.gz"
 WDI = ROOT / "data/raw/world_bank_long.csv"
@@ -148,14 +148,33 @@ def fetch_eurostat(dataset: str, start: int, end: int, snapshot_dir: Path):
     return parsed, status
 
 
+def extract_geodist_workbook(zip_bytes: bytes) -> tuple[str, bytes]:
+    """Return the official dist_cepii.xls member from CEPII's ZIP download."""
+    try:
+        archive = zipfile.ZipFile(io.BytesIO(zip_bytes))
+    except zipfile.BadZipFile as exc:
+        raise ValueError("CEPII download is not a valid ZIP archive") from exc
+    with archive:
+        members = [name for name in archive.namelist()
+                   if Path(name).name.lower() == "dist_cepii.xls"]
+        if len(members) != 1:
+            raise ValueError(
+                f"Expected exactly one dist_cepii.xls in CEPII archive; found {len(members)}"
+            )
+        return members[0], archive.read(members[0])
+
+
 def fetch_geodist(snapshot_dir: Path):
     snapshot_dir.mkdir(parents=True, exist_ok=True)
-    path = snapshot_dir / "dist_cepii.xls"
+    zip_path = snapshot_dir / "dist_cepii.zip"
+    xls_path = snapshot_dir / "dist_cepii.xls"
     response = requests.get(CEPII_URL, timeout=(20,180),
                             headers={"User-Agent":"EOM-Research/1.0"})
     response.raise_for_status()
-    path.write_bytes(response.content)
-    frame = pd.read_excel(io.BytesIO(response.content), engine="xlrd")
+    zip_path.write_bytes(response.content)
+    member_name, xls_bytes = extract_geodist_workbook(response.content)
+    xls_path.write_bytes(xls_bytes)
+    frame = pd.read_excel(io.BytesIO(xls_bytes), engine="xlrd")
     required = {"iso_o","iso_d"}
     if not required.issubset(frame.columns):
         raise ValueError(f"CEPII missing columns {sorted(required-set(frame.columns))}")
@@ -169,14 +188,19 @@ def fetch_geodist(snapshot_dir: Path):
     frame["iso_o"] = frame["iso_o"].astype(str).str.upper()
     frame["iso_d"] = frame["iso_d"].astype(str).str.upper()
     frame = frame.drop_duplicates(["iso_o","iso_d"])
-    audit = {"publisher":"CEPII", "url":CEPII_URL, "retrieved_at_utc":utc_now(),
+    audit = {"publisher":"CEPII", "url":CEPII_URL, "resolved_url":response.url,
+             "retrieved_at_utc":utc_now(),
              "publication_release_date":"downloadable file vintage not exposed; reference methodology Mayer & Zignago (2011), CEPII Working Paper 2011-25",
              "observation_period":"cross-sectional dyadic geography; no migration observation period",
              "definition":"bilateral distance in kilometres, contiguity and common official language",
              "unit":"kilometres for distance; binary indicators for contiguity and common official language",
              "geography":"225-country dyadic database per CEPII description",
              "status":"SUCCESS", "rows":int(len(frame)), "distance_field":distance,
-             "raw_snapshot":str(path.relative_to(ROOT)), "raw_size_bytes":path.stat().st_size,
+             "archive_member":member_name,
+             "raw_snapshot_zip":str(zip_path.relative_to(ROOT)),
+             "raw_snapshot_xls":str(xls_path.relative_to(ROOT)),
+             "raw_zip_size_bytes":zip_path.stat().st_size,
+             "raw_xls_size_bytes":xls_path.stat().st_size,
              "license":"Etalab Open License 2.0 per CEPII download page"}
     return frame[["iso_o","iso_d","distance_km","contig","comlang_off"]], audit
 
