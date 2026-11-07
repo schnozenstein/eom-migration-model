@@ -74,3 +74,11 @@ A daily run should report a research result only when it creates new evidence: n
 No daily re-ranking is required unless the eligible input panel or scoring rule changes. Do not retune equations or weights to improve a single test period. Preserve every prior model and report; adopt a revision only after credible later held-out improvement and sensitivity checks.
 
 The current model is uncalibrated. No coefficients, EOM energy values or migration probabilities should be presented as validated without relevant parameter estimation and out-of-sample evidence.
+
+
+## Run log — 7 November 2026
+
+- First live OD ingestion fetched Eurostat origin–destination immigration and emigration-reporter series and committed the append-only OD history. The gravity fit then stopped because the prior direct CEPII workbook URL returned HTTP 404; no gravity/EOM performance metrics were produced by that attempt.
+- Corrected the CEPII source retrieval to the official GeoDist archive at https://www.cepii.fr/distance/dist_cepii.zip, extracting and retaining the dyadic dist_cepii.xls workbook. The workflow now archives both ZIP and extracted workbook.
+- Parser and ZIP-extraction regression suite passed 85 tests in PR CI.
+- The next main-branch run is the first eligible live PPML gravity/EOM comparison. Until its generated benchmark outputs are inspected, the empirical result remains pending.
