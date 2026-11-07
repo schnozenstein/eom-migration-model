@@ -11,6 +11,9 @@ on:
       - "scripts/build_policy_event_delta.py"
       - "scripts/maintain_prediction_ledger.py"
       - "scripts/build_macro_ranking_delta.py"
+      - "scripts/run_bilateral_gravity_benchmark.py"
+      - "requirements.txt"
+      - "RESEARCH_PROGRAM.md"
       - "tests/test_incremental_ledgers.py"
       - "src/eom_empirical/**"
       - "data/destinations.csv"
@@ -28,6 +31,9 @@ on:
       - "scripts/build_policy_event_delta.py"
       - "scripts/maintain_prediction_ledger.py"
       - "scripts/build_macro_ranking_delta.py"
+      - "scripts/run_bilateral_gravity_benchmark.py"
+      - "requirements.txt"
+      - "RESEARCH_PROGRAM.md"
       - "tests/test_incremental_ledgers.py"
       - "src/eom_empirical/**"
       - "data/destinations.csv"
@@ -211,6 +217,14 @@ jobs:
           python -m eom_empirical.fetch_world_bank --start 2010 --end "$(date -u +%Y)"
           python -m eom_empirical.fit_macro_model
 
+      - name: Run bilateral gravity benchmark and EOM incremental test
+        if: github.event_name != 'pull_request'
+        id: bilateral_gravity
+        continue-on-error: true
+        env:
+          PYTHONPATH: src
+        run: python scripts/run_bilateral_gravity_benchmark.py --start-year 2010 --end-year 2024
+
       - name: Build macro ranking score/rank delta
         if: always() && github.event_name != 'pull_request'
         id: ranking_delta
@@ -284,6 +298,15 @@ jobs:
             outputs/data_freshness_dashboard.csv
             outputs/latest_macro_eom_ranking.csv
             outputs/macro_ranking_delta.csv
+            outputs/bilateral_gravity_benchmark.json
+            outputs/bilateral_gravity_benchmark_predictions.csv
+            outputs/bilateral_gravity_benchmark_folds.csv
+            outputs/bilateral_gravity_model_coefficients.csv
+            metadata/bilateral_gravity_data_audit.json
+            reports/bilateral_gravity_benchmark_latest.md
+            data/bilateral/eurostat_od_flows_history.csv.gz
+            data/raw/snapshots/eurostat_bilateral/**/*.json.gz
+            data/raw/snapshots/cepii_geodist/**/*.xls
             metadata/macro_ranking_delta_manifest.json
             outputs/source_retrieval_audit.csv
             outputs/policy_event_delta.csv
@@ -367,7 +390,7 @@ jobs:
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Preserve the compact risk panel and coverage audit when the risk step produced them.
-          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv outputs/source_retrieval_audit.csv outputs/policy_event_delta.csv outputs/macro_ranking_delta.csv data/prediction_ledger.csv data/outcome_ledger.csv data/prediction_outcome_join.csv metadata/source_audit_manifest.json metadata/source_lineage_current.csv metadata/policy_event_delta_manifest.json metadata/prediction_ledger_manifest.json metadata/macro_ranking_delta_manifest.json; do
+          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv outputs/source_retrieval_audit.csv outputs/policy_event_delta.csv outputs/macro_ranking_delta.csv outputs/bilateral_gravity_benchmark.json outputs/bilateral_gravity_benchmark_predictions.csv outputs/bilateral_gravity_benchmark_folds.csv outputs/bilateral_gravity_model_coefficients.csv reports/bilateral_gravity_benchmark_latest.md metadata/bilateral_gravity_data_audit.json data/bilateral/eurostat_od_flows_history.csv.gz data/prediction_ledger.csv data/outcome_ledger.csv data/prediction_outcome_join.csv metadata/source_audit_manifest.json metadata/source_lineage_current.csv metadata/policy_event_delta_manifest.json metadata/prediction_ledger_manifest.json metadata/macro_ranking_delta_manifest.json; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.
@@ -411,7 +434,7 @@ jobs:
           fi
 
       - name: Mark run failed if required pipeline stages failed
-        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure' || steps.source_audit.outcome == 'failure' || steps.policy_delta.outcome == 'failure' || steps.prediction_ledger.outcome == 'failure' || steps.ranking_delta.outcome == 'failure')
+        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure' || steps.source_audit.outcome == 'failure' || steps.policy_delta.outcome == 'failure' || steps.prediction_ledger.outcome == 'failure' || steps.ranking_delta.outcome == 'failure' || steps.bilateral_gravity.outcome == 'failure')
         run: |
           echo "Daily report was generated, but a required test, data refresh, ranking, risk panel, or geographic evidence stage failed. Inspect the step logs."
           exit 1
