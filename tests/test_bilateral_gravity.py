@@ -1,0 +1,89 @@
+import pandas as pd
+
+from eom_empirical.bilateral_gravity import (
+    parse_jsonstat, orient_rows, iso2_to_iso3, append_history,
+    prepare_panel, MAIN_DATASET, CHECK_DATASET
+)
+
+
+def jsonstat_fixture():
+    return {
+        "id": ["geo", "partner", "time"],
+        "size": [2, 2, 2],
+        "dimension": {
+            "geo": {"category": {"index": {"NL": 0, "UK": 1}}},
+            "partner": {"category": {"index": {"DE": 0, "IN": 1}}},
+            "time": {"category": {"index": {"2020": 0, "2021": 1}}}
+        },
+        "value": {"0": 12, "7": 0},
+        "status": {"7": "p"}
+    }
+
+
+def test_jsonstat_sparse_parser_decodes_dimensions_and_flags():
+    frame = parse_jsonstat(jsonstat_fixture(), MAIN_DATASET)
+    row0 = frame.loc[frame.flat_index == 0].iloc[0]
+    row7 = frame.loc[frame.flat_index == 7].iloc[0]
+    assert (row0.geo, row0.partner, row0.time, row0.value) == ("NL", "DE", "2020", 12)
+    assert (row7.geo, row7.partner, row7.time, row7.value) == ("UK", "IN", "2021", 0)
+    assert row7.observation_status == "p"
+
+
+def test_iso2_special_cases_and_aggregate_exclusion():
+    assert iso2_to_iso3("EL") == "GRC"
+    assert iso2_to_iso3("UK") == "GBR"
+    assert iso2_to_iso3("IN") == "IND"
+    assert iso2_to_iso3("EU27_2020") is None
+
+
+def test_flow_orientation_is_directionally_consistent():
+    raw = pd.DataFrame([{"geo":"NL","partner":"IN","time":"2020","value":100,"observation_status":""}])
+    immigration = orient_rows(raw, MAIN_DATASET, "https://example.test/imm", "2026-11-07T00:00:00Z").iloc[0]
+    emigration = orient_rows(raw, CHECK_DATASET, "https://example.test/emi", "2026-11-07T00:00:00Z").iloc[0]
+    assert (immigration.origin_iso3, immigration.destination_iso3) == ("IND","NLD")
+    assert (emigration.origin_iso3, emigration.destination_iso3) == ("NLD","IND")
+
+
+def test_append_history_is_incremental_and_versions_revisions(tmp_path):
+    path = tmp_path / "flows.csv.gz"
+    base = pd.DataFrame([{
+        "dataset": MAIN_DATASET, "measure":"immigration_previous_residence",
+        "origin_iso3":"IND","destination_iso3":"NLD","year":2020,
+        "flow_persons":100.0,"observation_status":"","source_flag":"",
+        "unit":"NR","source_url":"https://example.test","publisher":"Eurostat",
+        "retrieved_at_utc":"2026-11-07T00:00:00Z"
+    }])
+    first = append_history(base, path)
+    second = append_history(base.assign(retrieved_at_utc="2026-11-08T00:00:00Z"), path)
+    revised = append_history(base.assign(flow_persons=110.0,retrieved_at_utc="2026-11-09T00:00:00Z"), path)
+    history = pd.read_csv(path, compression="gzip")
+    assert first["inserted"] == 1
+    assert second["unchanged"] == 1
+    assert revised["revised"] == 1
+    assert len(history) == 2
+    assert sorted(history.revision_number.tolist()) == [1,2]
+    assert float(history.iloc[-1].previous_value) == 100.0
+
+
+def test_prepare_panel_uses_previous_year_features_and_eom_gap_sign():
+    flows = pd.DataFrame([{
+        "dataset":MAIN_DATASET,"measure":"immigration_previous_residence",
+        "origin_iso3":"IND","destination_iso3":"NLD","year":2020,
+        "flow_persons":100.0
+    }])
+    features = pd.DataFrame([
+        {"country_iso3":"IND","year":2019,"gdp_pc_ppp":7000,"population":1.3e9,"eom_energy":3.0},
+        {"country_iso3":"NLD","year":2019,"gdp_pc_ppp":50000,"population":1.7e7,"eom_energy":-2.0},
+        # Current-year values must not enter the 2020 flow row.
+        {"country_iso3":"IND","year":2020,"gdp_pc_ppp":99999,"population":1.3e9,"eom_energy":99.0},
+        {"country_iso3":"NLD","year":2020,"gdp_pc_ppp":1,"population":1.7e7,"eom_energy":-99.0},
+    ])
+    geodist = pd.DataFrame([{
+        "iso_o":"IND","iso_d":"NLD","distance_km":7000,"contig":0,"comlang_off":0
+    }])
+    panel = prepare_panel(flows, geodist, features).iloc[0]
+    assert panel.feature_year == 2019
+    assert panel.gdp_pc_origin == 7000
+    assert panel.gdp_pc_destination == 50000
+    assert panel.eom_attractor_gap == 5.0
+    assert panel.eom_attractor_gap > 0
