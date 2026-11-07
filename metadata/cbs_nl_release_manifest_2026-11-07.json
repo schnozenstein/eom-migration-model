@@ -1,0 +1,62 @@
+{
+  "run_date": "2026-11-07",
+  "version": "v28",
+  "created_at_utc": "2026-11-07T05:43:23Z",
+  "repository": "schnozenstein/eom-migration-model",
+  "supplemental_data": {
+    "source": "Statistics Netherlands (CBS)",
+    "release_date": "2026-10-30",
+    "source_article_url": "https://www.cbs.nl/en-gb/news/2026/44/population-growth-slows-for-fourth-consecutive-year",
+    "statline_table_url": "https://www.cbs.nl/en-gb/figures/detail/83474ENG",
+    "statline_odata_root": "https://opendata.cbs.nl/ODataApi/OData/83474ENG",
+    "retrieval_method": "manual numeric transcription from official CBS HTML release; not direct API ingestion",
+    "normalized_file": "data/research/cbs_nl_migration_release_ytd_2026-11-07.csv",
+    "raw_excerpt_file": "data/raw/snapshots/cbs/2026-11-07/cbs_nl_release_excerpt_2026-10-30.md",
+    "source_audit_file": "metadata/cbs_nl_source_audit_2026-11-07.csv",
+    "total_release_year_rows": 8,
+    "total_normalized_measure_rows": 24,
+    "origin_series": 10,
+    "origin_year_rows": 40,
+    "total_normalized_rows": 64,
+    "rows_added_to_supplemental_panel": 64,
+    "rejected_rows": 0,
+    "duplicate_natural_keys": 0,
+    "missing_values": 0,
+    "core_macro_panel_changed": false,
+    "ranking_input_changed": false,
+    "comparison_year_remains": 2025,
+    "caveats": [
+      "All observations are January–September cumulative periods; none is a full calendar-year observation.",
+      "2026 values are provisional and may be revised.",
+      "Values are rounded to one decimal thousand persons.",
+      "Origin panel includes only the ten origins selected as highest net migration in the 2026 Jan–September release.",
+      "CBS release label 'country of origin' is preserved; do not infer nationality or country of birth."
+    ]
+  },
+  "policy_review": {
+    "manual_events": 5,
+    "causal_estimates": 0,
+    "macro_score_adjustment": false,
+    "file": "data/policy_events_added_2026-11-07.csv"
+  },
+  "workflow_audit": {
+    "workflow_file": ".github/workflows/eom-daily-refresh.yml",
+    "default_branch": "main",
+    "cron_utc": "17 5 * * *",
+    "latest_verified_scheduled_run_id": 42221999070,
+    "latest_verified_scheduled_run_number": 174,
+    "latest_verified_scheduled_run_at_utc": "2026-11-06T13:00:24Z",
+    "latest_verified_scheduled_run_conclusion": "success",
+    "scheduled_nov7_run_visible_at_audit_time": false,
+    "last_scheduled_run_was_late": true,
+    "push_trigger_test_path": "tests/test_cbs_nl_release_panel_2026_11_07.py",
+    "note": "A push-triggered full refresh will be used as a corrective execution because the 7 November schedule-triggered run was not visible at the audit cutoff. This does not repair cron reliability."
+  },
+  "model": {
+    "status": "UNVALIDATED",
+    "production_forecasts": 0,
+    "parameter_fitting": false,
+    "causal_estimates": 0,
+    "note": "No EOM equations or weights changed. CBS YTD panel is supplementary and excluded from annual macro ranking and annual backtest."
+  }
+}
