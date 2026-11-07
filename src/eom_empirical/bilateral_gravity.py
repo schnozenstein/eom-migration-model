@@ -275,6 +275,37 @@ def prepare_panel(flows: pd.DataFrame, geodist: pd.DataFrame, features: pd.DataF
     return panel
 
 
+def reconcile_directions(flows: pd.DataFrame) -> tuple[dict, pd.DataFrame]:
+    """Compare destination-reported immigration with origin-reported emigration for the same OD-year."""
+    immigration = flows[flows["measure"] == "immigration_previous_residence"][
+        ["origin_iso3", "destination_iso3", "year", "flow_persons"]
+    ].rename(columns={"flow_persons": "immigration_reported_by_destination"})
+    emigration = flows[flows["measure"] == "emigration_next_residence"][
+        ["origin_iso3", "destination_iso3", "year", "flow_persons"]
+    ].rename(columns={"flow_persons": "emigration_reported_by_origin"})
+    matched = immigration.merge(emigration,
+        on=["origin_iso3", "destination_iso3", "year"], how="inner")
+    if matched.empty:
+        return {"matched_pair_years": 0, "correlation": None,
+            "median_absolute_difference_persons": None,
+            "median_absolute_percentage_difference": None}, matched
+    difference = (matched["immigration_reported_by_destination"] -
+        matched["emigration_reported_by_origin"]).abs()
+    denominator = matched[["immigration_reported_by_destination",
+        "emigration_reported_by_origin"]].mean(axis=1).replace(0, np.nan)
+    from scipy.stats import spearmanr
+    rho = spearmanr(matched["immigration_reported_by_destination"],
+        matched["emigration_reported_by_origin"]).statistic if len(matched) > 2 else np.nan
+    result = {"matched_pair_years": int(len(matched)),
+        "correlation": float(rho) if np.isfinite(rho) else None,
+        "median_absolute_difference_persons": float(difference.median()),
+        "median_absolute_percentage_difference": float((difference / denominator * 100).median()),
+        "interpretation": "source reconciliation only; series are not summed and discrepancies are not treated as model errors"}
+    matched["absolute_difference_persons"] = difference
+    matched["absolute_percentage_difference"] = difference / denominator * 100
+    return result, matched
+
+
 def metrics(frame: pd.DataFrame, prediction: str):
     from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_poisson_deviance
     from scipy.stats import spearmanr
@@ -430,6 +461,7 @@ def run(start_year=2010,end_year=2024):
         (ROOT/"metadata/bilateral_gravity_data_audit.json").write_text(json.dumps(audit,indent=2))
         raise RuntimeError("No primary Eurostat bilateral immigration flows retrieved.")
     all_flows=pd.concat(tables,ignore_index=True)
+    direction_reconciliation, reconciliation_rows = reconcile_directions(all_flows)
     history=append_history(all_flows)
     audit.update({"rows_inserted":history["inserted"],"rows_revised":history["revised"],
         "rows_unchanged":history["unchanged"],"duplicates_in_run":history["duplicates_in_run"],
@@ -448,7 +480,8 @@ def run(start_year=2010,end_year=2024):
     panel=prepare_panel(all_flows,geodist,features)
     summary,pred,folds,coef=evaluate(panel)
     summary.update({"retrieval_run_id":stamp,"data_cutoff_utc":utc_now(),
-        "source_failures":failures,"reverse_flow_crosscheck_rows":int((all_flows.measure=="emigration_next_residence").sum())})
+        "source_failures":failures,"reverse_flow_crosscheck_rows":int((all_flows.measure=="emigration_next_residence").sum()),
+        "direction_reconciliation":direction_reconciliation})
     audit["benchmark"]={"status":summary["status"],"panel_rows_after_join":len(panel),
         "complete_case_rows":summary.get("complete_case_rows",0),
         "rows_scored":summary.get("rows_scored",0),"folds_scored":summary.get("folds_scored",0)}
@@ -457,6 +490,7 @@ def run(start_year=2010,end_year=2024):
         (ROOT/folder).mkdir(parents=True,exist_ok=True)
     (ROOT/"outputs/bilateral_gravity_benchmark.json").write_text(json.dumps(summary,indent=2,default=str)+"\n")
     pred.to_csv(ROOT/"outputs/bilateral_gravity_benchmark_predictions.csv",index=False)
+    reconciliation_rows.to_csv(ROOT/"outputs/bilateral_gravity_source_reconciliation.csv",index=False)
     folds.to_csv(ROOT/"outputs/bilateral_gravity_benchmark_folds.csv",index=False)
     coef.to_csv(ROOT/"outputs/bilateral_gravity_model_coefficients.csv",index=False)
     (ROOT/"metadata/bilateral_gravity_data_audit.json").write_text(json.dumps(audit,indent=2,default=str)+"\n")
