@@ -1,8 +1,10 @@
+import io
+import zipfile
 import pandas as pd
 
 from eom_empirical.bilateral_gravity import (
     parse_jsonstat, orient_rows, iso2_to_iso3, append_history,
-    prepare_panel, MAIN_DATASET, CHECK_DATASET
+    prepare_panel, extract_geodist_workbook, MAIN_DATASET, CHECK_DATASET
 )
 
 
@@ -90,3 +92,26 @@ def test_prepare_panel_uses_previous_year_features_and_eom_gap_sign():
     assert panel.gdp_pc_destination == 50000
     assert panel.eom_attractor_gap == 5.0
     assert panel.eom_attractor_gap > 0
+
+
+
+def test_extract_geodist_workbook_from_official_zip_member():
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("CEPII/dist_cepii.xls", b"sample-workbook-bytes")
+        archive.writestr("CEPII/geo_cepii.xls", b"country-workbook-bytes")
+    member, workbook = extract_geodist_workbook(buffer.getvalue())
+    assert member == "CEPII/dist_cepii.xls"
+    assert workbook == b"sample-workbook-bytes"
+
+
+def test_extract_geodist_workbook_rejects_missing_member():
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("CEPII/geo_cepii.xls", b"country-workbook-bytes")
+    try:
+        extract_geodist_workbook(buffer.getvalue())
+    except ValueError as exc:
+        assert "Expected exactly one dist_cepii.xls" in str(exc)
+    else:
+        raise AssertionError("missing dyadic workbook should be rejected")
