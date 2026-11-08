@@ -42,6 +42,20 @@ def yes_no(value):
     return "Not reported"
 
 
+def freshness_warning_text(manifest_is_current, etl_outcome, attention):
+    if not manifest_is_current or str(etl_outcome).lower() != "success":
+        return "The full ETL did not write a current manifest; source/panel counts below are last stored values. Ranking status is reported from the actual ranking step outcome."
+    if not attention:
+        return "None; all monitored indicators are recent."
+    details=[]
+    for row in attention:
+        code=row.get("indicator_code") or row.get("indicator_name") or "unknown indicator"
+        year=row.get("latest_observation_year") or "year not reported"
+        status=row.get("freshness_status") or "unknown"
+        details.append(f"{code} ({year}; {status})")
+    return f"{len(attention)} indicator(s) require attention: " + "; ".join(details)
+
+
 def main():
     manifests = sorted(MANIFEST_DIR.glob("*.json")) if MANIFEST_DIR.exists() else []
     manifest = read_json(manifests[-1]) if manifests else {}
@@ -50,8 +64,6 @@ def main():
     manifest_is_current = (not current_workflow_run_id) or (manifest_workflow_run_id == current_workflow_run_id)
     etl_outcome = str(os.environ.get("EOM_ETL_OUTCOME", "unknown")).lower()
     ranking_outcome = str(os.environ.get("EOM_RANKING_RECOMPUTE_OUTCOME", "unknown")).lower()
-    freshness_warning = "None" if manifest_is_current and etl_outcome == "success" else "The full ETL did not write a current manifest; source/panel counts below are last stored values. Ranking status is reported from the actual ranking step outcome."
-
     dashboard = read_csv(OUT / "data_freshness_dashboard.csv")
     source_audit_manifest = read_json(META / "source_audit_manifest.json")
     policy_delta_manifest = read_json(META / "policy_event_delta_manifest.json")
@@ -91,6 +103,7 @@ def main():
 
     recent = [r for r in dashboard if r.get("freshness_status") == "RECENT"]
     attention = [r for r in dashboard if r.get("freshness_status") != "RECENT"]
+    freshness_warning = freshness_warning_text(manifest_is_current, etl_outcome, attention)
     scored_qol = [
         r for r in qol
         if r.get("joie_de_vivre_score", "").strip()
@@ -136,7 +149,7 @@ def main():
         f"- **Numeric source rows fetched:** {source_audit_manifest.get('numeric_source_rows_fetched_sum_across_endpoints', 'not reported')} across endpoints; {source_audit_manifest.get('numeric_normalized_rows_sum_across_primary_datasets', 'not reported')} normalized rows retained. These are source-record counts, not unique people.",
         f"- **Panel validation:** {source_audit_manifest.get('panel_duplicate_natural_keys', 'unknown')} duplicate WDI natural keys; {source_audit_manifest.get('panel_missing_values', 'unknown')} missing values ({source_audit_manifest.get('panel_missingness_pct', 'unknown')}% of panel cells).",
         f"- **Cross-source natural-key audit:** {source_audit_manifest.get('natural_key_duplicate_rows_across_audited_tables', 'unknown')} duplicate-key rows across audited tables; audit validation {source_audit_manifest.get('validation_status', 'not reported')}.",
-        f"- **Source lineage registry:** {source_audit_manifest.get('source_lineage_current_rows', 'not generated')} current source records in metadata/source_lineage_current.csv; legacy registry status {source_audit_manifest.get('legacy_source_lineage_registry_status', 'not reported')} (not overwritten).",
+        f"- **Source lineage registry:** {source_audit_manifest.get('source_lineage_current_rows', 'not generated')} current source records; {source_audit_manifest.get('source_lineage_unique_source_ids', 'unknown')} unique source IDs; {source_audit_manifest.get('source_lineage_duplicate_source_id_rows', 'unknown')} duplicate source-ID rows; legacy registry status {source_audit_manifest.get('legacy_source_lineage_registry_status', 'not reported')} (not overwritten).",
         f"- **Retrieval timestamp fallbacks:** {source_audit_manifest.get('retrieval_timestamp_fallback_rows', 0)} row(s) use the explicit ETL-run timestamp because a source-specific timestamp was not applicable or exposed; blank timestamp rows after fallback: {source_audit_manifest.get('retrieval_timestamp_blank_rows', 'unknown')}.",
         f"- **Policy-event delta:** {policy_delta_manifest.get('confirmed_policy_events', 'not reported')} confirmed events; {policy_delta_manifest.get('content_changed_pages', 'not reported')} page-content changes requiring review; {policy_delta_manifest.get('failed_or_unknown_pages', 'not reported')} failed/unknown pages. Hash changes are not policy-event confirmation.",
         f"- **Prediction/outcome ledger:** {prediction_manifest.get('prediction_rows', 'not reported')} production forecasts; {prediction_manifest.get('outcome_rows', 'not reported')} versioned country-year outcomes; {prediction_manifest.get('matched_outcomes', 'not reported')} forecast-outcome matches; {prediction_manifest.get('outcome_rows_inserted', 'not reported')} new outcomes and {prediction_manifest.get('outcome_rows_revised', 'not reported')} revisions.",
