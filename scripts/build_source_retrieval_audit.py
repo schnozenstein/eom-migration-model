@@ -15,7 +15,7 @@ FIELDS=[
 "exact_url","request_urls_json","metadata_url","retrieval_timestamp_utc","publication_release_date",
 "observation_period_start","observation_period_end_requested","observation_period_end_observed",
 "definition","unit","geography_scope","origin_scope","destination_scope","cohort","revision_vintage",
-"fetch_status","http_status","rows_fetched","rows_normalized","rows_inserted","rows_updated",
+"fetch_status","http_status","rows_fetched","rows_normalized","rows_carried_forward","rows_inserted","rows_updated",
 "rows_rejected","duplicate_rows","missing_values","missingness_pct","unchanged_rows_skipped",
 "sha256","raw_snapshot_path","normalized_output_path","counted_in_numeric_totals",
 "validation_status","error","notes"]
@@ -23,7 +23,7 @@ LINEAGE_FIELDS=[
 "workflow_run_id","etl_run_id","source_id","publisher","source_type","dataset_id","exact_url","metadata_url",
 "retrieval_timestamp_utc","publication_release_date","observation_period_start","observation_period_end_observed",
 "definition","unit","geography_scope","origin_scope","destination_scope","cohort","revision_vintage","fetch_status",
-"http_status","sha256","raw_snapshot_path","normalized_output_path","notes"]
+"http_status","rows_carried_forward","sha256","raw_snapshot_path","normalized_output_path","notes"]
 
 WDI_UNITS={
 "BX.KLT.DINV.WD.GD.ZS":"% of GDP",
@@ -103,28 +103,37 @@ def norm_http(value):
 def success(status,http=""):
     h=norm_http(http)
     return str(status).upper() in {"SUCCESS","OK","PASS","200"} and (not h or h=="200")
+
+def audit_current_rows(data,status,http=""):
+    """Return rows produced by this run and the prior rows retained after a failed fetch."""
+    if success(status,http):
+        return data,0
+    return data.iloc[0:0].copy(),len(data)
 def blank_row(run_id,etl_run_id,etl_outcome,**kwargs):
     r={k:"" for k in FIELDS}
     r.update({"workflow_run_id":run_id,"etl_run_id":etl_run_id,"etl_outcome":etl_outcome,
-    "counted_in_numeric_totals":"false","validation_status":"NOT_ASSESSED"})
+    "rows_carried_forward":0,"counted_in_numeric_totals":"false","validation_status":"NOT_ASSESSED"})
     r.update({k:("" if v is None else v) for k,v in kwargs.items() if k in r})
     if r.get("http_status"):
         r["http_status"]=norm_http(r["http_status"])
     return r
-def snapshot_for(source,tokens=None,explicit=""):
+def snapshot_for(source,tokens=None,explicit="",run_id=""):
+    def choose(files):
+        files=sorted((x for x in files if x.is_file()),key=lambda x:x.stat().st_mtime)
+        if tokens:
+            matched=[x for x in files if all(t.lower() in x.name.lower() for t in tokens)]
+            return matched[-1] if matched else None
+        return files[-1] if files else None
     if explicit:
         p=Path(explicit); p=p if p.is_absolute() else ROOT/p
         if p.exists():
             if p.is_file(): return p
-            files=sorted((x for x in p.rglob("*") if x.is_file()),key=lambda x:x.stat().st_mtime)
-            matched=[x for x in files if tokens and all(t.lower() in x.name.lower() for t in tokens)]
-            if matched: return matched[-1]
-            if files: return files[-1]
+            return choose(p.rglob("*"))
     base=ROOT/"data"/"raw"/"snapshots"/source
+    if run_id:
+        base=base/run_id
     if not base.exists(): return None
-    files=sorted((x for x in base.rglob("*") if x.is_file()),key=lambda x:x.stat().st_mtime)
-    matched=[x for x in files if tokens and all(t.lower() in x.name.lower() for t in tokens)]
-    return matched[-1] if matched else (files[-1] if files else None)
+    return choose(base.rglob("*"))
 def release_from_snapshot(path):
     if not path or Path(path).suffix.lower()!=".json": return ""
     try:
@@ -168,18 +177,19 @@ def main():
     wdi_status=read_csv(META/"live_source_status.csv")
     for st in wdi_status.to_dict("records") if not wdi_status.empty else []:
         code=first(st,"indicator","indicator_code")
+        status=first(st,"status",default="UNKNOWN")
         g=panel[panel.get("indicator_code",pd.Series(dtype=str)).astype(str).eq(code)] if not panel.empty and code else pd.DataFrame()
+        g,carried_forward=audit_current_rows(g,status,first(st,"http_status"))
         urls=parse_urls(st.get("request_urls",""),first(st,"url")); url=urls[0] if urls else first(st,"url")
         api_code=first(st,"api_indicator_code","indicator_api_code")
         if not api_code:
             m=re.search(r"/indicator/([^?]+)",url); api_code=m.group(1) if m else code
-        snap=snapshot_for("world_bank",[api_code.replace(".","_"),"page"],first(st,"snapshot_dir")) if api_code else snapshot_for("world_bank",None,first(st,"snapshot_dir"))
+        snap=snapshot_for("world_bank",[api_code.replace(".","_"),"page"],first(st,"snapshot_dir"),run_id=etl_run_id) if api_code else snapshot_for("world_bank",None,first(st,"snapshot_dir"),run_id=etl_run_id)
         n=len(g); missing=int(g["value_num"].isna().sum()) if n and "value_num" in g.columns else ""
         miss=round(missing/n*100,4) if n and isinstance(missing,int) else ""
         dup=natural_duplicates(g,"WDI") if n else 0
         years=pd.to_numeric(g.loc[g["value_num"].notna(),"year"],errors="coerce") if n and "value_num" in g.columns else pd.Series(dtype=float)
-        release=release_from_snapshot(snap) or first(st,"api_lastupdated")
-        status=first(st,"status",default="UNKNOWN")
+        release=(release_from_snapshot(snap) or first(st,"api_lastupdated")) if success(status,first(st,"http_status")) else ""
         rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
             source_id=f"WDI:{code}",publisher="World Bank",source_type="numeric_api",dataset_id=code,
             exact_url=url,request_urls_json=json.dumps(urls,ensure_ascii=False),
@@ -195,13 +205,13 @@ def main():
             origin_scope="not available; not bilateral",destination_scope="not available; not bilateral",
             cohort="national total; indicator-specific denominator",revision_vintage=release,
             fetch_status=status,http_status=first(st,"http_status",default="200" if success(status) else ""),
-            rows_fetched=as_int(first(st,"rows_fetched"),n),rows_normalized=n,
+            rows_fetched=as_int(first(st,"rows_fetched"),n),rows_normalized=n,rows_carried_forward=carried_forward,
             rows_inserted=as_int(refresh.get("world_bank_history_new_keys",0)),
             rows_updated=as_int(refresh.get("world_bank_history_value_revisions",0)),
             rows_rejected=as_int(refresh.get("world_bank_rows_rejected",0)),
             duplicate_rows=dup,missing_values=missing,missingness_pct=miss,
             unchanged_rows_skipped=n if as_int(refresh.get("world_bank_history_new_keys",0))==0 and as_int(refresh.get("world_bank_history_value_revisions",0))==0 else "",
-            sha256=sha256_file(snap) if snap else "",raw_snapshot_path=rel(snap) if snap else first(st,"snapshot_dir"),
+            sha256=sha256_file(snap) if snap else "",raw_snapshot_path=rel(snap) if snap else "",
             normalized_output_path=rel(panel_path),counted_in_numeric_totals="true",
             validation_status="PASS" if dup==0 else "FAIL",error=first(st,"error"),
             notes="Country-year fallback, not bilateral flow. Insert/revision counts are global WDI history totals, not allocated per indicator."
@@ -209,9 +219,11 @@ def main():
     euro=read_csv(META/"eurostat_source_status.csv"); euro_data=read_csv(ROOT/"data"/"raw"/"eurostat_migration_flows.csv")
     for st in euro.to_dict("records") if not euro.empty else []:
         dataset=first(st,"dataset","source_dataset","indicator")
+        status=first(st,"status",default="UNKNOWN")
         g=euro_data[euro_data.get("source_dataset",pd.Series(dtype=str)).astype(str).eq(dataset)] if not euro_data.empty and dataset else euro_data
+        g,carried_forward=audit_current_rows(g,status,first(st,"http_status"))
         n,missing,miss=numeric_stats(g,["value"]); dup=natural_duplicates(g,"Eurostat")
-        status=first(st,"status",default="UNKNOWN"); snap=snapshot_for("eurostat",[dataset])
+        snap=snapshot_for("eurostat",[dataset],run_id=etl_run_id)
         rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
             source_id=f"Eurostat:{dataset}",publisher="Eurostat",source_type="numeric_api",dataset_id=dataset,
             exact_url=first(st,"url"),request_urls_json=json.dumps([first(st,"url")]),
@@ -224,7 +236,7 @@ def main():
             origin_scope="not preserved in current compact output",destination_scope="reporting geography",
             cohort="selected total age/sex dimensions",revision_vintage=sha256_file(snap) if snap else "",
             fetch_status=status,http_status=first(st,"http_status",default="200" if success(status) else ""),
-            rows_fetched=as_int(first(st,"rows_fetched"),n),rows_normalized=n,rows_rejected="",
+            rows_fetched=as_int(first(st,"rows_fetched"),n),rows_normalized=n,rows_carried_forward=carried_forward,rows_rejected="",
             duplicate_rows=dup,missing_values=missing,missingness_pct=miss,sha256=sha256_file(snap) if snap else "",
             raw_snapshot_path=rel(snap) if snap else "",normalized_output_path=rel(ROOT/"data"/"raw"/"eurostat_migration_flows.csv"),
             counted_in_numeric_totals="true",validation_status="PASS" if dup==0 else "WARN",error=first(st,"error"),
@@ -243,6 +255,7 @@ def main():
                 sid=first(st,"source_id")
                 suffix=sid.rsplit("_",1)[-1].lower() if sid else ""
                 dataset=suffix if suffix in {"destination","origin","bilateral"} else first(st,"dataset",default=publisher)
+            status=first(st,"status",default="UNKNOWN")
             g=data
             if publisher=="ILOSTAT" and not data.empty and "indicator" in data.columns:
                 code=first(st,"indicator","indicator_code")
@@ -250,13 +263,14 @@ def main():
             elif publisher=="UN DESA" and not data.empty and "direction" in data.columns:
                 direction=dataset
                 g=data[data["direction"].astype(str).eq(direction)]
+            g,carried_forward=audit_current_rows(g,status,first(st,"http_status"))
             n,missing,miss=numeric_stats(g,["OBS_VALUE","obs_value","migrant_stock_persons","value","population"])
-            dup=natural_duplicates(g,publisher); status=first(st,"status",default="UNKNOWN")
+            dup=natural_duplicates(g,publisher)
             url=first(st,"url","data_url","download_url")
             snap_tokens=None
             if publisher=="UN DESA":
                 snap_tokens={"destination":["by_sex_and_destination"],"origin":["by_sex_and_origin"],"bilateral":["destination_and_origin"]}.get(dataset)
-            snap=snapshot_for(snap_source,snap_tokens,first(st,"raw_snapshot_path","download_path","snapshot_path"))
+            snap=snapshot_for(snap_source,snap_tokens,first(st,"raw_snapshot_path","download_path","snapshot_path"),run_id=etl_run_id)
             sh=first(st,"sha256_response","sha256_full_export","source_data_sha256","sha256","source_sha256") or (sha256_file(snap) if snap else "")
             label=first(st,"indicator_label_expected","dataset","table_type","indicator",default=dataset)
             obs_start=first(st,"observation_start"); obs_end=first(st,"observation_end","observation_end_requested")
@@ -291,17 +305,17 @@ def main():
                 cohort=first(st,"sex","cohort","classif1",default="source-defined; dimensions preserved"),
                 revision_vintage=sh,fetch_status=status,http_status=first(st,"http_status",default="200" if success(status) else ""),
                 rows_fetched=as_int(first(st,"rows_fetched","source_rows"),n),
-                rows_normalized=as_int(first(st,"rows_focus","focus_rows"),n),rows_rejected="",
+                rows_normalized=as_int(first(st,"rows_focus","focus_rows"),n),rows_carried_forward=carried_forward,rows_rejected="",
                 duplicate_rows=dup,missing_values=missing,missingness_pct=miss,sha256=sh,
                 raw_snapshot_path=rel(snap) if snap else first(st,"raw_snapshot_path","download_path"),
                 normalized_output_path=rel(data_path),counted_in_numeric_totals="true",
                 validation_status="PASS" if dup==0 else "WARN",error=first(st,"error"),
-                notes=definition+" Raw snapshots are retained; per-row revision ledger not yet implemented."
+                notes=definition+" Raw snapshots are retained; per-row revision ledger not yet implemented."+ (f" Prior canonical rows retained after failed fetch: {carried_forward}; not counted as current-run retrieval." if carried_forward else "")
             ))
     ob=read_csv(META/"obmigra_source_status.csv")
     for st in ob.to_dict("records") if not ob.empty else []:
         url=first(st,"url","final_url"); status=first(st,"status",default="UNKNOWN")
-        snap=snapshot_for("obmigra",None,first(st,"raw_snapshot_path"))
+        snap=snapshot_for("obmigra",None,first(st,"raw_snapshot_path"),run_id=etl_run_id)
         rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
             source_id="OBMigra:official_page_monitor",publisher="OBMigra / Brazilian government migration observatory",
             source_type="catalogue_page_monitor",dataset_id="official migration statistics page",exact_url=url,
@@ -317,7 +331,7 @@ def main():
     for st in policy.to_dict("records") if not policy.empty else []:
         url=first(st,"url","final_url"); status=first(st,"status",default="UNKNOWN")
         token=hashlib.sha256(url.encode("utf-8")).hexdigest()[:16] if url else ""
-        snap=snapshot_for("policy_pages",[token]) if token else None
+        snap=snapshot_for("policy_pages",[token],run_id=etl_run_id) if token else None
         rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
             source_id=f"PolicyPage:{first(st,'country',default='unknown')}:{first(st,'source_label','label',default='official page')}",
             publisher=first(st,"source_label","label",default="official immigration authority"),source_type="policy_page_monitor",
@@ -357,6 +371,7 @@ def main():
     years=pd.to_numeric(panel["year"],errors="coerce").dropna() if panel_rows and "year" in panel.columns else pd.Series(dtype=float)
     numeric_fetched=sum(as_int(r.get("rows_fetched")) for r in rows if r.get("counted_in_numeric_totals")=="true" and r.get("source_type") in {"numeric_api","numeric_download"})
     numeric_normalized=sum(as_int(r.get("rows_normalized")) for r in rows if r.get("counted_in_numeric_totals")=="true" and r.get("source_type") in {"numeric_api","numeric_download"})
+    rows_carried_forward_total=sum(as_int(r.get("rows_carried_forward")) for r in rows)
     failures=sum(1 for r in rows if r.get("source_type") not in {"derived_subset"} and r.get("fetch_status") and not success(r.get("fetch_status",""),r.get("http_status","")))
     dup_total=sum(as_int(r.get("duplicate_rows")) for r in rows if r.get("duplicate_rows")!="")
     rebuild=read_json(META/"wdi_history_rebuild_manifest.json")
@@ -387,6 +402,7 @@ def main():
     "source_records":len(rows),"source_failures_or_unknown_status":failures,
     "numeric_source_rows_fetched_sum_across_endpoints":numeric_fetched,
     "numeric_normalized_rows_sum_across_primary_datasets":numeric_normalized,
+    "rows_carried_forward_after_failed_fetches":rows_carried_forward_total,
     "derived_rows_excluded_from_numeric_totals":True,"panel_rows":panel_rows,
     "panel_indicators":int(panel["indicator_code"].nunique()) if panel_rows and "indicator_code" in panel.columns else 0,
     "panel_geographies":int(panel["country_code"].nunique()) if panel_rows and "country_code" in panel.columns else 0,
