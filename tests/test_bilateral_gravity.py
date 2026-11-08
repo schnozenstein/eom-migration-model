@@ -147,7 +147,7 @@ def test_cepii_source_failure_writes_blocked_status_and_archives_previous_result
     ])
 
     result = write_geodist_blocked_outputs(
-        "2026-11-08T054000Z", audit, [], requests.exceptions.HTTPError("403 Forbidden"),
+        "2026-11-08T054000Z", audit, [], RuntimeError("403 Forbidden"),
         history, reconciliation, reconciliation_rows
     )
 
