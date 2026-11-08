@@ -109,6 +109,14 @@ def audit_current_rows(data,status,http=""):
     if success(status,http):
         return data,0
     return data.iloc[0:0].copy(),len(data)
+
+def source_dataset_id(status_row,publisher):
+    """Use the source's indicator/table identifier before falling back to publisher."""
+    return first(status_row,"indicator","indicator_code","dataset","table_type","source_dataset","direction",default=publisher)
+
+def source_id_duplicate_rows(rows):
+    ids=[str(r.get("source_id","")).strip() for r in rows if str(r.get("source_id","")).strip()]
+    return len(ids)-len(set(ids))
 def blank_row(run_id,etl_run_id,etl_outcome,**kwargs):
     r={k:"" for k in FIELDS}
     r.update({"workflow_run_id":run_id,"etl_run_id":etl_run_id,"etl_outcome":etl_outcome,
@@ -250,7 +258,7 @@ def main():
     for publisher,status_name,snap_source,output_rel,source_type,definition,default_unit in configs:
         st_df=read_csv(META/status_name); data_path=ROOT/output_rel; data=read_csv(data_path)
         for st in st_df.to_dict("records") if not st_df.empty else []:
-            dataset=first(st,"indicator","dataset","table_type","source_dataset","direction",default=publisher)
+            dataset=source_dataset_id(st,publisher)
             if publisher=="UN DESA":
                 sid=first(st,"source_id")
                 suffix=sid.rsplit("_",1)[-1].lower() if sid else ""
@@ -372,6 +380,7 @@ def main():
     numeric_fetched=sum(as_int(r.get("rows_fetched")) for r in rows if r.get("counted_in_numeric_totals")=="true" and r.get("source_type") in {"numeric_api","numeric_download"})
     numeric_normalized=sum(as_int(r.get("rows_normalized")) for r in rows if r.get("counted_in_numeric_totals")=="true" and r.get("source_type") in {"numeric_api","numeric_download"})
     rows_carried_forward_total=sum(as_int(r.get("rows_carried_forward")) for r in rows)
+    source_id_duplicates=source_id_duplicate_rows(rows)
     failures=sum(1 for r in rows if r.get("source_type") not in {"derived_subset"} and r.get("fetch_status") and not success(r.get("fetch_status",""),r.get("http_status","")))
     dup_total=sum(as_int(r.get("duplicate_rows")) for r in rows if r.get("duplicate_rows")!="")
     rebuild=read_json(META/"wdi_history_rebuild_manifest.json")
@@ -420,9 +429,12 @@ def main():
     "retrieval_timestamp_fallback_rows":len(timestamp_fallback_ids),
     "retrieval_timestamp_fallback_source_ids":timestamp_fallback_ids,
     "retrieval_timestamp_blank_rows":timestamp_blank_rows,
-    "validation_status":"PASS_WITH_WARNINGS" if failures or panel_dup or dup_total or timestamp_blank_rows else "PASS",
+    "validation_status":"PASS_WITH_WARNINGS" if failures or panel_dup or dup_total or timestamp_blank_rows or source_id_duplicates else "PASS",
     "revision_tracking_note":"The compact WDI ledger is versioned. Supplemental sources retain raw snapshots/current extracts; per-row revision ledgers are not yet implemented for every supplemental source.",
     "source_lineage_current_path":str(lineage_path.relative_to(ROOT)),"source_lineage_current_rows":len(rows),
+    "source_lineage_unique_source_ids":len(rows)-source_id_duplicates,
+    "source_lineage_duplicate_source_id_rows":source_id_duplicates,
+    "source_lineage_ids_unique":source_id_duplicates==0,
     "source_lineage_current_sha256":sha256_file(lineage_path),
     "legacy_source_lineage_registry_path":str(legacy_lineage.relative_to(ROOT)) if legacy_lineage.exists() else "",
     "legacy_source_lineage_registry_rows":legacy_lineage_rows,
