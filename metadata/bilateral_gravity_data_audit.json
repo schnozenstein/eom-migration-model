@@ -1,6 +1,6 @@
 {
-  "run_id": "2026-11-08T060529Z",
-  "retrieved_at_utc": "2026-11-08T06:05:29.988886+00:00",
+  "run_id": "2026-11-08T062234Z",
+  "retrieved_at_utc": "2026-11-08T06:22:34.324322+00:00",
   "start_year": 2010,
   "end_year": 2024,
   "sources": [
@@ -19,7 +19,7 @@
         "sinceTimePeriod": "2010",
         "untilTimePeriod": "2024"
       },
-      "retrieved_at_utc": "2026-11-08T06:05:29.988898+00:00",
+      "retrieved_at_utc": "2026-11-08T06:22:34.324332+00:00",
       "status": "SUCCESS",
       "publication_release_date": "not exposed in the response; Eurostat metadata states annual flow breakdowns by previous/next residence are released in March T+1",
       "observation_period": "2010-2024",
@@ -31,7 +31,7 @@
       "numeric_cells": 72467,
       "status_flagged_cells": 7949,
       "missing_or_suppressed_cells": 433,
-      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-08T060529Z/migr_imm5prv.json.gz",
+      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-08T062234Z/migr_imm5prv.json.gz",
       "raw_size_bytes": 289485,
       "normalized_country_pair_rows": 61690,
       "unmapped_or_aggregate_rows": 11210
@@ -51,7 +51,7 @@
         "sinceTimePeriod": "2010",
         "untilTimePeriod": "2024"
       },
-      "retrieved_at_utc": "2026-11-08T06:05:33.379298+00:00",
+      "retrieved_at_utc": "2026-11-08T06:22:37.160994+00:00",
       "status": "SUCCESS",
       "publication_release_date": "not exposed in the response; Eurostat metadata states annual flow breakdowns by previous/next residence are released in March T+1",
       "observation_period": "2010-2024",
@@ -63,7 +63,7 @@
       "numeric_cells": 68493,
       "status_flagged_cells": 6034,
       "missing_or_suppressed_cells": 1073,
-      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-08T060529Z/migr_emi3nxt.json.gz",
+      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-08T062234Z/migr_emi3nxt.json.gz",
       "raw_size_bytes": 258464,
       "normalized_country_pair_rows": 58839,
       "unmapped_or_aggregate_rows": 10727
@@ -72,7 +72,7 @@
       "publisher": "CEPII",
       "url": "https://www.cepii.fr/distance/dist_cepii.zip",
       "resolved_url": "https://www.cepii.fr/distance/dist_cepii.zip",
-      "retrieved_at_utc": "2026-11-08T06:05:53.122155+00:00",
+      "retrieved_at_utc": "2026-11-08T06:22:57.605592+00:00",
       "publication_release_date": "downloadable file vintage not exposed; reference methodology Mayer & Zignago (2011), CEPII Working Paper 2011-25",
       "observation_period": "cross-sectional dyadic geography; no migration observation period",
       "definition": "bilateral distance in kilometres, contiguity and common official language",
@@ -82,8 +82,8 @@
       "rows": 50176,
       "distance_field": "distw",
       "archive_member": "dist_cepii.xls",
-      "raw_snapshot_zip": "data/raw/snapshots/cepii_geodist/2026-11-08T060529Z/dist_cepii.zip",
-      "raw_snapshot_xls": "data/raw/snapshots/cepii_geodist/2026-11-08T060529Z/dist_cepii.xls",
+      "raw_snapshot_zip": "data/raw/snapshots/cepii_geodist/2026-11-08T062234Z/dist_cepii.zip",
+      "raw_snapshot_xls": "data/raw/snapshots/cepii_geodist/2026-11-08T062234Z/dist_cepii.xls",
       "raw_zip_size_bytes": 2102114,
       "raw_xls_size_bytes": 8144384,
       "license": "Etalab Open License 2.0 per CEPII download page"
