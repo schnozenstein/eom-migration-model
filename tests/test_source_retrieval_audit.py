@@ -30,3 +30,16 @@ def test_snapshot_lookup_is_limited_to_current_run_and_matching_source(tmp_path,
     assert audit.snapshot_for(
         "undesa", ["destination_and_origin"], run_id="2026-11-08T060343Z"
     ) == bilateral
+
+
+def test_source_dataset_id_prefers_ilostat_indicator_code():
+    assert audit.source_dataset_id({"indicator_code": "POP_MFRB_SEX_CBR_NB_A"}, "ILOSTAT") == "POP_MFRB_SEX_CBR_NB_A"
+
+
+def test_source_id_duplicate_rows_counts_collisions():
+    rows = [
+        {"source_id": "ILOSTAT:POP_MFRB"},
+        {"source_id": "ILOSTAT:EMP_MFRB"},
+        {"source_id": "ILOSTAT:POP_MFRB"},
+    ]
+    assert audit.source_id_duplicate_rows(rows) == 1
