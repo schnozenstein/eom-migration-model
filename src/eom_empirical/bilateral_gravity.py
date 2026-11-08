@@ -478,6 +478,134 @@ def evaluate(panel: pd.DataFrame):
     return summary,pred,fold_df,coef_df
 
 
+
+def write_geodist_blocked_outputs(stamp, audit, failures, exc, history,
+                                  direction_reconciliation, reconciliation_rows):
+    """Persist a truthful blocked benchmark when CEPII geography data cannot be retrieved.
+
+    Eurostat OD flows have already been validated and appended to their versioned
+    history before this function is called. Do not reuse a previous benchmark as
+    if it had been computed from the current run's data.
+    """
+    output_dir = ROOT / "outputs"
+    metadata_dir = ROOT / "metadata"
+    report_dir = ROOT / "reports"
+    for folder in [output_dir, metadata_dir, report_dir]:
+        folder.mkdir(parents=True, exist_ok=True)
+
+    benchmark_path = output_dir / "bilateral_gravity_benchmark.json"
+    previous_reference = None
+    if benchmark_path.exists():
+        previous_text = benchmark_path.read_text(encoding="utf-8")
+        try:
+            previous = json.loads(previous_text)
+        except (TypeError, ValueError):
+            previous = {}
+        previous_stamp = previous.get("retrieval_run_id") or previous.get("run_id") or "unknown"
+        history_dir = output_dir / "history"
+        history_dir.mkdir(parents=True, exist_ok=True)
+        archive_path = history_dir / f"bilateral_gravity_benchmark_{previous_stamp}.json"
+        if not archive_path.exists():
+            archive_path.write_text(previous_text, encoding="utf-8")
+        previous_reference = {
+            "status": previous.get("status"),
+            "retrieval_run_id": previous.get("retrieval_run_id"),
+            "archived_path": str(archive_path.relative_to(ROOT))
+        }
+
+    ce_audit = {
+        "publisher": "CEPII",
+        "url": CEPII_URL,
+        "resolved_url": None,
+        "retrieved_at_utc": utc_now(),
+        "publication_release_date": "downloadable file vintage not exposed; reference methodology Mayer & Zignago (2011), CEPII Working Paper 2011-25",
+        "observation_period": "cross-sectional dyadic geography; no migration observation period",
+        "definition": "bilateral distance in kilometres, contiguity and common official language",
+        "unit": "kilometres for distance; binary indicators for contiguity and common official language",
+        "geography": "225-country dyadic database per CEPII description",
+        "status": "FAILED",
+        "rows": 0,
+        "error": f"{type(exc).__name__}: {exc}",
+        "fallback": "No unverified mirror or stale geography file was substituted."
+    }
+    audit["sources"].append(ce_audit)
+    audit["sources"].extend(failures)
+    audit["status"] = "blocked_geodist_source"
+    audit["benchmark"] = {
+        "status": "blocked_geodist_source",
+        "panel_rows_after_join": 0,
+        "complete_case_rows": 0,
+        "rows_scored": 0,
+        "folds_scored": 0,
+        "note": "Benchmark not run because the current CEPII dyadic geography download failed."
+    }
+    audit["benchmark_source_failure"] = ce_audit
+    audit["previous_benchmark_archived"] = previous_reference
+    audit["eurostat_history"] = history
+
+    summary = {
+        "status": "blocked_geodist_source",
+        "target": "annual persons immigrating to reporting destination whose previous usual residence was origin country",
+        "primary_source": MAIN_DATASET,
+        "retrieval_run_id": stamp,
+        "data_cutoff_utc": utc_now(),
+        "complete_case_rows": 0,
+        "rows_scored": 0,
+        "folds_scored": 0,
+        "source_failures": [ce_audit, *failures],
+        "eurostat_history": history,
+        "direction_reconciliation": direction_reconciliation,
+        "previous_benchmark_archived": previous_reference,
+        "interpretation_guardrail": "No current-run benchmark metrics or forecasts were produced. A previous successful benchmark is retained only as a dated historical artifact; this is not a causal estimate."
+    }
+    (output_dir / "bilateral_gravity_benchmark.json").write_text(
+        json.dumps(summary, indent=2, default=str) + "\n", encoding="utf-8"
+    )
+    pd.DataFrame(columns=[
+        "origin_iso3", "destination_iso3", "year", "flow_persons",
+        "eom_attractor_gap", "gravity_prediction", "gravity_eom_prediction",
+        "persistence_prediction"
+    ]).to_csv(output_dir / "bilateral_gravity_benchmark_predictions.csv", index=False)
+    reconciliation_rows.to_csv(
+        output_dir / "bilateral_gravity_source_reconciliation.csv", index=False
+    )
+    pd.DataFrame(columns=[
+        "target_year", "train_rows", "test_rows", "test_rows_with_persistence",
+        "train_origins", "train_destinations", "baseline_converged",
+        "eom_converged", "warnings", "status", "error"
+    ]).to_csv(output_dir / "bilateral_gravity_benchmark_folds.csv", index=False)
+    pd.DataFrame(columns=[
+        "fold_year", "model", "term", "coefficient", "standard_error",
+        "p_value", "converged"
+    ]).to_csv(output_dir / "bilateral_gravity_model_coefficients.csv", index=False)
+    (metadata_dir / "bilateral_gravity_data_audit.json").write_text(
+        json.dumps(audit, indent=2, default=str) + "\n", encoding="utf-8"
+    )
+    report = [
+        "# Bilateral gravity benchmark",
+        "",
+        f"Run: {stamp}",
+        "Status: BLOCKED — current CEPII dyadic geography retrieval failed.",
+        f"Eurostat flow-history rows: {history.get('history_rows', 0)}",
+        f"New Eurostat pair-year keys: {history.get('inserted', 0)}",
+        f"Eurostat source revisions: {history.get('revised', 0)}",
+        f"Matched reverse-direction pair-years: {direction_reconciliation.get('matched_pair_years', 0)}",
+        "",
+        "No PPML benchmark, EOM-augmented benchmark, persistence comparison or current-run predictions were produced.",
+        f"CEPII endpoint: {CEPII_URL}",
+        f"Retrieval error: {type(exc).__name__}: {exc}",
+        "No stale geography file or unverified mirror was substituted.",
+        f"Previous benchmark, if present, was archived at: {previous_reference.get('archived_path') if previous_reference else 'none'}",
+        "",
+        "Eurostat numeric OD observations were still appended to the versioned flow history before the CEPII failure.",
+        "This is a source-availability block, not a model result and not a causal estimate."
+    ]
+    (report_dir / "bilateral_gravity_benchmark_latest.md").write_text(
+        "\n".join(report) + "\n", encoding="utf-8"
+    )
+    return {"summary": summary, "audit": audit}
+
+
 def run(start_year=2010,end_year=2024):
     stamp=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M%SZ")
     dated=datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -510,7 +638,14 @@ def run(start_year=2010,end_year=2024):
     audit.update({"rows_inserted":history["inserted"],"rows_revised":history["revised"],
         "rows_unchanged":history["unchanged"],"duplicates_in_run":history["duplicates_in_run"],
         "history_rows":history["history_rows"]})
-    geodist,ce_audit=fetch_geodist(ce_dir); audit["sources"].append(ce_audit)
+    try:
+        geodist,ce_audit=fetch_geodist(ce_dir)
+    except Exception as exc:
+        return write_geodist_blocked_outputs(
+            stamp, audit, failures, exc, history,
+            direction_reconciliation, reconciliation_rows
+        )
+    audit["sources"].append(ce_audit)
     features=load_wdi_features()
     audit["wdi_feature_source"] = {
         "file": features.attrs.get("source_file"),

@@ -4,7 +4,8 @@ import pandas as pd
 
 from eom_empirical.bilateral_gravity import (
     parse_jsonstat, orient_rows, iso2_to_iso3, append_history,
-    prepare_panel, extract_geodist_workbook, MAIN_DATASET, CHECK_DATASET
+    prepare_panel, extract_geodist_workbook, write_geodist_blocked_outputs,
+    MAIN_DATASET, CHECK_DATASET
 )
 
 
@@ -115,3 +116,54 @@ def test_extract_geodist_workbook_rejects_missing_member():
         assert "Expected exactly one dist_cepii.xls" in str(exc)
     else:
         raise AssertionError("missing dyadic workbook should be rejected")
+
+
+
+def test_cepii_source_failure_writes_blocked_status_and_archives_previous_result(tmp_path, monkeypatch):
+    from eom_empirical import bilateral_gravity
+
+    monkeypatch.setattr(bilateral_gravity, "ROOT", tmp_path)
+    output_dir = tmp_path / "outputs"
+    output_dir.mkdir()
+    previous = {
+        "status": "completed_expanding_origin_bilateral_benchmark",
+        "retrieval_run_id": "2026-11-07T112406Z",
+        "gravity_ppml": {"n": 5196, "mae": 1714.05}
+    }
+    (output_dir / "bilateral_gravity_benchmark.json").write_text(
+        __import__("json").dumps(previous), encoding="utf-8"
+    )
+    audit = {"run_id": "2026-11-08T054000Z", "sources": []}
+    history = {"inserted": 3, "revised": 1, "unchanged": 5, "history_rows": 6000}
+    reconciliation = {
+        "matched_pair_years": 12,
+        "correlation": 0.8,
+        "median_absolute_difference_persons": 100.0,
+        "median_absolute_percentage_difference": 10.0
+    }
+    reconciliation_rows = pd.DataFrame(columns=[
+        "origin_iso3", "destination_iso3", "year",
+        "immigration_reported_by_destination", "emigration_reported_by_origin"
+    ])
+
+    result = write_geodist_blocked_outputs(
+        "2026-11-08T054000Z", audit, [], requests.exceptions.HTTPError("403 Forbidden"),
+        history, reconciliation, reconciliation_rows
+    )
+
+    current = __import__("json").loads(
+        (output_dir / "bilateral_gravity_benchmark.json").read_text(encoding="utf-8")
+    )
+    archived = output_dir / "history" / "bilateral_gravity_benchmark_2026-11-07T112406Z.json"
+    assert current["status"] == "blocked_geodist_source"
+    assert current["rows_scored"] == 0
+    assert current["previous_benchmark_archived"]["archived_path"] == str(
+        archived.relative_to(tmp_path)
+    )
+    assert archived.exists()
+    assert __import__("json").loads(archived.read_text())["gravity_ppml"]["n"] == 5196
+    assert len(pd.read_csv(output_dir / "bilateral_gravity_benchmark_predictions.csv")) == 0
+    assert "No PPML benchmark" in (
+        tmp_path / "reports" / "bilateral_gravity_benchmark_latest.md"
+    ).read_text()
+    assert result["audit"]["status"] == "blocked_geodist_source"
