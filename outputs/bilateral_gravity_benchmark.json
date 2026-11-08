@@ -10,16 +10,16 @@
   "same_complete_case_test_sample": true,
   "gravity_ppml": {
     "n": 5196,
-    "mae": 1714.0506052394485,
-    "rmse": 5211.4399391155375,
-    "poisson_deviance": 1453.7798990518083,
+    "mae": 1714.0506052398382,
+    "rmse": 5211.439939116105,
+    "poisson_deviance": 1453.779899052102,
     "spearman": 0.8856251843269166
   },
   "gravity_plus_eom_ppml": {
     "n": 5196,
-    "mae": 1679.1395970407589,
-    "rmse": 5123.243635668261,
-    "poisson_deviance": 1407.9299206390917,
+    "mae": 1679.1395970408807,
+    "rmse": 5123.243635668383,
+    "poisson_deviance": 1407.929920639267,
     "spearman": 0.8857650109398114
   },
   "pair_persistence": {
@@ -32,10 +32,10 @@
   "EOM_minus_gravity_MAE_cluster_bootstrap": {
     "clusters": 526,
     "repetitions": 300,
-    "mean_mae_difference": 35.90575128721322,
+    "mean_mae_difference": 35.90575128748583,
     "ci95": [
-      12.622959690286956,
-      62.34226800581475
+      12.62295969052343,
+      62.34226800598783
     ],
     "positive_favours_eom": true
   },
@@ -67,8 +67,8 @@
   "sample_selection": "Only observed numeric, non-suppressed pair-year cells with complete t-1 WDI and CEPII features; missing/suppressed values are not zero-imputed.",
   "persistence_sample": "Only scored pairs with an actual observed t-1 flow; absent prior pair-years are not assigned zero.",
   "interpretation_guardrail": "Predictive comparison, not causal. Current equal-weight EOM macro proxy overlaps GDP/labour/institutional gravity covariates; incremental association does not validate the full EOM theory.",
-  "retrieval_run_id": "2026-11-08T062821Z",
-  "data_cutoff_utc": "2026-11-08T06:28:44.653498+00:00",
+  "retrieval_run_id": "2026-11-08T063257Z",
+  "data_cutoff_utc": "2026-11-08T06:33:28.971603+00:00",
   "source_failures": [],
   "reverse_flow_crosscheck_rows": 58839,
   "direction_reconciliation": {
