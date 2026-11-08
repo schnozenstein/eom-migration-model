@@ -42,7 +42,8 @@ on:
       - "tests/**"
       - ".github/workflows/eom-daily-refresh.yml"
   schedule:
-    - cron: "17 5 * * *"
+    # Shift overnight UTC so the observed 6.5–8h GitHub schedule queue delay still completes before the 11:15 IST audit.
+    - cron: "17 17 * * *"
 
 concurrency:
   # Prevent scheduled and push-triggered refreshes from committing to main simultaneously.
