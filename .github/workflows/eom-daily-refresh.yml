@@ -300,7 +300,7 @@ jobs:
             outputs/macro_ranking_delta.csv
             outputs/bilateral_gravity_benchmark.json
             outputs/history/bilateral_gravity_benchmark_*.json
-            outputs/bilateral_gravity_benchmark_predictions.csv outputs/bilateral_gravity_source_reconciliation.csv
+            outputs/bilateral_gravity_benchmark_predictions.csv
             outputs/bilateral_gravity_source_reconciliation.csv
             outputs/bilateral_gravity_benchmark_folds.csv
             outputs/bilateral_gravity_model_coefficients.csv
