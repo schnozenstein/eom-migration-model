@@ -1,6 +1,6 @@
 # Bilateral gravity benchmark
 
-Run: 2026-11-10T004614Z
+Run: 2026-11-10T222517Z
 Status: completed_expanding_origin_bilateral_benchmark
 Complete-case OD-year rows: 6,132
 Scored predictions: 5,196
