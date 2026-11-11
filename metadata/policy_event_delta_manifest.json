@@ -1,8 +1,8 @@
 {
-  "workflow_run_id": "42913964349",
-  "etl_run_id": "2026-11-10T222323Z",
+  "workflow_run_id": "43120010170",
+  "etl_run_id": "2026-11-11T232846Z",
   "etl_outcome": "success",
-  "generated_at_utc": "2026-11-10T22:25:06.217806+00:00",
+  "generated_at_utc": "2026-11-11T23:42:40.339992+00:00",
   "baseline_available": true,
   "policy_pages_checked": 13,
   "content_changed_pages": 9,
@@ -13,8 +13,8 @@
   "causal_estimates": 0,
   "event_status_counts": {
     "CONTENT_CHANGED_REVIEW_REQUIRED": 9,
-    "NO_HASH_CHANGE": 2,
-    "UNKNOWN_FETCH_FAILED": 2
+    "UNKNOWN_FETCH_FAILED": 2,
+    "NO_HASH_CHANGE": 2
   },
   "interpretation": "Page hash changes are not verified policy events. No event is confirmed until a specific official notice, announcement/effective date, affected cohort and mechanism are extracted and reviewed.",
   "output_path": "outputs/policy_event_delta.csv"
