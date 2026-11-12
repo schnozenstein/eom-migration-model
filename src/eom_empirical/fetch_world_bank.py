@@ -196,7 +196,7 @@ def fetch_indicator_audited(
                     chunk_ok = True
                     break
                 except (requests.RequestException, ValueError) as exc:
-                    message = f"{url} (countries={';'.join(country_chunk}): {type(exc).__name__}: {exc}"
+                    message = f"{url} (countries={';'.join(country_chunk)}): {type(exc).__name__}: {exc}"
                     if attempt + 1 < CHUNK_ATTEMPTS:
                         delay = min(2 ** attempt, 12) + random.uniform(0.0, 0.5)
                         print(
@@ -295,34 +295,45 @@ def append_macro_history(frame: pd.DataFrame, path: Path = HISTORY) -> dict:
             latest[tuple(row[c] for c in key_cols)] = row
     append = []
     inserted = revised = new_vintage = unchanged = stale = 0
+    by_indicator = {}
     for _, row in current.iterrows():
         key = tuple(row[c] for c in key_cols)
+        indicator = str(row.get("indicator_code", ""))
+        bucket = by_indicator.setdefault(indicator, {
+            "inserted": 0, "revised": 0, "new_vintage_snapshots": 0,
+            "unchanged": 0, "stale": 0
+        })
         previous = latest.get(key)
         value = row.get("value")
         vintage = str(row.get("source_vintage") or "not_exposed")
         if previous is None:
             revision_number, revision_type, previous_value = 1, "initial", pd.NA
             inserted += 1
+            bucket["inserted"] += 1
         else:
             old_value = previous.get("value")
             old_vintage = str(previous.get("source_vintage") or "not_exposed")
             if vintage != "not_exposed" and old_vintage != "not_exposed" and vintage < old_vintage:
                 stale += 1
+                bucket["stale"] += 1
                 continue
             same_value = (pd.isna(value) and pd.isna(old_value)) or (
                 pd.notna(value) and pd.notna(old_value) and float(value) == float(old_value)
             )
             if same_value and vintage == old_vintage:
                 unchanged += 1
+                bucket["unchanged"] += 1
                 continue
             revision_number = int(previous.get("revision_number", 1)) + 1
             previous_value = old_value
             if same_value:
                 revision_type = "source_vintage_snapshot_unchanged"
                 new_vintage += 1
+                bucket["new_vintage_snapshots"] += 1
             else:
                 revision_type = "value_revision"
                 revised += 1
+                bucket["revised"] += 1
         record = row.to_dict()
         record.update({
             "revision_number": revision_number,
@@ -340,7 +351,8 @@ def append_macro_history(frame: pd.DataFrame, path: Path = HISTORY) -> dict:
     return {
         "inserted": inserted, "revised": revised,
         "new_vintage_snapshots": new_vintage, "unchanged": unchanged,
-        "stale": stale, "duplicates": duplicates, "history_rows": len(old)
+        "stale": stale, "duplicates": duplicates, "history_rows": len(old),
+        "by_indicator": by_indicator
     }
 
 
@@ -416,32 +428,18 @@ def main() -> None:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     frame.to_csv(args.out, index=False)
 
-    by_indicator = frame.groupby("indicator_code", dropna=False).size().to_dict()
-    status_by_indicator = {r["dataset_id"]: r for r in source_status}
-    for indicator, row_count in by_indicator.items():
-        row = status_by_indicator[indicator]
-        row["rows_normalized"] = int(row_count)
-    for row in source_status:
-        row["rows_inserted"] = 0
-        row["rows_updated"] = 0
-        row["rows_new_vintage_snapshots"] = 0
-        row["rows_unchanged"] = 0
-        row["rows_rejected"] = 0
-        row["duplicate_rows"] = 0
-    # Per-indicator history metrics are computed against the append-only ledger.
-    # Re-read the ledger once to classify the current run's rows against prior vintages.
-    history = pd.read_csv(HISTORY, compression="gzip")
+    row_counts = frame.groupby("indicator_code", dropna=False).size().to_dict()
+    history_by_indicator = history_stats.get("by_indicator", {})
     for row in source_status:
         indicator = row["dataset_id"]
+        row["rows_normalized"] = int(row_counts.get(indicator, 0))
+        stats = history_by_indicator.get(indicator, {})
+        row["rows_inserted"] = int(stats.get("inserted", 0))
+        row["rows_updated"] = int(stats.get("revised", 0))
+        row["rows_new_vintage_snapshots"] = int(stats.get("new_vintage_snapshots", 0))
+        row["rows_unchanged"] = int(stats.get("unchanged", 0))
+        row["rows_rejected"] = int(stats.get("stale", 0))
         current = frame[frame["indicator_code"] == indicator]
-        current_keys = set(zip(current.country_code, current.year))
-        latest_rows = history[history.indicator_code == indicator]
-        current_vintage = set(current.source_vintage.astype(str))
-        latest_vintage_rows = latest_rows[latest_rows.source_vintage.astype(str).isin(current_vintage)]
-        row["rows_inserted"] = int((latest_vintage_rows.revision_type == "initial").sum())
-        row["rows_updated"] = int((latest_vintage_rows.revision_type == "value_revision").sum())
-        row["rows_new_vintage_snapshots"] = int((latest_vintage_rows.revision_type == "source_vintage_snapshot_unchanged").sum())
-        row["rows_unchanged"] = max(0, int(len(current)) - row["rows_inserted"] - row["rows_updated"] - row["rows_new_vintage_snapshots"])
         row["duplicate_rows"] = int(current.duplicated(["country_code", "year"]).sum())
         row["normalized_output_path"] = str(args.out.relative_to(ROOT))
 
