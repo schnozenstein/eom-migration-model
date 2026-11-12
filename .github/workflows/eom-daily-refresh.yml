@@ -88,7 +88,7 @@ jobs:
           PYTHONPATH: src
         run: python -m pytest -q
 
-      - name: Check whether the compact WDI history ledger already exists
+      - name: Check persistent WDI and CEPII reference state
         id: check_wdi_ledger
         run: |
           if [ -s data/observations_history/world_bank_observations.csv.gz ]; then
@@ -96,10 +96,15 @@ jobs:
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
+          if [ -n "$(find data/raw/snapshots/cepii_geodist -name 'dist_cepii.zip' -print -quit 2>/dev/null)" ]; then
+            echo "cepii_exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "cepii_exists=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Find latest successful ETL artifact for one-time WDI history migration
         id: previous_wdi_artifact
-        if: steps.check_wdi_ledger.outputs.exists == 'false'
+        if: steps.check_wdi_ledger.outputs.exists == 'false' || steps.check_wdi_ledger.outputs.cepii_exists == 'false'
         uses: actions/github-script@v7
         with:
           script: |
@@ -132,6 +137,14 @@ jobs:
             core.setOutput("artifact_id", String(artifact.id));
             core.setOutput("artifact_name", artifact.name);
             core.setOutput("artifact_digest", artifact.digest || "");
+            const compactGeo = artifacts.data.artifacts
+              .filter(a => a.name.startsWith("eom-cepii-geodist-reference-") && !a.expired)
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+            const geoArtifact = compactGeo || artifact;
+            core.setOutput("cepii_artifact_id", String(geoArtifact.id));
+            core.setOutput("cepii_artifact_name", geoArtifact.name);
+            core.setOutput("cepii_artifact_digest", geoArtifact.digest || "");
+            core.setOutput("cepii_artifact_kind", compactGeo ? "compact_reference" : "full_etl_artifact");
 
       - name: Download prior ETL artifact for WDI history migration
         if: steps.previous_wdi_artifact.outputs.found == 'true' && steps.check_wdi_ledger.outputs.exists == 'false'
@@ -142,6 +155,85 @@ jobs:
           repository: ${{ github.repository }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path: previous-run-artifact
+
+      - name: Download prior CEPII GeoDist reference snapshot
+        if: steps.previous_wdi_artifact.outputs.found == 'true' && steps.check_wdi_ledger.outputs.cepii_exists == 'false'
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ steps.previous_wdi_artifact.outputs.cepii_artifact_id }}
+          run-id: ${{ steps.previous_wdi_artifact.outputs.run_id }}
+          repository: ${{ github.repository }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: previous-cepii-artifact
+
+      - name: Restore hash-verified CEPII GeoDist snapshot
+        if: steps.previous_wdi_artifact.outputs.found == 'true' && steps.check_wdi_ledger.outputs.cepii_exists == 'false'
+        env:
+          SOURCE_RUN_ID: ${{ steps.previous_wdi_artifact.outputs.run_id }}
+          SOURCE_ARTIFACT_ID: ${{ steps.previous_wdi_artifact.outputs.cepii_artifact_id }}
+          SOURCE_ARTIFACT_NAME: ${{ steps.previous_wdi_artifact.outputs.cepii_artifact_name }}
+          SOURCE_ARTIFACT_DIGEST: ${{ steps.previous_wdi_artifact.outputs.cepii_artifact_digest }}
+          SOURCE_ARTIFACT_KIND: ${{ steps.previous_wdi_artifact.outputs.cepii_artifact_kind }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, zipfile
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          root = Path("previous-cepii-artifact")
+          candidates = sorted(root.rglob("dist_cepii.zip"), key=lambda p: str(p.parent))
+          if not candidates:
+              print("::warning::Prior artifact has no CEPII dist_cepii.zip; current-run download will be attempted.")
+              raise SystemExit(0)
+          source_zip = candidates[-1]
+          zip_bytes = source_zip.read_bytes()
+          source_manifest_path = source_zip.parent / "cepii_snapshot_manifest.json"
+          manifest = {}
+          if source_manifest_path.exists():
+              manifest = json.loads(source_manifest_path.read_text(encoding="utf-8"))
+          else:
+              audit_path = root / "metadata" / "bilateral_gravity_data_audit.json"
+              if audit_path.exists():
+                  audit = json.loads(audit_path.read_text(encoding="utf-8"))
+                  ce = next((s for s in audit.get("sources", []) if s.get("publisher") == "CEPII"), {})
+                  manifest = {
+                      "publisher": "CEPII",
+                      "source_url": ce.get("url", "https://www.cepii.fr/distance/dist_cepii.zip"),
+                      "retrieved_at_utc": ce.get("retrieved_at_utc"),
+                      "source_vintage": ce.get("publication_release_date"),
+                  }
+          sha = hashlib.sha256(zip_bytes).hexdigest()
+          expected = manifest.get("sha256")
+          if expected and expected != sha:
+              raise SystemExit("::error::Prior CEPII snapshot SHA-256 does not match its manifest.")
+          if manifest.get("publisher") != "CEPII" or manifest.get("source_url") != "https://www.cepii.fr/distance/dist_cepii.zip":
+              raise SystemExit("::error::Prior CEPII snapshot lacks verifiable official-source lineage.")
+          dest = Path("data/raw/snapshots/cepii_geodist") / ("carry_forward_" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
+          dest.mkdir(parents=True, exist_ok=True)
+          target_zip = dest / "dist_cepii.zip"
+          target_zip.write_bytes(zip_bytes)
+          with zipfile.ZipFile(target_zip) as archive:
+              members = [n for n in archive.namelist() if Path(n).name.lower() == "dist_cepii.xls"]
+              if len(members) != 1:
+                  raise SystemExit("::error::Prior CEPII ZIP does not contain exactly one dist_cepii.xls.")
+              (dest / "dist_cepii.xls").write_bytes(archive.read(members[0]))
+          manifest.update({
+              "sha256": sha,
+              "carried_forward": True,
+              "carried_forward_at_utc": datetime.now(timezone.utc).isoformat(),
+              "carried_forward_from_artifact_run_id": os.environ.get("SOURCE_RUN_ID"),
+              "source_artifact_run_id": os.environ.get("SOURCE_RUN_ID"),
+              "source_artifact_id": os.environ.get("SOURCE_ARTIFACT_ID"),
+              "source_artifact_name": os.environ.get("SOURCE_ARTIFACT_NAME"),
+              "source_artifact_digest": os.environ.get("SOURCE_ARTIFACT_DIGEST"),
+              "source_artifact_kind": os.environ.get("SOURCE_ARTIFACT_KIND"),
+              "carried_forward_from": str(source_zip),
+              "raw_snapshot_zip": str(target_zip),
+              "raw_snapshot_xls": str(dest / "dist_cepii.xls"),
+          })
+          (dest / "cepii_snapshot_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+          print("Restored hash-verified CEPII reference snapshot:", target_zip)
+          PY
 
       - name: Rebuild compact WDI history from archived raw snapshots
         if: steps.previous_wdi_artifact.outputs.found == 'true' && steps.check_wdi_ledger.outputs.exists == 'false'
@@ -225,6 +317,31 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/run_bilateral_gravity_benchmark.py --start-year 2010 --end-year 2024
+
+      - name: Package compact CEPII GeoDist reference snapshot
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          set -euo pipefail
+          latest=$(find data/raw/snapshots/cepii_geodist -name 'dist_cepii.zip' -type f 2>/dev/null | sort | tail -n 1 || true)
+          if [ -z "$latest" ]; then
+            echo "No verified CEPII reference snapshot is available to package."
+            exit 0
+          fi
+          mkdir -p cepii-reference
+          cp "$latest" cepii-reference/dist_cepii.zip
+          cp "$(dirname "$latest")/dist_cepii.xls" cepii-reference/dist_cepii.xls
+          if [ -f "$(dirname "$latest")/cepii_snapshot_manifest.json" ]; then
+            cp "$(dirname "$latest")/cepii_snapshot_manifest.json" cepii-reference/cepii_snapshot_manifest.json
+          fi
+
+      - name: Upload compact CEPII GeoDist reference artifact
+        if: always() && github.event_name != 'pull_request' && hashFiles('cepii-reference/dist_cepii.zip') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: eom-cepii-geodist-reference-${{ github.run_id }}
+          path: cepii-reference/
+          retention-days: 90
+          if-no-files-found: warn
 
       - name: Build macro ranking score/rank delta
         if: always() && github.event_name != 'pull_request'
