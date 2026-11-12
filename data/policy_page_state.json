@@ -1,63 +1,63 @@
 {
   "https://www.canada.ca/en/immigration-refugees-citizenship/news.html": {
-    "content_sha256": "27482a25d9df97dca86b0e9bfe92a17c00f08e7b784b99e709400d2252f1d097",
-    "last_checked_utc": "2026-11-11T23:42:20.548277+00:00",
+    "content_sha256": "d97c2badd582932d597cead14bc0f4b9100f44d519bd5985395c0a63b5b59a82",
+    "last_checked_utc": "2026-11-12T05:58:59.493376+00:00",
     "country": "Canada",
     "label": "IRCC Express Entry news",
     "final_url": "https://www.canada.ca/en/immigration-refugees-citizenship/news.html"
   },
   "https://www.gov.uk/government/organisations/uk-visas-and-immigration": {
-    "content_sha256": "86e6cc514891a6694d9781ab4d257e499b27465c1a763d58b9cd497df8fe943b",
-    "last_checked_utc": "2026-11-11T23:42:20.874788+00:00",
+    "content_sha256": "30d2074be21bd3c58146fc48949a9b78017cfc78d71e2ea908b349b33c08c3c4",
+    "last_checked_utc": "2026-11-12T05:58:59.602597+00:00",
     "country": "United Kingdom",
     "label": "UK immigration policy news",
     "final_url": "https://www.gov.uk/government/organisations/uk-visas-and-immigration"
   },
   "https://immi.homeaffairs.gov.au/news-media/archive": {
-    "content_sha256": "ac9f49b333f666682d29b83075a185716082e9124271ba04b54c079970674f4b",
-    "last_checked_utc": "2026-11-11T23:42:21.448210+00:00",
+    "content_sha256": "969db22de23f46fd9a846e1b1a376628d8160197701f5223f3c97957dd7b5e7e",
+    "last_checked_utc": "2026-11-12T05:59:00.233621+00:00",
     "country": "Australia",
     "label": "Department of Home Affairs immigration news",
     "final_url": "https://immi.homeaffairs.gov.au/news-media/archive"
   },
   "https://www.immigration.govt.nz/about-us/news-centre/": {
-    "content_sha256": "ce7610300b18c95fdfde45980bf038f49f8414cc73af8acc6dcc1b7267c35bdc",
-    "last_checked_utc": "2026-11-11T23:42:22.121816+00:00",
+    "content_sha256": "1a199514a8c3d1723f043acd0d2297b9a49a97421ac8a821bcbac8e610771031",
+    "last_checked_utc": "2026-11-12T05:59:01.467443+00:00",
     "country": "New Zealand",
     "label": "Immigration New Zealand news",
     "final_url": "https://www.immigration.govt.nz/about-us/news-centre/"
   },
   "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/current-application-processing-dates/": {
-    "content_sha256": "f301a093bee0f62f5b7827ddfa612abf4115d7a9750cba2bf0075e0db508d8bf",
-    "last_checked_utc": "2026-11-11T23:42:23.099335+00:00",
+    "content_sha256": "bee8d1ebff8d4224ddc9f83c54e7148d2f17210b0b56c032fb090e93b44b2cd2",
+    "last_checked_utc": "2026-11-12T05:59:02.106709+00:00",
     "country": "Ireland",
     "label": "Employment permits current processing dates",
     "final_url": "https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/current-application-processing-dates/"
   },
   "https://www.mom.gov.sg/passes-and-permits": {
-    "content_sha256": "1d606f8c05cfe61a94a6a26443b69aa9bcb66daa4b4677a6ad41dd9d9797d5a1",
-    "last_checked_utc": "2026-11-11T23:42:23.853015+00:00",
+    "content_sha256": "95c9c601f6412f7486c1c46be632a70131e6ceba8bd98810ea19883bff1138ac",
+    "last_checked_utc": "2026-11-12T05:59:04.850551+00:00",
     "country": "Singapore",
     "label": "Ministry of Manpower work passes",
     "final_url": "https://www.mom.gov.sg/passes-and-permits"
   },
   "https://www.moj.go.jp/isa/": {
     "content_sha256": "c6880cad2a896e4443841bf3d7e5693aa8c04b86feefb142d0b2e88b0ebb8165",
-    "last_checked_utc": "2026-11-11T23:42:25.817563+00:00",
+    "last_checked_utc": "2026-11-12T05:59:07.537355+00:00",
     "country": "Japan",
     "label": "Immigration Services Agency",
     "final_url": "https://www.moj.go.jp/isa/"
   },
   "https://www.migration.gv.at/en/welcome/": {
     "content_sha256": "6d8b153d555eef734e43bacd72ba0201a4dbacb59bc1f2b5668e2e1f904d104b",
-    "last_checked_utc": "2026-11-11T23:42:27.402390+00:00",
+    "last_checked_utc": "2026-11-12T05:59:09.444449+00:00",
     "country": "Austria",
     "label": "Austrian Federal Government migration portal",
     "final_url": "https://www.migration.gv.at/en/welcome/"
   },
   "https://www.immd.gov.hk/eng/press/press_releases.html": {
     "content_sha256": "a5cbff1b7cd4ed00de28649917078042ed97e78fea453562647c307be1bfd9e2",
-    "last_checked_utc": "2026-11-11T23:42:24.389376+00:00",
+    "last_checked_utc": "2026-11-12T05:59:05.234804+00:00",
     "country": "Hong Kong",
     "label": "Immigration Department press releases",
     "final_url": "https://www.immd.gov.hk/eng/press/press_releases.html"
@@ -77,15 +77,15 @@
     "final_url": "https://inclusion.gob.es/comunicacion/noticias"
   },
   "https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx": {
-    "content_sha256": "c24227e4a27ea7d51c5733148a8a83f1ff9e4d0d91dd6b8489dafff2ebf1c5d6",
-    "last_checked_utc": "2026-11-11T23:42:28.660882+00:00",
+    "content_sha256": "4b1df58b80c224c57a30ef70c044e73cb1b4dafd760831437b45b56dbd12c4f7",
+    "last_checked_utc": "2026-11-12T05:59:10.900037+00:00",
     "country": "Spain",
     "label": "La Moncloa press releases — Inclusion, Social Security and Migration",
     "final_url": "https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx"
   },
   "https://www.gov.pl/web/udsc-en/basic-information-about-the-mos-system": {
     "content_sha256": "e3489a91d5d4dde8068df0c0595bb8d9c3090727904294ac35b084e149bd082b",
-    "last_checked_utc": "2026-11-11T23:42:29.586787+00:00",
+    "last_checked_utc": "2026-11-12T05:59:11.891705+00:00",
     "country": "Poland",
     "label": "Office for Foreigners — residence permits and MOS system",
     "final_url": "https://www.gov.pl/web/udsc-en/basic-information-about-the-mos-system"

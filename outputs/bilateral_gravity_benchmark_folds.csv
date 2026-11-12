@@ -1,13 +1,1 @@
-target_year,train_rows,test_rows,test_rows_with_persistence,train_origins,train_destinations,baseline_converged,eom_converged,warnings,status
-2013,836,381,379,43,11,True,True,,scored
-2014,1232,439,396,43,12,True,True,,scored
-2015,1713,479,477,43,13,True,True,,scored
-2016,2192,471,471,43,13,True,True,,scored
-2017,2663,470,469,43,13,True,True,,scored
-2018,3133,470,467,43,13,True,True,,scored
-2019,3603,468,466,43,13,True,True,,scored
-2020,4072,416,416,43,14,True,True,,scored
-2021,4488,374,374,43,14,True,True,,scored
-2022,4904,416,374,43,15,True,True,,scored
-2023,5320,406,406,43,15,True,True,,scored
-2024,5726,406,406,43,15,True,True,,scored
+target_year,train_rows,test_rows,test_rows_with_persistence,train_origins,train_destinations,baseline_converged,eom_converged,warnings,status,error
