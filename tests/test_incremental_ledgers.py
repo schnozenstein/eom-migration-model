@@ -26,8 +26,17 @@ def test_outcome_ledger_appends_only_new_keys_or_revisions():
     existing=pd.DataFrame([outcome("t","AAA",2020,1.0)],columns=OUTCOME_COLUMNS)
     current=pd.DataFrame([outcome("t","AAA",2020,1.0),outcome("t","AAA",2021,2.0),outcome("t","AAA",2020,1.5)],columns=OUTCOME_COLUMNS)
     combined,stats=append_outcome_versions(existing,current)
-    assert stats=={"inserted":1,"revised":1,"unchanged":1,"stale":0}
+    assert stats=={"inserted":1,"revised":1,"new_vintage_snapshots":0,"unchanged":1,"stale":0}
     assert len(combined)==3 and not combined["revision_id"].duplicated().any()
+
+def test_unchanged_value_in_new_source_vintage_is_not_a_value_revision():
+    existing=pd.DataFrame([outcome("t","AAA",2020,1.0,"2026-10-08")],columns=OUTCOME_COLUMNS)
+    current=pd.DataFrame([outcome("t","AAA",2020,1.0,"2026-11-11")],columns=OUTCOME_COLUMNS)
+    combined,stats=append_outcome_versions(existing,current)
+    assert stats=={"inserted":0,"revised":0,"new_vintage_snapshots":1,"unchanged":0,"stale":0}
+    assert len(combined)==2
+    assert combined.iloc[-1]["revision_type"]=="source_vintage_snapshot_unchanged"
+
 
 def test_empty_prediction_ledger_and_forecast_outcome_join():
     assert validate_prediction_ledger(pd.DataFrame(columns=PREDICTION_COLUMNS))
