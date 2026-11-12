@@ -274,14 +274,6 @@ jobs:
           EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
         run: python scripts/build_policy_event_delta.py --previous-state "$RUNNER_TEMP/eom_policy_state_pre_run.json"
 
-      - name: Build consolidated source-retrieval audit
-        if: always() && github.event_name != 'pull_request'
-        id: source_audit
-        continue-on-error: true
-        env:
-          EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
-        run: python scripts/build_source_retrieval_audit.py
-
       - name: Maintain prediction and outcome ledgers
         if: always() && github.event_name != 'pull_request'
         id: prediction_ledger
@@ -382,6 +374,14 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m eom_empirical.geographical_uncertainty
+
+      - name: Build consolidated source-retrieval audit
+        if: always() && github.event_name != 'pull_request'
+        id: source_audit
+        continue-on-error: true
+        env:
+          EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
+        run: python scripts/build_source_retrieval_audit.py
 
       - name: Create human-readable report
         if: always()
