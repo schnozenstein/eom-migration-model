@@ -1,6 +1,6 @@
 {
-  "run_id": "2026-11-12T062159Z",
-  "retrieved_at_utc": "2026-11-12T06:21:59.419711+00:00",
+  "run_id": "2026-11-12T224550Z",
+  "retrieved_at_utc": "2026-11-12T22:45:50.249681+00:00",
   "start_year": 2010,
   "end_year": 2024,
   "sources": [
@@ -19,7 +19,7 @@
         "sinceTimePeriod": "2010",
         "untilTimePeriod": "2024"
       },
-      "retrieved_at_utc": "2026-11-12T06:21:59.419723+00:00",
+      "retrieved_at_utc": "2026-11-12T22:45:50.249692+00:00",
       "status": "SUCCESS",
       "publication_release_date": "not exposed in the response; Eurostat metadata states annual flow breakdowns by previous/next residence are released in March T+1",
       "observation_period": "2010-2024",
@@ -27,14 +27,14 @@
       "unit": "persons (Eurostat unit NR)",
       "geography": "reporting country and partner country; international country pairs only",
       "http_status": 200,
-      "returned_cells": 72900,
-      "numeric_cells": 72467,
+      "returned_cells": 72906,
+      "numeric_cells": 72473,
       "status_flagged_cells": 7949,
       "missing_or_suppressed_cells": 433,
-      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-12T062159Z/migr_imm5prv.json.gz",
-      "raw_size_bytes": 289485,
+      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-12T224550Z/migr_imm5prv.json.gz",
+      "raw_size_bytes": 289502,
       "normalized_country_pair_rows": 61690,
-      "unmapped_or_aggregate_rows": 11210
+      "unmapped_or_aggregate_rows": 11216
     },
     {
       "dataset": "migr_emi3nxt",
@@ -51,7 +51,7 @@
         "sinceTimePeriod": "2010",
         "untilTimePeriod": "2024"
       },
-      "retrieved_at_utc": "2026-11-12T06:22:02.318809+00:00",
+      "retrieved_at_utc": "2026-11-12T22:45:54.527100+00:00",
       "status": "SUCCESS",
       "publication_release_date": "not exposed in the response; Eurostat metadata states annual flow breakdowns by previous/next residence are released in March T+1",
       "observation_period": "2010-2024",
@@ -63,8 +63,8 @@
       "numeric_cells": 68493,
       "status_flagged_cells": 6034,
       "missing_or_suppressed_cells": 1073,
-      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-12T062159Z/migr_emi3nxt.json.gz",
-      "raw_size_bytes": 258464,
+      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-12T224550Z/migr_emi3nxt.json.gz",
+      "raw_size_bytes": 258459,
       "normalized_country_pair_rows": 58839,
       "unmapped_or_aggregate_rows": 10727
     },
@@ -72,7 +72,7 @@
       "publisher": "CEPII",
       "url": "https://www.cepii.fr/distance/dist_cepii.zip",
       "resolved_url": "https://www.cepii.fr/distance/dist_cepii.zip",
-      "retrieved_at_utc": "2026-11-12T06:22:23.616248+00:00",
+      "retrieved_at_utc": "2026-11-12T22:46:11.450730+00:00",
       "publication_release_date": "downloadable file vintage not exposed; reference methodology Mayer & Zignago (2011), CEPII Working Paper 2011-25",
       "observation_period": "cross-sectional dyadic geography; no migration observation period",
       "definition": "bilateral distance in kilometres, contiguity and common official language",
@@ -82,14 +82,14 @@
       "rows": 50176,
       "distance_field": "distw",
       "archive_member": "dist_cepii.xls",
-      "raw_snapshot_zip": "data/raw/snapshots/cepii_geodist/2026-11-12T062159Z/dist_cepii.zip",
-      "raw_snapshot_xls": "data/raw/snapshots/cepii_geodist/2026-11-12T062159Z/dist_cepii.xls",
+      "raw_snapshot_zip": "data/raw/snapshots/cepii_geodist/2026-11-12T224550Z/dist_cepii.zip",
+      "raw_snapshot_xls": "data/raw/snapshots/cepii_geodist/2026-11-12T224550Z/dist_cepii.xls",
       "raw_zip_size_bytes": 2102114,
       "raw_xls_size_bytes": 8144384,
       "license": "Etalab Open License 2.0 per CEPII download page"
     }
   ],
-  "numeric_rows_fetched": 140960,
+  "numeric_rows_fetched": 140966,
   "status": "completed",
   "rows_inserted": 0,
   "rows_revised": 0,
