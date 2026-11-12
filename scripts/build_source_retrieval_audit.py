@@ -102,7 +102,7 @@ def norm_http(value):
     except Exception: return str(value or "").strip()
 def success(status,http=""):
     h=norm_http(http)
-    return str(status).upper() in {"SUCCESS","OK","PASS","200"} and (not h or h=="200")
+    return str(status).upper() in {"SUCCESS","OK","PASS","200","CARRIED_FORWARD_VERIFIED_OFFICIAL_SNAPSHOT"} and (not h or h=="200")
 
 def audit_current_rows(data,status,http=""):
     """Return rows produced by this run and the prior rows retained after a failed fetch."""
@@ -158,6 +158,7 @@ def natural_duplicates(df,source):
     if df.empty: return 0
     candidates={
     "WDI":["country_code","indicator_code","year"],
+    "WDI Macro Focus":["country_code","indicator_code","year"],
     "Eurostat":["geo_code","year","indicator","source_dataset"],
     "OECD":["REF_AREA","MEASURE","FREQ","TIME_PERIOD","UNIT_MEASURE","UNIT_MULT","SEX","BIRTH_PLACE","CITIZENSHIP","EDUCATION_LEV"],
     "ILOSTAT":["ref_area","indicator","sex","classif1","time"],
@@ -223,6 +224,60 @@ def main():
             normalized_output_path=rel(panel_path),counted_in_numeric_totals="true",
             validation_status="PASS" if dup==0 else "FAIL",error=first(st,"error"),
             notes="Country-year fallback, not bilateral flow. Insert/revision counts are global WDI history totals, not allocated per indicator."
+        ))
+    macro_status=read_csv(META/"macro_focus_source_status.csv")
+    macro_data=read_csv(ROOT/"data"/"raw"/"world_bank_macro_focus.csv")
+    for st in macro_status.to_dict("records") if not macro_status.empty else []:
+        code=first(st,"dataset_id","indicator_code")
+        status=first(st,"fetch_status","status",default="UNKNOWN")
+        current_success=(status.upper()=="SUCCESS")
+        g=macro_data[macro_data.get("indicator_code",pd.Series(dtype=str)).astype(str).eq(code)] if not macro_data.empty and code else pd.DataFrame()
+        if not current_success:
+            carried=len(g)
+            current=pd.DataFrame()
+        else:
+            current=g
+            carried=0
+        urls=parse_urls(st.get("request_urls_json",""),first(st,"exact_url"))
+        snap_paths=parse_urls(st.get("raw_snapshot_paths_json",""))
+        hashes=[]
+        for p in snap_paths:
+            full=ROOT/p
+            if full.exists(): hashes.append(sha256_file(full))
+        rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
+            source_id=f"WDI_MACRO_FOCUS:{code}",publisher="World Bank",source_type="numeric_api",dataset_id=code,
+            exact_url=first(st,"exact_url"),request_urls_json=json.dumps(urls,ensure_ascii=False),
+            metadata_url=first(st,"metadata_url"),
+            retrieval_timestamp_utc=first(st,"retrieval_timestamp_utc",default=etl_run_id),
+            publication_release_date=first(st,"publication_release_date",default="not exposed by endpoint"),
+            observation_period_start=first(st,"observation_period_start"),
+            observation_period_end_requested=first(st,"observation_period_end_requested"),
+            observation_period_end_observed=first(st,"observation_period_end_observed"),
+            definition=first(st,"definition",default=code),unit=first(st,"unit",default="indicator-defined"),
+            geography_scope=first(st,"geography_scope",default="registered global_country destinations"),
+            origin_scope=first(st,"origin_scope",default="not applicable; national macro context"),
+            destination_scope=first(st,"destination_scope",default="registered destination countries"),
+            cohort=first(st,"cohort",default="national aggregate; not migrant-specific"),
+            revision_vintage=first(st,"revision_vintage"),
+            fetch_status=status,http_status=first(st,"http_status"),
+            rows_fetched=as_int(first(st,"rows_fetched"),0),
+            rows_normalized=as_int(first(st,"rows_normalized"),len(current)),
+            rows_carried_forward=carried,
+            rows_inserted=as_int(first(st,"rows_inserted"),0),
+            rows_updated=as_int(first(st,"rows_updated"),0),
+            rows_rejected=as_int(first(st,"rows_rejected"),0),
+            duplicate_rows=as_int(first(st,"duplicate_rows"),natural_duplicates(current,"WDI Macro Focus")),
+            missing_values=as_int(first(st,"missing_values"),0),
+            missingness_pct=first(st,"missingness_pct"),
+            unchanged_rows_skipped=as_int(first(st,"rows_unchanged"),0),
+            sha256=";".join(hashes),raw_snapshot_path=";".join(snap_paths),
+            normalized_output_path=rel(ROOT/"data"/"raw"/"world_bank_macro_focus.csv"),
+            counted_in_numeric_totals="true" if current_success else "false",
+            validation_status="PASS" if current_success and not as_int(first(st,"duplicate_rows"),0) else "WARN",
+            error=first(st,"error"),
+            notes=("Destination-year macro context; not a bilateral migration outcome. "
+                   "Append-only natural key: country_code, indicator_code, year, source_vintage. "
+                   + ("Previous normalized panel preserved because one or more country batches failed." if not current_success else ""))
         ))
     euro=read_csv(META/"eurostat_source_status.csv"); euro_data=read_csv(ROOT/"data"/"raw"/"eurostat_migration_flows.csv")
     for st in euro.to_dict("records") if not euro.empty else []:
@@ -320,6 +375,37 @@ def main():
                 validation_status="PASS" if dup==0 else "WARN",error=first(st,"error"),
                 notes=definition+" Raw snapshots are retained; per-row revision ledger not yet implemented."+ (f" Prior canonical rows retained after failed fetch: {carried_forward}; not counted as current-run retrieval." if carried_forward else "")
             ))
+    bilateral_audit=read_json(META/"bilateral_gravity_data_audit.json")
+    for st in bilateral_audit.get("sources",[]) if isinstance(bilateral_audit.get("sources",[]),list) else []:
+        if first(st,"publisher").upper()!="CEPII":
+            continue
+        carried=bool(st.get("carried_forward"))
+        status=first(st,"status",default="UNKNOWN")
+        rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
+            source_id="CEPII:GeoDist",publisher="CEPII",source_type="numeric_reference_dataset",dataset_id="GeoDist",
+            exact_url=first(st,"url"),request_urls_json=json.dumps([first(st,"url")]) if first(st,"url") else "",
+            retrieval_timestamp_utc=first(st,"retrieved_at_utc",default=etl_run_id),
+            publication_release_date=first(st,"publication_release_date"),
+            observation_period_start="cross-sectional",observation_period_end_observed="cross-sectional",
+            definition=first(st,"definition",default="Bilateral geographic distance, contiguity and common official language"),
+            unit=first(st,"unit",default="kilometres; binary indicators"),
+            geography_scope=first(st,"geography",default="global dyadic country pairs"),
+            origin_scope="country-pair origin",destination_scope="country-pair destination",
+            cohort="not applicable; static geographic reference",
+            revision_vintage=first(st,"source_snapshot_retrieved_at_utc",default=first(st,"retrieved_at_utc")),
+            fetch_status=status,http_status="",
+            rows_fetched=0 if carried else as_int(first(st,"rows"),0),
+            rows_normalized=as_int(first(st,"rows"),0),
+            rows_carried_forward=as_int(first(st,"rows"),0) if carried else 0,
+            rows_rejected=0,duplicate_rows=0,missing_values=0,missingness_pct=0,
+            sha256=first(st,"sha256"),raw_snapshot_path=";".join([first(st,"raw_snapshot_zip"),first(st,"raw_snapshot_xls")]).strip(";"),
+            normalized_output_path=rel(ROOT/"outputs"/"bilateral_gravity_benchmark.json"),
+            counted_in_numeric_totals="false",
+            validation_status="PASS" if success(status) else "WARN",
+            error=first(st.get("attempted_current_download",{}),"error") if isinstance(st.get("attempted_current_download"),dict) else first(st,"error"),
+            notes=("Static reference data, not a migration outcome. "
+                   + ("Current download failed; hash-verified prior official snapshot carried forward." if carried else "Fresh official download retrieved."))
+        ))
     ob=read_csv(META/"obmigra_source_status.csv")
     for st in ob.to_dict("records") if not ob.empty else []:
         url=first(st,"url","final_url"); status=first(st,"status",default="UNKNOWN")
@@ -382,6 +468,7 @@ def main():
     rows_carried_forward_total=sum(as_int(r.get("rows_carried_forward")) for r in rows)
     source_id_duplicates=source_id_duplicate_rows(rows)
     failures=sum(1 for r in rows if r.get("source_type") not in {"derived_subset"} and r.get("fetch_status") and not success(r.get("fetch_status",""),r.get("http_status","")))
+    warnings=sum(1 for r in rows if r.get("fetch_status") and str(r.get("fetch_status")).upper() not in {"SUCCESS","OK","PASS","200"} and success(r.get("fetch_status",""),r.get("http_status","")))
     dup_total=sum(as_int(r.get("duplicate_rows")) for r in rows if r.get("duplicate_rows")!="")
     rebuild=read_json(META/"wdi_history_rebuild_manifest.json")
     timestamp_fallback_ids=[]
@@ -408,7 +495,7 @@ def main():
     "workflow_run_id":workflow_id,"etl_run_id":etl_run_id,"etl_outcome":etl_outcome,
     "workflow_event":os.environ.get("GITHUB_EVENT_NAME","unknown"),"scheduled_cron_utc":scheduled_cron,
     "refresh_manifest_matches_workflow_run":manifest_current,"generated_at_utc":datetime.now(timezone.utc).isoformat(),
-    "source_records":len(rows),"source_failures_or_unknown_status":failures,
+    "source_records":len(rows),"source_failures_or_unknown_status":failures,"source_warning_statuses":warnings,
     "numeric_source_rows_fetched_sum_across_endpoints":numeric_fetched,
     "numeric_normalized_rows_sum_across_primary_datasets":numeric_normalized,
     "rows_carried_forward_after_failed_fetches":rows_carried_forward_total,
