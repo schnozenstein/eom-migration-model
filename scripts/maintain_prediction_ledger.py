@@ -51,11 +51,11 @@ def derive_current_outcomes(panel,recorded_at_utc,exact_urls=None):
 def append_outcome_versions(existing,current):
     existing=existing.reindex(columns=OUTCOME_COLUMNS).fillna(""); current=current.reindex(columns=OUTCOME_COLUMNS).fillna("")
     if not existing.empty and existing["revision_id"].astype(str).duplicated().any():raise ValueError("Duplicate outcome revision_id in persistent ledger")
-    if current.empty:return existing,{"inserted":0,"revised":0,"unchanged":0,"stale":0}
+    if current.empty:return existing,{"inserted":0,"revised":0,"new_vintage_snapshots":0,"unchanged":0,"stale":0}
     latest={}
     if not existing.empty:
         for r in existing.sort_values("recorded_at_utc").to_dict("records"):latest[(r["target"],r["geography_id"],r["observation_period"])]=r
-    known=set(existing["revision_id"].astype(str)) if not existing.empty else set(); add=[]; inserted=revised=unchanged=stale=0
+    known=set(existing["revision_id"].astype(str)) if not existing.empty else set(); add=[]; inserted=revised=new_vintage_snapshots=unchanged=stale=0
     for r in current.to_dict("records"):
         key=(r["target"],r["geography_id"],r["observation_period"]); old=latest.get(key)
         if old is None:r["revision_type"]="initial_observation";add.append(r);inserted+=1;known.add(r["revision_id"]);latest[key]=r;continue
@@ -65,11 +65,16 @@ def append_outcome_versions(existing,current):
         if same_value and old_v==new_v:unchanged+=1;continue
         if old_v and new_v and new_v<old_v:stale+=1;continue
         if r["revision_id"] in known:unchanged+=1;continue
-        r["revision_type"]="value_revision" if not same_value else "source_vintage_revision"
-        add.append(r);revised+=1;known.add(r["revision_id"]);latest[key]=r
+        if same_value:
+            r["revision_type"]="source_vintage_snapshot_unchanged"
+            new_vintage_snapshots+=1
+        else:
+            r["revision_type"]="value_revision"
+            revised+=1
+        add.append(r);known.add(r["revision_id"]);latest[key]=r
     combined=pd.concat([existing,pd.DataFrame(add,columns=OUTCOME_COLUMNS)],ignore_index=True)
     if not combined.empty and combined["revision_id"].astype(str).duplicated().any():raise ValueError("Outcome ledger would contain duplicate revision_id values")
-    return combined,{"inserted":inserted,"revised":revised,"unchanged":unchanged,"stale":stale}
+    return combined,{"inserted":inserted,"revised":revised,"new_vintage_snapshots":new_vintage_snapshots,"unchanged":unchanged,"stale":stale}
 def validate_prediction_ledger(df):
     missing=[c for c in PREDICTION_COLUMNS if c not in df.columns]
     if missing:raise ValueError(f"Prediction ledger missing columns: {missing}")
@@ -121,7 +126,7 @@ def main():
     years=pd.to_numeric(combined["observation_period"],errors="coerce").dropna() if not combined.empty else pd.Series(dtype=float)
     matched=int(joins["join_status"].eq("MATCHED").sum()) if not joins.empty else 0
     manifest={"workflow_run_id":run_id,"generated_at_utc":now,"etl_outcome":etl_outcome,"prediction_rows":len(predictions),"outcome_rows":len(combined),
-    "outcome_rows_inserted":stats["inserted"],"outcome_rows_revised":stats["revised"],"outcome_rows_unchanged":stats["unchanged"],"outcome_rows_stale_skipped":stats["stale"],
+    "outcome_rows_inserted":stats["inserted"],"outcome_rows_revised":stats["revised"],"outcome_rows_value_revisions":stats["revised"],"outcome_rows_new_vintage_snapshots":stats["new_vintage_snapshots"],"outcome_rows_unchanged":stats["unchanged"],"outcome_rows_stale_skipped":stats["stale"],
     "prediction_outcome_join_rows":len(joins),"matched_outcomes":matched,"unmatched_forecasts":int(len(joins)-matched),
     "outcome_target":"national_net_migration_per_1000","outcome_unit":"net migrants per 1,000 residents","outcome_geographies":int(combined["geography_id"].nunique()) if not combined.empty else 0,
     "observation_period_start":int(years.min()) if len(years) else None,"observation_period_end":int(years.max()) if len(years) else None,
