@@ -167,3 +167,57 @@ def test_cepii_source_failure_writes_blocked_status_and_archives_previous_result
         tmp_path / "reports" / "bilateral_gravity_benchmark_latest.md"
     ).read_text()
     assert result["audit"]["status"] == "blocked_geodist_source"
+
+
+def test_fetch_geodist_uses_hash_verified_prior_official_snapshot(tmp_path, monkeypatch):
+    import hashlib
+    import json
+    import requests
+    from eom_empirical import bilateral_gravity
+
+    monkeypatch.setattr(bilateral_gravity, "ROOT", tmp_path)
+
+    prior = tmp_path / "data/raw/snapshots/cepii_geodist/2026-11-11T234444Z"
+    prior.mkdir(parents=True)
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("CEPII/dist_cepii.xls", b"verified-workbook-bytes")
+    zip_bytes = buffer.getvalue()
+    zip_path = prior / "dist_cepii.zip"
+    zip_path.write_bytes(zip_bytes)
+    (prior / "cepii_snapshot_manifest.json").write_text(json.dumps({
+        "publisher": "CEPII",
+        "source_url": bilateral_gravity.CEPII_URL,
+        "retrieved_at_utc": "2026-11-11T23:44:44Z",
+        "sha256": hashlib.sha256(zip_bytes).hexdigest(),
+        "source_artifact_run_id": "42913964349",
+        "source_artifact_id": "13901197650",
+        "source_artifact_digest": "sha256:verified",
+    }))
+
+    def forbidden(*args, **kwargs):
+        raise requests.HTTPError("403 Forbidden")
+
+    monkeypatch.setattr(bilateral_gravity.requests, "get", forbidden)
+    monkeypatch.setattr(
+        bilateral_gravity.pd,
+        "read_excel",
+        lambda *args, **kwargs: pd.DataFrame([{
+            "iso_o": "IND", "iso_d": "NLD", "distw": 7000,
+            "contig": 0, "comlang_off": 0
+        }])
+    )
+
+    current = tmp_path / "data/raw/snapshots/cepii_geodist/2026-11-12T060000Z"
+    frame, audit = bilateral_gravity.fetch_geodist(current)
+
+    assert len(frame) == 1
+    assert audit["status"] == "CARRIED_FORWARD_VERIFIED_OFFICIAL_SNAPSHOT"
+    assert audit["carried_forward"] is True
+    assert audit["attempted_current_download"]["status"] == "FAILED"
+    assert "403 Forbidden" in audit["attempted_current_download"]["error"]
+    assert (current / "dist_cepii.zip").exists()
+    assert (current / "dist_cepii.xls").read_bytes() == b"verified-workbook-bytes"
+    manifest = json.loads((current / "cepii_snapshot_manifest.json").read_text())
+    assert manifest["carried_forward"] is True
+    assert manifest["sha256"] == hashlib.sha256((current / "dist_cepii.zip").read_bytes()).hexdigest()
