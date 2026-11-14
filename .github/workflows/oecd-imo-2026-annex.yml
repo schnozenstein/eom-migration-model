@@ -1,4 +1,4 @@
-name: OECD IMO 2026 Annex Ingestion
+name: OECD IMO 2026 A-series StatLink Ingestion
 
 on:
   push:
@@ -56,9 +56,9 @@ jobs:
           path: |
             data/raw/snapshots/oecd_imo_2026/
             data/derived/oecd_imo_2026/
-            data/observations_history/oecd_imo_2026_annex_history.csv
+            data/observations_history/oecd_imo_2026_a_series_history.csv
             metadata/oecd_imo_2026/
-            reports/oecd_imo_2026_annex_*.md
+            reports/oecd_imo_2026_a_series_*.md
       - name: Commit compact revision ledger and manifests
         if: success() && github.event_name != 'pull_request'
         run: |
