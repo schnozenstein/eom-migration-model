@@ -107,7 +107,7 @@ def parse_statlink_workbook(raw: bytes, short_url: str, final_url: str,
         if label.casefold().startswith("note:"):
             break
         low = label.casefold()
-        if low.startswith("% of total population"):
+        if low.lstrip("%").strip().startswith("of total population"):
             if code == "A.4":
                 measure, unit, entity = "foreign_born_population_share", "percent", previous_entity
             elif code == "A.5":
