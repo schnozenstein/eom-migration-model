@@ -72,6 +72,9 @@ WB_INDICATORS = {
     "SP.DYN.CBRT.IN": "Birth rate, crude (per 1,000 people)",
     "SP.DYN.CDRT.IN": "Death rate, crude (per 1,000 people)",
 }
+# The detailed MOS work-permit guidance remains a manual fallback reference:
+# https://www.mos.cudzoziemcy.gov.pl/en/categories-information/doing-the-job/work-permit/
+# The GitHub runner's TLS validation failed on that host; do not disable TLS checks.
 POLICY_URLS = [
     ("Canada", "IRCC Express Entry news", "https://www.canada.ca/en/immigration-refugees-citizenship/news.html"),
     ("United Kingdom", "UK immigration policy news", "https://www.gov.uk/government/organisations/uk-visas-and-immigration"),
@@ -81,11 +84,11 @@ POLICY_URLS = [
     ("Singapore", "Ministry of Manpower work passes", "https://www.mom.gov.sg/passes-and-permits"),
     ("Hong Kong", "Immigration Department press releases", "https://www.immd.gov.hk/eng/press/press_releases.html"),
     ("Japan", "Immigration Services Agency", "https://www.moj.go.jp/isa/"),
-    ("Switzerland", "State Secretariat for Migration latest news", "https://www.sem.admin.ch/sem/en/home/sem/aktuell.html"),
+    ("Switzerland", "State Secretariat for Migration press releases", "https://www.sem.admin.ch/en/press-releases"),
     ("Austria", "Austrian Federal Government migration portal", "https://www.migration.gv.at/en/welcome/"),
     ("Spain", "La Moncloa press releases — Inclusion, Social Security and Migration", "https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx"),
-    ("Poland", "Office for Foreigners — residence permits and MOS system", "https://www.gov.pl/web/udsc-en/basic-information-about-the-mos-system"),
-    ("Poland", "Polish work permits — official MOS guidance", "https://www.mos.cudzoziemcy.gov.pl/en/categories-information/doing-the-job/work-permit/"),
+    ("Poland", "Office for Foreigners — immigration and residence news", "https://www.gov.pl/web/udsc-en/"),
+    ("Poland", "Ministry of Family, Labour and Social Policy — foreign-worker policy news", "https://www.gov.pl/web/family"),
 ]
 
 OBMIGRA_URL = "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/obmigra-1/relatorios-obmigra/dados-consolidados/2025"
