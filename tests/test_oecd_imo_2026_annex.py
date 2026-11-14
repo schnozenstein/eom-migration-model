@@ -1,26 +1,57 @@
-from scripts.oecd_imo_2026_annex import parse_annex_html, parse_numeric
+from io import BytesIO
+import pandas as pd
+from openpyxl import Workbook
+from scripts.oecd_imo_2026_annex import parse_numeric, parse_statlink_workbook
 
 def test_missing_markers_are_not_zero():
     assert parse_numeric("..") == (None, "missing", "..")
     assert parse_numeric(".") == (None, "missing", ".")
     assert parse_numeric("1 234.5") == (1234.5, "observed", "")
 
-def test_extracts_required_tables_and_keeps_dimensions_separate():
-    html = """
-    <html><body>
-      <h3>Table A.1. Inflows of foreign population into selected OECD countries</h3>
-      <table><thead><tr><th>Country</th><th>2023</th><th>2024</th></tr></thead><tbody><tr><td>Germany</td><td>100.0</td><td>110.0</td></tr></tbody></table>
-      <h3>Table A.4. Stocks of foreign-born population in OECD countries</h3>
-      <table><thead><tr><th>Country</th><th>2023</th><th>2024</th></tr></thead><tbody><tr><td>Germany</td><td>15000</td><td>15500</td></tr><tr><td>% of total population</td><td>18.0</td><td>18.5</td></tr></tbody></table>
-      <h3>Table B.4. Stocks of foreign-born population by country of birth – Germany</h3>
-      <table><thead><tr><th>Country of birth</th><th>2023</th><th>2024</th></tr></thead><tbody><tr><td>India</td><td>100</td><td>120</td></tr></tbody></table>
-      <h3>Table A.6. Acquisitions of nationality in OECD countries</h3>
-      <table><thead><tr><th>Country</th><th>2023</th><th>2024</th></tr></thead><tbody><tr><td>Germany</td><td>200000</td><td>220000</td></tr><tr><td>% of foreign population</td><td>1.2</td><td>1.3</td></tr></tbody></table>
-    </body></html>
-    """
-    frame, audit = parse_annex_html(html, "2026-11-14T00:00:00+00:00", "test", "abc")
-    assert {"A.1", "A.4", "B.4", "A.6"}.issubset(set(frame.table_code))
-    assert ((frame.table_code == "B.4") & (frame.destination == "Germany") & (frame.origin == "India")).any()
-    assert ((frame.table_code == "A.4") & (frame.measure == "foreign_born_population_share")).any()
-    assert ((frame.table_code == "A.6") & (frame.measure == "naturalisation_rate_foreign_population")).any()
-    assert audit["duplicate_natural_keys_rejected"] == 0
+def test_parse_a4_statlink_preserves_stock_and_share_separately():
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "A4_EN_2026"
+    ws.append(["Table A.4. Stocks of foreign-born population in OECD countries"])
+    ws.append(["Thousands and percentages"])
+    ws.append(["", 2020, 2021, 2022, 2023, 2024])
+    ws.append(["Germany", 14000, 14200, 14500, 15000, 15500])
+    ws.append(["% of total population", 17.0, 17.2, 17.5, 18.0, 18.5])
+    about = wb.create_sheet("About this file")
+    about.append(["", "Version 1 - Last updated: 12-Nov-2026"])
+    buffer = BytesIO()
+    wb.save(buffer)
+    raw = buffer.getvalue()
+    frame, audit = parse_statlink_workbook(
+        raw, "https://stat.link/test", "https://stat.link/files/test.xlsx",
+        "2026-11-14T00:00:00+00:00", "test-run", "abc123"
+    )
+    assert set(frame["table_code"]) == {"A.4"}
+    assert len(frame) == 10
+    assert ((frame.measure == "foreign_born_population_stock") & (frame.unit == "thousands")).sum() == 5
+    assert ((frame.measure == "foreign_born_population_share") & (frame.unit == "percent")).sum() == 5
+    assert set(frame.destination) == {"Germany"}
+    assert audit["release_date"] == "2026-11-12"
+
+
+def test_a5_share_row_without_percent_symbol_is_not_a_country():
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "A5_EN_2026"
+    ws.append(["Table A.5. Stocks of foreign population by nationality in OECD countries"])
+    ws.append(["Thousands and percentages"])
+    ws.append(["", 2020, 2021, 2022, 2023, 2024])
+    ws.append(["Poland", 80.0, 85.0, 90.0, 100.0, 110.0])
+    ws.append(["of total population", 0.25, 0.26, 0.27, 0.28, 0.29])
+    about = wb.create_sheet("About this file")
+    about.append(["", "Version 1 - Last updated: 12-Nov-2026"])
+    buffer = BytesIO()
+    wb.save(buffer)
+    frame, _ = parse_statlink_workbook(
+        buffer.getvalue(), "https://stat.link/test", "https://stat.link/files/test.xlsx",
+        "2026-11-14T00:00:00+00:00", "test-run", "abc123"
+    )
+    share = frame[frame.measure == "foreign_population_share"]
+    assert len(share) == 5
+    assert set(share.destination) == {"Poland"}
+    assert set(share.unit) == {"percent"}
