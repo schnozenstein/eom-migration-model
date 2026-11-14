@@ -10,8 +10,6 @@ From the repository root, in PowerShell:
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 py -m pip install -r webapp\backend\requirements.txt
-py -m pip install -r requirements.txt
-$env:PYTHONPATH = "src"
 py -m uvicorn webapp.backend.app.main:app --reload --port 8000
 ```
 
