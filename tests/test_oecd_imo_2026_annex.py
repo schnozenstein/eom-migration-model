@@ -32,3 +32,26 @@ def test_parse_a4_statlink_preserves_stock_and_share_separately():
     assert ((frame.measure == "foreign_born_population_share") & (frame.unit == "percent")).sum() == 2
     assert set(frame.destination) == {"Germany"}
     assert audit["release_date"] == "2026-11-12"
+
+
+def test_a5_share_row_without_percent_symbol_is_not_a_country():
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "A5_EN_2026"
+    ws.append(["Table A.5. Stocks of foreign population by nationality in OECD countries"])
+    ws.append(["Thousands and percentages"])
+    ws.append(["", 2023, 2024])
+    ws.append(["Poland", 100.0, 110.0])
+    ws.append(["of total population", 0.28, 0.29])
+    about = wb.create_sheet("About this file")
+    about.append(["", "Version 1 - Last updated: 12-Nov-2026"])
+    buffer = BytesIO()
+    wb.save(buffer)
+    frame, _ = parse_statlink_workbook(
+        buffer.getvalue(), "https://stat.link/test", "https://stat.link/files/test.xlsx",
+        "2026-11-14T00:00:00+00:00", "test-run", "abc123"
+    )
+    share = frame[frame.measure == "foreign_population_share"]
+    assert len(share) == 2
+    assert set(share.destination) == {"Poland"}
+    assert set(share.unit) == {"percent"}
