@@ -19,10 +19,8 @@ Requirements: Git, Python 3.11+, and Node.js 20.9+.
    ```powershell
    py -m venv .venv
    .\.venv\Scripts\Activate.ps1
-   py -m pip install -r requirements.txt
-   py -m pip install -r webapp\backend\requirements.txt
-   $env:PYTHONPATH = "src"
-   py -m uvicorn webapp.backend.app.main:app --reload --port 8000
+      py -m pip install -r webapp\backend\requirements.txt
+      py -m uvicorn webapp.backend.app.main:app --reload --port 8000
    ```
 
 3. In a second PowerShell window, start the frontend:
