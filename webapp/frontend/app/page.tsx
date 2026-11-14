@@ -59,7 +59,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ m
 
         <div className="section-head"><div><span className="eyebrow">LATEST MODEL OUTPUTS</span><h2>Destination landscape</h2></div><span className="year-tag">DATA YEAR · {year}</span></div>
         <div className="metrics">
-          <article className="metric"><span>BASELINE DESTINATIONS</span><strong>{model === "baseline" ? ranking?.count ?? "—" : "—"}</strong><small>Broad macro comparison</small></article>
+          <article className="metric"><span>DESTINATIONS IN VIEW</span><strong>{ranking?.count ?? "—"}</strong><small>Broad macro comparison</small></article>
           <article className="metric"><span>ACTIVE VIEW</span><strong>{model === "oecd" ? "OECD" : "EOM"}</strong><small>{model === "oecd" ? "Migration ecosystem lens" : "Equal-weight macro proxy"}</small></article>
           <article className="metric"><span>COMPARISON YEAR</span><strong>{year}</strong><small>Latest available artifact</small></article>
         </div>
