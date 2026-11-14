@@ -306,6 +306,9 @@ jobs:
             metadata/refresh_runs/*.json
             outputs/data_freshness_dashboard.csv
             outputs/latest_macro_eom_ranking.csv
+            outputs/latest_oecd_enhanced_macro_ranking.csv
+            outputs/oecd_macro_component_panel.csv
+            reports/oecd_enhanced_macro_methodology.md
             outputs/macro_ranking_delta.csv
             outputs/bilateral_gravity_benchmark.json
             outputs/history/bilateral_gravity_benchmark_*.json
@@ -402,6 +405,9 @@ jobs:
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Preserve the compact risk panel and coverage audit when the risk step produced them.
+          for path in outputs/latest_oecd_enhanced_macro_ranking.csv outputs/oecd_macro_component_panel.csv reports/oecd_enhanced_macro_methodology.md; do
+            if [ -f "$path" ]; then git add "$path"; fi
+          done
           for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv outputs/source_retrieval_audit.csv outputs/policy_event_delta.csv outputs/macro_ranking_delta.csv outputs/bilateral_gravity_benchmark.json outputs/bilateral_gravity_benchmark_predictions.csv outputs/bilateral_gravity_benchmark_folds.csv outputs/bilateral_gravity_model_coefficients.csv reports/bilateral_gravity_benchmark_latest.md metadata/bilateral_gravity_data_audit.json outputs/history data/bilateral/eurostat_od_flows_history.csv.gz data/prediction_ledger.csv data/outcome_ledger.csv data/prediction_outcome_join.csv metadata/source_audit_manifest.json metadata/source_lineage_current.csv metadata/policy_event_delta_manifest.json metadata/prediction_ledger_manifest.json metadata/macro_ranking_delta_manifest.json; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
@@ -446,7 +452,7 @@ jobs:
           fi
 
       - name: Mark run failed if required pipeline stages failed
-        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure' || steps.source_audit.outcome == 'failure' || steps.policy_delta.outcome == 'failure' || steps.prediction_ledger.outcome == 'failure' || steps.ranking_delta.outcome == 'failure' || steps.bilateral_gravity.outcome == 'failure')
+        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.oecd_enhanced.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure' || steps.source_audit.outcome == 'failure' || steps.policy_delta.outcome == 'failure' || steps.prediction_ledger.outcome == 'failure' || steps.ranking_delta.outcome == 'failure' || steps.bilateral_gravity.outcome == 'failure')
         run: |
           echo "Daily report was generated, but a required test, data refresh, ranking, risk panel, or geographic evidence stage failed. Inspect the step logs."
           exit 1
