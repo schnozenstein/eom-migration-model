@@ -10,3 +10,5 @@ pyreadr>=0.5.2
 statsmodels>=0.14
 xlrd>=2.0
 pycountry>=23.12
+beautifulsoup4>=4.12
+lxml>=4.9
