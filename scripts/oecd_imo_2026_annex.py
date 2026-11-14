@@ -115,7 +115,7 @@ def parse_statlink_workbook(raw: bytes, short_url: str, final_url: str,
             else:
                 measure, unit, entity = base_measure, base_unit, label
         elif low.startswith("% of foreign population") and code == "A.6":
-            measure, unit, entity = "naturalisation_rate_foreign_population", "percent", previous_entity
+            measure, unit, entity = "acquisitions_share_of_foreign_population", "percent", previous_entity
         else:
             measure, unit, entity = base_measure, base_unit, label
             previous_entity = label
@@ -154,7 +154,7 @@ def parse_statlink_workbook(raw: bytes, short_url: str, final_url: str,
         "unparsed_rows": int((out.observation_status == "unparsed").sum()),
         "duplicate_natural_keys_rejected": duplicates,
         "natural_key_columns": NATURAL_KEYS,
-        "unit_counts": out.groupby("unit").size().to_dict(),
+        "unit_counts": {str(k): int(v) for k, v in out.groupby("unit").size().items()},
         "raw_snapshot_sha256": digest, "raw_snapshot_bytes": len(raw),
         "source_url": final_url, "source_permalink": short_url,
     }
@@ -253,8 +253,8 @@ def run(run_id: str | None = None) -> dict:
         "duplicate_natural_keys_rejected": duplicate_count,
         "observation_start": int(current.year.min()), "observation_end": int(current.year.max()),
         "destinations_by_table": {k: sorted(v) for k, v in current.groupby("table_code").destination.unique().items()},
-        "rows_by_table": current.groupby("table_code").size().astype(int).to_dict(),
-        "missing_by_table": current[current.value.isna()].groupby("table_code").size().astype(int).to_dict(),
+        "rows_by_table": {str(k): int(v) for k, v in current.groupby("table_code").size().items()},
+        "missing_by_table": {str(k): int(v) for k, v in current[current.value.isna()].groupby("table_code").size().items()},
         "natural_key_columns": NATURAL_KEYS,
         "source_retrieval_audit": source_audits,
         "current_extract_path": str(current_path.relative_to(ROOT)),
