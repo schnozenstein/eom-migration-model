@@ -5,7 +5,7 @@ import argparse, gzip, hashlib, json, re
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from io import StringIO
+from io import StringIO, BytesIO
 from typing import Any
 import pandas as pd
 import requests
@@ -15,6 +15,13 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE_URL = "https://www.oecd.org/en/publications/international-migration-outlook-2026_a9eab36b-en/full-report/statistical-annex_f79de055.html"
 PUBLISHER = "Organisation for Economic Co-operation and Development (OECD)"
 RELEASE_DATE = "2026-11-12"
+STATLINKS = {
+ "A1_A2_B1": "https://stat.link/kr1oyp",
+ "A3_B3": "https://stat.link/pj3a4w",
+ "A4_B4": "https://stat.link/2d1v8s",
+ "A5_B5": "https://stat.link/qz4crd",
+ "A6_B6": "https://stat.link/zmq54t",
+}
 TABLE_CODES = {"A.1","A.2","A.3","A.4","A.5","A.6","B.1","B.3","B.4","B.5","B.6"}
 NATURAL_KEYS = ["table_code","destination","origin","measure","year"]
 OUTPUT_COLUMNS = ["table_code","table_heading","destination","origin","measure","year","value","raw_value","unit","observation_status","missing_marker","publisher","source_url","release_date","source_vintage","retrieved_at_utc","run_id","raw_snapshot_sha256"]
@@ -37,6 +44,51 @@ def utc_now():
 
 def sha256_bytes(data: bytes) -> str:
  return hashlib.sha256(data).hexdigest()
+
+
+def probe_statlinks(run_id: str) -> dict:
+    """Download OECD-owned StatLink workbooks after the publication page blocks runners."""
+    snapshot_dir = ROOT / "data" / "raw" / "snapshots" / "oecd_imo_2026" / run_id
+    snapshot_dir.mkdir(parents=True, exist_ok=True)
+    probe = {"publisher": PUBLISHER, "retrieved_at_utc": utc_now(), "status": "PROBED", "workbooks": []}
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; EOM-Research-ETL/1.0; +https://github.com/schnozenstein/eom-migration-model)",
+        "Accept": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/octet-stream,*/*",
+        "Referer": SOURCE_URL,
+    }
+    for name, url in STATLINKS.items():
+        item = {"workbook_id": name, "source_url": url, "status": "FAILED"}
+        try:
+            response = requests.get(url, timeout=(15, 90), headers=headers, allow_redirects=True)
+            item.update({"http_status": response.status_code, "final_url": response.url,
+                         "content_type": response.headers.get("Content-Type", ""),
+                         "bytes": len(response.content)})
+            response.raise_for_status()
+            raw = response.content
+            if not raw.startswith(b"PK"):
+                raise ValueError(f"StatLink did not return an XLSX ZIP payload; first bytes={raw[:24]!r}")
+            path = snapshot_dir / f"statlink_{name}.xlsx"
+            path.write_bytes(raw)
+            book = pd.ExcelFile(BytesIO(raw), engine="openpyxl")
+            sheets = []
+            for sheet in book.sheet_names:
+                frame = pd.read_excel(BytesIO(raw), sheet_name=sheet, header=None, engine="openpyxl")
+                preview = frame.head(14).fillna("").astype(str).values.tolist()
+                sheets.append({"sheet_name": sheet, "rows": int(len(frame)),
+                               "columns": int(len(frame.columns)), "preview": preview})
+            item.update({"status": "SUCCESS", "snapshot_path": str(path.relative_to(ROOT)),
+                         "sha256": sha256_bytes(raw), "sheet_names": book.sheet_names,
+                         "sheets": sheets})
+        except Exception as exc:
+            item["error"] = f"{type(exc).__name__}: {exc}"
+        probe["workbooks"].append(item)
+    probe["successful_workbooks"] = sum(x["status"] == "SUCCESS" for x in probe["workbooks"])
+    probe["failed_workbooks"] = sum(x["status"] != "SUCCESS" for x in probe["workbooks"])
+    metadata_dir = ROOT / "metadata" / "oecd_imo_2026"
+    metadata_dir.mkdir(parents=True, exist_ok=True)
+    output = metadata_dir / f"statlink_probe_{run_id}.json"
+    output.write_text(json.dumps(probe, indent=2, ensure_ascii=False), encoding="utf-8")
+    return probe
 
 def parse_numeric(raw: Any):
  if raw is None or (isinstance(raw,float) and pd.isna(raw)): return None,"missing",""
@@ -148,6 +200,9 @@ def append_revision_history(current,history_path):
 def run(url=SOURCE_URL,release_date=RELEASE_DATE,run_id=None):
  run_id=run_id or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"); retrieved_at=utc_now()
  response=requests.get(url,timeout=(15,90),headers={"User-Agent":"EOM-Research-ETL/1.0 (reproducible academic research)"})
+ if response.status_code == 403:
+  probe = probe_statlinks(run_id)
+  raise RuntimeError("OECD publication HTML returned HTTP 403; StatLink workbook probe completed: " + json.dumps(probe, ensure_ascii=False))
  response.raise_for_status(); response.encoding=response.encoding or "utf-8"; raw=response.content; digest=sha256_bytes(raw)
  snap=ROOT/"data"/"raw"/"snapshots"/"oecd_imo_2026"/run_id; snap.mkdir(parents=True,exist_ok=True)
  raw_path=snap/"statistical_annex.html.gz"
