@@ -1,6 +1,6 @@
 # Bilateral gravity benchmark
 
-Run: 2026-11-14T132152Z
+Run: 2026-11-14T133218Z
 Status: completed_expanding_origin_bilateral_benchmark
 Complete-case OD-year rows: 6,132
 Scored predictions: 5,196
@@ -11,16 +11,16 @@ Model metrics:
 {
   "gravity_ppml": {
     "n": 5196,
-    "mae": 1714.0506052394485,
-    "rmse": 5211.4399391155375,
-    "poisson_deviance": 1453.7798990518083,
+    "mae": 1714.0506052398382,
+    "rmse": 5211.439939116105,
+    "poisson_deviance": 1453.779899052102,
     "spearman": 0.8856251843269166
   },
   "gravity_plus_eom_ppml": {
     "n": 5196,
-    "mae": 1679.1395970407589,
-    "rmse": 5123.243635668261,
-    "poisson_deviance": 1407.9299206390917,
+    "mae": 1679.1395970408807,
+    "rmse": 5123.243635668383,
+    "poisson_deviance": 1407.929920639267,
     "spearman": 0.8857650109398114
   },
   "pair_persistence": {
@@ -33,10 +33,10 @@ Model metrics:
   "EOM_minus_gravity_MAE_cluster_bootstrap": {
     "clusters": 526,
     "repetitions": 300,
-    "mean_mae_difference": 35.90575128721322,
+    "mean_mae_difference": 35.90575128748583,
     "ci95": [
-      12.622959690286956,
-      62.34226800581475
+      12.62295969052343,
+      62.34226800598783
     ],
     "positive_favours_eom": true
   }
