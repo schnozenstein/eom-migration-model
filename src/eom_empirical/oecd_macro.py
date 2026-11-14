@@ -130,7 +130,8 @@ def build_oecd_enhanced_ranking(oecd_path: Path = OECD_HISTORY,
         "opportunity_proxy":"opportunity_proxy", "policy_proxy":"policy_proxy",
         "institution_proxy":"institution_proxy", "stability_proxy":"stability_proxy"
     }))
-    joined["baseline_energy"] = baseline["energy_equal_weight"].to_numpy()
+    baseline_by_code = baseline.set_index("country_code")["energy_equal_weight"]
+    joined["baseline_energy"] = joined["country_code"].map(baseline_by_code)
     joined["baseline_attractiveness_z"] = _z(-joined["baseline_energy"])
     component_z = []
     for col in feature_cols:
