@@ -27,9 +27,9 @@ def test_parse_a4_statlink_preserves_stock_and_share_separately():
         "2026-11-14T00:00:00+00:00", "test-run", "abc123"
     )
     assert set(frame["table_code"]) == {"A.4"}
-    assert len(frame) == 4
-    assert ((frame.measure == "foreign_born_population_stock") & (frame.unit == "thousands")).sum() == 2
-    assert ((frame.measure == "foreign_born_population_share") & (frame.unit == "percent")).sum() == 2
+    assert len(frame) == 10
+    assert ((frame.measure == "foreign_born_population_stock") & (frame.unit == "thousands")).sum() == 5
+    assert ((frame.measure == "foreign_born_population_share") & (frame.unit == "percent")).sum() == 5
     assert set(frame.destination) == {"Germany"}
     assert audit["release_date"] == "2026-11-12"
 
@@ -52,6 +52,6 @@ def test_a5_share_row_without_percent_symbol_is_not_a_country():
         "2026-11-14T00:00:00+00:00", "test-run", "abc123"
     )
     share = frame[frame.measure == "foreign_population_share"]
-    assert len(share) == 2
+    assert len(share) == 5
     assert set(share.destination) == {"Poland"}
     assert set(share.unit) == {"percent"}
