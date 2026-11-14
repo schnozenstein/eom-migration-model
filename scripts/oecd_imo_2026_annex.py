@@ -5,6 +5,7 @@ import argparse, gzip, hashlib, json, re
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
+from io import StringIO
 from typing import Any
 import pandas as pd
 import requests
@@ -68,7 +69,7 @@ def measure_for_row(table_code: str,label: str,previous_entity: str):
  return base_measure,base_unit,label
 
 def extract_table(table,table_code,heading,retrieved_at,run_id,snapshot_hash):
- frames=pd.read_html(str(table),flavor="lxml")
+ frames=pd.read_html(StringIO(str(table)),flavor="lxml")
  if not frames: return []
  frame=frames[0].copy(); frame.columns=flatten_columns(frame.columns)
  if frame.empty or len(frame.columns)<2: return []
