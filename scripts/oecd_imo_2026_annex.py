@@ -48,7 +48,7 @@ def parse_numeric(raw: Any):
     text = str(raw).replace("\xa0", " ").strip()
     if text in {"", "..", ".", "…", "—", "–", "-"}:
         return None, "missing", text or "blank"
-    numeric_match = re.fullmatch(r"([0-9\\s,]+(?:\\.\\d+)?)\\s*(?:\\(([^)]*)\\))?", text)
+    numeric_match = re.fullmatch(r"([0-9\s,]+(?:\.\d+)?)\s*(?:\(([^)]*)\))?", text)
     if numeric_match:
         numeric_text = numeric_match.group(1).replace(" ", "").replace(",", "")
         return float(numeric_text), "observed", ""
