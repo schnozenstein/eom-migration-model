@@ -7,6 +7,8 @@ def test_missing_markers_are_not_zero():
     assert parse_numeric("..") == (None, "missing", "..")
     assert parse_numeric(".") == (None, "missing", ".")
     assert parse_numeric("1 234.5") == (1234.5, "observed", "")
+    assert parse_numeric("729 105 (S1)") == (729105.0, "observed", "")
+    assert parse_numeric("911 952 (partial)") == (911952.0, "observed", "")
 
 def test_parse_a4_statlink_preserves_stock_and_share_separately():
     wb = Workbook()

@@ -64,6 +64,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/observations_history/oecd_imo_2026_annex_history.csv metadata/oecd_imo_2026/ reports/oecd_imo_2026_annex_*.md
+          git add data/observations_history/oecd_imo_2026_a_series_history.csv metadata/oecd_imo_2026/ reports/oecd_imo_2026_a_series_*.md
           git commit -m "Automated OECD IMO 2026 annex ingestion [skip ci]" || echo "No new OECD annex observations or metadata changes"
           git push origin HEAD:main
