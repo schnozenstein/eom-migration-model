@@ -29,6 +29,7 @@ INDICATORS = {
     "SM.POP.NETM": "Net migration",
 }
 BASE_URL = "https://api.worldbank.org/v2"
+COUNTRY_CHUNK_SIZE = 12
 
 
 DNS_ERROR_MARKERS = (
@@ -45,11 +46,11 @@ def build_http_session() -> requests.Session:
     """Retry transient HTTP status/read failures; DNS is retried explicitly below."""
     session = requests.Session()
     retry = Retry(
-        total=3,
+        total=5,
         connect=0,
-        read=2,
+        read=4,
         status=3,
-        backoff_factor=0.5,
+        backoff_factor=1.0,
         status_forcelist=(429, 500, 502, 503, 504),
         allowed_methods=frozenset({"GET"}),
         respect_retry_after_header=True,
@@ -101,46 +102,64 @@ def fetch_indicator(
     indicator: str,
     start: int,
     end: int,
-    timeout: int = 40,
+    timeout: int = 90,
     session: requests.Session | None = None,
+    country_chunk_size: int = COUNTRY_CHUNK_SIZE,
 ) -> list[dict]:
-    url = f"{BASE_URL}/country/{codes}/indicator/{indicator}"
-    params = {"date": f"{start}:{end}", "format": "json", "per_page": 20000}
+    """Fetch an indicator in smaller country batches to avoid slow oversized API responses."""
+    code_list = sorted({code.strip() for code in codes.split(";") if code.strip()})
+    if not code_list:
+        raise ValueError("At least one World Bank country code is required")
+    if country_chunk_size < 1:
+        raise ValueError("country_chunk_size must be >= 1")
+
+    chunks = [
+        code_list[index:index + country_chunk_size]
+        for index in range(0, len(code_list), country_chunk_size)
+    ]
     all_rows: list[dict] = []
     owns_session = session is None
     http = session if session is not None else build_http_session()
-    page = 1
     try:
-        while True:
-            params["page"] = page
-            response = get_with_dns_retries(http, url, params=params, timeout=timeout)
-            response.raise_for_status()
-            payload = response.json()
-            if not isinstance(payload, list) or len(payload) < 2 or not isinstance(payload[0], dict):
-                raise ValueError(f"Unexpected API response for {indicator}: {payload!r}")
-            metadata, observations = payload[0], payload[1]
-            observations = observations or []
-            if not isinstance(observations, list):
-                raise ValueError(f"Unexpected observations payload for {indicator}: {type(observations).__name__}")
-            for item in observations:
-                country = item.get("country") or {}
-                indicator_meta = item.get("indicator") or {}
-                all_rows.append({
-                    "country_code": (item.get("countryiso3code") or "").upper(),
-                    "country_name_api": country.get("value"),
-                    "indicator_code": indicator_meta.get("id", indicator),
-                    "indicator_name_api": indicator_meta.get("value") or INDICATORS[indicator],
-                    "year": int(item["date"]) if item.get("date") else None,
-                    "value": item.get("value"),
-                    "source": "World Bank Indicators API",
-                    "source_url": response.url,
-                    "retrieved_utc": pd.Timestamp.utcnow().isoformat(),
-                })
-            total_pages = int(metadata.get("pages", 1) or 1)
-            if page >= total_pages:
-                break
-            page += 1
-            time.sleep(0.15)
+        for chunk_number, country_chunk in enumerate(chunks, start=1):
+            codes_path = ";".join(country_chunk)
+            url = f"{BASE_URL}/country/{codes_path}/indicator/{indicator}"
+            params = {"date": f"{start}:{end}", "format": "json", "per_page": 20000}
+            page = 1
+            while True:
+                params["page"] = page
+                response = get_with_dns_retries(http, url, params=params, timeout=timeout)
+                response.raise_for_status()
+                payload = response.json()
+                if not isinstance(payload, list) or len(payload) < 2 or not isinstance(payload[0], dict):
+                    raise ValueError(f"Unexpected API response for {indicator}: {payload!r}")
+                metadata, observations = payload[0], payload[1]
+                observations = observations or []
+                if not isinstance(observations, list):
+                    raise ValueError(
+                        f"Unexpected observations payload for {indicator}: {type(observations).__name__}"
+                    )
+                for item in observations:
+                    country = item.get("country") or {}
+                    indicator_meta = item.get("indicator") or {}
+                    all_rows.append({
+                        "country_code": (item.get("countryiso3code") or "").upper(),
+                        "country_name_api": country.get("value"),
+                        "indicator_code": indicator_meta.get("id", indicator),
+                        "indicator_name_api": indicator_meta.get("value") or INDICATORS[indicator],
+                        "year": int(item["date"]) if item.get("date") else None,
+                        "value": item.get("value"),
+                        "source": "World Bank Indicators API",
+                        "source_url": response.url,
+                        "retrieved_utc": pd.Timestamp.now(tz="UTC").isoformat(),
+                    })
+                total_pages = int(metadata.get("pages", 1) or 1)
+                if page >= total_pages:
+                    break
+                page += 1
+                time.sleep(0.15)
+            if chunk_number < len(chunks):
+                time.sleep(0.15)
         return all_rows
     finally:
         if owns_session:
