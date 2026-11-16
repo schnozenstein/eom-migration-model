@@ -1,7 +1,7 @@
 from io import BytesIO
 import pandas as pd
 from openpyxl import Workbook
-from scripts.oecd_imo_2026_annex import parse_numeric, parse_statlink_workbook
+from scripts.oecd_imo_2026_annex import (OUTPUT_COLUMNS, append_revision_history, parse_numeric, parse_statlink_workbook)
 
 def test_missing_markers_are_not_zero():
     assert parse_numeric("..") == (None, "missing", "..")
@@ -57,3 +57,75 @@ def test_a5_share_row_without_percent_symbol_is_not_a_country():
     assert len(share) == 5
     assert set(share.destination) == {"Poland"}
     assert set(share.unit) == {"percent"}
+
+
+
+def test_append_revision_history_skips_metadata_only_missing_cell_and_keeps_real_revision(tmp_path):
+    row = {column: "" for column in OUTPUT_COLUMNS}
+    row.update({
+        "table_code": "A.4",
+        "destination": "Canada",
+        "origin": "",
+        "measure": "foreign_born_population_stock",
+        "year": 2025,
+        "value": None,
+        "raw_value": "",
+        "unit": "thousands",
+        "observation_status": "missing",
+        "missing_marker": "..",
+        "source_version": 1,
+        "source_vintage": "IMO2026-2026-11-12",
+        "retrieved_at_utc": "2026-11-15T14:58:14+00:00",
+        "run_id": "run2",
+        "raw_snapshot_sha256": "abc123",
+    })
+    current = pd.DataFrame([row], columns=OUTPUT_COLUMNS)
+    history_path = tmp_path / "history.csv"
+    prior = current.copy()
+    prior.loc[0, "retrieved_at_utc"] = "2026-11-15T05:45:29+00:00"
+    prior.loc[0, "run_id"] = "run1"
+    prior.to_csv(history_path, index=False)
+
+    unchanged = append_revision_history(current, history_path)
+    assert unchanged["inserted_new_natural_keys"] == 0
+    assert unchanged["appended_value_revisions"] == 0
+    assert unchanged["unchanged_keys_skipped"] == 1
+    assert unchanged["history_rows_after"] == 1
+
+    revised = current.copy()
+    revised.loc[0, "value"] = 1300070.0
+    revised.loc[0, "raw_value"] = "1 300 070"
+    revised.loc[0, "observation_status"] = "observed"
+    revision_stats = append_revision_history(revised, history_path)
+    assert revision_stats["appended_value_revisions"] == 1
+    assert revision_stats["history_rows_after"] == 2
+
+
+
+def test_history_unique_key_count_normalizes_blank_and_whitespace_origin(tmp_path):
+    row = {column: "" for column in OUTPUT_COLUMNS}
+    row.update({
+        "table_code": "A.4",
+        "destination": "Canada",
+        "origin": "",
+        "measure": "foreign_born_population_stock",
+        "year": 2025,
+        "value": None,
+        "raw_value": "",
+        "unit": "thousands",
+        "observation_status": "missing",
+        "missing_marker": "..",
+        "source_version": 1,
+        "source_vintage": "IMO2026-2026-11-12",
+        "retrieved_at_utc": "2026-11-15T05:45:29+00:00",
+        "run_id": "run1",
+        "raw_snapshot_sha256": "abc123",
+    })
+    prior = pd.DataFrame([row, {**row, "origin": " "}], columns=OUTPUT_COLUMNS)
+    history_path = tmp_path / "history.csv"
+    prior.to_csv(history_path, index=False)
+
+    stats = append_revision_history(pd.DataFrame([row], columns=OUTPUT_COLUMNS), history_path)
+    assert stats["history_rows_after"] == 2
+    assert stats["history_unique_natural_keys"] == 1
+    assert stats["appended_value_revisions"] == 0
