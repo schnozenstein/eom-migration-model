@@ -99,3 +99,33 @@ def test_append_revision_history_skips_metadata_only_missing_cell_and_keeps_real
     revision_stats = append_revision_history(revised, history_path)
     assert revision_stats["appended_value_revisions"] == 1
     assert revision_stats["history_rows_after"] == 2
+
+
+
+def test_history_unique_key_count_normalizes_blank_and_whitespace_origin(tmp_path):
+    row = {column: "" for column in OUTPUT_COLUMNS}
+    row.update({
+        "table_code": "A.4",
+        "destination": "Canada",
+        "origin": "",
+        "measure": "foreign_born_population_stock",
+        "year": 2025,
+        "value": None,
+        "raw_value": "",
+        "unit": "thousands",
+        "observation_status": "missing",
+        "missing_marker": "..",
+        "source_version": 1,
+        "source_vintage": "IMO2026-2026-11-12",
+        "retrieved_at_utc": "2026-11-15T05:45:29+00:00",
+        "run_id": "run1",
+        "raw_snapshot_sha256": "abc123",
+    })
+    prior = pd.DataFrame([row, {**row, "origin": " "}], columns=OUTPUT_COLUMNS)
+    history_path = tmp_path / "history.csv"
+    prior.to_csv(history_path, index=False)
+
+    stats = append_revision_history(pd.DataFrame([row], columns=OUTPUT_COLUMNS), history_path)
+    assert stats["history_rows_after"] == 2
+    assert stats["history_unique_natural_keys"] == 1
+    assert stats["appended_value_revisions"] == 0
