@@ -180,12 +180,18 @@ def append_revision_history(current: pd.DataFrame, history_path: Path) -> dict:
         latest = old
     else:
         old["retrieved_at_utc"] = pd.to_datetime(old["retrieved_at_utc"], errors="coerce", utc=True)
-        latest = old.sort_values("retrieved_at_utc", kind="stable").drop_duplicates(NATURAL_KEYS, keep="last")
-    index = {tuple(row[k] if pd.notna(row[k]) else "" for k in NATURAL_KEYS): row for _, row in latest.iterrows()}
+        old_keys = old.apply(lambda row: tuple(_normalized_cell(row[k]) for k in NATURAL_KEYS), axis=1)
+        latest = (
+            old.assign(_natural_key=old_keys)
+            .sort_values("retrieved_at_utc", kind="stable")
+            .drop_duplicates("_natural_key", keep="last")
+            .drop(columns="_natural_key")
+        )
+    index = {tuple(_normalized_cell(row[k]) for k in NATURAL_KEYS): row for _, row in latest.iterrows()}
     additions = []
     inserted = revised = unchanged = 0
     for _, row in current.iterrows():
-        key = tuple(row[k] if pd.notna(row[k]) else "" for k in NATURAL_KEYS)
+        key = tuple(_normalized_cell(row[k]) for k in NATURAL_KEYS)
         prior = index.get(key)
         if prior is None:
             additions.append(row.to_dict()); inserted += 1; continue
@@ -210,7 +216,10 @@ def append_revision_history(current: pd.DataFrame, history_path: Path) -> dict:
     return {
         "inserted_new_natural_keys": inserted, "appended_value_revisions": revised,
         "unchanged_keys_skipped": unchanged, "history_rows_after": int(len(history)),
-        "history_unique_natural_keys": int(history[NATURAL_KEYS].drop_duplicates().shape[0]) if not history.empty else 0,
+        "history_unique_natural_keys": (
+            int(history[NATURAL_KEYS].apply(lambda col: col.map(_normalized_cell)).drop_duplicates().shape[0])
+            if not history.empty else 0
+        ),
     }
 
 def run(run_id: str | None = None) -> dict:
