@@ -161,6 +161,18 @@ def parse_statlink_workbook(raw: bytes, short_url: str, final_url: str,
     }
     return out, audit
 
+def _normalized_cell(value: Any) -> str:
+    """Treat CSV blank cells and pandas NA as the same missing representation."""
+    if value is None:
+        return ""
+    try:
+        if pd.isna(value):
+            return ""
+    except (TypeError, ValueError):
+        pass
+    return str(value).strip()
+
+
 def append_revision_history(current: pd.DataFrame, history_path: Path) -> dict:
     history_path.parent.mkdir(parents=True, exist_ok=True)
     old = pd.read_csv(history_path, dtype={"raw_value": "string"}) if history_path.exists() else pd.DataFrame(columns=OUTPUT_COLUMNS)
@@ -179,8 +191,11 @@ def append_revision_history(current: pd.DataFrame, history_path: Path) -> dict:
             additions.append(row.to_dict()); inserted += 1; continue
         old_value = None if pd.isna(prior.get("value")) else float(prior.get("value"))
         new_value = None if pd.isna(row.get("value")) else float(row.get("value"))
-        same = (old_value == new_value and str(prior.get("raw_value", "")) == str(row.get("raw_value", "")) and
-                str(prior.get("observation_status", "")) == str(row.get("observation_status", "")))
+        same = (
+            old_value == new_value
+            and _normalized_cell(prior.get("raw_value", "")) == _normalized_cell(row.get("raw_value", ""))
+            and _normalized_cell(prior.get("observation_status", "")) == _normalized_cell(row.get("observation_status", ""))
+        )
         if same:
             unchanged += 1
         else:
