@@ -57,3 +57,103 @@ def test_a5_share_row_without_percent_symbol_is_not_a_country():
     assert len(share) == 5
     assert set(share.destination) == {"Poland"}
     assert set(share.unit) == {"percent"}
+
+
+def _history_row(**overrides):
+    row = {column: "" for column in __import__("scripts.oecd_imo_2026_annex", fromlist=["OUTPUT_COLUMNS"]).OUTPUT_COLUMNS}
+    row.update({
+        "table_code": "A.4",
+        "table_heading": "Table A.4. Stocks of foreign-born population in OECD countries",
+        "destination": "Canada",
+        "origin": "",
+        "measure": "foreign_born_population_stock",
+        "year": 2025,
+        "value": None,
+        "raw_value": "",
+        "unit": "thousands",
+        "observation_status": "missing",
+        "missing_marker": "",
+        "publisher": "Organisation for Economic Co-operation and Development (OECD)",
+        "source_url": "https://stat.link/files/a9eab36b-en/2d1v8s.xlsx",
+        "source_permalink": "https://stat.link/2d1v8s",
+        "source_page": "https://www.oecd.org/en/publications/international-migration-outlook-2026_a9eab36b-en/full-report/statistical-annex_f79de055.html",
+        "release_date": "2026-11-12",
+        "source_vintage": "IMO2026-2026-11-12",
+        "source_version": "1",
+        "source_sheet": "A4_EN_2026",
+        "retrieved_at_utc": "2026-11-16T17:26:36+00:00",
+        "run_id": "first-run",
+        "raw_snapshot_sha256": "hash-1",
+    })
+    row.update(overrides)
+    return row
+
+
+def test_identical_missing_cell_is_not_appended_as_a_revision(tmp_path):
+    from scripts.oecd_imo_2026_annex import OUTPUT_COLUMNS, append_revision_history
+
+    path = tmp_path / "history.csv"
+    original = _history_row()
+    pd.DataFrame([original], columns=OUTPUT_COLUMNS).to_csv(path, index=False)
+
+    current = pd.DataFrame([_history_row(
+        retrieved_at_utc="2026-11-17T00:00:00+00:00",
+        run_id="second-run",
+        raw_snapshot_sha256="hash-2",
+    )], columns=OUTPUT_COLUMNS)
+    stats = append_revision_history(current, path)
+
+    assert stats["inserted_new_natural_keys"] == 0
+    assert stats["appended_revisions"] == 0
+    assert stats["appended_value_revisions"] == 0
+    assert stats["appended_metadata_revisions"] == 0
+    assert stats["unchanged_keys_skipped"] == 1
+    assert len(pd.read_csv(path)) == 1
+
+
+def test_source_vintage_change_is_recorded_without_a_value_change(tmp_path):
+    from scripts.oecd_imo_2026_annex import OUTPUT_COLUMNS, append_revision_history
+
+    path = tmp_path / "history.csv"
+    original = _history_row(
+        value=123.0, raw_value="123", observation_status="observed",
+        source_vintage="v1", source_version="1",
+    )
+    pd.DataFrame([original], columns=OUTPUT_COLUMNS).to_csv(path, index=False)
+
+    current = pd.DataFrame([_history_row(
+        value=123.0, raw_value="123", observation_status="observed",
+        source_vintage="v2", source_version="2",
+        retrieved_at_utc="2026-11-17T00:00:00+00:00",
+        run_id="second-run",
+    )], columns=OUTPUT_COLUMNS)
+    stats = append_revision_history(current, path)
+
+    assert stats["appended_revisions"] == 1
+    assert stats["appended_value_revisions"] == 0
+    assert stats["appended_metadata_revisions"] == 1
+    assert stats["unchanged_keys_skipped"] == 0
+    assert len(pd.read_csv(path)) == 2
+
+
+def test_actual_numeric_change_is_recorded_as_value_revision(tmp_path):
+    from scripts.oecd_imo_2026_annex import OUTPUT_COLUMNS, append_revision_history
+
+    path = tmp_path / "history.csv"
+    original = _history_row(
+        value=123.0, raw_value="123", observation_status="observed",
+    )
+    pd.DataFrame([original], columns=OUTPUT_COLUMNS).to_csv(path, index=False)
+
+    current = pd.DataFrame([_history_row(
+        value=124.0, raw_value="124", observation_status="observed",
+        retrieved_at_utc="2026-11-17T00:00:00+00:00",
+        run_id="second-run",
+    )], columns=OUTPUT_COLUMNS)
+    stats = append_revision_history(current, path)
+
+    assert stats["appended_revisions"] == 1
+    assert stats["appended_value_revisions"] == 1
+    assert stats["appended_metadata_revisions"] == 0
+    assert stats["unchanged_keys_skipped"] == 0
+    assert len(pd.read_csv(path)) == 2

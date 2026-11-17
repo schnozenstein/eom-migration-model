@@ -170,21 +170,52 @@ def append_revision_history(current: pd.DataFrame, history_path: Path) -> dict:
         old["retrieved_at_utc"] = pd.to_datetime(old["retrieved_at_utc"], errors="coerce", utc=True)
         latest = old.sort_values("retrieved_at_utc", kind="stable").drop_duplicates(NATURAL_KEYS, keep="last")
     index = {tuple(row[k] if pd.notna(row[k]) else "" for k in NATURAL_KEYS): row for _, row in latest.iterrows()}
+    def normalise_text(value: Any) -> str:
+        # CSV round-trips turn empty strings into NaN by default. Treat both as
+        # the same missing representation so unchanged missing cells are not
+        # appended as a fresh revision on every scheduled run.
+        return "" if pd.isna(value) else str(value).strip()
+
+    def same_numeric_value(left: Any, right: Any) -> bool:
+        left_missing, right_missing = pd.isna(left), pd.isna(right)
+        if left_missing or right_missing:
+            return bool(left_missing and right_missing)
+        try:
+            left_number, right_number = float(left), float(right)
+            return abs(left_number - right_number) <= 1e-12 * max(
+                1.0, abs(left_number), abs(right_number)
+            )
+        except (TypeError, ValueError):
+            return normalise_text(left) == normalise_text(right)
+
+    source_metadata_fields = [
+        "raw_value", "observation_status", "missing_marker", "unit",
+        "source_vintage", "source_version",
+    ]
     additions = []
-    inserted = revised = unchanged = 0
+    inserted = value_revised = metadata_revised = unchanged = 0
     for _, row in current.iterrows():
         key = tuple(row[k] if pd.notna(row[k]) else "" for k in NATURAL_KEYS)
         prior = index.get(key)
         if prior is None:
-            additions.append(row.to_dict()); inserted += 1; continue
-        old_value = None if pd.isna(prior.get("value")) else float(prior.get("value"))
-        new_value = None if pd.isna(row.get("value")) else float(row.get("value"))
-        same = (old_value == new_value and str(prior.get("raw_value", "")) == str(row.get("raw_value", "")) and
-                str(prior.get("observation_status", "")) == str(row.get("observation_status", "")))
-        if same:
+            additions.append(row.to_dict())
+            inserted += 1
+            continue
+
+        same_value = same_numeric_value(prior.get("value"), row.get("value"))
+        same_source_metadata = all(
+            normalise_text(prior.get(field, "")) == normalise_text(row.get(field, ""))
+            for field in source_metadata_fields
+        )
+        if same_value and same_source_metadata:
             unchanged += 1
         else:
-            additions.append(row.to_dict()); revised += 1
+            additions.append(row.to_dict())
+            if same_value:
+                metadata_revised += 1
+            else:
+                value_revised += 1
+
     if additions:
         history = pd.concat([old, pd.DataFrame(additions)], ignore_index=True)
         history.to_csv(history_path, index=False)
@@ -193,8 +224,12 @@ def append_revision_history(current: pd.DataFrame, history_path: Path) -> dict:
         if not history_path.exists():
             history.to_csv(history_path, index=False)
     return {
-        "inserted_new_natural_keys": inserted, "appended_value_revisions": revised,
-        "unchanged_keys_skipped": unchanged, "history_rows_after": int(len(history)),
+        "inserted_new_natural_keys": inserted,
+        "appended_revisions": value_revised + metadata_revised,
+        "appended_value_revisions": value_revised,
+        "appended_metadata_revisions": metadata_revised,
+        "unchanged_keys_skipped": unchanged,
+        "history_rows_after": int(len(history)),
         "history_unique_natural_keys": int(history[NATURAL_KEYS].drop_duplicates().shape[0]) if not history.empty else 0,
     }
 
