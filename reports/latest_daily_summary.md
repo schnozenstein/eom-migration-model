@@ -1,16 +1,16 @@
 # EOM Daily Research Report
 
-> Generated: 2026-11-19 23:41 UTC
+> Generated: 2026-11-20 23:09 UTC
 
 ## 1. Executive summary
 
 - **Workflow trigger:** schedule; configured UTC schedule 17 17 * * *.
-- **Latest refresh run:** `2026-11-19T233548Z`
+- **Latest refresh run:** `2026-11-20T230621Z`
 - **ETL manifest matches this workflow run:** Yes
 - **Full ETL step outcome:** success
 - **Macro ranking step outcome:** success
 - **Freshness warning:** 1 indicator(s) require attention: NY.GDP.TOTL.RT.ZS (2021; STALE_OR_SLOW_RELEASE)
-- **Refresh timestamp:** 2026-11-19T23:35:48.179620+00:00
+- **Refresh timestamp:** 2026-11-20T23:06:21.638367+00:00
 - **World Bank observations fetched:** 165984
 - **World Bank indicator requests:** 39 succeeded; 0 failed
 - **Normalized WDI panel:** 165984 current rows; 3120 aggregate rows use stable non-ISO3 source keys
@@ -23,18 +23,18 @@
 - **UN DESA migrant-stock tables:** 3 of 3 files succeeded; 0 failed; 235632 normalized rows
 - **OECD migration database slice:** SUCCESS; 312 focus-country rows retained
 - **ILOSTAT migrant-labour indicators:** 3 succeeded; 0 failed; 6469 focus rows
-- **Brazil OBMigra official source page:** SUCCESS (catalogue monitor only; report tables are not numerically parsed)
+- **Brazil OBMigra official source page:** FAILED (catalogue monitor only; report tables are not numerically parsed)
 - **Policy pages:** 13 succeeded; 0 failed
 - **Freshness dashboard:** 38 recent; 1 requiring attention out of 39 indicators
 - **Macro ranking recomputed in this run:** Yes
 - **Ranking delta audit:** RECOMPUTED; data cutoff 2025; 0 score changes and 0 rank changes across 45 destinations; 42 scored and 3 unscored.
-- **Consolidated source-retrieval audit:** 64 source records; 0 failed/unknown statuses; validation PASS.
+- **Consolidated source-retrieval audit:** 64 source records; 1 failed/unknown statuses; validation PASS_WITH_WARNINGS.
 - **Numeric source rows fetched:** 1193274 across endpoints; 785556 normalized rows retained. These are source-record counts, not unique people.
 - **Panel validation:** 0 duplicate WDI natural keys; 27778 missing values (16.7353% of panel cells).
-- **Cross-source natural-key audit:** 0 duplicate-key rows across audited tables; audit validation PASS.
+- **Cross-source natural-key audit:** 0 duplicate-key rows across audited tables; audit validation PASS_WITH_WARNINGS.
 - **Source lineage registry:** 64 current source records; 64 unique source IDs; 0 duplicate source-ID rows; legacy registry status preserved_legacy_registry (not overwritten).
 - **Retrieval timestamp fallbacks:** 1 row(s) use the explicit ETL-run timestamp because a source-specific timestamp was not applicable or exposed; blank timestamp rows after fallback: 0.
-- **Policy-event delta:** 0 confirmed events; 10 page-content changes requiring review; 0 failed/unknown pages. Hash changes are not policy-event confirmation.
+- **Policy-event delta:** 0 confirmed events; 11 page-content changes requiring review; 0 failed/unknown pages. Hash changes are not policy-event confirmation.
 - **Prediction/outcome ledger:** 0 production forecasts; 8352 versioned country-year outcomes; 0 forecast-outcome matches; 0 new outcomes and 0 revisions.
 - **Prior WDI history recovery:** 7296 rows recovered from archived raw snapshots during the one-time migration; current run rebuild: No.
 - **Macro ranking comparison year:** 2025
@@ -263,20 +263,20 @@ Exact current-run URLs and per-source counts follow. Source-record totals are no
 | UN DESA:destination | [https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2024_ims_stock_by_sex_and_destination.xlsx](https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2024_ims_stock_by_sex_and_destination.xlsx) | 2024 dataset release; exact publication date not exposed by status file | 1990–2024 | SUCCESS (HTTP 200) | 5640 / 5640 | not tracked / not tracked / not tracked | 0 / 48 |
 | UN DESA:origin | [https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2024_ims_stock_by_sex_and_origin.xlsx](https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2024_ims_stock_by_sex_and_origin.xlsx) | 2024 dataset release; exact publication date not exposed by status file | 1990–2024 | SUCCESS (HTTP 200) | 5640 / 5640 | not tracked / not tracked / not tracked | 0 / 48 |
 | UN DESA:bilateral | [https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2024_ims_stock_by_sex_destination_and_origin.xlsx](https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2024_ims_stock_by_sex_destination_and_origin.xlsx) | 2024 dataset release; exact publication date not exposed by status file | 1990–2024 | SUCCESS (HTTP 200) | 224352 / 224352 | not tracked / not tracked / not tracked | 0 / 1 |
-| OBMigra:official_page_monitor | [https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/obmigra-1/relatorios-obmigra/dados-consolidados/2025](https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/obmigra-1/relatorios-obmigra/dados-consolidados/2025) | not applicable | — | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Canada:IRCC Express Entry news | [https://www.canada.ca/en/immigration-refugees-citizenship/news.html](https://www.canada.ca/en/immigration-refugees-citizenship/news.html) | not extracted; manual event review required | 2026-11-19T23:36:49.254903+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:United Kingdom:UK immigration policy news | [https://www.gov.uk/government/organisations/uk-visas-and-immigration](https://www.gov.uk/government/organisations/uk-visas-and-immigration) | not extracted; manual event review required | 2026-11-19T23:36:49.415087+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Australia:Department of Home Affairs immigration news | [https://immi.homeaffairs.gov.au/news-media/archive](https://immi.homeaffairs.gov.au/news-media/archive) | not extracted; manual event review required | 2026-11-19T23:36:50.565108+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:New Zealand:Immigration New Zealand news | [https://www.immigration.govt.nz/about-us/news-centre/](https://www.immigration.govt.nz/about-us/news-centre/) | not extracted; manual event review required | 2026-11-19T23:36:51.405187+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Ireland:Employment permits current processing dates | [https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/current-application-processing-dates/](https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/current-application-processing-dates/) | not extracted; manual event review required | 2026-11-19T23:36:52.613776+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Singapore:Ministry of Manpower work passes | [https://www.mom.gov.sg/passes-and-permits](https://www.mom.gov.sg/passes-and-permits) | not extracted; manual event review required | 2026-11-19T23:36:53.461831+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Hong Kong:Immigration Department press releases | [https://www.immd.gov.hk/eng/press/press_releases.html](https://www.immd.gov.hk/eng/press/press_releases.html) | not extracted; manual event review required | 2026-11-19T23:36:53.998604+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Japan:Immigration Services Agency | [https://www.moj.go.jp/isa/](https://www.moj.go.jp/isa/) | not extracted; manual event review required | 2026-11-19T23:36:55.345595+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Switzerland:State Secretariat for Migration press releases | [https://www.sem.admin.ch/en/press-releases](https://www.sem.admin.ch/en/press-releases) | not extracted; manual event review required | 2026-11-19T23:36:55.855139+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Austria:Austrian Federal Government migration portal | [https://www.migration.gv.at/en/welcome/](https://www.migration.gv.at/en/welcome/) | not extracted; manual event review required | 2026-11-19T23:36:56.855282+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Spain:La Moncloa press releases — Inclusion, Social Security and Migration | [https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx](https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx) | not extracted; manual event review required | 2026-11-19T23:36:58.465520+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Poland:Office for Foreigners — immigration and residence news | [https://www.gov.pl/web/udsc-en/](https://www.gov.pl/web/udsc-en/) | not extracted; manual event review required | 2026-11-19T23:36:59.360713+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
-| PolicyPage:Poland:Ministry of Family, Labour and Social Policy — foreign-worker policy news | [https://www.gov.pl/web/family](https://www.gov.pl/web/family) | not extracted; manual event review required | 2026-11-19T23:37:00.684677+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| OBMigra:official_page_monitor | [https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/obmigra-1/relatorios-obmigra/dados-consolidados/2025](https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/obmigra-1/relatorios-obmigra/dados-consolidados/2025) | not applicable | — | FAILED | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Canada:IRCC Express Entry news | [https://www.canada.ca/en/immigration-refugees-citizenship/news.html](https://www.canada.ca/en/immigration-refugees-citizenship/news.html) | not extracted; manual event review required | 2026-11-20T23:07:58.589604+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:United Kingdom:UK immigration policy news | [https://www.gov.uk/government/organisations/uk-visas-and-immigration](https://www.gov.uk/government/organisations/uk-visas-and-immigration) | not extracted; manual event review required | 2026-11-20T23:07:58.819939+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Australia:Department of Home Affairs immigration news | [https://immi.homeaffairs.gov.au/news-media/archive](https://immi.homeaffairs.gov.au/news-media/archive) | not extracted; manual event review required | 2026-11-20T23:07:59.163564+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:New Zealand:Immigration New Zealand news | [https://www.immigration.govt.nz/about-us/news-centre/](https://www.immigration.govt.nz/about-us/news-centre/) | not extracted; manual event review required | 2026-11-20T23:07:59.779465+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Ireland:Employment permits current processing dates | [https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/current-application-processing-dates/](https://enterprise.gov.ie/en/what-we-do/workplace-and-skills/employment-permits/current-application-processing-dates/) | not extracted; manual event review required | 2026-11-20T23:08:00.822948+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Singapore:Ministry of Manpower work passes | [https://www.mom.gov.sg/passes-and-permits](https://www.mom.gov.sg/passes-and-permits) | not extracted; manual event review required | 2026-11-20T23:08:01.353795+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Hong Kong:Immigration Department press releases | [https://www.immd.gov.hk/eng/press/press_releases.html](https://www.immd.gov.hk/eng/press/press_releases.html) | not extracted; manual event review required | 2026-11-20T23:08:02.354585+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Japan:Immigration Services Agency | [https://www.moj.go.jp/isa/](https://www.moj.go.jp/isa/) | not extracted; manual event review required | 2026-11-20T23:08:03.999047+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Switzerland:State Secretariat for Migration press releases | [https://www.sem.admin.ch/en/press-releases](https://www.sem.admin.ch/en/press-releases) | not extracted; manual event review required | 2026-11-20T23:08:04.415282+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Austria:Austrian Federal Government migration portal | [https://www.migration.gv.at/en/welcome/](https://www.migration.gv.at/en/welcome/) | not extracted; manual event review required | 2026-11-20T23:08:05.207100+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Spain:La Moncloa press releases — Inclusion, Social Security and Migration | [https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx](https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/inclusion/Paginas/index.aspx) | not extracted; manual event review required | 2026-11-20T23:08:06.227668+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Poland:Office for Foreigners — immigration and residence news | [https://www.gov.pl/web/udsc-en/](https://www.gov.pl/web/udsc-en/) | not extracted; manual event review required | 2026-11-20T23:08:06.970349+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
+| PolicyPage:Poland:Ministry of Family, Labour and Social Policy — foreign-worker policy news | [https://www.gov.pl/web/family](https://www.gov.pl/web/family) | not extracted; manual event review required | 2026-11-20T23:08:07.673166+00:00 | SUCCESS (HTTP 200) | 0 / 0 | not tracked / not tracked / not tracked | — / — |
 | Derived:Brazil_WDI_subset | [multiple WDI indicator endpoints; see WDI indicator rows](multiple WDI indicator endpoints; see WDI indicator rows) | inherits WDI vintages; see indicator rows | 2010–2025 | DERIVED | 0 / 624 | not tracked / not tracked / not tracked | 0 / — |
 
 Hash changes on policy pages are review flags, not confirmed policy events. Supplemental tables retain raw snapshots, but not all yet have per-row revision ledgers. Country-year outcomes remain a fallback because a globally harmonized bilateral flow panel is not yet complete.
