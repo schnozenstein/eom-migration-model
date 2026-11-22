@@ -255,6 +255,7 @@ jobs:
         env:
           PYTHONPATH: src
           EOM_FORCE_BILATERAL_RECOMPUTE: ${{ steps.change_gate.outputs.bilateral_code_changed }}
+          EOM_SCORING_INPUT_OUTCOME: ${{ steps.scoring_input.outcome }}
         run: python scripts/run_bilateral_gravity_benchmark.py --start-year 2010 --end-year 2024
 
       - name: Build macro ranking score/rank delta
