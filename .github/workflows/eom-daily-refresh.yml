@@ -32,6 +32,7 @@ on:
       - "scripts/build_policy_event_delta.py"
       - "scripts/maintain_prediction_ledger.py"
       - "scripts/build_macro_ranking_delta.py"
+      - "scripts/detect_material_changes.py"
       - "scripts/run_bilateral_gravity_benchmark.py"
       - "requirements.txt"
       - "RESEARCH_PROGRAM.md"
@@ -248,7 +249,7 @@ jobs:
         run: python -m eom_empirical.oecd_macro
 
       - name: Run bilateral gravity benchmark and EOM incremental test
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.change_gate.outcome == 'success'
         id: bilateral_gravity
         continue-on-error: true
         env:
