@@ -36,6 +36,7 @@ WB_INDICATORS = {
     "NY.GDP.MKTP.PP.CD": "GDP, PPP (current international $)",
     "PA.NUS.PPP": "PPP conversion factor, GDP (LCU per international $)",
     "PA.NUS.PRVT.PP": "PPP conversion factor, household/private consumption (LCU per international $)",
+    "PA.NUS.PRVT.PLI": "Price level index (households and NPISHs final consumption expenditure; US=100)",
     "SL.UEM.TOTL.ZS": "Unemployment, total (% of labor force, ILO modeled estimate)",
     "RQ.EST": "Regulatory quality estimate",
     "GE.EST": "Government effectiveness estimate",
