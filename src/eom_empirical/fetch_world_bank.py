@@ -1,6 +1,8 @@
 """Fetch a comparable public macro panel from the World Bank Indicators API."""
 from __future__ import annotations
 import argparse
+import hashlib
+import json
 import random
 import socket
 import time
@@ -179,15 +181,71 @@ def main() -> None:
     codes = sorted({c for c in destinations.loc[destinations["primary_choice_set"] == "global_country", "wb_country_code"].tolist() if c})
     codes_path = ";".join(codes)
     all_rows: list[dict] = []
-    with build_http_session() as session:
-        for indicator in INDICATORS:
-            print(f"Fetching {indicator} ({INDICATORS[indicator]})...")
-            all_rows.extend(
-                fetch_indicator(codes_path, indicator, args.start, args.end, session=session)
-            )
+    retrieved_at = pd.Timestamp.now(tz="UTC").isoformat()
+    audit_path = ROOT / "metadata" / "scoring_input_audit.json"
+    try:
+        with build_http_session() as session:
+            for indicator in INDICATORS:
+                print(f"Fetching {indicator} ({INDICATORS[indicator]})...")
+                all_rows.extend(
+                    fetch_indicator(codes_path, indicator, args.start, args.end, session=session)
+                )
+    except Exception as exc:
+        audit_path.parent.mkdir(parents=True, exist_ok=True)
+        audit_path.write_text(json.dumps({
+            "source_id": "WDI_MACRO_FOCUS_SCORING_INPUT",
+            "publisher": "World Bank",
+            "source_type": "numeric_api",
+            "status": "FAILED",
+            "retrieved_at_utc": retrieved_at,
+            "publication_release_date": "not exposed by the Indicators API response",
+            "observation_period_start": args.start,
+            "observation_period_end_requested": args.end,
+            "definition": "Destination-only 11-indicator macro scoring input; indicator definitions remain source-specific.",
+            "unit": "indicator-specific; see official World Bank indicator metadata",
+            "geography_scope": f"{len(codes)} registered global-country destinations",
+            "rows_fetched": len(all_rows),
+            "numeric_rows": sum(row.get("value") is not None for row in all_rows),
+            "missing_values": sum(row.get("value") is None for row in all_rows),
+            "exact_urls": sorted({row.get("source_url", "") for row in all_rows if row.get("source_url")}),
+            "error": f"{type(exc).__name__}: {exc}",
+            "counted_in_numeric_totals": False,
+            "note": "Separate scoring-panel fetch failed; previous normalized scoring input was not overwritten."
+        }, indent=2), encoding="utf-8")
+        raise
     df = pd.DataFrame(all_rows)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(args.out, index=False)
+    numeric = pd.to_numeric(df.get("value", pd.Series(dtype=float)), errors="coerce")
+    years = pd.to_numeric(df.get("year", pd.Series(dtype=float)), errors="coerce")
+    audit = {
+        "source_id": "WDI_MACRO_FOCUS_SCORING_INPUT",
+        "publisher": "World Bank",
+        "source_type": "numeric_api",
+        "status": "SUCCESS",
+        "retrieved_at_utc": retrieved_at,
+        "publication_release_date": "not exposed by the Indicators API response",
+        "observation_period_start": args.start,
+        "observation_period_end_requested": args.end,
+        "observation_period_end_observed": int(years.max()) if years.notna().any() else None,
+        "definition": "Destination-only 11-indicator macro scoring input; indicator definitions remain source-specific.",
+        "unit": "indicator-specific; see official World Bank indicator metadata",
+        "geography_scope": f"{df['country_code'].nunique() if not df.empty else 0} registered global-country destinations",
+        "destination_codes": sorted(df["country_code"].dropna().astype(str).unique().tolist()) if not df.empty else [],
+        "indicators": sorted(df["indicator_code"].dropna().astype(str).unique().tolist()) if not df.empty else [],
+        "rows_fetched": int(len(df)),
+        "numeric_rows": int(numeric.notna().sum()),
+        "missing_values": int(numeric.isna().sum()),
+        "missingness_pct": round(float(numeric.isna().mean() * 100), 4) if len(df) else None,
+        "duplicate_natural_keys": int(df.duplicated(["country_code", "indicator_code", "year"]).sum()) if not df.empty else 0,
+        "exact_urls": sorted(df["source_url"].dropna().astype(str).unique().tolist()) if not df.empty else [],
+        "normalized_output_path": str(args.out.relative_to(ROOT)),
+        "normalized_output_sha256": hashlib.sha256(args.out.read_bytes()).hexdigest(),
+        "counted_in_numeric_totals": False,
+        "note": "This focus extract is a duplicate scoring view of WDI; it is audited separately and excluded from source-row totals to prevent double counting."
+    }
+    audit_path.parent.mkdir(parents=True, exist_ok=True)
+    audit_path.write_text(json.dumps(audit, indent=2), encoding="utf-8")
     print(f"Saved {len(df):,} observations to {args.out}")
     print("Note: empty values are preserved as missing; no cross-country imputation was applied.")
 

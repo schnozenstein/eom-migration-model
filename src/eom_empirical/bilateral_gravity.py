@@ -1,6 +1,6 @@
 """Incremental bilateral migration-flow ingestion and gravity/EOM benchmark."""
 from __future__ import annotations
-import gzip, hashlib, io, json, math, warnings, zipfile
+import gzip, hashlib, io, json, math, os, warnings, zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -195,7 +195,7 @@ def fetch_geodist(snapshot_dir: Path):
              "definition":"bilateral distance in kilometres, contiguity and common official language",
              "unit":"kilometres for distance; binary indicators for contiguity and common official language",
              "geography":"225-country dyadic database per CEPII description",
-             "status":"SUCCESS", "rows":int(len(frame)), "distance_field":distance,
+             "status":"SUCCESS", "rows":int(len(frame)), "distance_field":distance, "raw_sha256":hashlib.sha256(response.content).hexdigest(),
              "archive_member":member_name,
              "raw_snapshot_zip":str(zip_path.relative_to(ROOT)),
              "raw_snapshot_xls":str(xls_path.relative_to(ROOT)),
@@ -606,14 +606,103 @@ def write_geodist_blocked_outputs(stamp, audit, failures, exc, history,
     return {"summary": summary, "audit": audit}
 
 
+
+def history_fingerprint(path: Path = HISTORY) -> str | None:
+    """Stable fingerprint of the versioned bilateral ledger, excluding retrieval timestamps."""
+    if not path.exists():
+        return None
+    frame = pd.read_csv(path, compression="gzip", low_memory=False)
+    cols = ["dataset", "origin_iso3", "destination_iso3", "year", "record_hash",
+            "revision_number", "revision_type", "flow_persons", "observation_status",
+            "source_flag", "unit"]
+    if not set(cols).issubset(frame.columns):
+        raise ValueError("Bilateral history lacks expected natural-key/revision columns")
+    x = frame[cols].copy()
+    for col in ["year", "revision_number", "flow_persons"]:
+        x[col] = pd.to_numeric(x[col], errors="coerce").map(
+            lambda value: "" if pd.isna(value) else format(float(value), ".15g")
+        )
+    for col in cols:
+        if col not in {"year", "revision_number", "flow_persons"}:
+            x[col] = x[col].fillna("").astype(str)
+    x = x.sort_values(
+        ["dataset", "origin_iso3", "destination_iso3", "year", "revision_number"],
+        kind="mergesort"
+    ).reset_index(drop=True)
+    return hashlib.sha256(x.to_csv(index=False, na_rep="", lineterminator="\n").encode("utf-8")).hexdigest()
+
+
+def write_bilateral_skip(stamp, audit, history, status, ce_audit=None, failures=None):
+    """Record daily retrieval status without replacing the last validated benchmark."""
+    (ROOT / "metadata").mkdir(parents=True, exist_ok=True)
+    (ROOT / "reports").mkdir(parents=True, exist_ok=True)
+    if ce_audit:
+        audit["sources"].append(ce_audit)
+    audit["sources"].extend(failures or [])
+    audit["status"] = status
+    audit["eurostat_history"] = history
+    if "scoring_input_refresh_failed" in status:
+        skip_note = "The destination WDI scoring-input refresh failed; no PPML fit or backtest was run on stale macro features. Any newly retrieved OD rows remain in the history ledger for a later valid run."
+    elif "source_unavailable" in status:
+        skip_note = "CEPII was unavailable, but no new bilateral flow rows or revisions were found; the previous validated benchmark was preserved."
+    else:
+        skip_note = "Daily OD-flow and CEPII retrieval completed, but validated model inputs and model code were unchanged; no PPML fit or backtest was rerun."
+    audit["benchmark"] = {
+        "status": status,
+        "model_fit_performed": False,
+        "previous_benchmark_preserved": True,
+        "preserved_output": "outputs/bilateral_gravity_benchmark.json",
+        "note": skip_note
+    }
+    (ROOT / "metadata/bilateral_gravity_data_audit.json").write_text(
+        json.dumps(audit, indent=2, default=str) + "\n", encoding="utf-8"
+    )
+    report = [
+        "# Bilateral gravity benchmark",
+        "",
+        f"Run: {stamp}",
+        f"Status: {status}",
+        f"New Eurostat pair-year keys: {history.get('inserted', 0)}",
+        f"Revised Eurostat pair-year keys: {history.get('revised', 0)}",
+        f"Unchanged observed pair-year keys: {history.get('unchanged', 0)}",
+        f"Current flow-history rows: {history.get('history_rows', 0)}",
+        f"CEPII source: {ce_audit.get('status') if ce_audit else 'FAILED'}",
+        "",
+        skip_note,
+        "The previous validated benchmark outputs and metrics were preserved unchanged.",
+        "This is a retrieval/freshness decision, not a new model result or causal estimate."
+    ]
+    (ROOT / "reports/bilateral_gravity_benchmark_latest.md").write_text(
+        "\n".join(report) + "\n", encoding="utf-8"
+    )
+    summary = {
+        "status": status,
+        "retrieval_run_id": stamp,
+        "model_fit_performed": False,
+        "eurostat_history": history,
+        "previous_benchmark_preserved": True,
+        "interpretation_guardrail": "No new benchmark metrics or forecasts were produced in this run."
+    }
+    return {"summary": summary, "audit": audit}
+
+
 def run(start_year=2010,end_year=2024):
     stamp=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M%SZ")
     dated=datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    # Timestamped snapshots prevent same-day reruns from overwriting source bytes.
     euro_dir=ROOT/"data/raw/snapshots/eurostat_bilateral"/stamp
     ce_dir=ROOT/"data/raw/snapshots/cepii_geodist"/stamp
     audit={"run_id":stamp,"retrieved_at_utc":utc_now(),"start_year":start_year,"end_year":end_year,
         "sources":[],"numeric_rows_fetched":0,"status":"started"}
+    state_path=ROOT/"metadata/recompute_state.json"
+    try:
+        state=json.loads(state_path.read_text(encoding="utf-8"))
+    except Exception:
+        state={}
+    prior=state.get("last_successful",{}).get("bilateral",{})
+    prior_flow_hash=prior.get("flow_history_sha256")
+    prior_geodist_hash=prior.get("geodist_sha256")
+    force=os.environ.get("EOM_FORCE_BILATERAL_RECOMPUTE","").lower()=="true"
+    scoring_input_outcome=os.environ.get("EOM_SCORING_INPUT_OUTCOME","success").lower()
     tables=[]; failures=[]
     for dataset in [MAIN_DATASET,CHECK_DATASET]:
         try:
@@ -638,13 +727,30 @@ def run(start_year=2010,end_year=2024):
     audit.update({"rows_inserted":history["inserted"],"rows_revised":history["revised"],
         "rows_unchanged":history["unchanged"],"duplicates_in_run":history["duplicates_in_run"],
         "history_rows":history["history_rows"]})
+    current_flow_hash=history_fingerprint()
     try:
         geodist,ce_audit=fetch_geodist(ce_dir)
     except Exception as exc:
+        ce_failure={"publisher":"CEPII","url":CEPII_URL,"retrieved_at_utc":utc_now(),
+            "status":"FAILED","rows":0,"error":f"{type(exc).__name__}: {exc}"}
+        if scoring_input_outcome!="success":
+            return write_bilateral_skip(stamp,audit,history,
+                "skipped_scoring_input_refresh_failed_source_unavailable",ce_failure,failures)
+        if (not force and history["inserted"]==0 and history["revised"]==0
+                and prior_flow_hash and current_flow_hash==prior_flow_hash):
+            ce_failure["note"]="Source unavailable; no new bilateral flow rows or revisions were found."
+            return write_bilateral_skip(stamp,audit,history,
+                "skipped_no_material_change_source_unavailable",ce_failure,failures)
         return write_geodist_blocked_outputs(
             stamp, audit, failures, exc, history,
             direction_reconciliation, reconciliation_rows
         )
+    if scoring_input_outcome!="success":
+        return write_bilateral_skip(stamp,audit,history,"skipped_scoring_input_refresh_failed",ce_audit,failures)
+    if (not force and history["inserted"]==0 and history["revised"]==0
+            and prior_flow_hash and current_flow_hash==prior_flow_hash
+            and prior_geodist_hash and ce_audit.get("raw_sha256")==prior_geodist_hash):
+        return write_bilateral_skip(stamp,audit,history,"skipped_no_material_change",ce_audit,failures)
     audit["sources"].append(ce_audit)
     features=load_wdi_features()
     audit["wdi_feature_source"] = {

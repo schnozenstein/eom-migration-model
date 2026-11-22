@@ -11,6 +11,7 @@ on:
       - "scripts/build_policy_event_delta.py"
       - "scripts/maintain_prediction_ledger.py"
       - "scripts/build_macro_ranking_delta.py"
+      - "scripts/detect_material_changes.py"
       - "scripts/run_bilateral_gravity_benchmark.py"
       - "requirements.txt"
       - "RESEARCH_PROGRAM.md"
@@ -31,6 +32,7 @@ on:
       - "scripts/build_policy_event_delta.py"
       - "scripts/maintain_prediction_ledger.py"
       - "scripts/build_macro_ranking_delta.py"
+      - "scripts/detect_material_changes.py"
       - "scripts/run_bilateral_gravity_benchmark.py"
       - "requirements.txt"
       - "RESEARCH_PROGRAM.md"
@@ -156,6 +158,13 @@ jobs:
             exit 1
           fi
 
+      - name: Bootstrap change-driven recomputation baseline if needed
+        if: github.event_name != 'pull_request'
+        id: bootstrap_change_state
+        env:
+          PYTHONPATH: src
+        run: python scripts/detect_material_changes.py bootstrap
+
       - name: Snapshot previous policy-page state for a verifiable delta
         if: always() && github.event_name != 'pull_request'
         run: |
@@ -173,6 +182,14 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/refresh_eom_data.py
+
+      - name: Refresh destination macro scoring input (retrieval only)
+        if: github.event_name != 'pull_request'
+        id: scoring_input
+        continue-on-error: true
+        env:
+          PYTHONPATH: src
+        run: python -m eom_empirical.fetch_world_bank --start 2010 --end "$(date -u +%Y)"
 
       - name: Build conservative policy-event delta
         if: always() && github.event_name != 'pull_request'
@@ -198,6 +215,15 @@ jobs:
           EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
         run: python scripts/maintain_prediction_ledger.py
 
+      - name: Detect material scoring and model-input changes
+        if: always() && github.event_name != 'pull_request'
+        id: change_gate
+        continue-on-error: true
+        env:
+          PYTHONPATH: src
+          EOM_SCORING_INPUT_OUTCOME: ${{ steps.scoring_input.outcome }}
+        run: python scripts/detect_material_changes.py evaluate
+
       - name: Snapshot previous macro ranking for score/rank delta
         if: always() && github.event_name != 'pull_request'
         run: |
@@ -208,18 +234,16 @@ jobs:
             : > "$RUNNER_TEMP/eom_ranking_pre_run.csv"
           fi
 
-      - name: Recompute macro EOM ranking from current destination set
-        if: github.event_name != 'pull_request'
+      - name: Recompute macro EOM ranking and backtest only after material input changes
+        if: github.event_name != 'pull_request' && (steps.change_gate.outputs.primary_changed == 'true' || steps.change_gate.outputs.backtest_changed == 'true')
         id: recompute_ranking
         continue-on-error: true
         env:
           PYTHONPATH: src
-        run: |
-          python -m eom_empirical.fetch_world_bank --start 2010 --end "$(date -u +%Y)"
-          python -m eom_empirical.fit_macro_model
+        run: python -m eom_empirical.fit_macro_model
 
       - name: Build OECD-enhanced macro ranking (A.1, A.4, A.6)
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.change_gate.outputs.oecd_changed == 'true'
         id: oecd_enhanced
         continue-on-error: true
         env:
@@ -227,11 +251,13 @@ jobs:
         run: python -m eom_empirical.oecd_macro
 
       - name: Run bilateral gravity benchmark and EOM incremental test
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.change_gate.outcome == 'success'
         id: bilateral_gravity
         continue-on-error: true
         env:
           PYTHONPATH: src
+          EOM_FORCE_BILATERAL_RECOMPUTE: ${{ steps.change_gate.outputs.bilateral_code_changed }}
+          EOM_SCORING_INPUT_OUTCOME: ${{ steps.scoring_input.outcome }}
         run: python scripts/run_bilateral_gravity_benchmark.py --start-year 2010 --end-year 2024
 
       - name: Build macro ranking score/rank delta
@@ -239,8 +265,20 @@ jobs:
         id: ranking_delta
         continue-on-error: true
         env:
-          EOM_RANKING_RECOMPUTE_OUTCOME: ${{ steps.recompute_ranking.outcome }}
+          EOM_RANKING_RECOMPUTE_OUTCOME: ${{ steps.recompute_ranking.outcome == 'skipped' && steps.change_gate.outputs.skip_reason == 'no_new_validated_primary_scoring_or_backtest_values_or_model_change' && 'skipped_no_material_change' || steps.recompute_ranking.outcome }}
+          EOM_RECOMPUTE_SKIP_REASON: ${{ steps.change_gate.outputs.skip_reason }}
         run: python scripts/build_macro_ranking_delta.py --previous-ranking "$RUNNER_TEMP/eom_ranking_pre_run.csv"
+
+      - name: Finalize change-driven recomputation state
+        if: always() && github.event_name != 'pull_request' && steps.change_gate.outcome == 'success'
+        id: finalize_change_state
+        continue-on-error: true
+        env:
+          PYTHONPATH: src
+          EOM_PRIMARY_OUTCOME: ${{ steps.recompute_ranking.outcome }}
+          EOM_OECD_OUTCOME: ${{ steps.oecd_enhanced.outcome }}
+          EOM_BILATERAL_OUTCOME: ${{ steps.bilateral_gravity.outcome }}
+        run: python scripts/detect_material_changes.py finalize
 
       - name: Build environmental and economic risk indicator panel
         if: github.event_name != 'pull_request'
@@ -279,7 +317,8 @@ jobs:
         env:
           PYTHONPATH: src
           EOM_ETL_OUTCOME: ${{ steps.refresh_data.outcome }}
-          EOM_RANKING_RECOMPUTE_OUTCOME: ${{ steps.recompute_ranking.outcome }}
+          EOM_RANKING_RECOMPUTE_OUTCOME: ${{ steps.recompute_ranking.outcome == 'skipped' && steps.change_gate.outputs.skip_reason == 'no_new_validated_primary_scoring_or_backtest_values_or_model_change' && 'skipped_no_material_change' || steps.recompute_ranking.outcome }}
+          EOM_RECOMPUTE_SKIP_REASON: ${{ steps.change_gate.outputs.skip_reason }}
           EOM_SOURCE_AUDIT_OUTCOME: ${{ steps.source_audit.outcome }}
           EOM_POLICY_DELTA_OUTCOME: ${{ steps.policy_delta.outcome }}
           EOM_PREDICTION_LEDGER_OUTCOME: ${{ steps.prediction_ledger.outcome }}
@@ -323,6 +362,9 @@ jobs:
             data/raw/snapshots/cepii_geodist/**/*.xls
             data/raw/snapshots/cepii_geodist/**/*.zip
             metadata/macro_ranking_delta_manifest.json
+            metadata/recompute_state.json
+            metadata/recompute_gate.json
+            metadata/scoring_input_audit.json
             outputs/source_retrieval_audit.csv
             outputs/policy_event_delta.csv
             data/prediction_ledger.csv
@@ -408,7 +450,7 @@ jobs:
           for path in outputs/latest_oecd_enhanced_macro_ranking.csv outputs/oecd_macro_component_panel.csv reports/oecd_enhanced_macro_methodology.md; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
-          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv outputs/source_retrieval_audit.csv outputs/policy_event_delta.csv outputs/macro_ranking_delta.csv outputs/bilateral_gravity_benchmark.json outputs/bilateral_gravity_benchmark_predictions.csv outputs/bilateral_gravity_benchmark_folds.csv outputs/bilateral_gravity_model_coefficients.csv reports/bilateral_gravity_benchmark_latest.md metadata/bilateral_gravity_data_audit.json outputs/history data/bilateral/eurostat_od_flows_history.csv.gz data/prediction_ledger.csv data/outcome_ledger.csv data/prediction_outcome_join.csv metadata/source_audit_manifest.json metadata/source_lineage_current.csv metadata/policy_event_delta_manifest.json metadata/prediction_ledger_manifest.json metadata/macro_ranking_delta_manifest.json; do
+          for path in outputs/risk_indicator_panel.csv outputs/risk_coverage_audit.json outputs/geographical_risk_adjusted_ranking.csv outputs/geographical_uncertainty_audit.json data/geographical_uncertainty_inputs.csv data/geographical_uncertainty_inputs_template.csv data/geopolitical_uncertainty_inputs.csv data/geopolitical_uncertainty_inputs_template.csv outputs/source_retrieval_audit.csv outputs/policy_event_delta.csv outputs/macro_ranking_delta.csv outputs/bilateral_gravity_benchmark.json outputs/bilateral_gravity_benchmark_predictions.csv outputs/bilateral_gravity_benchmark_folds.csv outputs/bilateral_gravity_model_coefficients.csv reports/bilateral_gravity_benchmark_latest.md metadata/bilateral_gravity_data_audit.json outputs/history data/bilateral/eurostat_od_flows_history.csv.gz data/prediction_ledger.csv data/outcome_ledger.csv data/prediction_outcome_join.csv metadata/source_audit_manifest.json metadata/source_lineage_current.csv metadata/policy_event_delta_manifest.json metadata/prediction_ledger_manifest.json metadata/macro_ranking_delta_manifest.json metadata/recompute_state.json metadata/recompute_gate.json metadata/scoring_input_audit.json; do
             if [ -f "$path" ]; then git add "$path"; fi
           done
           # Fail early with a clear message if any staged file approaches GitHub's 100 MB hard limit.
@@ -452,7 +494,7 @@ jobs:
           fi
 
       - name: Mark run failed if required pipeline stages failed
-        if: always() && (steps.tests.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.oecd_enhanced.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure' || steps.source_audit.outcome == 'failure' || steps.policy_delta.outcome == 'failure' || steps.prediction_ledger.outcome == 'failure' || steps.ranking_delta.outcome == 'failure' || steps.bilateral_gravity.outcome == 'failure')
+        if: always() && (steps.tests.outcome == 'failure' || steps.bootstrap_change_state.outcome == 'failure' || steps.change_gate.outcome == 'failure' || steps.finalize_change_state.outcome == 'failure' || steps.refresh_data.outcome == 'failure' || steps.recompute_ranking.outcome == 'failure' || steps.oecd_enhanced.outcome == 'failure' || steps.risk_panel.outcome == 'failure' || steps.geographic_evidence.outcome == 'failure' || steps.geopolitical_evidence.outcome == 'failure' || steps.geographic_adjustment.outcome == 'failure' || steps.source_audit.outcome == 'failure' || steps.policy_delta.outcome == 'failure' || steps.prediction_ledger.outcome == 'failure' || steps.ranking_delta.outcome == 'failure' || steps.bilateral_gravity.outcome == 'failure')
         run: |
           echo "Daily report was generated, but a required test, data refresh, ranking, risk panel, or geographic evidence stage failed. Inspect the step logs."
           exit 1

@@ -40,6 +40,7 @@ WDI_UNITS={
 "NY.GDP.TOTL.RT.ZS":"% of GDP",
 "PA.NUS.PPP":"local currency units per international dollar",
 "PA.NUS.PRVT.PP":"local currency units per international dollar",
+"PA.NUS.PRVT.PLI":"price level index; United States=100",
 "PV.EST":"governance index estimate",
 "RQ.EST":"governance index estimate",
 "SE.SEC.ENRR":"% gross enrollment",
@@ -223,6 +224,40 @@ def main():
             normalized_output_path=rel(panel_path),counted_in_numeric_totals="true",
             validation_status="PASS" if dup==0 else "FAIL",error=first(st,"error"),
             notes="Country-year fallback, not bilateral flow. Insert/revision counts are global WDI history totals, not allocated per indicator."
+        ))
+    scoring=read_json(META/"scoring_input_audit.json")
+    if scoring:
+        urls=scoring.get("exact_urls",[]) if isinstance(scoring.get("exact_urls",[]),list) else []
+        score_status=first(scoring,"status",default="UNKNOWN")
+        score_dup=as_int(scoring.get("duplicate_natural_keys",0))
+        rows.append(blank_row(workflow_id,etl_run_id,etl_outcome,
+            source_id="WDI:MACRO_FOCUS_SCORING_INPUT",publisher="World Bank",
+            source_type="numeric_api",dataset_id="11-indicator destination scoring input",
+            exact_url=urls[0] if urls else "",request_urls_json=json.dumps(urls,ensure_ascii=False),
+            metadata_url="https://api.worldbank.org/v2/",
+            retrieval_timestamp_utc=first(scoring,"retrieved_at_utc",default=etl_run_id),
+            publication_release_date=first(scoring,"publication_release_date",default="not exposed by API"),
+            observation_period_start=first(scoring,"observation_period_start"),
+            observation_period_end_requested=first(scoring,"observation_period_end_requested"),
+            observation_period_end_observed=first(scoring,"observation_period_end_observed"),
+            definition=first(scoring,"definition"),
+            unit=first(scoring,"unit"),
+            geography_scope=first(scoring,"geography_scope"),
+            origin_scope="not bilateral; destination-only",
+            destination_scope="registered global-country destination set",
+            cohort="national total; no demographic cohort dimensions",
+            revision_vintage="World Bank API current snapshot; compact history tracked separately",
+            fetch_status=score_status,http_status="200" if success(score_status) else "",
+            rows_fetched=as_int(scoring.get("rows_fetched")),
+            rows_normalized=as_int(scoring.get("rows_fetched")),
+            duplicate_rows=score_dup,missing_values=as_int(scoring.get("missing_values")),
+            missingness_pct=scoring.get("missingness_pct",""),
+            sha256=first(scoring,"normalized_output_sha256"),
+            normalized_output_path=first(scoring,"normalized_output_path"),
+            counted_in_numeric_totals="false",
+            validation_status="PASS" if success(score_status) and score_dup==0 else "WARN",
+            error=first(scoring,"error"),
+            notes="Separate daily scoring-input retrieval; duplicates the focus subset of WDI and is excluded from numeric totals to prevent double counting."
         ))
     euro=read_csv(META/"eurostat_source_status.csv"); euro_data=read_csv(ROOT/"data"/"raw"/"eurostat_migration_flows.csv")
     for st in euro.to_dict("records") if not euro.empty else []:

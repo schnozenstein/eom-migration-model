@@ -63,16 +63,34 @@ def main():
     added=sum(1 for r in rows if r["change_type"]=="ADDED");removed=sum(1 for r in rows if r["change_type"]=="REMOVED")
     scored=sum(1 for r in cur if number(r.get("energy_equal_weight")) is not None)
     years=[number(r.get("year")) for r in cur if number(r.get("year")) is not None]
+    skip_reason=str(os.environ.get("EOM_RECOMPUTE_SKIP_REASON","")).strip()
+    state={}
+    try: state=json.loads((META/"recompute_state.json").read_text(encoding="utf-8"))
+    except Exception: pass
+    last_primary=state.get("last_successful",{}).get("primary",{})
+    ranking_status=("RECOMPUTED" if outcome=="success" else
+                    "SKIPPED_NO_MATERIAL_CHANGE" if outcome=="skipped_no_material_change" else
+                    "NOT_RECOMPUTED")
+    if outcome=="skipped_no_material_change":
+        note=("Ranking and model fitting were intentionally skipped because no validated primary scoring input, matured outcome, "
+              "or model-specification change was detected. The prior validated ranking and its original timestamp are retained. "
+              "No score/rank comparison was performed.")
+    elif outcome=="skipped":
+        note=("Ranking was not recomputed because the scoring-input refresh or change gate was blocked. The prior validated ranking "
+              "was retained; consult skip_reason and the source-retrieval audit before using it as current.")
+    else:
+        note="If score/rank deltas are zero, the recomputation may still be valid; input signatures and scoring dependencies must be audited before attributing stability to model quality."
     manifest={"workflow_run_id":run_id,"generated_at_utc":datetime.now(timezone.utc).isoformat(),
-    "recompute_outcome":outcome,"ranking_status":"RECOMPUTED" if outcome=="success" else "NOT_RECOMPUTED",
+    "recompute_outcome":outcome,"ranking_status":ranking_status,"recompute_required":outcome=="success",
+    "skip_reason":skip_reason,"last_validated_ranking_run_id":last_primary.get("workflow_run_id",""),
+    "last_validated_ranking_data_year":last_primary.get("latest_year"),
     "previous_ranking_available":bool(prev),"comparison_valid":comparable,"previous_rows":len(prev),"current_rows":len(cur),
     "compared_destinations":len(rows),"scored_destinations":scored,"unscored_destinations":len(cur)-scored,
     "score_changed_rows":score_changed if comparable else None,"rank_changed_rows":rank_changed if comparable else None,
     "rows_with_any_score_or_rank_change":changed if comparable else None,"added_destinations":added if comparable else None,
     "removed_destinations":removed if comparable else None,"data_cutoff":int(max(years)) if years else None,
     "scoring_version":"equal-weight macro proxy; not a calibrated migration probability",
-    "code_version":sha,"output_path":str(output.relative_to(ROOT)),
-    "notes":"If score/rank deltas are zero, the recomputation may still be valid; inputs and scoring dependencies must be audited before attributing stability to model quality."}
+    "code_version":sha,"output_path":str(output.relative_to(ROOT)),"notes":note}
     (META/"macro_ranking_delta_manifest.json").write_text(json.dumps(manifest,indent=2),encoding="utf-8")
     print(json.dumps(manifest,indent=2));return 0
 if __name__=="__main__":raise SystemExit(main())

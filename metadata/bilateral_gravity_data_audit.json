@@ -86,7 +86,9 @@
       "raw_snapshot_xls": "data/raw/snapshots/cepii_geodist/2026-11-21T221429Z/dist_cepii.xls",
       "raw_zip_size_bytes": 2102114,
       "raw_xls_size_bytes": 8144384,
-      "license": "Etalab Open License 2.0 per CEPII download page"
+      "license": "Etalab Open License 2.0 per CEPII download page",
+      "raw_sha256": "1854825bab1abe7197f6e47295a7ced5f72c83bc95076768f733c4969ed86780",
+      "raw_sha256_verified_from_artifact": "eom-daily-report-44955413214.zip; member data/raw/snapshots/cepii_geodist/2026-11-21T221429Z/dist_cepii.zip"
     }
   ],
   "numeric_rows_fetched": 140968,
