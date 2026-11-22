@@ -75,6 +75,9 @@ def main():
         note=("Ranking and model fitting were intentionally skipped because no validated primary scoring input, matured outcome, "
               "or model-specification change was detected. The prior validated ranking and its original timestamp are retained. "
               "No score/rank comparison was performed.")
+    elif outcome=="skipped":
+        note=("Ranking was not recomputed because the scoring-input refresh or change gate was blocked. The prior validated ranking "
+              "was retained; consult skip_reason and the source-retrieval audit before using it as current.")
     else:
         note="If score/rank deltas are zero, the recomputation may still be valid; input signatures and scoring dependencies must be audited before attributing stability to model quality."
     manifest={"workflow_run_id":run_id,"generated_at_utc":datetime.now(timezone.utc).isoformat(),
