@@ -70,6 +70,9 @@ def main():
     prediction_manifest = read_json(META / "prediction_ledger_manifest.json")
     history_rebuild_manifest = read_json(META / "wdi_history_rebuild_manifest.json")
     ranking_delta_manifest = read_json(META / "macro_ranking_delta_manifest.json")
+    scoring_input_audit = read_json(META / "scoring_input_audit.json")
+    recompute_gate = read_json(META / "recompute_gate.json")
+    recompute_state = read_json(META / "recompute_state.json")
     macro_focus = read_csv(ROOT / "data" / "raw" / "world_bank_macro_focus.csv")
     macro_focus_rows = len(macro_focus)
     ranking = read_csv(OUT / "latest_macro_eom_ranking.csv")
@@ -125,6 +128,9 @@ def main():
         f"- **ETL manifest matches this workflow run:** {yes_no(manifest_is_current)}",
         f"- **Full ETL step outcome:** {etl_outcome}",
         f"- **Macro ranking step outcome:** {ranking_outcome}",
+        f"- **Change-driven recomputation gate:** {recompute_gate.get('status', 'not recorded')}; primary changed {yes_no(recompute_gate.get('primary_changed'))}; backtest changed {yes_no(recompute_gate.get('backtest_changed'))}; OECD-enhanced changed {yes_no(recompute_gate.get('oecd_changed'))}; reason {recompute_gate.get('skip_reason') or 'eligible input/model change detected or no skip required'}.",
+        f"- **Last validated primary ranking:** workflow run {recompute_state.get('last_successful', {}).get('primary', {}).get('workflow_run_id', 'not recorded')}; comparison year {recompute_state.get('last_successful', {}).get('primary', {}).get('latest_year', 'not recorded')}.",
+        f"- **Scoring-panel retrieval:** {scoring_input_audit.get('status', 'not recorded')}; {scoring_input_audit.get('rows_fetched', 'unknown')} rows; {scoring_input_audit.get('numeric_rows', 'unknown')} numeric; {scoring_input_audit.get('missing_values', 'unknown')} missing; {scoring_input_audit.get('duplicate_natural_keys', 'unknown')} duplicate natural keys.",
         f"- **Freshness warning:** {freshness_warning}",
         f"- **Refresh timestamp:** {manifest.get('run_at_utc', 'Not reported')}",
         f"- **World Bank observations fetched:** {manifest.get('world_bank_rows_fetched', 'Not reported')}",
@@ -132,7 +138,7 @@ def main():
         f"- **Normalized WDI panel:** {manifest.get('world_bank_rows_normalized', 'Not reported')} current rows; {manifest.get('world_bank_rows_without_iso3', 'Not reported')} aggregate rows use stable non-ISO3 source keys",
         f"- **Persistent WDI revision ledger:** {manifest.get('world_bank_history_rows', 'Not reported')} rows; {manifest.get('world_bank_history_new_keys', 'Not reported')} new keys; {manifest.get('world_bank_history_value_revisions', 'Not reported')} value revisions; {manifest.get('world_bank_history_unchanged_rows_skipped', 'Not reported')} unchanged observations skipped",
         f"- **WDI history migration this run:** {yes_no(manifest.get('world_bank_history_rebuilt_from_snapshots'))}; {manifest.get('world_bank_history_rows_restored_from_snapshots', 0)} rows restored from archived raw snapshots",
-        f"- **Macro scoring input:** `data/raw/world_bank_macro_focus.csv` ({macro_focus_rows} rows; {'fetched during this run' if ranking_outcome == 'success' else 'last stored input'}; separate 11-indicator destination input)",
+        f"- **Macro scoring input:** `data/raw/world_bank_macro_focus.csv` ({macro_focus_rows} rows; {'fetched during this run' if scoring_input_audit.get('status') == 'SUCCESS' else 'last stored input'}; separate 11-indicator destination input)",
         f"- **Brazil World Bank extract:** {manifest.get('brazil_macro_rows_fetched', 'Not reported')} fresh Brazil indicator-year rows",
         f"- **Eurostat total migration flows:** {eurostat_succeeded} series succeeded; {eurostat_failed} failed; {eurostat_observed} observed annual cells across up to {eurostat_geos} reporting geographies",
         f"- **UNHCR forced-displacement extract:** {unhcr_state}; {unhcr_rows} retained focus/origin rows",
@@ -143,7 +149,7 @@ def main():
         f"- **Policy pages:** {manifest.get('policy_pages_successful', 'Not reported')} succeeded; {manifest.get('policy_pages_failed', 'Not reported')} failed",
         f"- **Freshness dashboard:** {len(recent)} recent; {len(attention)} requiring attention out of {len(dashboard)} indicators",
         f"- **Macro ranking recomputed in this run:** {yes_no(ranking_outcome == 'success')}",
-        f"- **Ranking delta audit:** {ranking_delta_manifest.get('ranking_status', 'not recorded')}; data cutoff {ranking_delta_manifest.get('data_cutoff', 'unknown')}; {ranking_delta_manifest.get('score_changed_rows', 'unknown')} score changes and {ranking_delta_manifest.get('rank_changed_rows', 'unknown')} rank changes across {ranking_delta_manifest.get('compared_destinations', 'unknown')} destinations; {ranking_delta_manifest.get('scored_destinations', 'unknown')} scored and {ranking_delta_manifest.get('unscored_destinations', 'unknown')} unscored.",
+        f"- **Ranking delta audit:** {ranking_delta_manifest.get('ranking_status', 'not recorded')}; data cutoff {ranking_delta_manifest.get('data_cutoff', 'unknown')}; {ranking_delta_manifest.get('score_changed_rows', 'unknown')} score changes and {ranking_delta_manifest.get('rank_changed_rows', 'unknown')} rank changes across {ranking_delta_manifest.get('compared_destinations', 'unknown')} destinations; {ranking_delta_manifest.get('scored_destinations', 'unknown')} scored and {ranking_delta_manifest.get('unscored_destinations', 'unknown')} unscored; skip reason {ranking_delta_manifest.get('skip_reason', '') or 'none'}.",
 
         f"- **Consolidated source-retrieval audit:** {source_audit_manifest.get('source_records', 'not generated')} source records; {source_audit_manifest.get('source_failures_or_unknown_status', 'unknown')} failed/unknown statuses; validation {source_audit_manifest.get('validation_status', 'not reported')}.",
         f"- **Numeric source rows fetched:** {source_audit_manifest.get('numeric_source_rows_fetched_sum_across_endpoints', 'not reported')} across endpoints; {source_audit_manifest.get('numeric_normalized_rows_sum_across_primary_datasets', 'not reported')} normalized rows retained. These are source-record counts, not unique people.",
