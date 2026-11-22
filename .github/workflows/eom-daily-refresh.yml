@@ -161,6 +161,8 @@ jobs:
       - name: Bootstrap change-driven recomputation baseline if needed
         if: github.event_name != 'pull_request'
         id: bootstrap_change_state
+        env:
+          PYTHONPATH: src
         run: python scripts/detect_material_changes.py bootstrap
 
       - name: Snapshot previous policy-page state for a verifiable delta
