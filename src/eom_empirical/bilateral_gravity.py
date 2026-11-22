@@ -641,12 +641,18 @@ def write_bilateral_skip(stamp, audit, history, status, ce_audit=None, failures=
     audit["sources"].extend(failures or [])
     audit["status"] = status
     audit["eurostat_history"] = history
+    if "scoring_input_refresh_failed" in status:
+        skip_note = "The destination WDI scoring-input refresh failed; no PPML fit or backtest was run on stale macro features. Any newly retrieved OD rows remain in the history ledger for a later valid run."
+    elif "source_unavailable" in status:
+        skip_note = "CEPII was unavailable, but no new bilateral flow rows or revisions were found; the previous validated benchmark was preserved."
+    else:
+        skip_note = "Daily OD-flow and CEPII retrieval completed, but validated model inputs and model code were unchanged; no PPML fit or backtest was rerun."
     audit["benchmark"] = {
         "status": status,
         "model_fit_performed": False,
         "previous_benchmark_preserved": True,
         "preserved_output": "outputs/bilateral_gravity_benchmark.json",
-        "note": "Daily OD-flow and CEPII retrieval completed, but validated model inputs and model code were unchanged; no PPML fit or backtest was rerun."
+        "note": skip_note
     }
     (ROOT / "metadata/bilateral_gravity_data_audit.json").write_text(
         json.dumps(audit, indent=2, default=str) + "\n", encoding="utf-8"
@@ -662,7 +668,7 @@ def write_bilateral_skip(stamp, audit, history, status, ce_audit=None, failures=
         f"Current flow-history rows: {history.get('history_rows', 0)}",
         f"CEPII source: {ce_audit.get('status') if ce_audit else 'FAILED'}",
         "",
-        "Model fitting and chronological backtesting were intentionally skipped because no material bilateral-flow, CEPII geography, or model-code change was detected.",
+        skip_note,
         "The previous validated benchmark outputs and metrics were preserved unchanged.",
         "This is a retrieval/freshness decision, not a new model result or causal estimate."
     ]
@@ -696,6 +702,7 @@ def run(start_year=2010,end_year=2024):
     prior_flow_hash=prior.get("flow_history_sha256")
     prior_geodist_hash=prior.get("geodist_sha256")
     force=os.environ.get("EOM_FORCE_BILATERAL_RECOMPUTE","").lower()=="true"
+    scoring_input_outcome=os.environ.get("EOM_SCORING_INPUT_OUTCOME","success").lower()
     tables=[]; failures=[]
     for dataset in [MAIN_DATASET,CHECK_DATASET]:
         try:
@@ -724,17 +731,22 @@ def run(start_year=2010,end_year=2024):
     try:
         geodist,ce_audit=fetch_geodist(ce_dir)
     except Exception as exc:
+        ce_failure={"publisher":"CEPII","url":CEPII_URL,"retrieved_at_utc":utc_now(),
+            "status":"FAILED","rows":0,"error":f"{type(exc).__name__}: {exc}"}
+        if scoring_input_outcome!="success":
+            return write_bilateral_skip(stamp,audit,history,
+                "skipped_scoring_input_refresh_failed_source_unavailable",ce_failure,failures)
         if (not force and history["inserted"]==0 and history["revised"]==0
                 and prior_flow_hash and current_flow_hash==prior_flow_hash):
-            ce_failure={"publisher":"CEPII","url":CEPII_URL,"retrieved_at_utc":utc_now(),
-                "status":"FAILED","rows":0,"error":f"{type(exc).__name__}: {exc}",
-                "note":"Source unavailable; no new bilateral flow rows or revisions were found."}
+            ce_failure["note"]="Source unavailable; no new bilateral flow rows or revisions were found."
             return write_bilateral_skip(stamp,audit,history,
                 "skipped_no_material_change_source_unavailable",ce_failure,failures)
         return write_geodist_blocked_outputs(
             stamp, audit, failures, exc, history,
             direction_reconciliation, reconciliation_rows
         )
+    if scoring_input_outcome!="success":
+        return write_bilateral_skip(stamp,audit,history,"skipped_scoring_input_refresh_failed",ce_audit,failures)
     if (not force and history["inserted"]==0 and history["revised"]==0
             and prior_flow_hash and current_flow_hash==prior_flow_hash
             and prior_geodist_hash and ce_audit.get("raw_sha256")==prior_geodist_hash):
