@@ -629,7 +629,7 @@ def history_fingerprint(path: Path = HISTORY) -> str | None:
         ["dataset", "origin_iso3", "destination_iso3", "year", "revision_number"],
         kind="mergesort"
     ).reset_index(drop=True)
-    return hashlib.sha256(x.to_csv(index=False, na_rep="", lineterminator="\\n").encode("utf-8")).hexdigest()
+    return hashlib.sha256(x.to_csv(index=False, na_rep="", lineterminator="\n").encode("utf-8")).hexdigest()
 
 
 def write_bilateral_skip(stamp, audit, history, status, ce_audit=None, failures=None):
@@ -649,7 +649,7 @@ def write_bilateral_skip(stamp, audit, history, status, ce_audit=None, failures=
         "note": "Daily OD-flow and CEPII retrieval completed, but validated model inputs and model code were unchanged; no PPML fit or backtest was rerun."
     }
     (ROOT / "metadata/bilateral_gravity_data_audit.json").write_text(
-        json.dumps(audit, indent=2, default=str) + "\\n", encoding="utf-8"
+        json.dumps(audit, indent=2, default=str) + "\n", encoding="utf-8"
     )
     report = [
         "# Bilateral gravity benchmark",
@@ -667,7 +667,7 @@ def write_bilateral_skip(stamp, audit, history, status, ce_audit=None, failures=
         "This is a retrieval/freshness decision, not a new model result or causal estimate."
     ]
     (ROOT / "reports/bilateral_gravity_benchmark_latest.md").write_text(
-        "\\n".join(report) + "\\n", encoding="utf-8"
+        "\n".join(report) + "\n", encoding="utf-8"
     )
     summary = {
         "status": status,
@@ -735,11 +735,11 @@ def run(start_year=2010,end_year=2024):
             stamp, audit, failures, exc, history,
             direction_reconciliation, reconciliation_rows
         )
-    audit["sources"].append(ce_audit)
     if (not force and history["inserted"]==0 and history["revised"]==0
             and prior_flow_hash and current_flow_hash==prior_flow_hash
             and prior_geodist_hash and ce_audit.get("raw_sha256")==prior_geodist_hash):
         return write_bilateral_skip(stamp,audit,history,"skipped_no_material_change",ce_audit,failures)
+    audit["sources"].append(ce_audit)
     features=load_wdi_features()
     audit["wdi_feature_source"] = {
         "file": features.attrs.get("source_file"),
