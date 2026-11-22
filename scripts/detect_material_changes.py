@@ -168,7 +168,8 @@ def finalize():
  if oo=="success": state["last_successful"]["oecd"]={**cur["oecd"],"workflow_run_id":run_id}
  if bo=="success":
   audit=read_json(META/"bilateral_gravity_data_audit.json"); status=str(audit.get("status","")).lower()
-  if status in {"completed","skipped_no_material_change","skipped_no_material_change_source_unavailable"}:
+  state["last_bilateral_retrieval_status"]=status
+  if status=="completed":
    b=dict(cur["bilateral"]); b["geodist_sha256"]=geodist_sha_from_audit() or state["last_successful"].get("bilateral",{}).get("geodist_sha256")
    b.update({"workflow_run_id":run_id,"benchmark_status":status}); state["last_successful"]["bilateral"]=b
  state["last_checked_at_utc"]=now(); state["last_workflow_run_id"]=run_id
