@@ -1,6 +1,6 @@
 # Bilateral gravity benchmark
 
-Run: 2026-11-24T030043Z
+Run: 2026-11-24T030553Z
 Status: skipped_no_material_change
 New Eurostat pair-year keys: 0
 Revised Eurostat pair-year keys: 0

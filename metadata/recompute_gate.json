@@ -28,7 +28,7 @@
       "rows": 44
     }
   },
-  "generated_at_utc": "2026-11-24T03:00:42.840779+00:00",
+  "generated_at_utc": "2026-11-24T03:05:53.593475+00:00",
   "oecd_changed": false,
   "oecd_reasons": [],
   "primary_changed": false,
@@ -37,5 +37,5 @@
   "scoring_input_outcome": "success",
   "skip_reason": "no_new_validated_primary_scoring_or_backtest_values_or_model_change",
   "status": "no_material_change",
-  "workflow_run_id": "45314862954"
+  "workflow_run_id": "45077878869"
 }
