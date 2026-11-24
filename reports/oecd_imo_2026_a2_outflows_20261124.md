@@ -88,3 +88,10 @@ Official source: https://immi.homeaffairs.gov.au/work-in-australia/Documents1/sk
 - Policy-event delta addendum
 - Dataset-to-ranking eligibility matrix
 - Run manifest and recomputation-gate record
+
+
+## Current automation and Library status
+
+The scheduled ChatGPT automation `EOM Daily Data ETL & Ranking` is marked `in_progress` for run `28cbc715-0580-8328-996c-c5afd1663b2f`, scheduled for `2026-11-24T02:30:00Z` and started at `2026-11-24T02:45:13.834560Z`. No completion timestamp is available yet; the latest completed result still refers to the previous day. No duplicate immediate run was started.
+
+The Library folder `/EOM_Daily_Runs/2026-11-24_v43_partial` was created, but the compact ZIP and standalone report uploads both failed with `library_storage_limit_exceeded`. No earlier artifacts were deleted or overwritten. The current partial package remains available in the conversation; the dataset and audit files are committed in this repository.
