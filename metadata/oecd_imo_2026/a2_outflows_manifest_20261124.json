@@ -86,5 +86,24 @@
     "OECD A.2 was manually extracted from the official HTML rendering; raw HTML bytes were not captured.",
     "A.2 is not bilateral and is not sufficiently harmonized for immediate PPML or primary scoring.",
     "Library storage limit previously prevented v42 upload; v43 Library upload has not been attempted."
-  ]
+  ],
+  "automation_run": {
+    "automation_id": "6ac3b255a63c8191ac5c7346eaffb3c5",
+    "run_id": "28cbc715-0580-8328-996c-c5afd1663b2f",
+    "recorded_status": "in_progress",
+    "scheduled_for_utc": "2026-11-24T02:30:00Z",
+    "started_at_utc": "2026-11-24T02:45:13.834560Z",
+    "completed_at_utc": null,
+    "latest_completed_result_is_previous_run": true,
+    "note": "No duplicate immediate run_now was launched because the scheduled run was already in progress."
+  },
+  "persistence": {
+    "github_repository": "schnozenstein/eom-migration-model",
+    "github_commit_range_head_before_status_update": "1585fb9b7315764ac5fc2eb370f10473888c2366",
+    "library_folder": "/EOM_Daily_Runs/2026-11-24_v43_partial",
+    "library_folder_created": true,
+    "package_upload_status": "failed_library_storage_limit_exceeded",
+    "report_upload_status": "failed_library_storage_limit_exceeded",
+    "previous_artifacts_deleted_or_overwritten": false
+  }
 }
