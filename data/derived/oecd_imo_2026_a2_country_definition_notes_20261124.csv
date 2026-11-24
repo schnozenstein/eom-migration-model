@@ -1,0 +1,30 @@
+destination,destination_iso3,definition_and_comparability_note
+Austria,AUT,Outflows include administrative corrections.
+Belgium,BEL,"From 2010, outflows are changes of usual residence for at least 12 months; series breaks in 2010 and 2011."
+Czechia,CZE,Outflows are departures of foreigners staying permanently or temporarily; EU-national outflows may be underestimated.
+Denmark,DNK,Outflows include administrative corrections; asylum seekers and temporary residence permit holders are excluded.
+Estonia,EST,Foreigners expected to stay abroad for at least 12 months; temporary EU-national movements may be underestimated.
+Finland,FIN,More-than-one-year residence-permit/EU-intent population; excludes asylum seekers and temporary permits; EU-national outflows may be underestimated.
+Germany,DEU,Outflows are population-register deregistrations plus administrative deregistrations; includes asylum seekers in private households.
+Greece,GRC,"Outflows sourced from Eurostat emigration by age group, sex and citizenship."
+Hungary,HUN,"Foreign citizens with residence/settlement documents leaving without intent to return, or whose permit expires/is withdrawn; estimates included from 2012; asylum seekers excluded."
+Iceland,ISL,Foreigners expected to be outside the country for at least 12 months.
+Ireland,IRL,Outflows estimated from the Quarterly National Household Survey; reference year is May–April.
+Italy,ITA,Changes of residence; seasonal workers excluded; administrative corrections may follow censuses.
+Japan,JPN,Foreign nationals leaving without re-entry permission; temporary visitors excluded.
+Korea,KOR,"Long-term outflows, defined as more than 90 days."
+Latvia,LVA,"Long-term migration; 2023–2024 estimates use a revised method while 2022 was not recalculated, creating a comparability break."
+Lithuania,LTU,Foreign citizens resident for at least six months.
+Luxembourg,LUX,Foreigners leaving with the intention to live abroad for at least 12 months.
+Netherlands,NLD,Outflows include net administrative corrections for unreported emigration of foreigners.
+New Zealand,NZL,Foreign-born people returning overseas after at least 12 months in New Zealand; 12/16-month rule; provisional until 16 months after the event and later revised.
+Norway,NOR,Foreigners holding a residence/work permit and staying at least six months.
+Poland,POL,Departures of usual residents for an expected period of at least 12 months.
+Portugal,PRT,Departures of usual residents for an expected period of at least 12 months.
+Slovak Republic,SVK,"Includes permanent, temporary and tolerated residents."
+Slovenia,SVN,Persons emigrating abroad who intend to establish usual residence for at least one year.
+Spain,ESP,Changes in regular residence for at least 12 months declared by foreigners; since 2008 based on municipal-register changes for all foreigners regardless of legal status.
+Sweden,SWE,Foreigners intending to live abroad for at least one year; asylum seekers and temporary workers excluded.
+Switzerland,CHE,Departures of foreigners with permanent/annual permits and qualifying L-permit holders; administrative corrections include expired permits.
+Türkiye,TUR,Departures of long-term residents.
+United Kingdom,GBR,Outflows refer to non-British citizens leaving the United Kingdom; no duration threshold is specified in the annex note.
