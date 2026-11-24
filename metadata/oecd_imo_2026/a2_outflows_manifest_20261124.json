@@ -1,0 +1,90 @@
+{
+  "run_date_local": "2026-11-24",
+  "run_status": "PARTIAL_RESEARCH_CAPTURE_ONLY_FULL_DAILY_WORKFLOW_UNVERIFIED",
+  "package_version": "v43-partial",
+  "objective": "General empirically testable EOM migration-dynamics model; Tech MBA remains optional.",
+  "workflow_audit": {
+    "repository": "schnozenstein/eom-migration-model",
+    "latest_verified_daily_run_id": "45077878869",
+    "latest_verified_run_number": 244,
+    "latest_verified_run_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/45077878869",
+    "latest_verified_run_status": "completed_success",
+    "latest_verified_run_date_utc": "2026-11-22",
+    "latest_verified_change_gate": "no_material_change",
+    "latest_verified_primary_ranking_run_id": "44955413214",
+    "latest_default_branch_commit_before_manual_trigger": "4cadc7a0f37579db6da1f8d88bafee7c6d2c04b5",
+    "manual_trigger_commit": "2a72d83ad42973e0753cc502fec05b6681a2029a",
+    "manual_trigger_commit_url": "https://github.com/schnozenstein/eom-migration-model/commit/2a72d83ad42973e0753cc502fec05b6681a2029a",
+    "workflow_rerun_job_request": {
+      "job_id": 137379101095,
+      "api_response_success": true,
+      "new_attempt_jobs_visible": false
+    },
+    "current_run_verified": false,
+    "note": "No new workflow artifact or automated EOM output commit was visible after the manual trigger at the audit cutoff. Do not claim a full daily workflow execution."
+  },
+  "new_dataset": {
+    "publisher": "Organisation for Economic Co-operation and Development (OECD)",
+    "dataset": "International Migration Outlook 2026, Statistical Annex, Table A.2 — Outflows of foreign population from selected OECD countries",
+    "source_url": "https://www.oecd.org/en/publications/international-migration-outlook-2026_a9eab36b-en/full-report/statistical-annex_f79de055.html",
+    "release_date": "2026-11-12",
+    "retrieved_at_utc": "2026-11-24T02:50:33Z",
+    "observation_period_start": 2014,
+    "observation_period_end": 2024,
+    "geography": "29 OECD destination countries",
+    "origin": "not reported",
+    "cohort": "foreign population outflows; national definitions differ",
+    "unit": "thousands of persons",
+    "raw_source_mode": "HTML table text inspected through official OECD page; raw HTML bytes not captured",
+    "source_table_capture_file": "data/raw/oecd_imo_2026_a2_source_capture_20261124.csv",
+    "normalized_file": "data/derived/oecd_imo_2026_a2_outflows_long_20261124.csv",
+    "country_definition_notes_file": "data/derived/oecd_imo_2026_a2_country_definition_notes_20261124.csv",
+    "natural_key": [
+      "table_code",
+      "destination_iso3",
+      "year"
+    ],
+    "rows_fetched": 319,
+    "numeric_rows": 312,
+    "missing_rows": 7,
+    "duplicate_natural_keys": 0,
+    "invalid_numeric_rows": 0,
+    "minimum_value_thousands": 0,
+    "maximum_value_thousands": 1083.8,
+    "first_ingestion": true,
+    "new_keys_vs_existing_history": "not comparable; A.2 was absent from the prior A-series ingestion manifest",
+    "revisions": null,
+    "comparability_warning": "Destination-year foreign-population outflow, not origin-destination flow. Country definitions, durations, fiscal-year conventions and administrative corrections differ. Latvia has a documented 2023–2024 methodological break; Ireland uses May–April; UK series ends in 2019."
+  },
+  "ranking_gate": {
+    "status": "NOT_EVALUATED_FULL_WORKFLOW_UNVERIFIED",
+    "primary_ranking_recompute_required_from_this_dataset": false,
+    "reason": "A.2 is an exploratory destination-year outflow outcome and does not map to any of the six current primary macro scoring components.",
+    "last_validated_primary_ranking_run_id": "44955413214",
+    "last_validated_primary_ranking_timestamp_utc": "2026-11-21T22:14:28.784546Z",
+    "last_validated_data_cutoff": 2025,
+    "score_or_rank_delta": null
+  },
+  "policy_event": {
+    "event_id": "AUS_SKILLSELECT_PORTAL_TRANSITION_2026-11",
+    "publisher": "Australian Government, Department of Home Affairs",
+    "source_url": "https://immi.homeaffairs.gov.au/work-in-australia/Documents1/skillselect-decision-tree.pdf",
+    "retrieved_at_utc": "2026-11-24T02:50:33Z",
+    "publication_date": "not exposed in PDF text",
+    "effective_period_start": "2026-11-24",
+    "effective_period_end": "2026-11-27",
+    "new_portal_from": "2026-11-28",
+    "event_type": "administrative_system_transition",
+    "affected_cohort": "people preparing or managing a SkillSelect expression of interest",
+    "mechanism": "temporary portal unavailability; submitted EOIs can be imported from 28 Nov; unsubmitted drafts not imported and must be restarted",
+    "eligibility_change": "none stated in source",
+    "ranking_effect": "none; policy/admin friction ledger only"
+  },
+  "limitations": [
+    "Full daily GitHub Actions ETL run for 2026-11-24 was not verified.",
+    "World Bank and Eurostat live API endpoints were inaccessible through the current web retrieval surface; no current-day WDI numeric refresh was claimed.",
+    "OECD A.2 was manually extracted from the official HTML rendering; raw HTML bytes were not captured.",
+    "A.2 is not bilateral and is not sufficiently harmonized for immediate PPML or primary scoring.",
+    "Library storage limit previously prevented v42 upload; v43 Library upload has not been attempted."
+  ]
+}
