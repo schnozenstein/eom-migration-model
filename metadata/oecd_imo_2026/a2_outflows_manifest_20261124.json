@@ -105,5 +105,13 @@
     "package_upload_status": "failed_library_storage_limit_exceeded",
     "report_upload_status": "failed_library_storage_limit_exceeded",
     "previous_artifacts_deleted_or_overwritten": false
+  },
+  "automation_prompt_update": {
+    "status": "succeeded",
+    "automation_id": "6ac3b255a63c8191ac5c7346eaffb3c5",
+    "updated_at_utc": "2026-11-24T02:55:39.825175Z",
+    "section_added": "OECD International Migration Outlook 2026 Table A.2 persistent destination-year outflow panel",
+    "next_scheduled_run": "2026-11-25T08:00:00+05:30",
+    "current_in_progress_run_uses_updated_prompt": false
   }
 }
