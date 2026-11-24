@@ -95,3 +95,8 @@ Official source: https://immi.homeaffairs.gov.au/work-in-australia/Documents1/sk
 The scheduled ChatGPT automation `EOM Daily Data ETL & Ranking` is marked `in_progress` for run `28cbc715-0580-8328-996c-c5afd1663b2f`, scheduled for `2026-11-24T02:30:00Z` and started at `2026-11-24T02:45:13.834560Z`. No completion timestamp is available yet; the latest completed result still refers to the previous day. No duplicate immediate run was started.
 
 The Library folder `/EOM_Daily_Runs/2026-11-24_v43_partial` was created, but the compact ZIP and standalone report uploads both failed with `library_storage_limit_exceeded`. No earlier artifacts were deleted or overwritten. The current partial package remains available in the conversation; the dataset and audit files are committed in this repository.
+
+
+## Future-run integration
+
+The persistent EOM automation prompt was updated successfully at `2026-11-24T02:55:39Z` to include the OECD IMO 2026 A.2 outflow panel. Future daily runs must re-fetch and compare A.2 against its natural-key/value vintage, preserve country-level definition and period differences, and keep it separate from bilateral OD flows and the primary macro score unless a future versioned model justifies inclusion. The next scheduled run is `2026-11-25T08:00:00+05:30`. The already-in-progress 24 November run started before this prompt update and is not assumed to use the new instruction.
