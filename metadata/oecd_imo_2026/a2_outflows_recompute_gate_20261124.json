@@ -1,0 +1,10 @@
+{
+  "status": "NOT_EVALUATED_FULL_WORKFLOW_UNVERIFIED",
+  "primary_ranking_recompute_required_from_new_A2_dataset": false,
+  "reason": "OECD A.2 is not mapped to any existing primary macro scoring feature; it is an exploratory destination-year outflow outcome.",
+  "full_scoring_input_refresh_verified": false,
+  "last_validated_primary_ranking_run_id": "44955413214",
+  "last_validated_primary_ranking_timestamp_utc": "2026-11-21T22:14:28.784546Z",
+  "data_cutoff": 2025,
+  "score_rank_deltas": null
+}
