@@ -3,8 +3,8 @@
   "baseline_workflow_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/44955413214",
   "bootstrap_reason": "Input/code fingerprints captured from the latest verified successful primary and OECD-enhanced rankings before change-driven gating.",
   "bootstrapped_at_utc": "2026-11-22T03:16:35.349197+00:00",
-  "last_bilateral_retrieval_status": "skipped_no_material_change_source_unavailable",
-  "last_checked_at_utc": "2026-11-24T03:23:09.684233+00:00",
+  "last_bilateral_retrieval_status": "skipped_no_material_change",
+  "last_checked_at_utc": "2026-11-25T01:29:13.157243+00:00",
   "last_outcomes": {
     "bilateral": "success",
     "oecd": "skipped",
@@ -40,6 +40,6 @@
       "workflow_run_id": "44955413214"
     }
   },
-  "last_workflow_run_id": "45318730290",
+  "last_workflow_run_id": "45525652644",
   "schema_version": 1
 }
