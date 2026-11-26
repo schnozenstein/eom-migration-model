@@ -3,7 +3,7 @@
   "publisher": "World Bank",
   "source_type": "numeric_api",
   "status": "SUCCESS",
-  "retrieved_at_utc": "2026-11-25T01:28:23.256672+00:00",
+  "retrieved_at_utc": "2026-11-26T01:02:21.501603+00:00",
   "publication_release_date": "not exposed by the Indicators API response",
   "observation_period_start": 2010,
   "observation_period_end_requested": 2026,
@@ -122,7 +122,7 @@
     "https://api.worldbank.org/v2/country/SAU;SGP;SWE;THA;TUR;TWN;USA;VNM;ZAF/indicator/SP.POP.TOTL?date=2010%3A2026&format=json&per_page=20000&page=1"
   ],
   "normalized_output_path": "data/raw/world_bank_macro_focus.csv",
-  "normalized_output_sha256": "ee0ba55d95f4f9f5556455941abb9f0ff6c9304a976def9a35fdf38913db8292",
+  "normalized_output_sha256": "4034073d2de6f2e325b7f53aa5823e2e5a5b87714dbde1533fdffe9d22e729c3",
   "counted_in_numeric_totals": false,
   "note": "This focus extract is a duplicate scoring view of WDI; it is audited separately and excluded from source-row totals to prevent double counting."
 }

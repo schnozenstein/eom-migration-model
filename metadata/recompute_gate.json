@@ -12,7 +12,7 @@
     "bilateral": {
       "code_sha256": "b7d62ba3339b43b5a61cce84ab2ed74531a29b26eb6ecd023e17ffcef9dc2302",
       "flow_history_sha256": "c8f3ea9d70866e64fabfe4a4a45ce24ef27b873acd3040c71433f4ed3cbc0d86",
-      "geodist_sha256": "legacy-fingerprint:51863ce2637441b5336d615b8582c1b2f3f882d84efd468c8495742ea40fb900"
+      "geodist_sha256": "1854825bab1abe7197f6e47295a7ced5f72c83bc95076768f733c4969ed86780"
     },
     "oecd": {
       "code_sha256": "75856a06b7c14f671d5d11ca2ec7eb1b1be356437a139ca01452ceb3e295dce8",
@@ -28,7 +28,7 @@
       "rows": 44
     }
   },
-  "generated_at_utc": "2026-11-25T01:28:45.651793+00:00",
+  "generated_at_utc": "2026-11-26T01:02:50.397917+00:00",
   "oecd_changed": false,
   "oecd_reasons": [],
   "primary_changed": false,
@@ -37,5 +37,5 @@
   "scoring_input_outcome": "success",
   "skip_reason": "no_new_validated_primary_scoring_or_backtest_values_or_model_change",
   "status": "no_material_change",
-  "workflow_run_id": "45525652644"
+  "workflow_run_id": "45732610870"
 }
