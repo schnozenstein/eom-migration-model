@@ -1,6 +1,6 @@
 {
-  "run_id": "2026-11-26T010250Z",
-  "retrieved_at_utc": "2026-11-26T01:02:50.810968+00:00",
+  "run_id": "2026-11-27T010420Z",
+  "retrieved_at_utc": "2026-11-27T01:04:20.764608+00:00",
   "start_year": 2010,
   "end_year": 2024,
   "sources": [
@@ -19,7 +19,7 @@
         "sinceTimePeriod": "2010",
         "untilTimePeriod": "2024"
       },
-      "retrieved_at_utc": "2026-11-26T01:02:50.811056+00:00",
+      "retrieved_at_utc": "2026-11-27T01:04:20.764709+00:00",
       "status": "SUCCESS",
       "publication_release_date": "not exposed in the response; Eurostat metadata states annual flow breakdowns by previous/next residence are released in March T+1",
       "observation_period": "2010-2024",
@@ -27,14 +27,14 @@
       "unit": "persons (Eurostat unit NR)",
       "geography": "reporting country and partner country; international country pairs only",
       "http_status": 200,
-      "returned_cells": 72908,
-      "numeric_cells": 72475,
-      "status_flagged_cells": 7951,
-      "missing_or_suppressed_cells": 433,
-      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-26T010250Z/migr_imm5prv.json.gz",
-      "raw_size_bytes": 289485,
-      "normalized_country_pair_rows": 61690,
-      "unmapped_or_aggregate_rows": 11218
+      "returned_cells": 73293,
+      "numeric_cells": 72355,
+      "status_flagged_cells": 8513,
+      "missing_or_suppressed_cells": 938,
+      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-27T010420Z/migr_imm5prv.json.gz",
+      "raw_size_bytes": 291892,
+      "normalized_country_pair_rows": 61470,
+      "unmapped_or_aggregate_rows": 11823
     },
     {
       "dataset": "migr_emi3nxt",
@@ -51,7 +51,7 @@
         "sinceTimePeriod": "2010",
         "untilTimePeriod": "2024"
       },
-      "retrieved_at_utc": "2026-11-26T01:02:58.637136+00:00",
+      "retrieved_at_utc": "2026-11-27T01:04:27.470432+00:00",
       "status": "SUCCESS",
       "publication_release_date": "not exposed in the response; Eurostat metadata states annual flow breakdowns by previous/next residence are released in March T+1",
       "observation_period": "2010-2024",
@@ -59,56 +59,71 @@
       "unit": "persons (Eurostat unit NR)",
       "geography": "reporting country and partner country; international country pairs only",
       "http_status": 200,
-      "returned_cells": 69566,
-      "numeric_cells": 68493,
-      "status_flagged_cells": 6034,
-      "missing_or_suppressed_cells": 1073,
-      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-26T010250Z/migr_emi3nxt.json.gz",
-      "raw_size_bytes": 258468,
+      "returned_cells": 69807,
+      "numeric_cells": 68631,
+      "status_flagged_cells": 6194,
+      "missing_or_suppressed_cells": 1176,
+      "raw_snapshot": "data/raw/snapshots/eurostat_bilateral/2026-11-27T010420Z/migr_emi3nxt.json.gz",
+      "raw_size_bytes": 261040,
       "normalized_country_pair_rows": 58839,
-      "unmapped_or_aggregate_rows": 10727
+      "unmapped_or_aggregate_rows": 10968
     },
     {
       "publisher": "CEPII",
       "url": "https://www.cepii.fr/distance/dist_cepii.zip",
-      "resolved_url": "https://www.cepii.fr/distance/dist_cepii.zip",
-      "retrieved_at_utc": "2026-11-26T01:04:58.741885+00:00",
+      "resolved_url": null,
+      "retrieved_at_utc": "2026-11-27T01:07:45.859879+00:00",
       "publication_release_date": "downloadable file vintage not exposed; reference methodology Mayer & Zignago (2011), CEPII Working Paper 2011-25",
       "observation_period": "cross-sectional dyadic geography; no migration observation period",
       "definition": "bilateral distance in kilometres, contiguity and common official language",
       "unit": "kilometres for distance; binary indicators for contiguity and common official language",
       "geography": "225-country dyadic database per CEPII description",
-      "status": "SUCCESS",
-      "rows": 50176,
-      "distance_field": "distw",
-      "raw_sha256": "1854825bab1abe7197f6e47295a7ced5f72c83bc95076768f733c4969ed86780",
-      "archive_member": "dist_cepii.xls",
-      "raw_snapshot_zip": "data/raw/snapshots/cepii_geodist/2026-11-26T010250Z/dist_cepii.zip",
-      "raw_snapshot_xls": "data/raw/snapshots/cepii_geodist/2026-11-26T010250Z/dist_cepii.xls",
-      "raw_zip_size_bytes": 2102114,
-      "raw_xls_size_bytes": 8144384,
-      "license": "Etalab Open License 2.0 per CEPII download page"
+      "status": "FAILED",
+      "rows": 0,
+      "error": "ReadTimeout: HTTPSConnectionPool(host='www.cepii.fr', port=443): Read timed out. (read timeout=180)",
+      "fallback": "No unverified mirror or stale geography file was substituted."
     }
   ],
-  "numeric_rows_fetched": 140968,
-  "status": "skipped_no_material_change",
-  "rows_inserted": 0,
+  "numeric_rows_fetched": 140986,
+  "status": "blocked_geodist_source",
+  "rows_inserted": 1,
   "rows_revised": 0,
-  "rows_unchanged": 120529,
+  "rows_unchanged": 120308,
   "duplicates_in_run": 0,
-  "history_rows": 120529,
-  "eurostat_history": {
-    "inserted": 0,
-    "revised": 0,
-    "unchanged": 120529,
-    "duplicates_in_run": 0,
-    "history_rows": 120529
-  },
+  "history_rows": 120530,
   "benchmark": {
-    "status": "skipped_no_material_change",
-    "model_fit_performed": false,
-    "previous_benchmark_preserved": true,
-    "preserved_output": "outputs/bilateral_gravity_benchmark.json",
-    "note": "Daily OD-flow and CEPII retrieval completed, but validated model inputs and model code were unchanged; no PPML fit or backtest was rerun."
+    "status": "blocked_geodist_source",
+    "panel_rows_after_join": 0,
+    "complete_case_rows": 0,
+    "rows_scored": 0,
+    "folds_scored": 0,
+    "note": "Benchmark not run because the current CEPII dyadic geography download failed."
+  },
+  "benchmark_source_failure": {
+    "publisher": "CEPII",
+    "url": "https://www.cepii.fr/distance/dist_cepii.zip",
+    "resolved_url": null,
+    "retrieved_at_utc": "2026-11-27T01:07:45.859879+00:00",
+    "publication_release_date": "downloadable file vintage not exposed; reference methodology Mayer & Zignago (2011), CEPII Working Paper 2011-25",
+    "observation_period": "cross-sectional dyadic geography; no migration observation period",
+    "definition": "bilateral distance in kilometres, contiguity and common official language",
+    "unit": "kilometres for distance; binary indicators for contiguity and common official language",
+    "geography": "225-country dyadic database per CEPII description",
+    "status": "FAILED",
+    "rows": 0,
+    "error": "ReadTimeout: HTTPSConnectionPool(host='www.cepii.fr', port=443): Read timed out. (read timeout=180)",
+    "fallback": "No unverified mirror or stale geography file was substituted."
+  },
+  "previous_benchmark_archived": {
+    "status": "completed_expanding_origin_bilateral_benchmark",
+    "retrieval_run_id": "2026-11-21T221429Z",
+    "archived_path": "outputs/history/bilateral_gravity_benchmark_2026-11-21T221429Z.json"
+  },
+  "eurostat_history": {
+    "inserted": 1,
+    "revised": 0,
+    "unchanged": 120308,
+    "duplicates_in_run": 0,
+    "history_rows": 120530
   }
 }

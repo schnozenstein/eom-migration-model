@@ -1,6 +1,6 @@
 {
-  "workflow_run_id": "45732610870",
-  "generated_at_utc": "2026-11-26T01:04:58.963816+00:00",
+  "workflow_run_id": "45920012332",
+  "generated_at_utc": "2026-11-27T01:07:46.075805+00:00",
   "recompute_outcome": "skipped_no_material_change",
   "ranking_status": "SKIPPED_NO_MATERIAL_CHANGE",
   "recompute_required": false,
@@ -21,7 +21,7 @@
   "removed_destinations": null,
   "data_cutoff": 2025,
   "scoring_version": "equal-weight macro proxy; not a calibrated migration probability",
-  "code_version": "270efa6c06c4ef85ce76e8fcc3f9b1096d822538",
+  "code_version": "a9d9204b4afeb533db1b88570c6d0c80c0c80ac6",
   "output_path": "outputs/macro_ranking_delta.csv",
   "notes": "Ranking and model fitting were intentionally skipped because no validated primary scoring input, matured outcome, or model-specification change was detected. The prior validated ranking and its original timestamp are retained. No score/rank comparison was performed."
 }
