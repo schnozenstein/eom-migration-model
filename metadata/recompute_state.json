@@ -3,8 +3,8 @@
   "baseline_workflow_url": "https://github.com/schnozenstein/eom-migration-model/actions/runs/44955413214",
   "bootstrap_reason": "Input/code fingerprints captured from the latest verified successful primary and OECD-enhanced rankings before change-driven gating.",
   "bootstrapped_at_utc": "2026-11-22T03:16:35.349197+00:00",
-  "last_bilateral_retrieval_status": "blocked_geodist_source",
-  "last_checked_at_utc": "2026-11-27T01:07:47.124369+00:00",
+  "last_bilateral_retrieval_status": "completed",
+  "last_checked_at_utc": "2026-11-28T00:35:39.313262+00:00",
   "last_outcomes": {
     "bilateral": "success",
     "oecd": "skipped",
@@ -18,11 +18,11 @@
       "workflow_run_id": "44955413214"
     },
     "bilateral": {
-      "benchmark_status": "completed_expanding_origin_bilateral_benchmark",
+      "benchmark_status": "completed",
       "code_sha256": "b7d62ba3339b43b5a61cce84ab2ed74531a29b26eb6ecd023e17ffcef9dc2302",
-      "flow_history_sha256": "c8f3ea9d70866e64fabfe4a4a45ce24ef27b873acd3040c71433f4ed3cbc0d86",
+      "flow_history_sha256": "2f85663a0787d819df2bc795d94049b04596ed115e4f13cabb6239d1fe4ecb43",
       "geodist_sha256": "1854825bab1abe7197f6e47295a7ced5f72c83bc95076768f733c4969ed86780",
-      "workflow_run_id": "2026-11-21T221429Z"
+      "workflow_run_id": "46088429065"
     },
     "oecd": {
       "code_sha256": "75856a06b7c14f671d5d11ca2ec7eb1b1be356437a139ca01452ceb3e295dce8",
@@ -40,6 +40,6 @@
       "workflow_run_id": "44955413214"
     }
   },
-  "last_workflow_run_id": "45920012332",
+  "last_workflow_run_id": "46088429065",
   "schema_version": 1
 }

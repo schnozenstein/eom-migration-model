@@ -1,11 +1,11 @@
 {
-  "workflow_run_id": "45920012332",
-  "etl_run_id": "2026-11-27T010101Z",
+  "workflow_run_id": "46088429065",
+  "etl_run_id": "2026-11-28T003317Z",
   "etl_outcome": "success",
   "workflow_event": "schedule",
   "scheduled_cron_utc": "17 17 * * *",
   "refresh_manifest_matches_workflow_run": true,
-  "generated_at_utc": "2026-11-27T01:04:18.336007+00:00",
+  "generated_at_utc": "2026-11-28T00:35:10.690738+00:00",
   "source_records": 66,
   "source_failures_or_unknown_status": 1,
   "numeric_source_rows_fetched_sum_across_endpoints": 1197798,
@@ -40,10 +40,10 @@
   "source_lineage_unique_source_ids": 66,
   "source_lineage_duplicate_source_id_rows": 0,
   "source_lineage_ids_unique": true,
-  "source_lineage_current_sha256": "8454fc67937d30bfc03ffbf76e8a91a3397f31a0fa8745992493d7dde1689df5",
+  "source_lineage_current_sha256": "180631b6140a2b3308a31fbd2f185a8e137258c0142677f738c12557c95685b3",
   "legacy_source_lineage_registry_path": "metadata/source_lineage_2026-10-13.csv",
   "legacy_source_lineage_registry_rows": 8,
   "legacy_source_lineage_registry_status": "preserved_legacy_registry",
   "output_path": "outputs/source_retrieval_audit.csv",
-  "output_sha256": "5c2d60dbd82bb116e563a60e0db746e5ea67e3b10d8b114c2067439088bee0ad"
+  "output_sha256": "8849acef01dbf408c27af49721318fe6a08a00034fddb28a7bdbc0c0437ec488"
 }
